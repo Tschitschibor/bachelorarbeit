@@ -1,0 +1,28 @@
+Was tust du?
+- catreps umschreiben vom "assembler" gap, d.h. kleinteilig direkt mit Matrizen und ihren Einträgen arbeiten
+nach CAP, d.h. Kategorientheorie betreiben, indem man kategorientheoretisch programmiert.
+
+Warum willst du tun, was du tust?
+- In March 2020 there is major new release of the packages reps and catreps in which they are combined as one. Commands common to both groups and categories have been written in objected oriented form by Moriah Elkin. This has been done as a response to the need to interface between the two contexts.
+- Read P.J. Webb, An introduction to the representations and cohomology of categories, to learn the basics of representations of categories.
+
+Dokumentation von FunctorCategories
+
+Wie schreibt man eine Arbeit über eine Dokumentation?
+AutoDoc von gap verstehen?
+
+Wieviel von catreps ist meine eigene Arbeit, wieviel ist von Peter und seinen Leuten?
+
+Wollen wir noch DecomposeForCAP schreiben oder bleibt das in catreps?
+
+Wenn wir uns deren Code anschauen, und dann das kategorientheoretisch umschreiben, ist es dann unser Code oder bleibt es basierend auf deren Code?
+
+Termine:
+Fertig bis Mitte Juli
+Anmelden bis Ende Juli
+
+Abschluss im August. 
+
+Selber kleinteilig optimieren vs Schnittstellen zu anderen Optimierten Programmen
+
+CAP greift zu auf Singular oder Magma, bleibt aber auf der höheren Abstraktionss

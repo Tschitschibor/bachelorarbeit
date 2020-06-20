@@ -1,0 +1,299 @@
+% mainfile: ../main.tex
+
+\section{Reconstructing \texorpdfstring{$G$}{G} algorithmically}
+
+From now on, let $\Ccal$ be a category equivalent to \Gset{} via an equivalence $Z \colon \Ccal \to \Gset$, let $F\colon \Ccal \to \Set$ be a functor such that $F \cong U \circ Z$ and let $X$ be an object in $\Ccal$ with $Z(X) \cong G$. In examples and for testing the implementation of our algorithms we choose $\Ccal = \SkeletalGSets$, $F = U \circ R$ where $R$ is the realization functor $\SkeletalGSets \to \Gset$ and $X = A(G)$ where $A$ is the abstraction functor $\Gset \to \SkeletalGSets$. The aim of this chapter is to reconstruct $G$ from $\Ccal$ algorithmically using three different approaches.
+
+\subsection{\texorpdfstring{$\End(F)$}{End(F)} as an equalizer}
+
+\begin{rem}\label{rem:infinite_index_set}
+As we have seen in the last chapter, we can reconstruct $G$ from the category $\Ccal$ as an equalizer of two parallel maps $\rho,\lambda\colon S \to T$. The first problem when it comes to actually computing the equalizer are the \emph{infinite} index classes $\Obj(\Ccal)$ of the products which form $S$ and $T$ respectively. If we can find a subcategory $\tilde I$ of $\Ccal$ with finitely many objects such that $\End(F\vert_{\tilde I}) \cong \End(F)$ as monoids, then we can compute the equalizer with finite index sets $\Obj(\tilde I)$. If we think of ends as sets of natural transformations, then computing $\End(F\vert_{\tilde I})$ corresponds to finding only finitely many components of a natural transformation $F \to F$ and to only ensuring that some of the squares in the definition of a natural transformation $F \to F$ commute. The condition $\End(F\vert_{\tilde I}) \cong \End(F)$ means that we can still regain all natural transformations $F \to F$ by uniquely extending natural transformations $F\vert_{\tilde I} \to F\vert_{\tilde I}$. For example for $\Ccal = \SkeletalGSets$ and $F = U \circ R$ we can choose $\tilde I$ as the full subcategory of $\Ccal$ with $\Obj(\tilde I) = \{A(G)\}$. We show this in general in \propref{reduce_to_finite_I} but first prove a lemma as a preparation.
+\end{rem}
+
+\begin{lem}\label{lem:free_object}
+Let $\alpha\colon F \to U \circ Z$ be an isomorphism and $\tau\colon Z(X) \to G$ a $G$-equivariant bijection. Set $1_X \coloneqq \alpha_X\inv(\tau\inv(1)) \in F(X)$. Then for any object $C$ in $\Ccal$ and any $c \in F(C)$ there exists a unique morphism $\phi_c\colon X \to C$ with $F(\phi_c)(1_X) = c$. Additionally, for any object $D$ in $\Ccal$ and any morphism $\phi\colon C \to D$ we have $\phi \circ \phi_c = \phi_{F(\phi)(c)}$.
+\end{lem}
+\begin{proof}
+\begin{figure}
+\[
+\begin{tikzcd}
+1_X \in F(X) \arrow[d, "\alpha_X"'] \arrow[rr, "F(\phi_c)"]    &  & F(C) \ni c \arrow[d, "\alpha_C"] \\
+1 \in U(Z(X)) \arrow[rr, "U(\phi_{c'})"] \arrow[d, "U(\tau)"'] &  & U(Z(C)) \ni c'                   \\
+U(G) \arrow[rru, "U(\psi_{c'})"']                              &  &                                 
+\end{tikzcd}
+\]
+\caption{The objects and morphisms used in the proof of \lemref{free_object}}\label{fig:free_object}
+\end{figure}
+We visualize all objects and morphisms used in the proof in \figref{free_object}. Let $C$ be an object in $\Ccal$ and $c \in F(C)$. Set $c' \coloneqq \alpha_C(c) \in U(Z(C))$. Then there exists a $G$-equivariant map $\psi_{c'}\colon G \to Z(C)$ which maps $1$ to $c'$:
+\begin{align*}
+\psi_{c'}\colon G &\to Z(C)\\
+g &\mapsto c'g
+\end{align*}
+Thus, we get the $G$-equivariant map $\phi_{c'} \coloneqq \psi_{c'} \circ \tau\colon Z(X) \to Z(C)$ which maps $\tau\inv(1) = \alpha_X(1_X)$ to $c'$. Since $Z(X) \cong G$, we have $\alpha_X(1_X)G = Z(X)$, so any $G$-equivariant map with source $Z(X)$ is uniquely determined by the image of the element $\alpha_X(1_X)$. Thus, $\phi_{c'}$ is the unique $G$-equivariant map $Z(X) \to Z(C)$ which maps $\alpha_X(1_X)$ to $c'$. Since $Z$ is an equivalence of categories, there exists a unique morphism $\phi_c\colon X \to C$ with $Z(\phi_c) = \phi_{c'}$. We have the following commutative diagram:
+\[
+\begin{tikzcd}
+F(X) \arrow[rr, "F(\phi_c)"] \arrow[d, "\alpha_X"] &  & F(C) \arrow[d, "\alpha_C"] \\
+U(Z(X)) \arrow[rr, "U(Z(\phi_c))"]                 &  & U(Z(C))                   
+\end{tikzcd}
+\]
+By construction, we have $F(\phi_c)(1_X) = \alpha_C\inv(U(Z(\phi_c))(\alpha_X(1_X))) = \alpha_C\inv(c') = c$.
+
+We now show the uniqueness of $\phi_c$. Let $\phi \colon X \to C$ be a morphism with $F(\phi)(1_X) = c$. By the commutative diagram above, $Z(\phi)$ is a $G$-equivariant map which maps $\alpha_X(1_X)$ to $c'$. By uniqueness of $\phi_{c'}$ we get $Z(\phi) = \phi_{c'}$ and because $Z$ is fully faithful we have $\phi = \phi_c$.
+
+Finally, let $D$ be an object in $\Ccal$ and $\phi\colon C \to D$ a morphism. Then we have \[F(\phi \circ \phi_c)(1_X) = F(\phi)(F(\phi_c)(1_X)) = F(\phi)(c) = F(\phi_{F(\phi)(c)})(1_X)\] and the uniqueness of $\phi_{F(\phi)(c)}$ implies $\phi \circ \phi_c = \phi_{F(\phi)(c)}$.
+\end{proof}
+
+\begin{defn}
+Let $I$ be a set of objects in $\Ccal$. Then we define $\tilde I$ to be the full subcategory of $\Ccal$ with $\Obj(\tilde I) = I$.
+\end{defn}
+
+\begin{prop}\label{prop:reduce_to_finite_I}
+Set $I \coloneqq \{X\}$. Then $\Hom(F\vert_{\tilde I},F\vert_{\tilde I}) \cong \Hom(F,F)$ as monoids.
+\end{prop}
+\begin{proof}
+For the proof, fix an isomorphism $\alpha\colon F \to U \circ Z$ as well as a $G$-equivariant bijection $\tau\colon Z(X) \to G$, and set $1_X \coloneqq \alpha_X\inv(\tau\inv(1)) \in F(X)$.
+
+We first show that we have $\Hom(F\vert_{\tilde I},F\vert_{\tilde I}) \cong \Hom(F,F)$ as sets. Let $(\beta_C)_C \in \Hom(F\vert_{\tilde I},F\vert_{\tilde I})$. Then $(\beta_C)_C$ only has a single component $\beta_X \eqqcolon \beta$. We want to extend $\beta$ to a natural transformation $\alpha\colon F \to F$. For this, let $C$ be an object in $\Ccal$. We want to define the component $\alpha_C\colon F(C) \to F(C)$ of $\alpha$. For any $c \in F(C)$ we set $\alpha_C(c) \coloneqq F(\phi_c)(\beta(1_X))$ where $\phi_c$ is the unique morphism from \lemref{free_object} with $F(\phi_c)(1_X) = c$. We visualize this in the following diagram:
+\[
+\begin{tikzcd}
+F(X) \arrow[d, "\beta"] \arrow[r, "F(\phi_c)"] & F(C) \arrow[d, "\alpha_C"] \\
+F(X) \arrow[r, "F(\phi_c)"]                    & F(C)                      
+\end{tikzcd}
+\]
+Note that we do not make a claim about the commutativity of the diagram. We have to check that $\alpha$ is indeed a natural transformation $F \to F$. Let $C_1$ and $C_2$ be two objects in $\Ccal$ and $\phi\colon C_1 \to C_2$ a morphism. We have to show that the following diagram commutes:
+\[
+\begin{tikzcd}
+F(C_1) \arrow[d, "\alpha_{C_1}"] \arrow[r, "F(\phi)"] & F(C_2) \arrow[d, "\alpha_{C_2}"] \\
+F(C_1) \arrow[r, "F(\phi)"]                           & F(C_2)                          
+\end{tikzcd}
+\]
+Let $c \in C_1$. Then we have
+\begin{align*}
+(F(\phi) \circ \alpha_{C_1})(c) &= F(\phi)(F(\phi_c)(\beta(1_X)))\\
+&= F(\phi \circ \phi_c)(\beta(1_X))\\
+&= F(\phi_{F(\phi)(c)})(\beta(1_X))\\
+&= (\alpha_{C_2} \circ F(\phi))(c)
+\end{align*}
+by \lemref{free_object}, that is, $F(\phi) \circ \alpha_{C_1} = \alpha_{C_2} \circ F(\phi)$.
+
+We claim that $\alpha$ really is an extension of $\beta$, that is, we have $\alpha_X = \beta$. Let $x \in F(X)$. Then by assumption, the following diagram commutes:
+\[
+\begin{tikzcd}
+F(X) \arrow[r, "F(\phi_x)"] \arrow[d, "\beta"] & F(X) \arrow[d, "\beta"] \\
+F(X) \arrow[r, "F(\phi_x)"]                    & F(X)                   
+\end{tikzcd}
+\]
+Thus, we have $\alpha_X(x) = F(\phi_x)(\beta(1_X)) = \beta(F(\phi_x)(1_X)) = \beta(x)$.
+
+Finally, we have to show that any natural transformation $\alpha\colon F \to F$ arises in this way, that is, if we choose $\beta \coloneqq \alpha_X$ and extend $\beta$ as above, we get back $\alpha$. Thus, we have to show $\alpha_C(c) = F(\phi_c)(\alpha_X(1_X))$ for any object $C$ in $\Ccal$ and any $c \in F(C)$. By assumption, the following diagram commutes:
+\[
+\begin{tikzcd}
+F(X) \arrow[r, "F(\phi_c)"] \arrow[d, "\alpha_X"] & F(C) \arrow[d, "\alpha_C"] \\
+F(X) \arrow[r, "F(\phi_c)"]                       & F(C)                      
+\end{tikzcd}
+\]
+Thus, we get $F(\phi_c)(\alpha_X(1_X)) = \alpha_C(F(\phi_c)(1_X)) = \alpha_C(c)$.
+
+Summing up, we have a bijection $\Hom(F\vert_{\tilde I},F\vert_{\tilde I}) \cong \Hom(F,F)$. It remains to show that this is an isomorphism of monoids. Let $\beta_1,\beta_2 \in \Hom(F\vert_{\tilde I},F\vert_{\tilde I})$ and set $\beta \coloneqq \beta_1 \circ \beta_2$. Let $\alpha_1$, $\alpha_2$ and $\alpha$ be the extensions of $\beta_1$, $\beta_2$ and $\beta$ respectively. We have to show $\alpha = \alpha_1 \circ \alpha_2$. As a preparation we show $F(\phi_{\beta_2(1_X)})(\beta_1(1_X)) = \beta_1(F(\phi_{\beta_2(1_X)})(1_X))$. This follows immediately from the following diagram, which commutes by assumption:
+\[
+\begin{tikzcd}
+F(X) \arrow[rr, "F(\phi_{\beta_2(1_X)})"] \arrow[d, "\beta_1"] &  & F(C) \arrow[d, "\beta_1"] \\
+F(X) \arrow[rr, "F(\phi_{\beta_2(1_X)})"]                      &  & F(C)                     
+\end{tikzcd}
+\]
+Now, let $C$ be an object in $\Ccal$ and $c \in C$. Then we have
+\begin{align*}
+(\alpha_1)_C((\alpha_2)_C(c)) &= (\alpha_1)_C(F(\phi_c)(\beta_2(1_X)))\\
+&= F(\phi_{F(\phi_c)(\beta_2(1_X))})(\beta_1(1_X))\\
+&= F(\phi_c)(F(\phi_{\beta_2(1_X)})(\beta_1(1_X)))\\
+&= F(\phi_c)(\beta_1(F(\phi_{\beta_2(1_X)})(1_X)))\\
+&= F(\phi_c)(\beta_1(\beta_2(1_X)))\\
+&= F(\phi_c)(\beta(1_X))\\
+&= \alpha_C(c).
+\end{align*}
+This finishes the proof.
+\end{proof}
+
+\begin{rem}[Implementation]\label{rem:EndAsEqualizer}
+Summing up, we have shown that $\End(F\vert_{\tilde I}) \cong G$ with $I \coloneqq \{X\}$. For the implementation we need some remarks.
+
+First, note that $U$ is faithful because morphisms in \Gset{} are $G$-equivariant maps and two morphism are equal if and only if they are equal as maps. In particular, any hom-set $\Hom_\Gset(\Omega_1,\Omega_2)$ in \Gset{} is finite because $\Hom_\Set(U(\Omega_1),U(\Omega_2))$ has $\abs{U(\Omega_2)}^{\abs{U(\Omega_1)}} < \infty$ elements. Since $Z$ is fully faithful, this implies that all hom-sets in $\Ccal$ are finite. Also note that we can easily compute $\Hom_\Set(M,N)$ for finite sets $M$ and $N$ as $\prod_{m \in M} N$.
+
+If we have implementations of $\Ccal$ and $F$ in \CapPkg{} and the implementation of a method computing hom-sets in $\Ccal$, we can now implement an algorithm which reconstructs $G$ by computing $\End(F\vert_{\tilde I})$ as the equalizer of two parallel maps $\rho,\lambda\colon S \to T$ as in \propref{end_as_equalizer_concrete}: The index sets of the products forming $S$ and $T$ are finite, so we only have to compute the finitely many components of $\rho$ and $\lambda$. These components are maps between finite sets formed by taking finite hom-sets in $\Ccal$ and in $\Set$. Thus, we can compute all sets involved explicitly. Using the implementation of \FinSets{} in \cite{FinSetsForCAP}, we can also represent and compose maps between finite sets. Since $\rho$ and $\lambda$ are defined via taking $F$ and composing maps, we have all algorithms we need. However, the sets get too large: even for $G = S_3$ and $\Ccal = \SkeletalGSets$ we already have $\abs{T} = (6^6)^6 \approx 1.03 \cdot 10^{28}$. The solution is to work in \SkeletalFinSets{} instead, which is also implemented in \cite{FinSetsForCAP}. That is, we only store the size $n$ of a set and think of the set as $\{1,\dots,n\}$. However, we want to compose elements of hom-sets. Thus, for $M = \{1,\dots,m\}$ and $N = \{1,\dots,n\}$ we need a mapping between integers in $\{1,\dots,n^m\} \cong \Hom_\Set(M,N)$ and actual maps $M \to N$. For this, we set $\tilde M \coloneqq \{0,\dots,m-1\}$ and $\tilde N \coloneqq \{0,\dots,n-1\}$. Let $f\colon \tilde M \to \tilde N$ be a map. We can think of $f$ as the vector $(f(m))_{m \in M}$ with $0 \leq f(m) < n-1$ for all $m \in M$. This is exactly the base-$n$ representation with $m$ digits of some integer in $\{0,\dots,n^m - 1\}$. Conversely, any base-$n$ representation of an integer in $\{0,\dots,n^m - 1\}$ padded to $m$ digits is a map $f\colon \tilde M \to \tilde N$ in this way. By subtracting 1 before the conversion and adding 1 back after the conversion, we can use this to identify the integers in $\{1,\dots,n^m\}$ with maps $M \to N$.
+
+Now we have all algorithms for the implementation in \texttt{EndAsEqualizer}. The implementation computes the equalizer in \propref{end_as_equalizer_concrete} for an arbitrary finite index set. The functions for converting back and forth between integers and morphisms are called \texttt{IntToMorphism} and \texttt{MorphismToInt}. Additionally, the function \texttt{PseudoMorphismToInt} allows us to omit wrapping a morphism in a \GAP{} object in case we would immediately unwrap it again using \texttt{MorphismToInt}. The functions \texttt{GetRhoComponent} and \texttt{GetLambdaComponent} compute $\rho_{C_1,C_2}$ and $\lambda_{C_1,C_2}$ for two objects $C_1$ and $C_2$ as given in \propref{end_as_equalizer_concrete}. The main function constructs $S$, $T$, $\rho$ and $\lambda$ using the functions above and the implementation of the direct product in \SkeletalFinSets{}, computes the equalizer of $\rho$ and $\lambda$ using the implementation in \SkeletalFinSets{} and finally translates the resulting skeletal set into a set of morphisms again.
+\end{rem}
+
+\begin{rem}[Search space]
+In \remref{EndAsEqualizer} we use a skeletal representation of sets to avoid having to construct $S$ and $T$ as sets explicitly. However, for computing the components of $\rho$ and $\lambda$ we still have to construct the elements of $S$ explicitly. For $I = \{X\}$ this means that we have to construct all maps in $\Hom_\Set(F(X),F(X))$. We define the \emphindex{search space} of an algorithm as the subset $Y$ of $\Hom_\Set(F(X),F(X))$ consisting of the maps which we construct explicitly during the algorithm. Of course, for a valid result the search space must contain the equalizer of $\rho$ and $\lambda$. If this is the case and $Y$ is a proper subset of $\Hom_\Set(F(X),F(X))$, we only have to check if $\rho(y) = \lambda(y)$ for the elements $y \in Y$ instead of checking this for all elements in $\Hom_\Set(F(X),F(X))$.
+
+In \remref{EndAsEqualizer} the search space is the whole set $\Hom_\Set(F(X),F(X))$, which has size $\abs{F(X)}^\abs{F(X)}$. For $X = G = S_3$ we have to construct $6^6 = 46656$ maps, which is still feasible. However, for a group of order $100$ we have no chance to construct all $100^{100}$ maps as we cannot even to loop over their representing integers in feasible time. Thus, we have to find strategies which reduce the size of the search space. A first step is to only consider bijective maps in $\Hom_\Set(F(X),F(X))$. This works because we have shown that the natural transformations $F \to F$ form a group and thus their components have to be bijective maps because inverses exist. However, this still leaves us with $\abs{F(X)}!$ elements. One further step would be to try to find a different index set $I$ leading to a smaller set $S$. For example, for $G = S_3$ and $\Ccal = \SkeletalGSets$ a natural idea would be to choose $I \coloneqq \{A(U_2 \backslash S_3),A(U_3 \backslash S_3)\}$ because $A(U_2 \backslash S_3) \times A(U_3 \backslash S_3) = A(\{1\} \backslash G)$. However, $\End(F\vert_{\tilde I})$ contains $54$ elements instead of $6$. The reason for this is that $\Hom_\Gset(C_2 \backslash S_3 , C_2 \backslash S_3 )$ only contains a single element, that is, the identity, although we would expect three elements by mapping $\bar 1 \in C_2 \backslash S_3$ to any element of $C_2 \backslash S_3$. However, the two non-identity maps are not well-defined. On the other hand, $\Hom_\Gset( A_3 \backslash S_3 , A_3 \backslash S_3 )$  contains two element as expected. It follows that $\Hom_\Gset( C_2 \backslash S_3 , C_2 \backslash S_3 ) \times \Hom_\Gset( A_3 \backslash S_3 , A_3 \backslash S_3 )$ contains two elements although $\Hom_\Gset( C_2 \backslash S_3 \times A_3 \backslash S_3 , C_2 \backslash S_3 \times A_3 \backslash S_3 )$ contains six elements. So we simply do not get enough conditions on the components of our natural transformation. All other choices of $I$ either lead to a larger set $S$ or do not contain more information than $I$. Thus, we will take a different approach in the next section.
+\end{rem}
+
+\subsection{Lifting components of natural maps}
+
+Recall the setting which we have fixed above: $\Ccal$ is a category equivalent to \Gset{} via an equivalence $Z \colon \Ccal \to \Gset$, $F\colon \Ccal \to \Set$ is a functor such that $F \cong U \circ Z$ and $X$ is an object in $\Ccal$ with $Z(X) \cong G$.
+
+Now, we present an algorithm which recursively uses information of maps $F(X') \to F(X')$ for objects $X'$ with $\abs{F(X')} < \abs{F(X)}$ to find maps $F(X) \to F(X)$ which are components of natural transformations $F \to F$. To illustrate the idea behind the algorithm, we start with an example.
+
+\begin{exmp}\label{exmp:idea_behind_lifting_maps}
+Let $\Ccal = \SkeletalGSets$, $F = U \circ R$, $X = G$ and $I = \{X\}$. We want to determine $\End(F\vert_{\tilde I})$. We know that any element $\beta \in \End(F\vert_{\tilde I})$ extends uniquely to a natural transformation $\alpha\colon F \to F$. Then for all $G$-equivariant maps $\phi_1\colon \{1\} \backslash S_3 \to A_3 \backslash S_3$ and $\phi_2\colon A_3 \backslash S_3 \to S_3 \backslash S_3$ we have the following commutative diagram:
+\[
+\begin{tikzcd}
+\{1\} \backslash S_3 \arrow[d, "\alpha_{\{1\} \backslash S_3}"] \arrow[r, "\phi_1", two heads] & A_3 \backslash S_3 \arrow[d, "\alpha_{A_3 \backslash S_3}"] \arrow[r, "\phi_2", two heads] & S_3 \backslash S_3 \arrow[d, "\alpha_{S_3 \backslash S_3}"] \\
+\{1\} \backslash S_3 \arrow[r, "\phi_1", two heads]                                            & A_3 \backslash S_3 \arrow[r, "\phi_2", two heads]                                          & S_3 \backslash S_3                                         
+\end{tikzcd}
+\]
+Since there exists only one map $S_3 \backslash S_3 \to S_3 \backslash S_3$, we know the component $\alpha_{S_3 \backslash S_3}$. The right square imposes no conditions on $\alpha_{A_3 \backslash S_3}$, so we can only use the knowledge that $\alpha_{A_3 \backslash S_3}$ is bijective. Since $\abs{A_3 \backslash S_3} = 2$, this leaves two options for $\alpha_{A_3 \backslash S_3}$: the identity on $A_3 \backslash S_3$ and the map that swaps the two elements of $A_3 \backslash S_3$. We first choose $\alpha_{A_3 \backslash S_3} = \id_{A_3 \backslash S_3}$. Then the left square imposes conditions on $\alpha_{\{1\} \backslash S_3}$: Let $x \in \{1\} \backslash S_3$. By the commutativity of the left square we must have \[\alpha_{\{1\} \backslash S_3}(x) \in \phi_1\inv(\alpha_{A_3 \backslash S_3}(\phi_1(x)))\] for any $G$-equivariant map $\phi_1\colon \{1\} \backslash S_3 \to A_3 \backslash S_3$, that is, \[\alpha_{\{1\} \backslash S_3}(x) \in \bigcap_{\phi \in \Hom_\Gset(\{1\} \backslash S_3,A_3 \backslash S_3)}\phi\inv(\alpha_{A_3 \backslash S_3}(\phi(x))).\] One can check that this gives three options for $\alpha_{\{1\} \backslash S_3}(x)$, which we call \emph{lifts} of $\alpha_{A_3 \backslash S_3}$. Since $\abs{\{1\} \backslash S_3} = 6$, this gives $3^6 = 729$ possibilities for $\alpha_{\{1\} \backslash S_3}$. If we take the bijectivity into account we can reduce this number to $36$. For the second choice of $\alpha_{A_3 \backslash S_3}$ we again get $36$ possibilities for $\alpha_{\{1\} \backslash S_3}$. Thus, we only have to check if $\rho(\alpha) = \lambda(\alpha)$ are equal for $36 + 36 = 72$ maps $\alpha$, that is, our search space has size $72$ instead of $6! = 720$.
+
+To get an idea of the size of the search space in general, in the following lemma we compute the size of a single preimage occurring in the algorithm.
+\end{exmp}
+
+\begin{lem}\label{lem:size_of_preimages}
+Let $\Omega = U \backslash G$ and $\Delta = V \backslash G$, and let $\phi\colon \Omega \to \Delta$ be a $G$-equivariant map. Then for any $\bar y \in \Delta$ it holds $\abs{\phi\inv(\bar y)} = \frac{\abs{ U \backslash G }}{\abs{ V \backslash G }}$.
+\end{lem}
+\begin{proof}
+Set $Vg \coloneqq \phi(\bar 1)$. Then we have
+\begin{align*}
+\abs{\phi\inv(y)} &= \abs{\{\bar x \in U \backslash G \colon \phi(\bar x) = \bar y\}}\\
+ &= \frac{\abs{\{x \in G \colon Vgx = Vy\}}}{\abs{U}}\\
+ &= \frac{\abs{\{x \in G \colon \exists v \in V\colon gx = vy\}}}{\abs{U}}\\
+ &= \frac{\abs{\{g\inv vy \colon v \in V\}}}{\abs{U}}\\
+ &= \frac{\abs{V}}{\abs{U}}\\
+ &= \frac{\abs{ U \backslash G }}{\abs{ V \backslash G }}.
+\end{align*}
+\end{proof}
+
+\begin{exmp}
+Let $G$ be a group of order $9$ and $U \in \ReprSet$ be a subgroup of order $3$. Let $\Ccal = \SkeletalGSets$, $F = U \circ R$, $X = G$, $I = \{X\}$ and $\alpha\colon F \to F$ by a natural transformation. Set $\Omega \coloneqq \{1\} \backslash G$ and $\Delta \coloneqq U \backslash G$. Then there exist $3^3$ maps $\Delta \to \Delta$ and thus, there are $27$ possibilities for $\alpha_\Delta \colon \Delta \to \Delta$. We know that there exists a morphism $\phi\colon \Omega \to \Delta$, for example by applying \lemref{free_object}. If we fix one possibility of $\alpha_\Delta \colon \Delta \to \Delta$, then as in \exmpref{idea_behind_lifting_maps} we get that for any $x \in \Omega$ we have $\alpha_\Omega(x) \in \phi\inv(\alpha_\Delta(\phi(x)))$. Applying \lemref{size_of_preimages} gives that $\abs{\phi\inv(\alpha_\Delta(\phi(x)))} = \frac 9 3 = 3$. Thus, we have $3^9 = 19683$ possibilities for $\alpha_\Omega$. Taking the $27$ possibilities of $\alpha_\Delta \colon \Delta \to \Delta$ into account, we get a total of $19683 \cdot 27 = 531441$ possibilities. Checking $531441$ maps is a matter of minutes, whereas checking all $9^9 = 387420489$ maps $\Omega \to \Omega$ would be a matter of hours. Note that there exist three morphisms $\Omega \to \Delta$, so by taking the intersection as in \exmpref{idea_behind_lifting_maps}, we might reduce the number of possibilities even more.
+\end{exmp}
+
+\begin{rem}\label{rem:take_pairs}
+The ideas from the examples above are still not applicable to groups of, for example, order $100$. Let $G$ be a group of order $100$ with a subgroup $U \in \ReprSet$ of order $2$. Then analogously to the last example, we get $2^{100} \approx 1.27 \cdot 10^{30}$ possible lifts of a single map $\alpha_{U \backslash G}\colon U \backslash G \to U \backslash G$. Thus, we have to restrict the possibilities \[\alpha_{\{1\} \backslash G}(x) \in \bigcap_{\phi \in \Hom_\Gset(\{1\} \backslash G,U \backslash G)}\phi\inv(\alpha_{U \backslash G}(\phi(x)))\] even more. For this, let $V \in \ReprSet$ be another subgroup of $G$. Then we have \[\alpha_{\{1\} \backslash G}(x) \in \bigcap_{\phi \in \Hom_\Gset(\{1\} \backslash G,U \backslash G)}\phi\inv(\alpha_{U \backslash G}(\phi(x))) \cap \bigcap_{\phi \in \Hom_\Gset(\{1\} \backslash G,V \backslash G)}\phi\inv(\alpha_{V \backslash G}(\phi(x))),\] that is, we do not lift single maps, but pairs of maps. Finally, this is sufficient for many groups up to order $200$. For maximal efficiency, we choose $V$ in such a way that there exists no morphism $U \backslash G \to V \backslash G$ and vice versa, since otherwise, some of the morphisms $\{1\} \backslash G \to V \backslash G$ are simply concatenations $\{1\} \backslash G \to U \backslash G \to V \backslash G$ (or vice versa) and do not add new restrictions. Summing up, this gives \algoref{LiftMaps} and \algoref{LiftEfficiently}.
+\end{rem}
+
+\begin{algorithm}\capstart
+    \caption{\texttt{LiftMaps}}\label{algo:LiftMaps}
+	\KwIn{objects $C$, $C_1$ and $C_2$ in $\Ccal$, a set $M_1$ of bijective maps $F(C_1) \to F(C_1)$ and a set $M_2$ of bijective maps $F(C_2) \to F(C_2)$}
+	\KwOut{the set $M$ of bijective maps $f \colon F(C) \to F(C)$ with the following property: there exist $f_1 \in M_1$ and $f_2 \in M_2$ such that for all $\phi \in \Hom_\Ccal(C,C_1)$ we have $F(\phi) \circ f = f_1 \circ F(\phi)$ and  for all $\phi \in \Hom_\Ccal(C,C_2)$ we have $F(\phi) \circ f = f_2 \circ F(\phi)$}
+	\BlankLine
+	let $M$ be the empty set\;
+	\ForAll{$f_1 \in M_1$}{
+	    \ForAll{$f_2 \in M_2$}{
+	        \ForAll{$x \in F(C)$}{
+	            set $P_{x,1} \coloneqq \bigcap_{\phi \in \Hom_\Ccal(C,C_1)} (F(\phi))\inv(f_1(F(\phi)(x)))$\;
+	            set $P_{x,2} \coloneqq \bigcap_{\phi \in \Hom_\Ccal(C,C_2)} (F(\phi))\inv(f_2(F(\phi)(x)))$\;
+	            set $P_x \coloneqq P_{x,1} \cap P_{x,2}$\;
+	        }
+	        let $M'$ be the set of bijective maps $f\colon F(C) \to F(C)$ with $f(x) \in P_x$ for all $x \in F(C)$\;
+	        
+	        set $M \coloneqq M \cup M'$\;
+	    }
+	}
+	
+	\Return $M$\;
+\end{algorithm}
+
+\begin{algorithm}\capstart
+    \caption{\texttt{LiftEfficiently}}\label{algo:LiftEfficiently}
+	\KwIn{objects $C_t$ in $\Ccal$ for $t \in \{1,\dots,s\}$ such that $C_1 = X$, $\abs{F(C_s))} = 1$ and $\abs{F(C_{t_1})} \geq \abs{F(C_{t_2})}$ if $t_1 \leq t_2$ and a fixed object $C = C_{t'}$}
+	\KwOut{a set $M_C$ of maps $F(C) \to F(C)$ such that for any natural transformation $\alpha\colon F \to F$ we have $\alpha_C \in M_C$}
+	\BlankLine
+	\If{$t' = s$}{
+	    \Return the set $\{\id_{F(C)}\}$\;
+	}
+	\BlankLine
+	set $t_1 := \min\{t \mid t > t'\text{ and }\Hom_\Ccal(C,C_t) \neq \varnothing\}$\;
+	set $t_2 := \min(\{t \mid t > t_1\text{ and }\Hom_\Ccal(C,C_t) \neq \varnothing\text{ and } \Hom_\Ccal(C_{t_1},C_t) = \varnothing\} \cup \{s\})$\;
+	\BlankLine
+	let $M_1$ be the result of this algorithm applied to the input $C_t$ for $t \in \{1,\dots,s\}$ and $C = C_{t_1}$\;
+	let $M_2$ be the result of this algorithm applied to the input $C_t$ for $t \in \{1,\dots,s\}$ and $C = C_{t_2}$\;
+	\BlankLine
+	let $M$ be the result of the algorithm \texttt{LiftMaps} applied to the input $C$, $C_1 = C_{t_1}$, $M_1$, $C_2 = C_{t_2}$ and $M_2$\;
+	remove all elements $f \in M$ from $M$ which do not fulfill the following property: for all $\phi \in \Hom_\Ccal(C,C)$ it holds $f \circ F(\phi) = F(\phi) \circ f$ \label{line:compatibility}\;
+	\BlankLine
+	\Return $M$\;
+\end{algorithm}
+
+\begin{prop}\label{prop:LiftMaps_correct}
+\Algoref{LiftMaps} terminates and yields the correct result.
+\end{prop}
+\begin{proof}
+Since for all objects $C$ in $\Ccal$ we have that $F(C) \cong U(Z(C))$ is a finite set, all loops loop over finite sets and the algorithm terminates. Let $f \colon F(C) \to F(C)$ be a bijective map such that there exist $f_1 \in M_1$ and $f_2 \in M_2$ such that for all $\phi \in \Hom_\Ccal(C,C_1)$ we have $F(\phi) \circ f = f_1 \circ F(\phi)$ and for all $\phi \in \Hom_\Ccal(C,C_2)$ we have $F(\phi) \circ f = f_2 \circ F(\phi)$. Then for all $x \in F(C)$, for all $\phi_1 \in \Hom_\Ccal(C,C_1)$ and for all $\phi_2 \in \Hom_\Ccal(C,C_2)$ we have $f(x) \in (F(\phi_1))\inv(f_1(F(\phi_1)(x)))$ and $f(x) \in (F(\phi_2))\inv(f_2(F(\phi_2)(x)))$, that is, $f(x) \in P_x$ in the iteration $f_1 \in M_1$ and $f_2 \in M_2$ and $f$ gets constructed in this iteration. Conversely, let $f$ be constructed in the iteration $f_1 \in M$ and $f_2 \in M$. Then for all $\phi \in \Hom_\Ccal(C,C_1)$ we have $F(\phi) \circ f = f_1 \circ F(\phi)$ and for all $\phi \in \Hom_\Ccal(C,C_2)$ we have $F(\phi) \circ f = f_2 \circ F(\phi)$ by construction.
+\end{proof}
+
+\begin{prop}
+\Algoref{LiftEfficiently} terminates and yields the correct result. Additionally, the set $M_{C_1}$ contains exactly the maps $C \to C$ which are components of elements in $\End{F\vert_{\tilde I}}$ for $I = \{X\}$.
+\end{prop}
+\begin{proof}
+We show that the algorithm terminates and yields the correct result by induction on $t'$:
+
+For $t' = s$ we have $\abs{F(C)} = 1$. Thus, the only map $F(C) \to F(C)$ is the identity and any natural transformation $\alpha\colon F \to F$ has to fulfill $\alpha_C = \id_{F(C)}$. We return $\{\id_{F(C)}\}$ and the algorithm terminates.
+
+Now let $t' < s$ and assume that the algorithm terminates and yields the correct result for all $t \in \{t' + 1,\dots,s\}$. We have $\abs{U(Z(C_s))} = \abs{F(C_s)} = 1$. Thus, $Z(C_s)$ has to be the trivial $G$-set and the unique map $U(A(C)) \to U(A(C_s))$ is $G$-equivariant, that is, there exists a morphism $A(C) \to A(C_s)$. Since $A$ is fully faithful, there also exists a morphism $C \to C_s$. Therefore, the set $\{C_t \mid t > t'\text{ and }\Hom_\Ccal(C,C_t) \neq \varnothing\}$ is non-empty and we find $t_1 \in \{t'+1,\dots,s\}$. Trivially, we find $t_2 \in \{t_1+1,\dots,s\} \subseteq \{t'+1,\dots,s\}$. By induction assumption and \propref{LiftMaps_correct}, all other computations in the algorithm terminate. Let $\alpha\colon F \to F$ be a natural transformation. By induction assumption, we have $\alpha_{C_{t_1}} \in M_1$ and $\alpha_{C_{t_2}} \in M_2$. Thus, $\alpha_C$ fulfills the specification of the output of \algoref{LiftMaps} by choosing $f_1 = \alpha_{C_{t_1}}$ and $f_2 = \alpha_{C_{t_2}}$. Therefore, we have $\alpha_C \in M$. Additionally, $\alpha_C$ fulfills the condition in line \ref{line:compatibility} and thus is not removed from $M$.
+
+It remains to show the additional claim. By \propref{reduce_to_finite_I}, the components of elements in $\End{F\vert_{\tilde I}}$ are exactly the components $\alpha_X$ of the natural transformations $\alpha\colon F \to F$ and thus elements of $M_{C_1}$ by the specification of the output of the algorithm. Conversely, any element of the output of the algorithm for $t' = 1$ is a component of an element of $\End{F\vert_{\tilde I}}$ by line \ref{line:compatibility}. This finishes the proof.
+\end{proof}
+
+\begin{rem}[Implementation]\label{rem:EndByLifts}
+The implementation is given in \texttt{EndByLifts}. The functions \texttt{PermutationsListKWithRestrictions} and \texttt{PermutationsListWithRestrictions} are adapted from the \GAP{} functions \texttt{PermutationsListK} and \texttt{PermutationsList}: they compute all permutations of a given set (this corresponds to \emph{bijective} maps in \algoref{LiftMaps}) with additional restrictions on the elements at a given position (this corresponds to the condition $f(x) \in P_x$ in \algoref{LiftMaps}). The functions \texttt{LiftMaps} and \texttt{LiftEfficiently} are the implementations of \algoref{LiftMaps} and \algoref{LiftEfficiently} respectively with some obvious performance optimizations. The main function simply calls \texttt{LiftEfficiently} and wraps each element of the result in a tuple to get $\End_{\tilde I}(F)$ for $I \coloneqq \{X\}$.
+\end{rem}
+
+\begin{rem}
+Taking preimages and defining maps elementwise only works in $\Set$ respectively in categories in which the morphisms are basically maps of sets. Thus, it might be difficult to generalize the algorithm to different underlying categories $V$. Nevertheless, the basic idea of the algorithm, that is, lifting the components of a natural transformation from ``smaller'' to ``larger'' objects, might also be applicable in more general categories.
+\end{rem}
+
+\begin{rem}
+As we have indicated above, lifting maps is feasible for many groups up to order $200$. However, there are two main criteria which exclude some groups:
+
+If a group has a prime divisor greater or equal to $11$, at some point of the algorithm we have to lift maps $F(\Delta) \to F(\Delta)$ to maps $F(\Omega) \to F(\Omega)$ with $\frac{F(\Omega)}{F(\Delta)} \geq 11$. By \lemref{size_of_preimages}, we possibly get more than $11^{11} = 285311670611$ lifts for a single map $\Delta \to \Delta$. This is not feasible.
+
+If a group is too ``well-structured'', for example, if it is cyclic, then lifting pairs might not give more conditions than lifting single maps. We have already seen in \remref{take_pairs} that lifting single maps is not feasible in many cases.
+\end{rem}
+
+\begin{rem}
+Another idea would be to lift components of a natural transformation $F \to F$ using products. For example, choose $G = S_3$, $\Ccal = \SkeletalGSets$ and $F = U \circ R$, and let $\alpha\colon F \to F$ be a natural transformation. One can check that $A(U_2 \backslash S_3) \times A(U_3 \backslash S_3) = A(\{1\} \backslash S_3)$. Thus, we would like to reconstruct the component $\alpha_{A(\{1\} \backslash S_3)}$ using the components $\alpha_{A(U_2 \backslash S_3)}$ and $\alpha_{A(U_3 \backslash S_3)}$. At first glance this seems easy because in a category with products, the following diagram lifts a morphism $f_{C_1}\colon C_1 \to C_1$ and a morphism $f_{C_2} \colon C_2 \to C_2$ to a unique morphism $f_{C_1} \times f_{C_2}\colon C_1 \times C_2 \to C_1 \times C_2$ by using the universal property of the product:
+\[
+\begin{tikzcd}
+C_1 \arrow[dd, "f_{C_1}"'] & C_1 \times C_2 \arrow[dd, "\exists_1 f_{C_1} \times f_{C_2}" description, dotted] \arrow[l, "\pi_{C_1}"'] \arrow[r, "\pi_{C_2}"] & C_2 \arrow[dd, "f_{C_2}"] \\
+                           &                                                                                                                                  &                           \\
+C_1                        & C_1 \times C_2 \arrow[r, "\pi_{C_2}"] \arrow[l, "\pi_{C_1}"']                                                                    & C_2                      
+\end{tikzcd}
+\]
+In our example, one is tempted to choose $C_1 = A(U_2 \backslash S_3)$, $C_2 = A(U_3 \backslash S_3)$, $f_{C_1} = \alpha_{A(U_2 \backslash S_3)}$ and $f_{C_2} = \alpha_{A(U_3 \backslash S_3)}$. Then choosing $\alpha_{C_1 \times C_2}$ for the dashed arrow makes the diagram commute by definition of a natural transformation and because of the uniqueness of the dashed arrow we would conclude $\alpha_{C_1 \times C_2} = f_{C_1} \times f_{C_2}$. However, we have to be more careful since the projections and the components of $\alpha$ are morphisms in different categories. So we try to make this precise:
+\[
+\begin{tikzcd}
+F(C_1) \arrow[dd, "f_{C_1}"'] & F(C_1 \times C_2) \arrow[dd, "\exists_1"', dotted] \arrow[l, "F(\pi_{C_1})"'] \arrow[r, "F(\pi_{C_2})"] & F(C_2) \arrow[dd, "f_{C_2}"] \\
+                        &                                                                                            &                        \\
+F(C_1)                    & F(C_1) \times F(C_2) \arrow[r, "\pi_{F(C_2)}"] \arrow[l, "\pi_{F(C_1)}"']                          & F(C_2)                   \\
+                        & F(C_1 \times C_2) \arrow[ru, "F(\pi_{C_2})"'] \arrow[lu, "F(\pi_{C_1})"]                               &                       
+\end{tikzcd}
+\]
+Now we see that the we have to apply the universal property of the product $F(C_1) \times F(C_2)$ with regard to projections $\pi_{F(C_1)}$ and $\pi_{F(C_2)}$ in \Set{}, whereas the statement that the diagram commutes was about $F(C_1 \times C_2)$ with regard to $F(\pi_{C_1})$ and $F(\pi_{C_2})$. Thus, for the initial claim we need $\pi_{F(C_1)} = F(\pi_{C_1})$ and $\pi_{F(C_2)} = F(\pi_{C_2})$. However, this is impossible to achieve with our implementation of $\SkeletalFinSets$ and $\FinSets$: the projections $C_1 \times C_2 \to C_1$ and $C_2 \times C_1 \to C_1$ are equal, but the projections $F(C_1) \times F(C_2) \to F(C_1)$ and $F(C_2) \times F(C_1) \to F(C_1)$ are different. This is a general problem of skeletal categories: by taking isomorphism classes we lose information about the concrete representation of $C_1 \times C_2$ as a product.
+\end{rem}
+
+\subsection{Reconstructing the table of marks}
+
+Recall the setting which we have fixed above: $\Ccal$ is a category equivalent to \Gset{} via an equivalence $Z \colon \Ccal \to \Gset$, $F\colon \Ccal \to \Set$ is a functor such that $F \cong U \circ Z$ and $X$ is an object in $\Ccal$ with $Z(X) \cong G$.
+
+A completely different approach to reconstructing the group $G$ is to reconstruct its table of marks $T$. We can do this even if we do not know the hom-sets. If we know that there exists only one group up to isomorphism with table of marks $T$, then we have determined $G$ up to isomorphism. However, there are non-isomorphic groups with isomorphic table of marks. For example, the \GAP{} groups \texttt{SmallGroup(96,108)} and \texttt{SmallGroup(96,114)} have isomorphic table of marks.
+
+\begin{rem}[Idea]\label{rem:information_of_marks_in_products}
+The information about the table of marks is encoded in the direct products of \SkeletalGSets{}: Let $s,t \in \Ical$ and $A(U_s \backslash G) \times A(U_t \backslash G) = [m_1,\dots,m_k]$. Then by \remref{properties_of_marks} we have the equation $\beta_{U_s}(j) \cdot \beta_{U_t}(j) = \beta_{U_s \backslash G \times U_t \backslash G}(j) = \sum_{i \in \Ical} m_i \beta_{U_i}(j)$ for all $j \in \Ical$. If we also take into account that the table of marks is a lower triangular matrix with non-zero diagonal entries, taking all such equations is often sufficient to reconstruct the table of marks.
+\end{rem}
+
+\begin{rem}[Generalization to $\Ccal$]
+Since $Z$ is an equivalence of categories and thus commutes with taking products and coproducts, we can generalize the idea in \remref{information_of_marks_in_products} from $\SkeletalGSets$ to $\Ccal$: Let $L$ be a minimal set of generators of $\Ccal$ with regard to finite coproducts, that is, any object in $\Ccal$ is isomorphic to a coproduct of elements in $L$ and this decomposition into cofactors is unique up to permutation. Since $Z$ and $A$ are equivalences, the set $L' \coloneqq \{A(Z(C)) \mid C \in L\}$ has the same properties in $\SkeletalGSets$. Then $L'$ must contain the objects $A(U \backslash G)$ with $U \in \ReprSet$ because these objects cannot be decomposed into proper cofactors. Conversely, the set $\{A(U \backslash G) \mid U \in \ReprSet\}$ already generates $\SkeletalGSets$ with regard to coproducts. Thus, by minimality of $L'$ we get $L' = \{A(U \backslash G) \mid U \in \ReprSet\}$. Therefore, we can apply the idea of \remref{information_of_marks_in_products} to get equations for the entries of the table of marks by taking products of elements of $L$ and writing the result as a coproduct of elements of $L$ up to isomorphism.
+
+One problem remains: the table of marks is a lower triangular matrix because $\abs{U_i} \leq \abs{U_j}$ if $i < j$. However, the elements of $L$ (and thus the elements of $L'$) might be ordered differently or not at all. The condition $\abs{U_i} \leq \abs{U_j}$ is equivalent to $\abs{G \backslash U_i} \geq \abs{G \backslash U_j}$. Thus, we want to sort the elements $C_t$ of $L$ in descending order with regard to $\abs{F(C_t)}$. Actually, we can even do this without knowing the functor $F$:
+
+All orbits in $\{1\} \backslash G \times \{1\} \backslash G$ have length $\abs{G}$. Thus, the transitive cofactors of $\{1\} \backslash G \times \{1\} \backslash G$ have to be isomorphic to $\{1\} \backslash G$, that is, we have $A(\{1\} \backslash G) \times A(\{1\} \backslash G) = m_{\{1\} \backslash G} A(\{1\} \backslash G)$. For any object $\Omega$ in $L'$ with $\Omega \times \Omega = m_{\Omega} \Omega$ we have $m_{\Omega} = \abs{U(R(\Omega))}$ by considering the sizes of the underlying sets. In particular, $m_{\{1\} \backslash G} = \abs{G}$. Since $\abs{U(R(\Omega))} \leq \abs{G}$ for all $\Omega$ in $L'$, we can find $A(\{1\} \backslash G)$ among the objects $\Omega$ in $L'$ with $\Omega \times \Omega = m_{\Omega} \Omega$ as the one with the largest multiplicity $m_\Omega$.
+
+If we know the object $A(\{1\} \backslash G)$, we can use that for any object $\Omega$ in $\SkeletalGSets$ all orbits in the product $\{1\} \backslash G \times R(\Omega)$ have length $\abs{G}$. Thus, for any $\Omega$ in $L'$ we get the equation $A(\{1\} \backslash G) \times \Omega = n_\Omega A(\{1\} \backslash G)$ with $n_\Omega = \abs{U(R(\Omega))}$ by the same reasoning as above.
+
+Again, because $Z$ is an equivalence and because $F \cong U \circ Z$ we can apply the same algorithm to $L$ and get the values $\abs{F(C_t)}$ for all elements $C_t$ of $L'$.
+\end{rem}
+
+\begin{rem}[Implementation]\label{rem:ReconstructTableOfMarks}
+A sample implementation of the algorithm described above is given in \texttt{ReconstructTableOfMarks}. The arguments are the category $\Ccal$, the minimal generating set $L$ and a function which decomposes any object in $\Ccal$ into a coproduct with cofactors in $L$. The function may return an error if it cannot find unique solutions to the equations. If it finishes without error, all equations have been solved uniquely and thus the resulting matrix $T$ must be the table of marks of $G$ up to a permutation of rows $i$ and $j$ with $\abs{U_i} = \abs{U_j}$ and their corresponding columns. In particular, the group order is just the entry $(1,1)$ and we can check for all groups up to isomorphism of this order if its table of marks is $T$ up to a permutation of rows and columns. If there is only one such group up to isomorphism, we have successfully reconstructed $G$ up to isomorphism.
+\end{rem}

@@ -1,0 +1,11 @@
+Was muss / kann da rein?
+
+Einleitung
+
+Beschreibung der Algorithmen
+
+Definition der Begriffe im Algorithmus
+
+Diskussion
+
+Was habe ich gemacht? Die gap-Funktionen von Peter Webb umgeschrieben in CAP. Das war die Aufgabe.

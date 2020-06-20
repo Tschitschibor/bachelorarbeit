@@ -1,0 +1,40 @@
+% mainfile: ../main.tex
+
+\section{Relations of the Algebroid}
+
+\subsection{Relations of endomorphisms}
+
+% A forest on a cycle
+\begin{tikzpicture}[x=0.5cm,y=0.5cm]
+\tikzstyle{cblack}=[circle, fill=black, scale=0.5]
+
+%Nodes
+\foreach \place/\x in {{(0,0)/0}, {(-4.5,0)/1}, {(-7,-3)/2}, {(-4.5,-6)/3},
+  {(0,-6)/4}, {(2.5,-3)/5},
+  {(-4.5,3)/6}, {(-7.5,6)/7}, {(-4.5,6)/8},
+  {(0,3)/9}, {(0,6)/10}, {(0,9)/11},
+  {(3,3)/12}, {(3,6)/13}, {(3,9)/14},
+  {(7.5,6)/15}, {(7.5,9)/16}, {(7.5,12)/17}, {(10.5,9)/18}}
+\node[cblack] (a\x) at \place {};
+
+%Arrows
+\foreach \i in {0,1,2,3,4,5}
+{
+  \pgfmathtruncatemacro\result{Mod(\i+1,6)}%
+  \draw[->] (a\i) -> (a\result);
+}
+\path[->] (a7) edge (a6); 
+\path[->] (a8) edge (a6) edge (a1);
+\path[->] (a11) edge (a10) edge (a9) edge (a0);
+\path[->] (a14) edge (a13) edge (a12); 
+\path[->] (a12) edge (a0);
+\path[->] (a18) edge (a15) (a15) edge (a12);
+\path[->] (a17) edge (a16) edge (a15);
+%\path[->] (a\x) edge (a\y);
+
+\end{tikzpicture}
+%\cite{facchini_2019}
+\begin{lemma}[$\sigma$-Lemma]
+For each endomorphism $f$ in a finite concrete category $\mathcal{C}$ there exist $m,n\in\mathbb{N}$
+such that $f^{(m+n)}=f^{m}$.
+\end{lemma}

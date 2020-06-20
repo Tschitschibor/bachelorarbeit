@@ -1,0 +1,22 @@
+s : M x G -> M, projection onto the first component M,
+t : M x G -> M, action map.
+
+Each group action defines a groupoid with source and target maps as above.
+
+Now we consider the action of S_3 on the cosets of A_3 and get the groupoid:
+
+s : {A_3, A_3 (1,2)} x S_3 -> {A_3, A_3 (1,2)},
+t : {A_3, A_3 (1,2)} x S_3 -> {A_3, A_3 (1,2)}.
+
+{A_3, A_3 (1,2)} x <g=(1,2,3),h=(1,2)> -> {A_3, (12) A_3}
+
+M = {A_3, A_3 (1,2)}
+1 = A_3
+2 = A_3 (1,2)
+G = S_3 = <g,h>
+a = (1,g): 1 -> 1
+b = (1,h): 1 -> 2
+b'= (2,h): 2 -> 1
+c = (2,g): 2 -> 2
+
+Our category is a proper subcategory of this groupoid.

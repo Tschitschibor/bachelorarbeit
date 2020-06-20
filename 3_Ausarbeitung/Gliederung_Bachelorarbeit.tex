@@ -1,0 +1,374 @@
+\documentclass{article}
+
+\usepackage[a4paper,%
+            left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,%
+            footskip=.6cm]{geometry}
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
+
+
+%%% For Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsbsy}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\usepackage{mathtools}
+\usepackage{commath}
+\usepackage[sc,osf]{mathpazo}
+\usepackage{mnsymbol}
+
+%%% For calculations inside tikz and latex
+\usepackage{calc}
+
+\newcounter{modresult}
+
+\newcommand*{\themodulo}[2]{%
+\setcounter{modresult}{%
+#1-(#1/#2)*#2%
+}%
+#1 mod #2 = \themodresult\par
+}
+
+%%% For algorithm styles
+\usepackage[linesnumbered,ruled]{algorithm2e}
+
+
+%%% Math theorem styles
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}[thm]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{example}[thm]{Example}
+
+%%% Math operators bold
+%\newcommand{\Category}{Category}
+
+%%% For arrows and categories
+\usepackage[all]{xy}
+\usepackage{tikz-cd}
+
+%%% For matrices
+\let\ampersand =&
+
+%%% tikz
+\usetikzlibrary{positioning}
+
+%%% For dotted box around diagrams
+\tikzcdset{
+    boxedcd/.style={
+        every matrix/.append style={
+            draw=black,
+            dotted,
+            rounded corners,
+            #1
+        },
+    },
+}
+
+%%% For some big dots
+\makeatletter
+\newcommand*{\bigcdot}{}% Check if undefined
+\DeclareRobustCommand*{\bigcdot}{%
+  \mathbin{\mathpalette\bigcdot@{}}%
+}
+\newcommand*{\bigcdot@scalefactor}{.5}
+\newcommand*{\bigcdot@widthfactor}{1.15}
+\newcommand*{\bigcdot@}[2]{%
+  % #1: math style
+  % #2: unused
+  \sbox0{$#1\vcenter{}$}% math axis
+  \sbox2{$#1\cdot\m@th$}%
+  \hbox to \bigcdot@widthfactor\wd2{%
+    \hfil
+    \raise\ht0\hbox{%
+      \scalebox{\bigcdot@scalefactor}{%
+        \lower\ht0\hbox{$#1\bullet\m@th$}%
+      }%
+    }%
+    \hfil
+  }%
+}
+\makeatother
+
+%%% For horizontal times
+
+
+%%% For proper underline
+\usepackage{soul}
+%\setuldepth{gjpqy}
+%\setuldepth\strut
+\setuldepth{-1}
+
+\usepackage{pgffor}
+
+%%% For source code listings
+\usepackage{listings}
+\def \pkgpath {C:/Users/Tibor/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/user/.gap/pkg}
+%%% For footnotes at end of text
+\usepackage{endnotes}
+\let\footnote=\endnote
+
+%%% For captions
+\usepackage{hyperref}
+\usepackage[figure]{hypcap}
+
+\title{Bachelorarbeit Representations of Concrete Categories as Objects in the Functor Category}
+
+\author{Tibor Gr{\"u}n}
+
+\begin{document}
+	\pagenumbering{gobble}
+
+	\maketitle
+
+	\newpage
+
+	\tableofcontents
+
+	\newpage
+
+	\pagenumbering{arabic}
+
+%\input{tex/en/01_introduction.tex}
+\input{tex/de/01_introduction.tex}
+
+\[
+\mathbf{Quiv}\rightarrow^{CatClosure}\leftarrow_{U}\mathbf{Cats}
+\rightarrow^{k-Algebroid}\leftarrow_{U}\mathbf{k-Cats}
+\rightarrow^{AdditiveClosure}\leftarrow_{U}\mathbf{k-Cats^{\oplus}}
+\]
+
+\input{tex/en/02_Quiver_Path-Algebra_Algebroid.tex}
+%\input{tex/de/02_Quiver_Path-Algebra_Algebroid.tex}
+
+
+Quiver = unvollständige Struktur einer Kategorie
+Erzeugendensystem einer Kategorie.
+
+K-linearer Abschluss einer Kategorie
+
+Pfadalgebra = Kategorien-Algebra
+
+So wie Menge ein Erz-system eines Monoid.
+
+\input{tex/en/03_Relations_of_the_Algebroid.tex}
+%\input{tex/de/03_Relations_of_the_Algebroid.tex}
+
+
+
+\section{Category}
+
+\begin{definition}{(Quiver)}\\
+A \ul{quiver} $A$ consists of a class of  \ul{objects} (or vertices) $A_{0} = \textup{Obj} A$ and 
+a class of \ul{morphisms} (or arrows) $A_{1} = \textup{Mor} A$ together with two defining maps
+\[
+\begin{tikzcd}[column sep=small]
+{s,t\colon A_{1}} \arrow[rr, shift left = 0.7ex] \arrow[rr, shift right = 0.7ex] & & A_{0}
+\end{tikzcd}
+\]
+$s$ called \ul{source} and $t$ called \ul{target}.\footnote{Some authors use maps $t, h$ for $tail$ and $head$ instead of source and target, defining the arrows to go from the tail to the head. This use of $t$ as the starting point instead of the end target as in our definition can lead to some confusion.}\\
+\noindent We write $\textup{Hom}_A (M,N)$ (sometimes also $A(M,N)$) for the fiber $(s,t)^{-1} (\{(M,N)\})$ of the product
+map $(s,t) : A_{1} \rightarrow A_{0} \times A_{0}$ over the pair $(M,N) \in A_{0} \times A_{0}$.\\
+This is the class of all morphisms with source $= M$ and target $= N$.\\
+For a morphism $\varphi \in \textup{Hom}_{A}(M,N)$ we write
+\[
+\begin{tikzcd}[column sep=small]
+\varphi : M \arrow[rr] & & N
+\end{tikzcd}
+or
+\begin{tikzcd}[column sep=small]
+M \arrow[rr, "\varphi"] & & N
+\end{tikzcd}
+\]
+Clearly $A_{1}$ is the disjoint union $\bigcup\limits^{\bigcdot}_{M,N \in A_{0}} \textup{Hom}_{A}(M,N) = A_{1}$. As usual we define 
+$\textup{End}_{A}(M):= \textup{Hom}_{A}(M,M)$.
+\end{definition}
+
+
+
+\begin{definition}{(Category)}\\
+A \ul{category} $\mathfrak{A}$ is a quiver with two further defining maps
+\[
+\begin{tikzcd}[column sep=small]
+A_{0} \arrow[rr,"1"] &  & A_{1} &  & A_{1} \times_{s,A_{0},t} A_{1} \arrow[ll,"\mu"]
+\end{tikzcd}
+\]
+\end{definition}
+
+\begin{example}\label{representation}{(Representation of a concrete category)}\\
+\begin{center}
+\begin{tikzcd}[boxedcd={inner sep=1pt}]
+                                                                                           &  &  &  & \\
+                                                                                              &  &                                                                       \\
+                                                                                              &  &                                                                       \\
+                                                                                              &  &                                                                       \\
+&  & 5 \arrow[rr, "{\begin{pmatrix} 
+0\ampersand1\ampersand0\ampersand0\\
+0\ampersand0\ampersand1\ampersand0\\
+0\ampersand0\ampersand0\ampersand0\\
+0\ampersand1\ampersand0\ampersand1\\
+0\ampersand0\ampersand1\ampersand0
+\end{pmatrix}}"]
+\arrow["{\begin{pmatrix} 
+1\ampersand 1\ampersand 0\ampersand 0\ampersand 0\\
+0\ampersand 1\ampersand 1\ampersand 0\ampersand 0\\
+0\ampersand 0\ampersand 1\ampersand 0\ampersand 0\\
+0\ampersand 0\ampersand 0\ampersand 1\ampersand 1\\
+0\ampersand 0\ampersand 0\ampersand 0\ampersand 1 
+\end{pmatrix}}"', loop, distance=2em, in=305, out=235]             &  & 
+4 \arrow["{\begin{pmatrix}
+1\ampersand1\ampersand0\ampersand0\\
+0\ampersand1\ampersand1\ampersand0\\
+0\ampersand0\ampersand1\ampersand0\\
+0\ampersand0\ampersand0\ampersand1
+\end{pmatrix}}"', loop, distance=2em, in=305, out=235]  &  &         \\
+                                                                                              &  &                                                                       \\
+                                                                                              &  &                                                                       \\
+                                                                                              &  &                                                                       \\   
+                                                                                              &  &                                                                       \\   
+\end{tikzcd}
+\end{center}
+\begin{center}
+\begin{tikzcd}
+                                                                                              & {} &                                                                       \\
+                                                                                              & {} &                                                                       \\
+                                                                                              & {} \arrow["nine",u, Rightarrow] &                                                                       \\
+\end{tikzcd}
+\end{center}
+\begin{center}
+\begin{tikzcd}[boxedcd={inner sep=1pt}]
+                                                                                              &  &                                                                       \\
+&  1 \arrow["a"', loop, distance=2em, in=305, out=235] \arrow[rr, "b"] \arrow[rr] \arrow[rr]     &  & 
+2 \arrow["c"', loop, distance=2em, in=305, out=235]  &                   \\
+                                                                                              &  &                                                                       \\
+\end{tikzcd}
+\end{center}
+\begin{center}
+\begin{tikzcd}[boxedcd={inner sep=1pt}]
+                                                                                              &  &                                                                       \\
+&  {\{1,2,3\}} \arrow["{(2,1,3)}"', loop, distance=2em, in=305, out=235] 
+\arrow[rr, "{(4,5,6)}"] &  & 
+{\{4,5,6\}} \arrow["{(5,6,4)}"', loop, distance=2em, in=305, out=235]  & \\
+                                                                                              &  &                                                                       \\
+\end{tikzcd}
+\end{center}
+
+\[
+F(a) \eta_{1} = \eta_{1} G(a)\\
+F(b) \eta_{2} = \eta_{1} G(b)
+\]
+\end{example}
+
+\section{$\mathbb{K}$-linear Category (Algebroid)}
+
+Group: Category with one object.
+
+Groupoid: A small category in which every morphism is an isomorphism.
+
+Algebroid
+
+EmbeddingOfSumOfImages
+
+What is an Algebroid? Bialgebroid?
+
+\section{Additive Category}
+
+
+
+\section{Abelian Category}
+
+\section{The Category of Categories}
+
+\section{The Categories of Functors}
+
+\section{The Representation of a Category}
+
+\section{Representation}
+
+Grundidee von FunctorCategory
+
+Standard-Monoidale Struktur von der Zielkategorie z.B. TensorUnit(C)
+
+\section{Algorithms}
+\lstinputlisting[numbers=left,firstnumber=60,firstline=60,lastline=142]{\pkgpath/catreps/gap/CatRepsWithCAP.gi}
+
+\begin{algorithm}\capstart
+    \caption{\texttt{RightQuiverFromConcreteCategory}}\label{algo:RightQuiverFromConcreteCategory}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~a finite concrete category $C$ with $n$ objects}
+	\Output{~the right quiver $q(n)$}
+	\BlankLine
+	let $Obj$ be the set of objects of $C$\;
+	let $n := Length(Obj)$\;
+	let $gMor$ be the set of generating morphisms of $C$\;
+	let $A$ be the empty set and let $i := 1$\;
+	\ForEach{morphism $mor$ in $gMor$}{
+	    let $A_{i,1}$ be the position of $Source( mor )$ in $Obj$\;
+	    let $A_{i,2}$ be the position of $Range( mor )$ in $Obj$\;
+	    let $i := i+1$\;
+	}
+	\BlankLine
+	let $q$ be the right quiver with vertices $\{1,\dots,n\}$ and arrows $A$.
+	\BlankLine
+	\Return q\;
+\end{algorithm}
+
+We want the endomorphism relations so that the path algebra is finite-dimensional and we
+get a finite Gröbner basis.
+
+\begin{algorithm}\capstart
+    \caption{\texttt{RelationsOfEndomorphisms}}\label{algo:RelationsOfEndomorphisms}
+	\SetKwInput{Input}{~Input}
+	\SetKwInput{Output}{~Output}
+	\Input{~a commutative ring $k$ and a finite concrete category $C$}
+	\Output{~the endomorphism relations of the category $C$}
+	\BlankLine
+	let $q := \texttt{RightQuiverFromConcreteCategory}(C)$\;
+	let $kq$ be the path algebra generated by $k$ and $q$\;
+	let $gMor$ be the set of generating morphisms of $C$\;
+	let $A := Arrows(q)$\;
+	let $relsEndo$ be the empty set\;
+	\ForEach{$i = 1, \dots, Length(gMor)$}{
+	    let $mor := gMor_i$
+	    \If{$mor$ is not an endomorphism}{
+		continue\;
+	    }
+	    let $m := 0$ and let $powers$ be the empty set\;
+	    let $foundEqual$ be false\;
+	    \While{$mor^{m}\nin powers$}{
+		let $n := 1$\;
+		\While{$\neg foundEqual$}{
+		    \If{$mor^{(m+n)} = mor^{m}$}{
+		    	Add the relation $kq.(A_{i})^{(m+n)}-kq.(A_{i})^{m}$ to relsEndo\;
+		    	foundEqual := true\;
+		    }
+		    n := n+1\;
+		}
+		Add $mor^{m}$ to powers\;
+		m := m+1\;
+	    }
+	}
+	\Return{relsEndo}\;
+\end{algorithm}
+
+Proof that algorithm is correct
+Proof that it terminates.
+
+Wir haben BasisOfExternalHom benutzt um Decompose in CAP umzusetzen um EmbeddingOfSubRepresentation umzusetzen um
+WeakDirectSumDecomposition umzusetzen.
+
+\begingroup
+     \parindent 0pt
+     \parskip 2ex
+     \def\enotesize{\normalsize}
+     \theendnotes
+\endgroup 
+
+\input{bib/sources.bib}
+
+\end{document}

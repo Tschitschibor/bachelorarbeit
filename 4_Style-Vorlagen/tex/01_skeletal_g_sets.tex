@@ -1,0 +1,839 @@
+% mainfile: ../main.tex
+
+\section{The categories \Gset{} and \SkeletalGSets{}}
+
+In this section, we first want to define the category $\Gset$ and prove the existence of some category-theoretic constructions which we will need later. Afterwards, we define the category $\SkeletalGSets$ in a way which mirrors the data structures of our implementation in \CapPkg{}. Thus, from an abstract point of view, the definitions might seem unusual. However, we will make use of these data structures to give explicit algorithms for some category-theoretic constructions in \SkeletalGSets{}. In particular, we are interested in algorithms for finite equalizers and coequalizers because in conjunction with the algorithms for finite products and coproducts, which are explained in \cite{Julia}, all finite limits and colimits are algorithmically accessible. Important notions which we need as a preparation for equalizers and coequalizers are sub-$G$-sets, mono- and epimorphisms, images and preimages, and lifts and colifts along mono- and epimorphisms respectively.
+
+\subsection{The category \Gset{}}
+
+Throughout the whole chapter let $G$ be a finite group, $k$ the number of conjugacy classes of subgroups of $G$, $\Ical \coloneqq \{1,\dots,k\}$ and $\ReprSet = \{U_i \mid i \in \Ical\}$ a set of representatives of the conjugacy classes of subgroups of $G$ with $U_1 = \{1\}$, $U_k = G$ and $\abs{U_i} \leq \abs{U_j}$ if $i < j$. If $G$ is a group named \texttt{group} in \GAP{} then we fix $\ReprSet$ by setting \[U_i \coloneqq \texttt{RepresentativeTom( TableOfMarks( group ), i )}.\] For example, for $G = S_3 = \texttt{SymmetricGroup( 3 )}$ we have $k = 4$ and
+\begin{align*}
+U_1 &= \{()\},\\
+U_2 &= \langle (23) \rangle \leq S_3,\\
+U_3 &= A_3 \leq S_3,\\
+U_4 &= S_3.
+\end{align*}
+
+\begin{defn}[The category \Gset]
+A \emphindex{right action} of $G$ on a set $\Omega$ is a map $\Omega \times G \to \Omega$, $(\omega,g) \mapsto \omega g$ with the following properties:
+\begin{itemize}
+\item $\omega 1 = \omega$ for all $\omega \in \Omega$ and
+\item $(\omega g) h = \omega (g h)$ for all $\omega \in \Omega$ and all $g,h \in G$.
+\end{itemize}
+A set $\Omega$ together with a right action is called a \emphindex{right $G$-set}. A \emph{morphism} of right $G$-sets $\phi \colon \Omega \to \Delta$ is a \emphindex[$G$-equivariant map]{$G$-equivariant} map of sets, that is, it holds that $\phi(\omega g) = \phi(\omega) g$ for all $\omega \in \Omega$ and all $g \in G$. We will never encounter left actions or left $G$-sets and thus we will simply say \emphindex{action} instead of \emph{right action} and \emphindex{$G$-set} instead of \emph{right $G$-set} from now on.
+
+We only deal with the case of \emph{finite} $G$-sets and define the category \emphindex{\Gset{}} as follows: its objects are the finite $G$-sets and morphisms are morphisms of $G$-sets. From now on, any $G$-set will be finite.
+\end{defn}
+
+\begin{defn}[Orbits]
+Let $\Omega$ be a $G$-set and let $\omega \in \Omega$. Then the \emphindex{orbit} of $\omega$ is the set $\omega G \coloneqq \{\omega g \mid g \in G\}$, and $\Omega$ is called \emphindex{transitive} if it consists of a single orbit.
+\end{defn}
+
+\begin{exmp}[Right cosets as $G$-sets]
+For any subgroup $U \leq G$, the set of right cosets $U \backslash G$ is a $G$-set by right multiplication. In particular, $G = \{1\} \backslash G$ is a $G$-set by right multiplication. In the following, sets of right cosets as well as $G$ itself will always be regarded as $G$-sets by right multiplication.
+\end{exmp}
+
+\begin{defn}[The forgetful functor]
+We define a functor $U\colon \Gset \to \Set$ which sends every $G$-set to its underlying set and a morphism of $G$-sets to the set-theoretic map. Since morphisms of $G$-sets are just maps of sets, this really is a functor. Two morphisms of $G$-sets are equal if and only if they are equal as maps of sets, so $U$ is faithful. We call $U$ the \emphindex{forgetful functor} from \Gset{} to \Set{}.
+\end{defn}
+
+\begin{lem}[Representability of the forgetful functor]\label{lem:representability_of_U}
+The forgetful functor $U$ and the hom-functor $\Hom_\Gset(G,-)$ are isomorphic as functors $\Gset \to \Set$.
+\end{lem}
+\begin{proof}
+We define a natural transformation $\alpha\colon U \to \Hom_\Gset(G,-)$ with bijective components $\alpha_\Omega$. For any $G$-set $\Omega$ let $\alpha_\Omega$ be the map
+\begin{align*}
+U(\Omega) &\to \Hom_\Gset(G,\Omega)\\
+\omega &\mapsto f_\omega
+\end{align*}
+where
+\begin{align*}
+f_\omega\colon G &\to \Omega\\
+g &\mapsto \omega g
+\end{align*}
+One immediately sees that for $\omega \in \Omega$ the map $f_\omega$ is indeed $G$-equivariant. We show that $\alpha_\Omega$ is bijective with inverse
+\begin{align*}
+\alpha'_\Omega\colon \Hom_\Gset(G,\Omega) &\to U(\Omega)\\
+\phi &\mapsto \phi(1)
+\end{align*}
+For any $\omega \in \Omega$ we have $\alpha'_\Omega(\alpha_\Omega(\omega)) = \alpha'_\Omega(f_\omega) = f_\omega(1) = \omega$. Conversely, for any morphism $\phi \in \Hom_\Gset(G,\Omega)$ and all $g \in G$ we have \[\alpha_\Omega(\alpha'_\Omega(\phi))(g) = \alpha_\Omega(\phi(1))(g) = f_{\phi(1)}(g) = \phi(1)g = \phi(g).\]
+
+It remains to show that $\alpha$ is a natural transformation, that is, that for all $G$-sets $\Omega$ and $\Delta$ and any morphism $\phi \colon \Omega \to \Delta$ the following diagram commutes:
+\[
+\begin{tikzcd}
+U(\Omega) \arrow[r, "U(\phi)"] \arrow[d, "\alpha_\Omega"] & U(\Delta) \arrow[d, "\alpha_\Delta"] \\
+\Hom_\Gset(G,\Omega) \arrow[r, "\phi_*"]                  & \Hom_\Gset(G,\Delta)                
+\end{tikzcd}
+\]
+For any $\omega \in \Omega$ and any $g \in G$ we have \[\phi_*(\alpha_\Omega(\omega))(g) = \phi(f_\omega(g)) = \phi(\omega g) = \phi(\omega) g = f_{\phi(\omega)}(g) = \alpha_\Delta(\phi(\omega))(g) = \alpha_\Delta(U(\phi)(\omega))(g).\] This finishes the proof.
+\end{proof}
+
+\begin{defn}[Sub-$G$-sets]
+Let $\Omega$ be a $G$-set and let $\Delta$ be a subset of $\Omega$. We call $\Delta$ a \emphindex[sub-$G$-set!of a $G$-set]{sub-$G$-set} of $\Omega$ if it is closed under the right action of $G$, that is, for all $\delta \in \Delta$ we have $\delta g \in \Delta$. If $\Delta$ is a sub-$G$-set of $\Omega$, it is a $G$-set itself by restricting the action $\Omega \times G \to \Omega$ to $\Delta \times G \to \Delta$, and the set-theoretic inclusion is obviously $G$-equivariant.
+\end{defn}
+
+\begin{rem}
+Note that any sub-$G$-set $\Delta$ of $\Omega$ can be written as a union of orbits in $\Omega$: Assume that $\Delta$ has a non-empty intersection with some orbit. Then it already contains the whole orbit because it is closed under the right action of $G$. Conversely, any union of orbits is closed under the right action of $G$ by definition and thus is a sub-$G$-set.
+\end{rem}
+
+We now characterize mono- and epimorphisms in $\Gset$.
+
+\begin{prop}[Monomorphisms]
+A morphism $\phi$ in \Gset{} is a monomorphism if and only if it is injective.
+\end{prop} 
+\begin{proof}
+Let $\phi\colon \Omega \to \Delta$ be an injective morphism in \Gset{}. Let $\psi_1,\psi_2\colon \Lambda \to \Omega$ be morphisms in \Gset{} with $\phi \circ \psi_1 = \phi \circ \psi_2$. Since $\phi$ is injective, it is a monomorphism in \Set{} and this implies $\psi_1 = \psi_2$. Thus, $\phi$ is a monomorphism in \Gset{}.
+
+Conversely, let $\phi\colon \Omega \to \Delta$ be a monomorphism in \Gset{}. Let $\omega_1,\omega_2 \in \Omega$ with $\phi(\omega_1) = \phi(\omega_2)$. We want to show that $\omega_1 = \omega_2$. For $t \in \{1,2\}$ we define the morphism
+\begin{align*}
+\psi_t\colon G &\to \Omega\\
+g &\mapsto \omega_tg
+\end{align*}
+One immediately sees that $\psi_1$ and $\psi_2$ are $G$-equivariant. We have \[(\phi \circ \psi_1)(g) = \phi(\omega_1 g) = \phi(\omega_1)g = \phi(\omega_2)g = \phi(\omega_2 g) = (\phi \circ \psi_2)(g)\] for any $g \in G$, that is, $\phi \circ \psi_1 = \phi \circ \psi_2$. Since $\phi$ is a monomorphism, we get $\psi_1 = \psi_2$. In particular, we have $\omega_1 = \psi_1(1) = \psi_2(1) = \omega_2$. Thus, $\phi$ is injective.
+\end{proof}
+
+\begin{prop}[Epimorphisms]
+A morphism $\phi$ in \Gset{} is an epimorphism if and only if it is surjective.
+\end{prop} 
+\begin{proof}
+Let $\phi\colon \Omega \to \Delta$ be a surjective morphism in \Gset{}. Let $\psi_1,\psi_2\colon \Delta \to \Lambda$ be morphisms in \Gset{} with $\psi_1 \circ \phi = \psi_2 \circ \phi$. Since $\phi$ is surjective, it is an epimorphism in \Set{} and this implies $\psi_1 = \psi_2$. Thus, $\phi$ is an epimorphism in \Gset{}.
+
+Conversely, let $\phi\colon \Omega \to \Delta$ be an epimorphism in \Gset{}. Assume that $\phi$ is not surjective, that is, we can find $\delta' \in \Delta$ such that there exists no $\omega \in \Omega$ with $\phi(\omega) = \delta'$. Set $\Lambda \coloneqq (G \backslash G) \sqcup (G \backslash G)$ and let $x,y \in \Lambda$ with $x \neq y$ be the two elements of $\Lambda$. We define two maps $\psi_1$ and $\psi_2$:
+\begin{align*}
+\psi_1\colon \Delta &\to \Lambda & \psi_2\colon \Delta &\to \Lambda\\
+\delta &\mapsto x & \delta &\mapsto y\quad\text{if $\delta$ lies in the orbit of $\delta'$}\\
+& & \delta &\mapsto x\quad\text{else}
+\end{align*}
+One can quickly check that $\psi_1$ and $\psi_2$ are $G$-equivariant. We claim that $\psi_1 \circ \phi = \psi_2 \circ \phi$. For this, it suffices to show that for any $\omega \in \Omega$ its image $\phi(\omega)$ is not an element of the orbit of $\delta'$. Assume the contrary, that is, there exist $\omega \in \Omega$ and $g \in G$ such that $\phi(\omega) = \delta' g \in \delta' G$. Then we have \[\phi(\omega g \inv) = \phi(\omega) g\inv = \delta' g g\inv = \delta'\] which is a contradiction to the choice of $\delta'$. Therefore, we have $\psi_1 \circ \phi = \psi_2 \circ \phi$. Since $\phi$ is an epimorphism this implies $\psi_1 = \psi_2$. However, this is a contradiction to $\psi_1(\delta') = x \neq y = \psi_2(\delta')$.
+\end{proof}
+
+The universal morphisms of equalizers and coequalizers can be obtained as lifts and colifts along mono- and epimorphisms respectively, see \algoref{Equalizer} and \algoref{Coequalizer}. Thus, we now explicitly construct such lifts and colifts.
+
+\begin{rem}[Lifts along monomorphisms]\label{rem:lifts_along_monomorphisms_in_G_sets}
+Let $\phi\colon \Omega \to \Delta$ be a morphism of $G$-sets and let $\iota\colon \Lambda \to \Delta$ be a monomorphism of $G$-sets with $\phi(\Omega) \subseteq \iota(\Lambda)$. Then $\iota$ is injective and thus we can find a set-theoretic lift of $\phi$ along $\iota$, that is, a map $\psi\colon \Omega \to \Lambda$ of sets such that the following diagram commutes:
+\[
+\begin{tikzcd}
+\Lambda \arrow[r, "\iota", hook]             & \Delta \\
+\Omega \arrow[ru, "\phi"'] \arrow[u, "\psi"] &       
+\end{tikzcd}
+\]
+The image of $\omega \in \Omega$ under $\psi$ is the uniquely determined element $\lambda \in \Lambda$ with $\iota(\lambda) = \phi(\omega)$. We want to show that $\psi$ is $G$-equivariant. For all $\omega \in \Omega$ and $g \in G$ we have \[\iota(\psi(\omega g)) = \phi(\omega g) = \phi(\omega)g = \iota(\psi(\omega))g = \iota(\psi(\omega)g).\] Since $\iota$ is a monomorphism, this implies $\psi(\omega g) = \psi(\omega)g$, and this finishes the proof.
+Often, $\Lambda$ will be a sub-$G$-set of $\Delta$ and $\iota$ the inclusion.
+\end{rem}
+
+\begin{rem}[Colifts along epimorphisms]\label{rem:colifts_along_epimorphisms_in_G_sets}
+Let $\phi\colon \Omega \to \Delta$ be a morphism of $G$-sets and let $\pi\colon \Omega \to \Lambda$ be an epimorphism of $G$-sets such that any two elements of $\Omega$ have the same image under $\phi$ whenever they have the same image under $\pi$. Then $\pi$ is surjective and thus we can find a set-theoretic colift of $\phi$ along $\pi$, that is, a map $\psi\colon \Lambda \to \Delta$ of sets such that the following diagram commutes:
+\[
+\begin{tikzcd}
+\Omega \arrow[r, "\pi", two heads] \arrow[rd, "\phi"'] & \Lambda \arrow[d, "\psi"] \\
+                                                       & \Delta                   
+\end{tikzcd}
+\]
+To obtain the image of $\lambda \in \Lambda$ under $\psi$, choose $\omega \in \Omega$ with $\pi(\omega) = \lambda$ and set $\psi(\lambda) \coloneqq \phi(\omega)$. By assumption this assignment is independent of the choice of $\omega$. We show that $\psi$ is $G$-equivariant: For $\lambda \in \Lambda$ and $g \in G$ we can choose $\omega \in \pi\inv(\lambda) \neq \varnothing$ and get \[\psi(\lambda)g = \psi(\pi(\omega))g = \phi(\omega)g = \phi(\omega g) = \psi(\pi(\omega g)) = \psi(\pi(\omega) g) = \psi(\lambda g).\] This finishes the proof.
+\end{rem}
+
+We will need the concept of images for finding \emph{connected components} in \algoref{Coequalizer}. Thus, we now show that in $\Gset$ all images exist.
+
+\begin{prop}[Images]\label{prop:images_in_G_sets}
+In \Gset{} all images exist.
+\end{prop}
+\begin{proof}
+Let $\phi\colon \Omega \to \Delta$ be a morphism of $G$-sets and let $\tau_1\colon \Omega \to \Lambda'$ and $\tau_2\colon \Lambda' \to \Delta$ be morphisms of $G$-sets such that $\tau_2$ is a monomorphism and $\tau_2 \circ \tau_1 = \phi$. Let $\Lambda$ be the canonical set-theoretic image of $\phi$, $c\colon \Omega \to \Lambda$ the set-theoretic coastriction, $\iota \colon \Lambda \hookrightarrow \Delta$ the set-theoretic embedding and $u\colon \Lambda \to \Lambda'$ the unique set-theoretic morphism such that $u \circ c = \tau_1$ and $\tau_2 \circ u = i$. That is, we have the following commutative diagram in \Set{}:
+\[
+\begin{tikzcd}
+\Omega \arrow[rr, "\phi"] \arrow[rd, "c"] \arrow[rdd, "\tau_1"'] &                                                               & \Delta \\
+                                                                 & \Lambda \arrow[ru, "\iota", hook] \arrow[d, "u" description]  &        \\
+                                                                 & \Lambda' \arrow[ruu, "\tau_2"', hook]                         &  
+\end{tikzcd}
+\]
+We have to show that this is a commutative diagram in \Gset{}. Let $y \in \Lambda$. Then there exists $x \in \Omega$ such that $\phi(x) = y$. Thus, we have $yg = \phi(x)g = \phi(xg) \in \Lambda$ for all $g \in G$. Hence, $\Lambda$ is a sub-$G$-set of $\Omega$ and therefore $\iota$ is $G$-equivariant. The coastriction $c$ is the lift of $\phi$ along the monomorphism $\iota$ and the universal morphism $u$ is the lift of $\iota$ along the monomorphism $\tau_2$. Therefore, both are $G$-equivariant.
+\end{proof}
+
+\begin{prop}[Equalizers]\label{prop:equalizers_in_G_sets}
+In \Gset{} all equalizers exist.
+\end{prop}
+\begin{proof}
+Let $\phi_t\colon \Omega \to \Delta$ be morphisms of $G$-sets for $t \in \{1,\dots,s\}$ and let $\tau \colon \Lambda' \to \Omega$ be a morphism of $G$-sets with $\phi_a \circ \tau = \phi_b \circ \tau$ for all $a,b \in \{1,\dots,s\}$. Let $\Lambda \subseteq \Omega$ be the canonical set-theoretic equalizer, let $\iota\colon \Lambda \to \Omega$ be the set-theoretic inclusion and let $u\colon \Lambda' \to \Lambda$ be the unique set-theoretic morphism such that $\iota \circ u = \tau$. That is, we have the following diagram in \Set{}:
+\[
+\begin{tikzcd}
+\Lambda \arrow[r, "\iota", hook]                  & \Omega \arrow[r, "\phi_t"] & \Delta \\
+\Lambda' \arrow[ru, "\tau"'] \arrow[u, "u"]       &                            &       
+\end{tikzcd}
+\]
+We have to show that this is a diagram in \Gset{}. For all $\lambda \in \Lambda$, $g \in G$ and $a,b \in \{1,\dots,s\}$ we have \[\phi_a(\lambda g) = \phi_a(\lambda)g = \phi_b(\lambda)g = \phi_b(\lambda g).\] This implies that $\lambda g \in \Lambda$ for all $\lambda \in \Lambda$ and $g \in G$, that is, $\Lambda$ is a sub-$G$-set of $\Omega$. Therefore, the inclusion $\iota$ is $G$-equivariant. Moreover, $u$ is $G$-equivariant since it is the lift of $\tau$ along the monomorphism $\iota$.
+\end{proof}
+
+\begin{prop}[Coequalizers]\label{prop:coequalizers_in_G_sets}
+In \Gset{} all coequalizers exist.
+\end{prop}
+\begin{proof}
+Let $\phi_t\colon \Omega \to \Delta$ be morphisms of $G$-sets for $t \in \{1,\dots,s\}$ and let $\tau \colon \Delta \to \Lambda'$ be a morphism of $G$-sets with $\tau \circ \phi_a = \tau \circ \phi_b$ for all $a,b \in \{1,\dots,s\}$. Let $\Lambda$ be the the canonical set-theoretic coequalizer, let $\pi\colon \Delta \to \Lambda$ be the set-theoretic projection and let $u\colon \Lambda \to \Lambda'$ be the unique set-theoretic morphism such that $u \circ \pi = \tau$. That is, we have the following diagram in \Set{}:
+\[
+\begin{tikzcd}
+\Omega \arrow[r, "\phi_i"] & \Delta \arrow[r, "\pi", two heads] \arrow[rd, "\tau"'] & \Lambda \arrow[d, "u"] \\
+                           &                                                        & \Lambda'              
+\end{tikzcd}
+\]
+We have to show that this is a diagram in \Gset{}. The coequalizer $\Lambda$ is the set of equivalence classes of the transitive hull of the relation $\sim$ on $\Delta$ defined as follows: for $\delta_1,\delta_2 \in \Delta$ we set $\delta_1 \sim \delta_2$ if and only of there exists $\omega \in \Omega$ and $a,b \in \{1,\dots,s\}$ such that $\phi_a(\omega) = \delta_1$ and $\phi_b(\omega) = \delta_2$. This relation is compatible with the action of $G$: for $\delta_1 \sim \delta_2$, $\omega \in \Omega$ and $a,b \in \{1,\dots,s\}$ as before and any $g \in G$ we have $\phi_a(\omega g) = \delta_1 g$ and $\phi_b(\omega g) = \delta_2 g$, and thus $\delta_1 g \sim \delta_2 g$. Therefore, we can define an action of $G$ on $\Lambda$ by acting on representatives. Since $\pi$ maps any element of $\Delta$ to its equivalence class in $\Lambda$, we immediately get that $\pi$ is $G$-equivariant. Moreover, $u$ is $G$-equivariant since it is the colift of $\tau$ along the epimorphism $\pi$.
+\end{proof}
+
+We will now give a definition of the \emph{table of marks}, which we will need for the third algorithm in the final section.
+
+\begin{defn}[Mark]
+Let $\Omega$ be a $G$-set. The \emphindex{mark} of $\Omega$ is the map 
+\begin{align*}
+\beta_\Omega \colon \ReprSet &\to \ZZ_{\geq 0}\\
+U_i &\mapsto \abs{\fix_{U_i}(\Omega)}.
+\end{align*}
+As shorthand notations, we set $\beta_\Omega(i) \coloneqq \beta_\Omega(U_i)$, and $\beta_V \coloneqq \beta_{V \backslash G}$ for a subgroup $V \leq G$.
+\end{defn}
+
+\begin{defn}[Table of marks]
+The matrix \[\left(\beta_{U_i}(j)\right)_{1 \leq i,j \leq k} = \left(\abs{\fix_{U_j}(U_i \backslash G)}\right)_{1 \leq i,j \leq k}\] is called \emphindex{table of marks} of $G$.
+\end{defn}
+
+\begin{rem}[Properties of marks]\label{rem:properties_of_marks}
+Two $G$-sets are isomorphic if and only they have have the same mark. The table of marks is a lower triangular matrix with non-zero diagonal entries. Let $\Omega_1$, $\Omega_2$, and $\Omega = \bigsqcup_{i=1}^k \bigsqcup_{l=1}^{m_i} U_i \backslash G$ be $G$-sets. Then it is easy to see that $\beta_{\Omega_1 \times \Omega_2} = \beta_{\Omega_1} \cdot \beta_{\Omega_2}$ and $\beta_{\Omega_1 \sqcup{} \Omega_2} = \beta_{\Omega_1} + \beta_{\Omega_2}$ with pointwise multiplication and addition. In particular, $\beta_\Omega = \sum_{i \in \Ical} m_i \beta_{U_i}$. Additionally, the marks $\beta_{U_i}$ with $i \in \Ical$ are linearly independent over $\ZZ$. Thus, we can find the multiplicities $m_i$ by decomposing the mark $\beta_\Omega$ with regard to the marks $\beta_{U_i}$.
+\end{rem}
+
+\subsection{The category \SkeletalGSets{}}
+
+We now want to define the category \SkeletalGSets{} in a way suitable for implementation in \CapPkg{} and thus have to find representations of objects in \Gset{} up to isomorphism and their morphisms. For this, first recall the following proposition:
+
+\begin{prop}[Classification of finite $G$-sets]\label{prop:classification_of_finite_G_sets}
+Let $\Omega$ be a finite $G$-set and $\omega_1,\dots,\omega_s \in \Omega$ a system of representatives of the orbits in $\Omega$. Then $\Omega \cong \Delta \coloneqq \bigsqcup_{t=1}^s \Stab_G(\omega_i) \backslash G$ as $G$-sets, where $G$ acts on $\Delta$ by right multiplication. Moreover, we can choose the $\omega_i$ in such a way that $\Stab_G(\omega_i) \in \ReprSet$. Thus, $\Omega \cong \bigsqcup_{t=1}^s U_{i_t} \backslash G$ for suitable $i_t \in \Ical$. Moreover, the indices $i_t$ are uniquely determined up to permutation.
+\end{prop}
+
+\begin{rem}[Representation of $G$-sets up to isomorphism]
+By \propref{classification_of_finite_G_sets}, any $G$-set $\Omega$ is isomorphic to a disjoint union $\Delta$ of right cosets $U_i \backslash G$ with $U_i \in \ReprSet$, where each $U_i \backslash G$ occurs with a uniquely determined multiplicity $m_i \in \ZZ_{\geq 0}$. That is, we have \[\Omega \cong \Delta = \bigsqcup_{i=1}^k m_i (U_i \backslash G) \coloneqq \bigsqcup_{i=1}^k \bigsqcup_{l=1}^{m_i} (U_i \backslash G)_l\] with $(U_i \backslash G)_l \coloneqq U_i \backslash G$ for all $i \in \Ical$. Thus, a possible skeletal representation of both $\Omega$ and $\Delta$ is given by the $k$-tuple $(m_1,\dots,m_k)$. In this setting, we set
+\begin{align*}
+(1_i)_l &\coloneqq U_i1 \in (U_i \backslash G)_l \subseteq \Delta\text{ and }\\
+(U_ig)_l &\coloneqq U_ig \in (U_i \backslash G)_l \subseteq \Delta.
+\end{align*}
+In \cite{Julia}, we see that taking the disjoint union with the canonical embeddings gives a coproduct in \Gset{}. Thus, the set $(U_i \backslash G)_l$ is a transitive cofactor of $\Delta$ and we call the pair $(i,l)$ its \emphindex[position!of a transitive cofactor of a $G$-set]{position}.
+\end{rem}
+
+\begin{rem}[Representation of morphisms of $G$-sets]
+Let $\Omega = \bigsqcup_{i=1}^k \bigsqcup_{l=1}^{m_i} (U_i \backslash G)_l$ and $\Delta = \bigsqcup_{j=1}^k \bigsqcup_{r=1}^{n_j} (U_j \backslash G)_r$ be $G$-sets. Any morphism $\phi \colon \Omega \to \Delta$ of $G$-sets is uniquely determined by the images of the elements $(1_i)_l \in \Omega$: For any $U_ig \in (U_i \backslash G)_l$ we have \[\phi(U_ig) = \phi(U_i1)g = \phi((1_i)_l)g\] since $\phi$ is $G$-equivariant. Conversely, if we choose $U_{j_{(i,l)}}g_{(i,l)} \in \Delta$ for every position $(i,l)$ of a transitive cofactor of $\Omega$ and set \[\phi((1_i)_l) \coloneqq U_{j_{(i,l)}}g_{(i,l)},\] we can extend this to a morphism of $G$-sets by setting \[\phi(U_ig) \coloneqq \phi((1_i)_l)g\text{ for }U_ig \in (U_i \backslash G)_l \subseteq \Omega\] as long as this extension is well-defined. The extension is well-defined if and only if it is independent of the choice of the representative of $U_ig$, that is, if for all $ug \in U_ig$ we have \[U_{j_{(i,l)}}g_{(i,l)}ug = \phi((1_i)_l)ug = \phi((1_i)_l)g = U_{j_{(i,l)}}g_{(i,l)}g.\]
+This in turn is equivalent to \[U_{j_{(i,l)}}g_{(i,l)}ug_{(i,l)}\inv = U_{j_{(i,l)}}\] for all $u \in U_i$, that is, we have \[g_{(i,l)}ug_{(i,l)}\inv \in U_{j_{(i,l)}}\] for all $u \in U_i$. Thus, the condition for the images $U_{j_{(i,l)}}g_{(i,l)}$ is that we have \[g_{(i,l)}U_ig_{(i,l)}\inv \subseteq U_{j_{(i,l)}}.\] Note that taking a different representative of $U_{j_{(i,l)}}g_{(i,l)}$ does not change this condition.
+
+Therefore, we can represent a morphisms $\phi\colon \Omega \to \Delta$ as a $k$-tuple $L$ with the following structure: The $i$-th entry of $L$ is an $m_i$-tuple $L_i$. The $l$-th entry of $L_i$ is a triple $(r,U_jg,j)$ with integers $1 \leq j \leq k$ and $1 \leq r \leq n_j$ and $g \in G$ such that $gU_ig\inv \subseteq U_j$, which we interpret as \[\phi((1_i)_l) \coloneqq (U_jg)_r \in (U_j \backslash G)_r \subseteq \Delta.\] We call $(r,U_jg,j)$ the \emphindex[component]{component of $\phi$ at position $(i,l)$} and the pair $(j,r)$ the \emphindex{target position} of the component. Note that the implementation in \CapPkg{} also accepts the triple $(r,g,j)$ instead of $(r,U_jg,j)$ for simpler notation. For an example, see \exmpref{representation_of_morphisms}. However, we first turn this into a precise definition.
+\end{rem}
+
+\begin{defn}[The category \SkeletalGSets{}]
+We now define the category \emphindex{\SkeletalGSets{}}: Its objects are $k$-tuples of non-negative integers. A morphism between $\Omega = (m_1,\dots,m_k)$ and $\Delta = (n_1,\dots,n_k)$ is given by a $k$-tuple $L$ with the following structure: The $i$-th entry of $L$ is an $m_i$-tuple $L_i$. The $l$-th entry of $L_i$ is a triple $(r,U_jg,j)$, where $j$ and $r$ are integers with $1 \leq j \leq k$ and $1 \leq r \leq n_j$ and where $g \in G$ such that $g U_i g\inv \subseteq U_j$. The remarks above show that this indeed represents the skeleton of \Gset{}.
+\end{defn}
+
+\begin{rem}[Notation]
+For better readability we will always use square brackets for the tuples defining objects and morphisms of \SkeletalGSets{}, with the only exception that for the triples in the definition of a morphism we will use round brackets as usual. In particular, $[]$ is always the $0$-tuple whereas $()$ is the identity element of some $S_n$ used in examples.
+\end{rem}
+
+\begin{defn}
+We define the \emphindex{realization functor} $R \colon \SkeletalGSets \to \Gset$ which assigns to a $k$-tuple in \SkeletalGSets{} its actual $G$-set and to a morphism the actual morphism of $G$-sets using the interpretations in the remarks above. Conversely, we define the \emphindex{abstraction functor} $A\colon \Gset \to \SkeletalGSets$ which assigns to a $G$-set respectively a morphism its representing $k$-tuple as in the remarks above. However, for ease of notation we do not distinguish between an object $\Omega$ in \SkeletalGSets{}, its realization as a $G$-set $R(\Omega)$ and the corresponding underlying set $U(R(\Omega))$ if it is not relevant in the given context. In particular, we write $\omega \in \Omega$ instead of $\omega \in U(R(\Omega))$ and $\phi(\omega)$ instead of $U(R(\phi))(\omega)$. Note that $R$ and $A$ are the canonical equivalences between \Gset{} and its skeleton.
+\end{defn}
+
+\begin{defn}[Positions of an object in \SkeletalGSets{}]
+Let $\Omega = [m_1,\dots,m_k]$ be an object in $\SkeletalGSets$. A \emphindex[position!of an object in $\SkeletalGSets$]{position} of $\Omega$ is a position of a transitive cofactor of $R(\Omega)$, that is, an element of the set $\{ (i,l) \mid 1 \leq i \leq k, 1 \leq l \leq m_i \}$.
+\end{defn}
+
+\begin{exmp}\label{exmp:representation_of_morphisms}
+Let $G = S_3$ and let $\Omega = [2,1,0,0]$ and $\Delta = [1,2,0,0]$ be two objects in \SkeletalGSets{}. Let $\phi\colon \Omega \to \Delta$ be the morphism given by by \[[[],[(1,U_2(123),2),(1,U_2(),2)],[(2,U_2(),2)],[]].\] We visualize this as follows:
+\[
+\begin{tikzcd}
+R(\Omega)                   &  & R(\Delta)  \\
+=                           &  & =          \\
+\{1\} \backslash S_3 \arrow[rrdd, "(123)"] &  & \{1\} \backslash S_3   \\
+\sqcup                      &  & \sqcup  \\
+\{1\} \backslash S_3 \arrow[rr, "()"]      &  & U_2 \backslash S_3 \\
+\sqcup                      &  & \sqcup  \\
+U_2 \backslash S_3 \arrow[rr, "()"]    &  & U_2 \backslash S_3
+\end{tikzcd}
+\]
+The $G$-sets $R(\Omega)$ and $R(\Delta)$ are the disjoint unions of the sets in the first and second column respectively. The components $(1,U_2(123),2)$, $(1,U_2(),2)$, and $(2,U_2(),2)$ of $\phi$ correspond exactly to the arrows. The positions of $\Omega$ are $(1,1)$, $(1,2)$ and $(2,1)$. The positions of $\Delta$ are $(1,1)$, $(2,1)$ and $(2,2)$.
+\end{exmp}
+
+\begin{rem}
+Recall that two $G$-sets are isomorphic if and only if they have the same mark. Thus, we could have used the marks as objects of $\SkeletalGSets$. However, for defining morphisms and visualizing the corresponding $G$-sets it is easier to use the ``coordinates'' of the marks with regard to the marks $\beta_{U_i}$, that is, the multiplicities $m_i$ as in \remref{properties_of_marks}.
+\end{rem}
+
+\subsection{Algorithms in \SkeletalGSets{}}
+
+We now want to explain some of the algorithms of our implementation of $\SkeletalGSets$. In particular, we are interested in algorithms for finite equalizers and coequalizers. We start with some basic algorithms which are explained in more detail in \cite{Julia}.
+
+\begin{rem}[Composition of morphisms in \SkeletalGSets{}]\label{rem:composition_of_G_morphisms}
+Let $\phi\colon \Omega \to \Delta$ and $\phi'\colon \Delta \to \Lambda$ be morphisms in \SkeletalGSets{} with $\Omega = [m_1,\dots,m_k]$, $\Delta = [n_1,\dots,n_k]$ and $\Lambda = [o_1,\dots,o_k]$. We want to determine $\psi \coloneqq \phi' \circ \phi$. For this, we have to compute the images $\phi'(\phi((1_i)_l))$ for all positions $(i,l)$ of $\Omega$. Fix a position $(i,l)$ of $\Omega$. Let $(r_1,U_{j_1}g_1,j_1)$ be the component of $\phi$ at position $(i,l)$ and let $(r_2,U_{j_2}g_2,j_2)$ be the component of $\phi'$ at position $(j_1,r_1)$. Then, by definition we have \[\phi'(\phi((1_i)_l)) = \phi'((U_{j_1}g_1)_{r_1}) = \phi'((U_{j_1}1)_{r_1})g_1 = \phi'((1_{j_1})_{r_1})g_1 = (U_{j_2}g_2)_{r_2}g_1 = (U_{j_2}g_2g_1)_{r_2},\] which gives the component $(r_2,U_{j_2}g_2g_1,j_2)$. In particular, to compose arrows in a diagram like the one above we only have to multiply the labels (in reverse order) using the multiplication in $G$.
+\end{rem}
+
+\begin{rem}[Equality of morphisms in \SkeletalGSets{}]\label{rem:equality_of_morphisms_in_skeletal_G_sets}
+Two morphisms $\phi\colon \Omega \to \Delta$ and $\phi'\colon \Omega \to \Delta$ in \SkeletalGSets{} are equal if and only if $R(\phi) = R(\phi')$ as maps. We want to find an easy way to check this condition. For this, observe that $R(\phi) = R(\phi')$ if and only if $R(\phi)\vert_C = R(\phi')\vert_C$ for all transitive cofactors $C$ of $R(\Omega)$. Let $C$ be such a cofactor and $(i,l)$ its position. If $R(\phi)\vert_C = R(\phi')\vert_C$, then in particular we have $R(\phi)((1_i)_l) = R(\phi')((1_i)_l)$. Conversely, if $R(\phi)((1_i)_l) = R(\phi')((1_i)_l)$ we get $R(\phi)((U_ig)_l) = R(\phi')((U_ig)_l)$ for all $g$ in $G$ since $R(\phi)$ and $R(\phi')$ are $G$-equivariant. Since $C$ is transitive, this implies $R(\phi)\vert_C = R(\phi')\vert_C$.
+
+Summing up, we get that $\phi$ and $\phi'$ are equal if and only if for all positions $p$ of $\Omega$ the components of $\phi$ and $\phi'$ at position $p$ are the same. Note that we might still have different representations if we consider representatives of cosets instead of the actual cosets.
+\end{rem}
+
+Now we explain the algorithms which we need as a preparation for the algorithms computing equalizers and coequalizers. The method names of the implementations in \CapPkg{} are set in a \texttt{monospace font}.
+
+\begin{rem}[Representation of sub-$G$-sets in \SkeletalGSets]\label{rem:representation_of_sub_G_sets}
+Let $\Omega = [m_1,\dots,m_k]$ be an object in \SkeletalGSets{} and $\Lambda$ a sub-$G$-set of $R(\Omega)$. We know that $\Lambda$ is a union of orbits in $R(\Omega)$ and the orbits in $R(\Omega)$ are exactly its transitive cofactors. Thus, $\Lambda$ is a union of transitive cofactors of $R(\Omega)$ and can be represented as the set $P$ of the positions of these cofactors. Additionally, we can immediately read of its representation as an object in \SkeletalGSets{}: for each $i \in \Ical$ we have to count how many transitive cofactors of $\Lambda$ are equal to $U_i \backslash G$, that is, how many elements in $P$ have first component $i$. Finally, we determine the representation of the embedding $\iota\colon \Lambda \hookrightarrow R(\Omega)$. For this, sort the elements of $P$ in lexicographical order. Let $(i,l)$ be a position of $\Lambda$ and let $(i,r)$ be the $l$-th element in $P$ which has first component $i$. Then the component of $\iota$ at position $(i,l)$ is given by $(r,U_i1,i)$.
+
+We make this precise in the next definition and in \algoref{EmbeddingOfPositions}.
+\end{rem}
+
+\begin{defn}[Sub-$G$-sets of objects in \SkeletalGSets{}]
+Let $\Omega = [m_1,\dots,m_k]$ be an object in $\SkeletalGSets$. A \emphindex[sub-$G$-set!of an object in $\SkeletalGSets$]{sub-$G$-set} of $\Omega$ is a subset of the set of positions of $\Omega$, that is, a subset of $\{ (i,l) \mid 1 \leq i \leq k, 1 \leq l \leq m_i \}$. Using the translation in \remref{representation_of_sub_G_sets} we see that the sub-$G$-sets of $\Omega$ correspond exactly to the sub-$G$-sets of $R(\Omega)$. Let $P$ be a sub-$G$-set of $\Omega$, let $\Lambda$ be the corresponding sub-$G$-set of $R(\Omega)$ and let $\iota\colon \Lambda \hookrightarrow R(\Omega)$ be the embedding of $\Lambda$. Then we call $A(\iota)$ the \emphindex[embedding of a sub-$G$-set]{embedding} of $P$. Let $\phi \colon \Omega \to \Delta$ be a morphism in $\SkeletalGSets$. Then we call $\phi \circ A(\iota)$ the \emphindex[restriction!to a sub-$G$-set]{restriction} of $\phi$ to $P$.
+\end{defn}
+
+\begin{exmp}[Sub-$G$-sets in \SkeletalGSets]\label{exmp:sub_G_sets}
+Let $G = S_3$, $\Omega = [3,2,0,0]$ an object in $\SkeletalGSets$ and $P = \{(1,2),(1,3),(2,1)\}$ a sub-$G$-set of $\Omega$. We visualize this in \figref{exmp:sub_G_sets}.
+\begin{figure}
+\[
+\begin{tikzcd}
+                                                            &  & \{1\} \backslash S_3   \leftrightarrow (1,1) \\
+(1,1) \leftrightarrow \{1\} \backslash S_3 \arrow[rr, hook] &  & \{1\} \backslash S_3   \leftrightarrow (1,2) \\
+(1,2) \leftrightarrow \{1\} \backslash S_3 \arrow[rr, hook] &  & \{1\} \backslash S_3   \leftrightarrow (1,3) \\
+(2,1) \leftrightarrow U_2 \backslash S_3 \arrow[rr, hook]   &  & U_2 \backslash S_3 \leftrightarrow (2,1) \\
+                                                            &  & U_2 \backslash S_3 \leftrightarrow (2,2)
+\end{tikzcd}
+\]
+\caption{A visualization of \exmpref{sub_G_sets}}\label{fig:exmp:sub_G_sets}
+\end{figure}
+The representation of $P$ as an object in $\SkeletalGSets$ is $[2,1,0,0]$, and the components of the embedding $\iota$ of $P$ are $(2,(),1)$, $(3,(),1)$ and $(1,(),2)$.
+\end{exmp}
+
+\begin{algorithm}\capstart
+    \caption{\texttt{EmbeddingOfPositions}}\label{algo:EmbeddingOfPositions}
+	\KwIn{a sub-$G$-set $P$ of an object $T$ in \SkeletalGSets{}}
+	\KwOut{the embedding of $P$}
+	\BlankLine
+	\ForEach{$i = 1, \dots, k$}{
+	    let $L_i$ be the set of positions in $P$ with first component $i$\;
+	    sort the elements of $L_i$ by their second component\;
+	}
+	\BlankLine
+	the source $S$ of the embedding is given by the tuple $(\abs{L_i})_i$\;
+	\BlankLine
+	let $\iota$ be the morphism $S \to T$ with components defined as follows:\\
+	\ForEach{position $p = (i,l)$ of $S$}{
+	    the component of $\iota$ at position $p$ is $(l',U_i1,i)$ where $l'$ is the second component of the $l$-th entry of $L_i$\;
+	}
+	\BlankLine
+	\Return $\iota$\;
+\end{algorithm}
+
+\begin{rem}[Preimages in \SkeletalGSets{}]
+Let $\Omega$ and $\Delta$ be objects in $\SkeletalGSets$ and let $\phi\colon \Omega \to \Delta$ be a morphism in \SkeletalGSets{}. Let $P'$ be a sub-$G$-set of $\Delta$ and let $\Lambda'$ be the corresponding sub-$G$-set of $R(\Delta)$. We want to describe the set-theoretic preimage $\Lambda$ of $\Lambda'$ under $R(\phi)$. For any $(U_ig)_l \in \Omega$ we have
+\begin{alignat*}{2}
+&& (U_ig)_l &\in \Lambda\\
+&\Leftrightarrow &\quad\phi((U_ig)_l) &\in \Lambda'\\
+&\Leftrightarrow &\quad\phi((U_i1)_l)g &\in \Lambda'\\
+&\Leftrightarrow &\quad\phi((1_i)_l) &\in \Lambda'\\
+\end{alignat*}
+and this holds true if and only if the target position of the component of $\phi$ at position $(i,l)$ is an element of $P'$. Thus, $\Lambda$ is a sub-$G$-set of $R(\Omega)$ and corresponds to the sub-$G$-set $P$ of $\Omega$ with the following property: a position $p$ of $\Omega$ is in $P$ if and only if the target position of the component of $\phi$ at position $p$ is an element of $P'$. We make this precise in \algoref{PreimagePositions}.
+\end{rem}
+
+\begin{algorithm}\capstart
+    \caption{\texttt{PreimagePositions}}\label{algo:PreimagePositions}
+	\KwIn{a morphism $\phi\colon S \to T$ and a sub-$G$-set $P'$ of $T$ corresponding to a sub-$G$-set $\Lambda'$ of $R(T)$}
+	\KwOut{the sub-$G$-set $P$ of $S$ corresponding to the preimage of $\Lambda'$ under $R(\phi)$}
+	\BlankLine
+	let $P$ be the empty set\;
+	\ForEach{position $p_S$ of $S$}{
+	    \If{the target position of the component of $\phi$ at position $p_S$ is an element of $P'$}{
+	        add $p_S$ to $P$\;
+	    }
+	}
+	\BlankLine
+	\Return $P$\;
+\end{algorithm}
+
+\begin{rem}[Lifts along monomorphisms in \SkeletalGSets{}]
+Let $\phi\colon \Omega \to \Delta$ be a morphism in \SkeletalGSets{} and let $\iota\colon \Lambda \hookrightarrow \Delta$ be a monomorphism in \SkeletalGSets{} with $R(\phi)(\Omega) \subseteq R(\iota)(\Lambda)$. By \remref{lifts_along_monomorphisms_in_G_sets}, the lift $\psi\colon R(\Omega) \to R(\Lambda)$ of $R(\phi)$ along $R(\iota)$ exists, and makes the following diagram commute:
+\[
+\begin{tikzcd}
+R(\Lambda) \arrow[r, "R(\iota)", hook]             & R(\Delta) \\
+R(\Omega) \arrow[ru, "R(\phi)"'] \arrow[u, "\psi"] &       
+\end{tikzcd}
+\]
+We want to find the representation of $\psi$ in \SkeletalGSets{}. For this, we have to compute $\psi((1_i)_l)$ for all positions $(i,l)$ of $\Omega$. By construction, $\psi((1_i)_l)$ is the unique preimage of $(U_jg)_r \coloneqq \phi((1_i)_l)$ under $R(\iota)$. Let $(s,t)$ be the position of the component of $\iota$ with target position $(j,r)$, that is, a position of $\Lambda$ such that the component of $\iota$ at position $(s,t)$ is $(r,U_jh,j)$ for some $h \in G$. Then we have \[\iota((U_sh\inv g)_t) = (U_jh)_rh\inv g = (U_jg)_r = \phi((1_i)_l).\] Thus, we get $\psi((1_i)_l) = (U_sh\inv g)_t$ which is represented by the triple $(t,U_sh\inv g,s)$. We make this precise in \algoref{LiftAlongMonomorphism}.
+\end{rem}
+
+\begin{algorithm}\capstart
+    \caption{\texttt{LiftAlongMonomorphism}}\label{algo:LiftAlongMonomorphism}
+	\KwIn{a monomorphism $\iota$ and a morphism $\phi$ in \SkeletalGSets{} such that a lift of $\phi$ along $\iota$ exists}
+	\KwOut{such a lift $\psi$}
+	\BlankLine
+	let $S$ be the source of $\phi$\;
+	let $T$ be the source of $\iota$\;
+    \BlankLine
+    let $\psi$ be the morphism $S \to T$ with components defined as follows:\\
+	\ForEach{position $p = (i,l)$ of $S$}{
+	    let $(r,U_jg,j)$ be the component of $\phi$ at position $p$\;
+	    let $(s,t)$ be the (unique) preimage position of $\{(j,r)\}$ under $\iota$\;
+	    let $h \in G$ such that $(r,U_jh,j)$ is the component of $\iota$ at position $(s,t)$\;
+	    \BlankLine
+	    the component of $\psi$ at position $p$ is $(t,U_sh\inv g,s)$\;
+	}
+	\BlankLine
+	\Return $\psi$\;
+\end{algorithm}
+
+\begin{rem}[Colifts along epimorphisms in \SkeletalGSets{}]
+Let $\phi\colon \Omega \to \Delta$ be a morphism in \SkeletalGSets{} and let $\pi\colon \Omega \twoheadrightarrow \Lambda$ be an epimorphism in \SkeletalGSets{} such that any two elements of $R(\Omega)$ have the same image under $R(\phi)$ whenever they have the same image under $R(\pi)$. By \remref{colifts_along_epimorphisms_in_G_sets}, the colift $\psi\colon R(\Lambda) \to R(\Delta)$ of $R(\phi)$ along $R(\pi)$ exists, and makes the following diagram commute:
+\[
+\begin{tikzcd}
+R(\Omega) \arrow[r, "R(\pi)", two heads] \arrow[rd, "R(\phi)"'] & R(\Lambda) \arrow[d, "\psi"] \\
+                                                       & R(\Delta)                   
+\end{tikzcd}
+\]
+We want to find the representation of $\psi$ in \SkeletalGSets{}. For this, we have to compute $\psi((1_i)_l)$ for all positions $(i,l)$ of $\Lambda$. By construction, $\psi((1_i)_l)$ is the image under $R(\phi)$ of the preimage of $(1_i)_l$ under $R(\pi)$. Let $(s,t)$ be a preimage position of $\{(i,l)\}$ under $\pi$, that is, a position of $\Omega$ such that the target position of the component of $\pi$ at position $(s,t)$ is $(i,l)$. Let $(l,U_ih,i)$ be the component of $\pi$ at position $(s,t)$. Then we have \[\pi((U_sh\inv)_t) = (U_ih)_l h\inv = (1_i)_l,\] so $(U_sh\inv)_t$ is a preimage of $(1_i)_l$ under $R(\pi)$. Now let $(r,U_jg,j)$ be the component of $\phi$ at position $(s,t)$. Then we have \[\phi((U_sh\inv)_t) = (U_jg)_rh\inv = (U_jgh\inv)_r\] which is represented by the triple $(r,U_jgh\inv,j)$. We make this precise in \algoref{ColiftAlongEpimorphism}.
+\end{rem}
+
+\begin{algorithm}\capstart
+    \caption{\texttt{ColiftAlongEpimorphism}}\label{algo:ColiftAlongEpimorphism}
+	\KwIn{an epimorphism $\pi$ and a morphism $\phi$ in \SkeletalGSets{} such that a colift of $\phi$ along $\pi$ exists}
+	\KwOut{such a lift $\psi$}
+	\BlankLine
+	let $S$ be the range of $\pi$\;
+	let $T$ be the range of $\phi$\;
+    \BlankLine
+    let $\psi$ be the morphism $S \to T$ with components defined as follows:\\
+	\ForEach{position $(i,l)$ of $S$}{
+	    let $(s,t)$ be a preimage position of $\{(i,l)\}$ under $\pi$\;
+	    let $h \in G$ such that $(l,U_ih,i)$ is the component of $\pi$ at position $(s,t)$\;
+	    let $(r,U_jg,j)$ be the component of $\phi$ at position $(s,t)$\;
+	    \BlankLine
+	    the component of $\psi$ at position $p$ is $(r,U_j g h\inv,j)$\;
+	}
+	\BlankLine
+	\Return $\psi$\;
+\end{algorithm}
+
+\begin{rem}[Images in \SkeletalGSets{}]
+By \propref{images_in_G_sets}, all images in $G$-set exist. Therefore, also in \SkeletalGSets{} all images exist. Let $\Omega$ and $\Delta$ be objects in \SkeletalGSets{} and let $\phi\colon \Omega \to \Delta$ be a morphism. We want to find an image $\Lambda$ of $\phi$ and its embedding $\iota\colon \Lambda \hookrightarrow \Delta$. By \propref{images_in_G_sets}, we know that $R(\Lambda)$ is a sub-$G$-set of $R(\Delta)$, that is, a disjoint union of transitive cofactors of $R(\Delta)$. We observe the following fact: Let $C$ be a transitive cofactor of $R(\Delta)$. If there exists $(1_i)_l \in \Omega$ such that $\phi((1_i)_l) \in C$, then by the $G$-equivariance of $R(\phi)$ and since $C$ is a transitive $G$-set, we already have that $C$ is a subset of the set-theoretic image. Conversely, if $C$ is a subset of the set-theoretic image, there exists an $\omega \in \Omega$ such that $\phi(\omega) \in C$. Write $\omega = (1_i)_lg$ for some $(1_i)_l \in \Omega$. Then $\phi((1_i)_l) = \phi(\omega g\inv) = \phi(\omega)g\inv \in C$ since $C$ is a transitive $G$-set. Thus, $R(\Lambda)$ is the sub-$G$-set of $R(\Delta)$ corresponding to the sub-$G$-set $P$ of $\Delta$ which consists of the target positions of the components of $\phi$, and $\iota\colon \Lambda \hookrightarrow \Delta$ is the embedding of $P$. We make this precise in \algoref{ImagePositions} and \algoref{Images}.
+\end{rem}
+
+\begin{algorithm}\capstart
+    \caption{\texttt{ImagePositions}}\label{algo:ImagePositions}
+	\KwIn{a morphism $\phi\colon S \to T$}
+	\KwOut{the sub-$G$-set $P$ of $T$ corresponding to the sub-$G$-set $\im(R(\phi))$ of $R(T)$}
+	\BlankLine
+	let $P$ be the empty set\;
+	\ForEach{position $p_T$ of $T$}{
+	    \If{there exists a position $p_S$ of $S$ such that the component of $\phi$ at position $p_S$ has target position $p_T$}{
+	        add $p_T$ to $P$\;
+	    }
+	}
+	
+	\Return $P$\;
+\end{algorithm}
+
+\begin{algorithm}\capstart
+    \caption{Images in \SkeletalGSets{}}\label{algo:ImageEmbedding}\label{algo:Images}
+	\KwIn{a morphism $\phi\colon \Omega \to \Delta$ in \SkeletalGSets{} and optionally a test object $\Lambda'$ and test morphisms $\tau_1\colon \Omega \to \Lambda'$ and $\tau_2\colon \Lambda' \to \Delta$ such that $\tau_2$ is a monomorphism and $\tau_2 \circ \tau_1 = \phi$}
+	\KwOut{an image $\Lambda$ of $\phi$ with an embedding $\iota\colon \Lambda \to \Delta$ and a coastriction $c\colon \Omega \to \Lambda$; additionally the universal morphism $\psi\colon \Lambda \to \Lambda'$ if a test object is given}
+	\BlankLine
+	\texttt{ImageEmbedding} and \texttt{ImageObject}:\\
+	let $\iota$ be the embedding of the sub-$G$-set $\texttt{ImagePositions}(\phi)$ of $\Delta$\;
+	let $\Lambda$ be the source of $\iota$\;
+	\BlankLine
+	\texttt{CoastrictionToImage} (automatically derived by \CapPkg{}):\\
+	let $c$ be the lift of $\phi$ along the monomorphism $\iota$\;
+	\BlankLine
+	\texttt{UniversalMorphismFromImage} (automatically derived by \CapPkg{}):\\
+	\If{a test object is given}{
+	    let $\psi$ be the lift of $\iota$ along the monomorphism $\tau_2$\;
+	}
+	\BlankLine
+	\Return $\Lambda$, $\iota$, and $c$, and additionally $\psi$ if a test object is given\;
+\end{algorithm}
+
+\begin{rem}[Mono- and epimorphisms in \SkeletalGSets{}]\label{rem:IsMonoIsEpi}
+Let $\phi\colon \Omega \to \Delta$ be a morphism in \SkeletalGSets{}. We want to find algorithms to determine if $\phi$ is a monomorphism respectively an epimorphism.
+
+If $\phi$ is a monomorphism, then $R(\phi)$ is injective and thus bijective onto its image. Therefore, we have $\im(\phi) = \Omega$ because \SkeletalGSets{} is a skeletal category. Conversely, if we have $\im(\phi) = \Omega$, then in particular $\abs{\im(R(\phi))} = \abs{R(\Omega)}$ as sets and this implies that $R(\phi)$ is injective, that is, $\phi$ is a monomorphism.
+
+Since $U(R(\phi))$ is a map of sets, it is surjective if and only if $\im(U(R(\phi))) = U(R(\Delta))$ and this holds true if and only if $\im(\phi) = \Delta$. Thus, $\phi$ is an epimorphism if and only if $\im(\phi) = \Delta$.
+\end{rem}
+
+Finally, we are able to explain the algorithms for computing equalizers and coequalizers.
+
+\begin{rem}[Equalizers in \SkeletalGSets{}]
+By \propref{equalizers_in_G_sets}, all equalizers in \Gset{} exist. Therefore, also in \SkeletalGSets{} all equalizers exist. Let $\Omega$ and $\Delta$ be objects in \SkeletalGSets{} and let $\phi_t\colon \Omega \to \Delta$ be morphisms in \SkeletalGSets{} for $t \in \{1,\dots,s\}$. We want to find an equalizer $\Lambda$ of the $\phi_i$ and its embedding $\iota$ into $\Omega$. By \propref{equalizers_in_G_sets}, we know that $R(\Lambda)$ is a sub-$G$-set of $R(\Omega)$, that is, a disjoint union of transitive cofactors of $R(\Omega)$. Concretely, it contains exactly the transitive cofactors $C$ of $R(\Omega)$ such that $R(\phi_a)\vert_C = R(\phi_b)\vert_C$ for all $a,b \in \{1,\dots,s\}$. We have seen in \remref{equality_of_morphisms_in_skeletal_G_sets} that $R(\phi_a)\vert_C = R(\phi_b)\vert_C$ is equivalent to $\phi_a((1_i)_l) = \phi_b((1_i)_l)$ where $(i,l)$ is the position of $C$. Therefore, $R(\Lambda)$ is the sub-$G$-set of $R(\Omega)$ corresponding  to the sub-$G$-set $P$ of $\Omega$ with the following property: a position $p$ of $\Omega$ is an element of $P$ if and only if the target positions of the $\phi_t$ at position $p$ are pairwise equal. Moreover, $\iota\colon \Lambda \hookrightarrow \Omega$ is the embedding of $P$. We make this precise in \algoref{Equalizers}.
+\end{rem}
+
+\begin{algorithm}\capstart
+    \caption{Equalizers in \SkeletalGSets{}}\label{algo:Equalizers}\label{algo:Equalizer}\label{algo:EmbeddingOfEqualizer}\label{algo:UniversalMorphismIntoEqualizer}
+	\KwIn{morphisms $\phi_1,\dots,\phi_s\colon \Omega \to \Delta$ in \SkeletalGSets{} and optionally a test object $\Lambda'$ with a test morphism $\iota'\colon \Lambda' \to \Omega$}
+	\KwOut{an equalizer $\Lambda$ of $\phi_1,\dots,\phi_s$ with an embedding $i\colon \Lambda \to \Omega$; additionally the universal morphism $\psi\colon \Lambda' \to \Lambda$ if a test object is given}
+	\BlankLine
+	\texttt{EmbeddingOfEqualizer} and \texttt{Equalizer} (automatically derived by \CapPkg{}):\\
+	let $P$ be the empty set\;
+	\ForEach{position $p$ of $\Omega$}{
+	    \If{the components of the $\phi_t$ at position $p$ are pairwise equal}{
+	        add $p$ to $P$\;
+	    }
+	}
+	let $\iota$ be the embedding of the sub-$G$-set $P$ of $\Omega$\;
+	let $\Lambda$ be the source of $\iota$\;
+	\BlankLine
+	\texttt{UniversalMorphismIntoEqualizer}:\\
+	\If{a test object is given}{
+	    let $\psi$ be the lift of $\iota'$ along the monomorphism $\iota$\;
+	}
+	\BlankLine
+	\Return $\Lambda$ and $\iota$, and additionally $\psi$ if a test object is given\;
+\end{algorithm}
+
+\begin{exmp}[Coequalizers in \SkeletalGSets{}]\label{exmp:coequalizers_in_skeletal_G_sets_1}
+Before we explain our algorithm for computing a coequalizer, we give a motivating example. Let $G = S_3$ and let $\Omega = [4,0,0,0]$ and $\Delta = [0,4,0,0]$ be objects in \SkeletalGSets{}. Let $\phi_1, \phi_2 \colon \Omega \to \Delta$ be morphisms in \SkeletalGSets{} represented by \[[ [ ( 1, U_2(), 2 ), ( 1, U_2(), 2 ), ( 3, U_2(), 2 ), ( 3, U_2(), 2 ) ], [], [], [] ]\] and \[[ [ ( 2, U_2(123), 2 ), ( 2, U_2(), 2 ), ( 4, U_2(), 2 ), ( 4, U_2(), 2 ) ], [], [], [] ]\] respectively. \figref{exmp:coequalizers_in_skeletal_G_sets_1_objects_and_maps} shows a visualization.
+\begin{figure}
+\[
+\begin{tikzcd}
+\Omega                                                                               &  & \Delta  \\
+=                                                                                    &  & =       \\
+\{1\} \backslash S_3 \arrow[rr, "()" near start, dotted] \arrow[rrdd, "(123)" near start, dashed]   &  & U_2 \backslash S_3 \\
+\sqcup                                                                               &  & \sqcup  \\
+\{1\} \backslash S_3 \arrow[rruu, "()"' near start, dotted] \arrow[rr, "()"' near start, dashed]    &  & U_2 \backslash S_3 \\
+\sqcup                                                                               &  & \sqcup  \\
+\{1\} \backslash S_3 \arrow[rr, "()" near start, dotted] \arrow[rrdd, "()" near start, dashed]      &  & U_2 \backslash S_3 \\
+\sqcup                                                                               &  & \sqcup  \\
+\{1\} \backslash S_3 \arrow[rruu, "()"' near start, dotted] \arrow[rr, "()"' near start, dashed]    &  & U_2 \backslash S_3
+\end{tikzcd}
+\]
+\caption{A visualization of the objects and maps in \exmpref{coequalizers_in_skeletal_G_sets_1}}\label{fig:exmp:coequalizers_in_skeletal_G_sets_1_objects_and_maps}
+\end{figure}
+The dotted and dashed arrows correspond to $\phi_1$ and $\phi_2$ respectively. Our aim is to find a coequalizer of $\phi_1$ and $\phi_2$, that is, an object $\Lambda$ and a projection $\pi\colon \Delta \twoheadrightarrow \Lambda$ represented by \[[ [ ( b_1, U_{a_1}h_1, a_1 ), ( b_2, U_{a_2}h_2, a_2 ), ( b_3, U_{a_3}h_3, a_3 ), ( b_4, U_{a_4}h_1, a_4 ) ], [], [], [] ]\] such that $\pi \circ \phi_1 = \pi \circ \phi_2$. Visually speaking, the condition $\pi \circ \phi_1 = \pi \circ \phi_2$ means that in \figref{exmp:coequalizers_in_skeletal_G_sets_1_coequalizer} ``taking the dotted arrows and then the solid ones'' yields the same result as ``taking the dashed arrows and then the solid ones''.
+\begin{figure}
+\[
+\begin{tikzcd}
+\{1\} \backslash S_3 \arrow[rr, "()" near start, dotted] \arrow[rrdd, "(123)" near start, dashed]   &  & U_2 \backslash S_3 \arrow[rrddd, "h_1"] &  &         \\
+                                                                                     &  &                              &  &         \\
+\{1\} \backslash S_3 \arrow[rruu, "()"' near start, dotted] \arrow[rr, "()"' near start, dashed]    &  & U_2 \backslash S_3 \arrow[rrd, "h_2"']   &  &         \\
+                                                                                     &  &                              &  & \Lambda \\
+\{1\} \backslash S_3 \arrow[rr, "()" near start, dotted] \arrow[rrdd, "()" near start, dashed]      &  & U_2 \backslash S_3 \arrow[rru, "h_3"]   &  &         \\
+                                                                                     &  &                              &  &         \\
+\{1\} \backslash S_3 \arrow[rruu, "()"' near start, dotted] \arrow[rr, "()"' near start, dashed]    &  & U_2 \backslash S_3 \arrow[rruuu, "h_4"'] &  &        
+\end{tikzcd}
+\]
+\caption{A visualization of the coequalizer in \exmpref{coequalizers_in_skeletal_G_sets_1}}\label{fig:exmp:coequalizers_in_skeletal_G_sets_1_coequalizer}
+\end{figure}
+Of course, we could construct all sets and the maps explicitly, afterwards take the canonical coequalizer in \Set{} and finally define an action of $G$ on it as in \propref{coequalizers_in_G_sets}. However, we have implemented a more efficient way. The idea is to collect all necessary conditions which follow from the diagram in \figref{exmp:coequalizers_in_skeletal_G_sets_1_coequalizer} and then show that these conditions are already sufficient. The first observation is that the diagram in \figref{exmp:coequalizers_in_skeletal_G_sets_1_objects_and_maps} consists of two ``connected components'', the upper and the lower half. All components of $\pi$ starting from a single connected component of the diagram (for example $( b_1, U_{a_1}h_1, a_1 )$ and $( b_2, U_{a_2}h_2, a_2 )$) have to have the same target position because otherwise ``taking the dotted arrows'' and ``taking the dashed arrows'' can never give the same result. For the converse, recall the definition of $\sim$ in \propref{coequalizers_in_G_sets}: two elements of $\Delta$ are related by $\sim$ if and only if they are the images of a single $\omega \in \Omega$ under $\phi_1$ and $\phi_2$. But this implies that they lie in the same connected component of the diagram. Since taking the transitive hull of $\sim$ does not cross connected components, we do not want to relate elements of different connected components to each other. If two components of $\pi$ have the same target position, this means that elements of the sources of the components are related. So components of $\pi$ starting from different connected components of the diagram should not have the same target position. Thus, $\Lambda$ must have at least two positions and the universal property implies that $\Lambda$ is the ``smallest'' object with this property, so it should not have more. Therefore, we have $\Lambda = V_1 \backslash S_3 \sqcup V_2 \backslash S_3$ for suitable subgroups $V_1,V_2 \leq S_3$. This is visualized in \figref{exmp:coequalizers_in_skeletal_G_sets_1_coequalizer_refined}.
+\begin{figure}
+\[
+\begin{tikzcd}
+                                                                                     &  &                            &  & \Lambda \\
+                                                                                     &  &                            &  & =       \\
+\{1\} \backslash S_3 \arrow[rr, "()" near start, dotted] \arrow[rrdd, "(123)" near start, dashed]   &  & U_2 \backslash S_3 \arrow[rrd, "h_1"] &  &         \\
+                                                                                     &  &                            &  & V_1 \backslash S_3 \\
+\{1\} \backslash S_3 \arrow[rruu, "()"' near start, dotted] \arrow[rr, "()"' near start, dashed]    &  & U_2 \backslash S_3 \arrow[rru, "h_2"'] &  &         \\
+                                                                                     &  &                            &  & \sqcup  \\
+\{1\} \backslash S_3 \arrow[rr, "()" near start, dotted] \arrow[rrdd, "()" near start, dashed]      &  & U_2 \backslash S_3 \arrow[rrd, "h_3"] &  &         \\
+                                                                                     &  &                            &  & V_2 \backslash S_3 \\
+\{1\} \backslash S_3 \arrow[rruu, "()"' near start, dotted] \arrow[rr, "()"' near start, dashed]    &  & U_2 \backslash S_3 \arrow[rru, "h_4"'] &  &        
+\end{tikzcd}
+\]
+\caption{A refined visualization of the coequalizer in \exmpref{coequalizers_in_skeletal_G_sets_1}}\label{fig:exmp:coequalizers_in_skeletal_G_sets_1_coequalizer_refined}
+\end{figure}
+Now, one can check that $V_1 \backslash S_3$ and $V_2 \backslash S_3$ are coequalizers of the upper connected component and the lower connected component respectively. Thus, we only have to compute coequalizers of individual connected components. We will make this precise in the following definition and lemma.
+\end{exmp}
+
+\begin{defn}[Connected components of parallel maps]\label{defn:connected_components_of_parallel_maps}
+Given two objects $\Omega = [m_1,\dots,m_k]$ and $\Delta = [n_1,\dots,n_k]$ in \SkeletalGSets{} and morphisms $\phi_1,\dots,\phi_s\colon \Omega \to \Delta$ in \SkeletalGSets{} we define the set \[R \coloneqq \{ (i,l_i,1) \mid 1 \leq i \leq k\text{ and } 1 \leq l_i \leq m_i \} \cup \{ (j,r_j,2) \mid 1 \leq j \leq k\text{ and } 1 \leq r_j \leq n_j \}.\] A triple $(i,l,1) \in R$ corresponds to the position $(i,l)$ of $\Omega$ and a triple $(j,r,2)$ corresponds to the position $(j,r) \in \Delta$. We define a relation on $R$: we set $(i,l,1) \sim (j,r,2)$ for $(i,l,1),(j,r,2) \in R$ if and only if there exists $t \in \{1,\dots,s\}$ such that the target position of the component of $\phi_t$ at position $(i,l)$ is $(j,r)$. If this is the case, we say that $(i,l,1) \sim (j,r,2)$ is \emph{induced} by $\phi_t$. A \emphindex{connected component} of $\phi_1,\dots,\phi_s$ is an equivalence class of the reflexive, symmetric and transitive hull of this relation.
+
+Note that the components of morphisms correspond to edges in our diagrams and thus the connected components of $\phi_1,\dots,\phi_s$ are indeed the connected components of the corresponding diagram viewed as a graph.
+
+Let $C$ be a connected component of $\phi_1,\dots,\phi_s$. Then we define the \emphindex[source of a connected component]{source} $S(C)$ of $C$ as the sub-$G$-set of $R(\Omega)$ corresponding to the sub-$G$-set $\{(i,l) \mid (i,l,1) \in C\}$ of $\Omega$, and the \emphindex{target of a connected component} $T(C)$ of $C$ as the sub-$G$-set of $R(\Delta)$ corresponding to the sub-$G$-set $\{(j,r) \mid (j,r,2) \in C\}$ of $\Delta$. Let $\iota_S\colon S(C) \to R(\Omega)$ and $\iota_T\colon T(C) \to R(\Delta)$ be the corresponding embeddings. For $t \in \{1,\dots,s\}$ we define the \emphindex[restriction!to a connected component]{restriction} $\phi_t\vert_C$ of $\phi_t$ to $C$ as the lift of $\phi_t \circ A(\iota_S)$ along the monomorphism $A(\iota_T)$. Note that this lift exists since by construction $R(\phi_t) \circ \iota_S(S(C)) \subseteq \iota_T(T(C))$. A \emphindex[coequalizer of a connected component]{coequalizer} of $C$ is a coequalizer of the restrictions of $\phi_1,\dots,\phi_s$ to $C$.
+\end{defn}
+
+\begin{rem}[Functoriality of the coproduct in \SkeletalGSets{}]
+For any $t \in \{1,\dots,s\}$ let $\phi_t\colon \Omega_t \to \Delta_t$ be a morphism in \SkeletalGSets{}. Set $\Omega \coloneqq \bigsqcup_t \Omega_t$ and $\Delta \coloneqq \bigsqcup_t \Delta_t$. Then there exists a unique morphism $\phi\colon \Omega \to \Delta$ such that for any $t \in \{1,\dots,s\}$ the following diagram commutes:
+\[
+\begin{tikzcd}
+\Omega_t \arrow[d, "\iota_{\Omega_t}"', hook] \arrow[r, "\phi_t"] & \Delta_t \arrow[d, "\iota_{\Delta_t}", hook] \\
+\Omega \arrow[r, "\phi"']                                         & \Delta                                      
+\end{tikzcd}
+\]
+To see this, note that for any $t \in \{1,\dots,s\}$ we have a morphism $\Omega_t \stackrel{\phi_t}{\longrightarrow} \Delta_t \stackrel{\iota_{\Delta_t}}{\longrightarrow} \Delta$ and by the universal property of the coproduct, these morphisms induce a unique morphism $\Omega \to \Delta$. We write $\bigsqcup_t \phi_t \coloneqq \phi$.
+
+This is a special case of the functoriality of limits and colimits in arbitrary categories.
+\end{rem}
+
+\begin{lem}
+Let $\Omega$ and $\Delta$ be objects in \SkeletalGSets{} and let $\phi_1,\dots,\phi_s\colon \Omega \to \Delta$ be morphisms in \SkeletalGSets{}. Then a coproduct of coequalizers of the connected components of $\phi_1,\dots,\phi_s$ is a coequalizer of $\phi_1,\dots,\phi_s$.
+\end{lem}
+\begin{proof}
+Assume that we can decompose both $\Omega = \bigsqcup_{d=1}^c \Omega_d$ and $\Delta = \bigsqcup_{d=1}^c \Delta_d$ into sub-$G$-sets such that for any $t \in \{1,\dots,s\}$ and any $d \in \{1,\dots,c\}$ there exists a morphism $(\phi_t)_d\colon \Omega_d \to \Delta_d$ such that the following diagram commutes:
+\[
+\begin{tikzcd}
+\Omega_d \arrow[d, "\iota_{\Omega_d}"', hook] \arrow[r, "(\phi_t)_d"] & \Delta_d \arrow[d, "\iota_{\Delta_d}", hook] \\
+\Omega \arrow[r, "\phi_t"]                                            & \Delta                                      
+\end{tikzcd}
+\]
+For any $d \in \{1,\dots,c\}$ let $\Lambda_d$ be a coequalizer of $(\phi_1)_d,\dots,(\phi_s)_d$ and $\pi_d \colon \Delta_d \to \Lambda_d$ the corresponding projection. Set $\Lambda \coloneqq \bigsqcup_d \Lambda_d$ and $\pi \coloneqq \bigsqcup_d \pi_d$. Then we have the following commutative diagram:
+\[
+\begin{tikzcd}
+\Omega_d \arrow[d, "\iota_{\Omega_d}"', hook] \arrow[r, "(\phi_t)_d"] & \Delta_d \arrow[d, "\iota_{\Delta_d}"', hook] \arrow[r, "\pi_d", two heads] & \Lambda_d \arrow[d, "\iota_{\Lambda_d}"', hook] \\
+\Omega \arrow[r, "\phi_t"]                                            & \Delta \arrow[r, "\pi"]                                                     & \Lambda                                        
+\end{tikzcd}
+\]
+We want to show that $\Lambda$ together with $\pi$ is a coequalizer of $\phi_1,\dots,\phi_s$. First, we have to show that $\pi \circ \phi_a = \pi \circ \phi_b$ for all $a,b \in \{1,\dots,s\}$. But this can be checked on the sub-$G$-sets $\Omega_d$ of $\Omega$ and by commutativity of the diagram we have \[\pi \circ \phi_a \circ \iota_{\Omega_d} = \iota_{\Lambda_d} \circ \pi_d \circ (\phi_a)_d = \iota_{\Lambda_d} \circ \pi_d \circ (\phi_b)_d = \pi \circ \phi_b \circ \iota_{\Omega_d}.\]
+
+Now let $\pi'\colon \Delta \to \Lambda'$ be a morphism in \SkeletalGSets{} with $\pi' \circ \phi_a = \pi' \circ \phi_b$ for all $a,b \in \{1,\dots,s\}$. Then for any $d \in \{1,\dots,c\}$ and for all $a,b \in \{1,\dots,s\}$ we have \[\pi' \circ \iota_{\Delta_d} \circ (\phi_a)_d = \pi' \circ \phi_a \circ \iota_{\Omega_d} = \pi' \circ \phi_b \circ \iota_{\Omega_d} = \pi' \circ \iota_{\Delta_d} \circ (\phi_b)_d.\] Thus, we get a unique morphism $\psi_d \colon \Lambda_d \to \Lambda'$ such that the following diagram commutes:
+\[
+\begin{tikzcd}
+\Omega_d \arrow[d, "\iota_{\Omega_d}"', hook] \arrow[r, "(\phi_t)_d"] & \Delta_d \arrow[d, "\iota_{\Delta_d}"', hook] \arrow[r, "\pi_d", two heads] & \Lambda_d \arrow[d, "\iota_{\Lambda_d}"', hook] \arrow[rdd, "\psi_d", bend left] &          \\
+\Omega \arrow[r, "\phi_t"]                                            & \Delta \arrow[r, "\pi"] \arrow[rrd, "\pi'"', bend right]                    & \Lambda                                                                          &          \\
+                                                                      &                                                                             &                                                                                  & \Lambda'
+\end{tikzcd}
+\]
+Finally, by the universal property of the coproduct we get a unique morphism $\psi \colon \Lambda \to \Lambda'$ such that the following diagram commutes:
+\[
+\begin{tikzcd}
+\Omega_d \arrow[d, "\iota_{\Omega_d}"', hook] \arrow[r, "(\phi_t)_d"] & \Delta_d \arrow[d, "\iota_{\Delta_d}"', hook] \arrow[r, "\pi_d", two heads] & \Lambda_d \arrow[d, "\iota_{\Lambda_d}"', hook] \arrow[rdd, "\psi_d", bend left] &          \\
+\Omega \arrow[r, "\phi_t"]                                            & \Delta \arrow[r, "\pi"] \arrow[rrd, "\pi'"', bend right]                    & \Lambda \arrow[rd, "\psi" description]                                           &          \\
+                                                                      &                                                                             &                                                                                  & \Lambda'
+\end{tikzcd}
+\]
+This is a special case of the fact that taking colimits commutes with taking colimits.
+
+Now let $\Ccal$ be the set of connected components of $\phi_1,\dots,\phi_s$. Then one can easily check that $\Omega = \bigsqcup_{C \in \Ccal} A(S(C))$ and $\Delta = \bigsqcup_{C \in \Ccal} A(T(C))$, and that for any $C \in \Ccal$ and any $t \in \{1,\dots,s\}$ the following diagram commutes:
+\[
+\begin{tikzcd}
+A(S(C)) \arrow[d, "\iota_{A(S(C))}"', hook] \arrow[r, "\phi_t\vert_C"] & A(T(C)) \arrow[d, "\iota_{A(T(C))}", hook] \\
+\Omega \arrow[r, "\phi_t"]                                             & \Delta                                      
+\end{tikzcd}
+\]
+Thus, the decomposition into connected components has the properties which we have assumed at the beginning of the proof and the claim follows.
+\end{proof}
+
+\begin{rem}[Implementation]\label{rem:CoproductFunctorial}
+Let $\Omega$ and $\Delta$ be two objects in \SkeletalGSets{} and let $\phi_1,\dots,\phi_s\colon \Omega \to \Delta$ be morphisms in \SkeletalGSets{}. The lemma above shows that if we can compute the projections $\pi_C$ of coequalizers of the connected components of $\phi_1,\dots,\phi_s$, we can afterwards take $\bigsqcup_C \pi_C$ to get the projection of a coequalizer of $\phi_1,\dots,\phi_s$. Computing $\bigsqcup_C \pi_C$ can be done with the method \texttt{CoproductFunctorial} in \CapPkg{}. However, one issue arises: the source of $\pi$ is a coproduct of the $A(T(C))$ but in general this is not the same coproduct as $\Delta$. Since we work in a skeletal setting, as objects both agree, but in general the embeddings are different. Thus, the following diagram does \emph{not} commute for $\alpha' = \id_\Delta$ because the triangle on the left does not commute:
+\[
+\begin{tikzcd}
+                                     & A(T(C)) \arrow[r, "\pi_C"] \arrow[ld, "\iota_{A(T(C))}"', hook] \arrow[d, hook] & \Lambda_C \arrow[d, hook] \\
+\Delta \arrow[r, "\alpha'"', dotted] & \bigsqcup_C A(T(C)) \arrow[r, "\bigsqcup_C \pi_C"]                           & \bigsqcup_C \Lambda_C    
+\end{tikzcd}
+\]
+However, we know that there exists an isomorphism $\alpha'\colon\Delta \to \bigsqcup_C A(T(C))$ which makes the diagram commute. If not concerned with the implementation, one would use the universal property of the coproduct $\Delta$ and choose $\alpha'$ to be the unique morphism $\Delta \to \bigsqcup_C A(T(C))$. However, in \CapPkg{} we can only use the universal property of the coproduct with the embeddings given by \texttt{InjectionOfCofactorOfCoproduct}. But this is exactly what \texttt{CoproductFunctorial} uses and what we have denoted by $A(T(C)) \hookrightarrow \bigsqcup_C A(T(C))$ above. Thus, we can use the universal property of $\bigsqcup_C A(T(C))$ to get an isomorphism $\alpha\colon\bigsqcup_C A(T(C)) \to \Delta$ and choose $\alpha' \coloneqq \alpha\inv$. Thus, the projection $\pi\colon \Delta \to \bigsqcup_C \Lambda_C$ we are looking for is given by $\bigsqcup_C \pi_C \circ \alpha\inv$.
+\end{rem}
+
+\begin{exmp}[Finding connected components]\label{exmp:finding_connected_components}
+Choose $G = S_3$. Let $\Omega = [3,0,0,0]$ and $\Delta = [2,2,0,0]$ be objects in \SkeletalGSets{} and let $\phi_1,\phi_2\colon \Omega \to \Delta$ be two morphisms in \SkeletalGSets{} represented by \[[(1,U_1(),1),(2,U_1(),1),(2,U_1(),1)],[],[],[]\] and \[[(2,U_1(),1),(1,U_2(),2),(1,U_2(),2)],[],[],[]\] respectively. We get the following diagram, where $\phi_1$ corresponds to the dotted and $\phi_2$ to the dashed arrows:
+\[
+\begin{tikzcd}
+\{1\} \backslash S_3 \arrow[r, dotted] \arrow[rd, dashed] & \{1\} \backslash S_3   \\
+\{1\} \backslash S_3 \arrow[r, dotted] \arrow[rd, dashed] & \{1\} \backslash S_3   \\
+\{1\} \backslash S_3 \arrow[r, dashed] \arrow[ru, dotted] & U_2 \backslash S_3 \\
+                                                      & U_2 \backslash S_3
+\end{tikzcd}
+\]
+We want to find the connected components of $\phi_1$ and $\phi_2$. For this, we start with the position $(1,1)$ of $\Delta$ at, which corresponds to the element $(1,1,2)$ in $R$. Let $(i,l,1) \in R$ for $R$ as in \defnref{connected_components_of_parallel_maps}. By the definition of $\sim$ in \defnref{connected_components_of_parallel_maps}, we have $(i,l,1) \sim (1,1,2)$ if and only if the target position of the component of $\phi_1$ at position $(i,l)$ is $(1,1)$ or the target position of the component of $\phi_2$ at position $(i,l)$ is $(1,1)$. Now, the positions $(i,l)$ with this property are exactly the preimage positions of the set $\{(1,1)\}$ under $\phi_1$ or $\phi_2$. There is only one such preimage position, namely the position $(1,1)$ of $\Omega$, which corresponds to $(1,1,1) \in R$. Since we want to have equivalence classes of the transitive hull of $\sim$, we now have to continue by finding all triples $(j,r,2) \in R$ such that $(1,1,1) \sim (j,r,2)$. Again by definition of $\sim$, these correspond exactly to the image positions of the set $\{(1,1)\}$ under $\phi_1$ or $\phi_2$. These image positions are the positions $(1,1)$ and $(1,2)$ of $\Delta$. Repeating this one more time, we get the preimage positions $(1,1)$, $(1,2)$ and $(1,3)$ and the image positions $(1,1)$, $(1,2)$ and $(2,1)$. Note that repeating this again will not change the result anymore. Thus, we know that we have found all elements related to $(1,1,2)$ under the reflexive, symmetric and transitive hull of $\sim$, that is, a connected component $C$. The source $S(C)$ is the sub-$G$-set of $R(\Omega)$ corresponding to the sub-$G$-set $\{(1,1), (1,2), (1,3)\}$ of $\Omega$ and the target $T(C)$ is the sub-$G$-set of $R(\Delta)$ corresponding to the sub-$G$-set $\{(1,1), (1,2), (2,1)\}$ of $\Delta$.
+
+Now the only remaining position of $\Delta$ is the position $(2,2)$. There are no preimage positions of the set $\{(2,2)\}$ under $\phi_1$ or $\phi_2$. Thus, the equivalence class of $(2,2,2)$ only contains $(2,2,2)$ itself. Therefore, we have found another connected component $C'$. Its source $S(C')$ is the sub-$G$-set of $R(\Omega)$ corresponding to the sub-$G$-set $\varnothing$ of $\Omega$ and its target $T(C')$ is the sub-$G$-set of $R(\Delta)$ corresponding to the sub-$G$-set $\{(2,2)\}$ of $\Delta$.
+
+Every position of $\Omega$ is related to a position $\Delta$, so it suffices to find the equivalence classes of the positions of $\Delta$ and hence we are done.
+\end{exmp}
+
+\begin{exmp}
+We continue \exmpref{coequalizers_in_skeletal_G_sets_1} and now only consider the upper connected component, that is, we restrict $\phi_1$, $\phi_2$ and $\pi$ to $\Omega = [2,0,0,0]$ and $\Delta = [0,2,0,0]$. From the diagram we get the following conditions:
+\begin{equation}
+\begin{aligned}
+V_1h_1() &= V_1h_2(123),\\ \label{coequalizers_in_skeletal_G_sets_1_is_coeq}
+V_1h_1() &= V_1h_2().
+\end{aligned}
+\end{equation}
+As always, $V_1$ is only determined up to conjugation. This is reflected in the fact that we can choose one $h_t$ freely, since choosing it differently corresponds simply to taking a conjugate of $V_1$. Thus, we can fix $h_1 \coloneqq ()$ and compute $h_2 = h_1()(123)^{-1} = (132)$ using the first equation considered as an equation in $G$, that is, not modulo $V_1$. Now we have found the group elements $h_1$ and $h_2$ in the definition of the projection $\pi$ but we still have to determine $V_1$ such that $\pi$ is well-defined and such that the second equation is fulfilled. The second equation gives us the condition $V_1() = V_1(132)$ which is equivalent to $(132) \in V_1$. The well-definedness of $\pi$ gives us the following conditions:
+\begin{equation}
+\begin{aligned}
+\langle (23) \rangle &= h_1 U_2 h_1\inv &\subseteq V_1,\\ \label{coequalizers_in_skeletal_G_sets_1_well_defined}
+\langle (12) \rangle &= h_2 U_2 h_2\inv &\subseteq V_1.
+\end{aligned}
+\end{equation}
+Thus, $\langle (23),(12),(132) \rangle \subseteq V_1$ which implies $V_1 = S_3$ and so the coequalizer $V_1 \backslash S_3$ must be the trivial $G$-set. To explain the general setting, let us assume that we do not know that the condition $\langle (23),(12),(132) \rangle \subseteq V_1$ already determines $V_1$. Then, we simply set $V_1 \coloneqq \langle (23),(12),(132) \rangle$ and show that $V_1 \backslash S_3$ fulfills the properties of the coequalizer.
+
+Note that we have constructed $V_1 \backslash S_3$ in \Gset{}, not in \SkeletalGSets{}. To get an object in \SkeletalGSets{}, we have to find $g \in S_3$ such that $gV_1g\inv = V \in \ReprSet$. Then $V_1 \backslash S_3 \cong V \backslash S_3$ and the tuple representing $V \backslash S_3$ can be read of immediately: if we write $V = U_i \in \ReprSet$, then the $i$-th entry of the tuple is $1$ and all other entries are $0$. An explicit isomorphism $V_1 \backslash S_3 \to V \backslash S_3$ is given by $V_1h \mapsto Vgh$. Thus, we only have to multiply the $h_t$ with $g$ to get the projection to $V \backslash S_3$ instead of $V_1 \backslash S_3$. Note that this corresponds to choosing $h_1 = g$ instead of $h_1 = ()$. In this example we could choose any $g \in S_3$ because we know that $V_1 = S_3$. Therefore, we stick to $g = ()$ and $V = V_1$.
+
+To check that $V_1 \backslash S_3$ together with $\pi$ is a coequalizer we could show that it is the canonical set-theoretic coequalizer. However, it is easier to check the properties of the coequalizer directly.
+
+By \eqref{coequalizers_in_skeletal_G_sets_1_well_defined}, the projection $\pi$ is well-defined and by \eqref{coequalizers_in_skeletal_G_sets_1_is_coeq} we have $\pi \circ f_1 = \pi \circ f_2$. 
+
+Now, let $\Lambda'$ be an object in \SkeletalGSets{} and $\pi'\colon \Delta \to \Lambda'$ a morphism given by \[[ [ ( b'_1, U_{a'_1}h'_1, a'_1 ), ( b'_2, U_{a'_2}h'_2, a'_2 ) ], [], [], [] ]\] such that $\pi' \circ f_1 = \pi' \circ f_2$. We have to show that there exists a unique morphism $\psi \colon \Lambda \to \Lambda'$ with the single component $(b,U_ag_\psi,a)$ such that $\psi \circ \pi = \pi'$. By the same arguments as in \exmpref{coequalizers_in_skeletal_G_sets_1}, both components of $\pi'$ and the unique component of $\psi$ must have the same target position. So let $V' \coloneqq U_{a'_1} = U_{a'_2} = U_a$.
+
+The equality $\psi \circ \pi = \pi'$ is equivalent to the conditions $V'g_\psi h_1 = V'h'_1$ and $V'g_\psi h_2 = V' h'_2$. Since we have fixed $h_1 = ()$, the first condition implies $V' g_\psi = V'h'_1$. Thus, $(b,U_ag_\psi,a)$ is uniquely defined. Setting $U_ag_\psi \coloneqq V'h'_1$ also fulfills the second condition because we have
+\begin{align}
+V' g_\psi h_2 &= V' h'_1 h_2 \label{eq:equality_0}\\ 
+&= V'h'_1h_1()(123)^{-1} \label{eq:equality_1}\\
+&= V'h'_1()(123)^{-1}\\
+&= V'h'_2. \label{eq:equality_2}
+\end{align}
+For the equality in \eqref{eq:equality_1} we use that we have computed $h_2 = h_1()(123)\inv$ above. For the equality in \eqref{eq:equality_2} we use the equation $V'h'_1() = V'h'_2(123)$ following from the assumption $h' \circ f_1 = h' \circ f_2$.
+
+Finally, we have to show that $\psi$ is in fact well-defined. This comes down to showing three inclusions:
+\begin{align}
+g_\psi \langle (23) \rangle g_\psi\inv &\subseteq V',\label{eq:inclusion_1}\\
+g_\psi \langle (12) \rangle g_\psi\inv &\subseteq V',\label{eq:inclusion_2}\\
+g_\psi \langle (132) \rangle g_\psi\inv &\subseteq V'.\label{eq:inclusion_3}
+\end{align}
+The inclusion in \eqref{eq:inclusion_1} is just $h'_1 \langle (23) \rangle {h'_1}\inv \subseteq V'$, which holds true because $h'$ is well-defined. For the inclusion in \eqref{eq:inclusion_2}, recall that the subgroup $\langle (12) \rangle$ was originally given as $h_2 \langle (23) \rangle h_2\inv$ in \eqref{coequalizers_in_skeletal_G_sets_1_well_defined}, so we can rewrite the inclusion as $h'_1 h_2 \langle (23) \rangle h_2\inv {h'_1}\inv \subseteq V'$. Using the equality $V'h'_1h_2 = V'h'_2$ (see \eqref{eq:equality_0} and \eqref{eq:equality_2}), this in turn is equivalent to $h'_2 \langle (23) \rangle {h'_2}\inv \subseteq V'$, which again holds true because $h'$ is well-defined. Finally, the inclusion in \eqref{eq:inclusion_3} holds true because the assumption $h' \circ f_1 = h' \circ f_2$ implies $V'() = V'(132)$.
+
+We make the algorithm precise in \algoref{ProjectionOntoCoequalizerOfAConnectedComponent} and \algoref{Coequalizers}.
+\end{exmp}
+
+\begin{algorithm}\capstart
+    \caption{\texttt{ProjectionOntoCoequalizerOfAConnectedComponent}}\label{algo:ProjectionOntoCoequalizerOfAConnectedComponent}
+	\KwIn{morphisms $\phi_1,\dots,\phi_s\colon \Omega \to \Delta$ in \SkeletalGSets{} which have only a single connected component}
+	\KwOut{a coequalizer $\Lambda$ of $\phi_1,\dots,\phi_s$ and its projection $\pi\colon \Delta \to \Lambda$}
+	\BlankLine
+	\emph{Building the system of equations:}\\
+	\For{$a,b \in \{1,\dots,s\}$}{
+	    \emph{Note: Since for $a = b$ the equations are trivially fulfilled and since the order of $a$ and $b$ is irrelevant, we can actually restrict to the cases where $a < b$.}\\
+	    \ForEach{position $(i,l)$ of $\Omega$}{
+            let $(r_a,U_ag_a,j_a)$ be the the component of $\phi_a$ at position $(i,l)$\;
+            let $(r_b,U_bg_b,j_b)$ be the the component of $\phi_b$ at position $(i,l)$\;
+            add the equation $h_{(j_a,r_a)} \cdot g_a = h_{(j_b,r_b)} \cdot g_b$ with variables $h_{(j_a,r_a)}$ and $h_{(j_b,r_b)}$ to the system of equations\;
+        }
+	}
+	\BlankLine
+	\emph{Solving the system of equations:}\\
+	let $(j',r')$ be a fixed position of $\Delta$\;
+	set $h_{(j',r')} \coloneqq 1 \in G$\;
+	\Repeat{all variables $h_{(j,r)}$ have known values}{\label{line:solving_the_system_of_equations}
+	    \ForEach{equation $h_{(j_a,r_a)} \cdot g_a = h_{(j_b,r_b)} \cdot g_b$}{
+    	    \If{the value of $h_{(j_a,r_a)}$ is unknown and the value of $h_{(j_b,r_b)}$ is known}{
+    	        solve the equation for $h_{(j_a,r_a)}$, that is, set $h_{(j_a,r_a)} \coloneqq h_{(j_b,r_b)} \cdot g_b \cdot g_a\inv$\;
+    	    }
+    	    \If{the value of $h_{(j_a,r_a)}$ is known and the value of $h_{(j_b,r_b)}$ is unknown}{
+    	        solve the equation for $h_{(j_b,r_b)}$, that is, set $h_{(j_b,r_b)} \coloneqq h_{(j_a,r_a)} \cdot g_a \cdot g_b\inv$\;
+    	    }
+	    }
+	}
+	\BlankLine
+	\emph{Construct $\Lambda$ and $\pi$:}\\
+	let $X$ be the empty set\;
+	\ForEach{position $(j,r)$ of $\Delta$}{
+	    add the elements of $h_{(j,r)} U_j h_{(j,r)}\inv$ to $X$\; \label{line:projections_are_well-defined}
+	}
+	\ForEach{equation $h_{(j_a,r_a)} \cdot g_a = h_{(j_b,r_b)} \cdot g_b$}{
+	    add $h_{(j_b,r_b)} \cdot g_b \cdot g_a\inv \cdot h_{(j_a,r_a)}\inv$ to $X$\; \label{line:equations_hold_true}
+	}
+	let $V \coloneqq \langle X \rangle \leq G$\;
+	find $g \in G$ such that $gVg\inv = U_{i'} \in \ReprSet$\;
+	set $\Lambda \coloneqq A(U_{i'} \backslash G)$\;
+	let $\pi$ be the morphism $\Delta \to \Lambda$ which has component $(1,U_{i'}gh_{(j,r)},i')$ at position $(j,r)$\;
+	\BlankLine
+	\Return $\Lambda$ and $\pi$\;
+\end{algorithm}
+
+\begin{prop}
+\Algoref{ProjectionOntoCoequalizerOfAConnectedComponent} terminates and yields the correct result.
+\end{prop}
+\begin{proof}
+For any position $p$ of $\Omega$ and $t \in \{1,\dots,s\}$ let $((r_t)_p,U_{(j_t)_p}(g_t)_p,(j_t)_p)$ be the component of $\phi_t$ at position $p$. Whenever we implicitly choose a representative of some $U_{(j_t)_p}(g_t)_p$ during the proof, let this representative be $(g_t)_p$. See \remref{consistent_choices} for more details on this.
+
+We first show that the algorithm terminates, that is, that solutions for all $h_{(j,r)}$ are found in the loop in line \ref{line:solving_the_system_of_equations} after finitely many iterations. For this, consider one variable $h_{(j,r)}$. Since $\phi_1,\dots,\phi_s$ have only a single connected component, $(j',r',2)$ and $(j,r,2)$ lie in the same connected component, where $(j',r')$ is the position of $\Delta$ fixed in the algorithm. By definition, this means that there exists a chain
+\begin{equation}
+(j',r',2) \eqqcolon (j_1,r_1,2) \sim (i_1,l_1,1) \sim (j_2,r_2,2) \sim \dots \sim (i_c,l_c,1) \sim (j_{c+1},r_{c+1},2) \coloneqq (j,r)\label{eq:chain}
+\end{equation}
+where we have replaced $\sim$ with its own symmetric hull for simpler notation. Now, we consider a triple in this chain, that is, we fix $d \in \{1,\dots,c\}$ and look at \[(j_d,r_d,2) \sim (i_d,l_d,1) \sim (j_{d+1},r_{d+1},2).\] Choose $a \in \{1,\dots,s\}$ such that $(i_d,l_d,1) \sim (j_d,r_d,2)$ is induced by $\phi_a$ and choose $b \in \{1,\dots,s\}$ such that $(i_d,l_d,1) \sim (j_{d+1},r_{d+1},2)$ is induced by $\phi_b$. When building the system of equations we add the equation $h_{(j_d,r_d)} \cdot (g_a)_{(i_d,l_d)} = h_{(j_{d+1},r_{d+1})} \cdot (g_b)_{(i_d,l_d)}$. In particular, if the value of $h_{(j_d,r_d)}$ is known we can solve the equation for $h_{(j_{d+1},r_{d+1})}$, that is, we set
+\begin{equation}
+h_{(j_{d+1},r_{d+1})}:= h_{(j_d,r_d)} \cdot (g_a)_{(i_d,l_d)} \cdot (g_b)_{(i_d,l_d)}\inv.\label{eq:solving_chain_triple}
+\end{equation}
+Since the chain is finite and since we have fixed a value for $h_{(j',r')}$, after finitely many steps we will find a solution for $h_{(j,r)}$.
+
+Next, we show that the projection $\pi$ is well-defined. Choose $g$ and $i'$ as in the algorithm. Then the component of $\pi$ at a position $(j,r)$ of $\Delta$ is $(1,U_{i'}gh_{(j,r)},i')$. We have \[gh_{(j,r)}U_j(gh_{(j,r)})\inv = gh_{(j,r)}U_jh_{(j,r)}\inv g\inv \subseteq gVg\inv = U_{i'}\] by line \ref{line:projections_are_well-defined} and thus, $\pi$ is well-defined.
+
+Next, we show that $\pi \circ \phi_a = \pi \circ \phi_b$ for all $a,b \in \{1,\dots,s\}$. This is equivalent to all components being equal. Let $p$ be a position of $\Omega$, let $(r_a,U_{j_a}g_a,j_a)$ be the component of $\phi_a$ at position $p$ and let $(r_b,U_{j_b}g_b,j_b)$ be the component of $\phi_b$ at position $p$. We have to show that $U_{i'}gh_{(j_a,r_a)}g_a = U_{i'}gh_{(j_b,r_b)}g_b$, which is equivalent to $gh_{(j_b,r_b)}g_b g_a\inv h_{(j_a,r_a)}\inv g\inv \in U_{i'}$. By line \ref{line:equations_hold_true} we have $h_{(j_b,r_b)}g_b g_a\inv h_{(j_a,r_a)}\inv \in V$ and the claim follows by using $gVg\inv = U_{i'}$.
+
+Now, let $\Lambda'$ be a test object with $\pi'\colon\Delta \to \Lambda'$ such that $\pi' \circ \phi_a = \pi' \circ \phi_b$ for all $a,b \in \{1,\dots,s\}$. For any position $p$ of $\Delta$ let $(y_p,U_{x_p}h'_p,x_p)$ be the component of $\pi'$ at position $p$. Let $\psi\colon\Lambda \to \Lambda'$ be the morphism in \SkeletalGSets{} with the single component $(y_{(j',r')},U_{x_{(j',r')}}h'_{(j',r')} g\inv,x_{(j',r')})$. Before we prove that $\psi$ is well-defined, we first prove the following claim: we have
+\begin{equation}
+V' h'_{(j',r')}h_{(j,r)} = V'h'_{(j,r)}\label{eq:main_claim}
+\end{equation}
+for all positions $(j,r)$ of $\Delta$. This follows if we consider the same chain as in \eqref{eq:chain} and, again, a triple \[(j_d,r_d,2) \sim (i_d,l_d,1) \sim (j_{d+1},r_{d+1},2)\] in this chain. Let $a,b \in \{1,\dots,s\}$ such that $\phi_a$ induces $(i_d,l_d,1) \sim (j_d,r_d,2)$ and $\phi_b$ induces $(i_d,l_d,1) \sim (j_{d+1},r_{d+1},2)$. Then by \eqref{eq:solving_chain_triple} we have
+\begin{equation}
+h_{(j_d,r_d)} \cdot (g_a)_{(i_d,l_d)} = h_{(j_{d+1},r_{d+1})} \cdot (g_b)_{(i_d,l_d)}.\label{eq:coequalizer_eq_1}
+\end{equation}
+Additionally, $\pi' \circ \phi_a = \pi' \circ \phi_b$ implies $x_{(j_d,r_d)} = x_{(j_{d+1},r_{d+1})}$, $y_{(j_d,r_d)} = y_{(j_{d+1},r_{d+1})}$, and
+\begin{equation}
+U_{x_{(j_d,r_d)}} h'_{(j_d,r_d)} (g_a)_{(i_d,l_d)} = U_{x_{(j_{d+1},r_{d+1})}} h'_{(j_{d+1},r_{d+1})} (g_b)_{(i_d,l_d)}.\label{eq:coequalizer_eq_2}
+\end{equation}
+For $V' \coloneqq U_{x_{(j_d,r_d)}} = U_{x_{(j_{d+1},r_{d+1})}}$, combining \eqref{eq:coequalizer_eq_1} and \eqref{eq:coequalizer_eq_2} gives \[V'h'_{(j_d,r_d)} h_{(j_d,r_d)}\inv h_{(j_{d+1},r_{d+1})} = V'h'_{(j_{d+1},r_{d+1})}.\] Iterating this, we get $U_{x_{(j_d,r_d)}} = V'$ for all $d \in \{1,\dots,(c+1)\}$ and
+\begin{align*}
+V'h'_{(j,r)} = V'h'_{(j_{c+1},r_{c+1})} &= V' h'_{(j_c,r_c)} h_{(j_c,r_c)}\inv h_{(j_{c+1},r_{c+1})}\\
+                                        &= V' h'_{(j_{c-1},r_{c-1})} h_{(j_{c-1},r_{c-1})}\inv h_{(j_c,r_c)} h_{(j_c,r_c)}\inv h_{(j_{c+1},r_{c+1})}\\
+                                        &= V' h'_{(j_{c-1},r_{c-1})} h_{(j_{c-1},r_{c-1})}\inv h_{(j_{c+1},r_{c+1})}\\
+                                        &\vdotswithin{=}\\
+                                        &= V' h'_{(j_1,r_1)} h_{(j_1,r_1)}\inv h_{(j_{c+1},r_{c+1})}\\
+                                        &= V' h'_{(j_1,r_1)} h_{(j_{c+1},r_{c+1})} = V' h'_{(j',r')} h_{(j,r)}.
+\end{align*}
+This is what we have claimed. In particular, there exists $v'_{(j,r)} \in V'$ such that
+\begin{equation}
+v'_{(j,r)} h'_{(j,r)} = h'_{(j',r')} h_{(j,r)}.\label{eq:coequalizer_eq_3}
+\end{equation}
+
+Now, we show that $\psi$ is well-defined, that is, that we have $h'_{(j',r')} g\inv U_{i'} (h'_{(j',r')} g\inv)\inv \subseteq V'$. This is equivalent to \[h'_{(j',r')} V {h'_{(j',r')}}\inv \subseteq V'.\] Since $V$ was defined as a generated subgroup, it suffices to show this inclusion for the generating sets instead of $V$. That is, we have to show
+\begin{equation}
+h'_{(j',r')} h_{(j,r)} U_j h_{(j,r)}\inv {h'_{(j',r')}}\inv \subseteq V'\label{eq:coequalizer_eq_4}
+\end{equation}
+for each position $(j,r)$ of $\Delta$ and
+\begin{equation}
+{h'_{(j',r')}} h_{(j_b,r_b)} \cdot g_b \cdot g_a\inv \cdot h_{(j_a,r_a)}\inv {h'_{(j',r')}}\inv \in V'\label{eq:coequalizer_eq_5}
+\end{equation}
+for each equation $h_{(j_a,r_a)} \cdot g_a = h_{(j_b,r_b)} \cdot g_b$. Using \eqref{eq:coequalizer_eq_3}, we can write \eqref{eq:coequalizer_eq_4} as \[v'_{(j,r)} h'_{(j,r)} U_j {h'_{(j,r)}}\inv {v'_{(j,r)}}\inv \subseteq V',\] which holds true since $\pi'$ is well-defined. Analogously, we can write \eqref{eq:coequalizer_eq_5} as
+\begin{equation}
+v'_{(j_b,r_b)} h'_{(j_b,r_b)} \cdot g_b \cdot g_a\inv \cdot {h'_{(j_a,r_a)}}\inv {v'_{(j_a,r_a)}}\inv \in V'.\label{eq:coequalizer_eq_6}
+\end{equation}
+By construction of the system of equations, there exists a position $(i,l)$ of $\Omega$ such that the component of $\phi_a$ at position $(i,l)$ is $(r_a,U_ag_a,j_a)$ and the component of $\phi_b$ at position $(i,l)$ is $(r_b,U_bg_b,j_b)$. Thus, $\pi' \circ \phi_a = \pi' \circ \phi_b$ implies that $V' h'_{(j_a,r_a)} \cdot g_a = V' h'_{(j_b,r_b)} \cdot g_b$ and therefore \eqref{eq:coequalizer_eq_6} holds true.
+
+Next, we show that $\psi \circ \pi = \pi'$. This is equivalent to all components being equal, that is, $V' h'_{(j',r')} g\inv g h_{(j,r)} = V' h'_{(j,r)}$ for all positions $(j,r)$ of $\Delta$, and this is just \eqref{eq:main_claim}.
+
+In particular, $\psi$ is the colift of $\pi'$ along the epimorphism $\pi$. Such a colift is unique if it exists. Thus, $\psi$ is uniquely defined and this finishes the proof.
+\end{proof}
+
+\begin{rem}\label{rem:consistent_choices}
+The intermediate results of the proof are certainly neither independent of the choices of the representatives at the beginning of the proof, nor are they independent of the choice of the chain \eqref{eq:chain}. Concretely, the left hand side of \eqref{eq:solving_chain_triple} depends both on the choice of the $g_a$ and $g_b$ and on the choice of the chain. However, this is no surprise because the coequalizer together with the projection is only determined up to isomorphism. Mathematically, this is not a problem because in the proof we fix representatives and a chain and can thus use \eqref{eq:coequalizer_eq_1} as a consequence of \eqref{eq:solving_chain_triple}. In the implementation, we fix representatives when building the system of equations and implicitly build the chain when solving the system of equations. If we would do this both for computing a coequalizer and for computing the universal morphism, we would have to ensure that both implementations are consistent. However, we will compute the universal morphism as a colift along an epimorphism. Thus, at no point inconsistencies can arise.
+\end{rem}
+
+\begin{algorithm}\capstart
+    \caption{Coequalizers in \SkeletalGSets{}}\label{algo:Coequalizers}\label{algo:Coequalizer}\label{algo:ProjectionOntoCoequalizer}\label{algo:UniversalMorphismFromCoequalizer}
+	\KwIn{two objects $\Omega$ and $\Delta$ in \SkeletalGSets{}, morphisms $\phi_1,\dots,\phi_s\colon \Omega \to \Delta$ in \SkeletalGSets{}, optionally a test object $\Lambda'$ with a test morphism $\pi'\colon \Lambda' \to \Omega$}
+	\KwOut{a coequalizer $\Lambda$ of $\phi_1,\dots,\phi_s$ with a projection $\pi\colon \Delta \to \Lambda$; if a test object is given additionally the universal morphism $\psi\colon \Lambda \to \Lambda'$}
+	\BlankLine
+	\texttt{ProjectionOntoCoequalizer} and \texttt{Coequalizer} (automatically derived by \CapPkg{}):\\
+	let $P$ the set of positions of $\Delta$\;
+	\While{$P$ is not the empty set}{\label{line:looping_over_connected_components}
+	    let $p$ be an element of $P$\;
+	    \emph{Find the connected component containing $p$:}\\
+	    let $I \coloneqq \{p\}$\;
+	    \Repeat{$I$ has stabilized, that is, it has not changed during the last iteration}{\label{line:finding_a_connected_component}
+	        let $L$ be the union of the preimage positions of $I$ under the $\phi_t$\;
+	        \If{$L$ is non-empty}{
+	            let $I$ be the union of the image positions of the $\phi_t$ restricted to the sub-$G$-set $L$ of $\Omega$\;
+	        }
+	    }
+	    \BlankLine
+	    \emph{Compute a coequalizer of the connected component:}\\
+	    let $C$ be the connected component of $\phi_1,\dots,\phi_s$ with $S(C)$ corresponding to the sub-$G$-set $L$ of $\Omega$ and $T(C)$ corresponding to the sub-$G$-set $I$ of $\Delta$\;
+	    compute a coequalizer $\Lambda_C$ of $\phi_1\vert_C,\dots,\phi_s\vert_C$ and its projection $\pi_C$\;
+	    let $\iota_C$ be the embedding of the sub-$G$-set $I$ of $\Delta$\;
+	    set $P \coloneqq P \setminus I$\;
+	}
+	\BlankLine
+	\emph{Take the coproduct:}\\
+	let $\tau \coloneqq \bigsqcup_C \pi_C \colon \bigsqcup_C A(T(C)) \to \bigsqcup_C \Lambda_C \eqqcolon \Lambda$\;
+	let $\alpha$ be the unique morphism from $\bigsqcup_C A(T(C))$ to $\Delta$ induced by the embeddings $\iota_C\colon A(T(C)) \hookrightarrow \Delta$\;
+	set $\pi \coloneqq \tau \circ \alpha\inv$\;
+	\BlankLine
+	\texttt{UniversalMorphismFromCoequalizer}:\\
+	\If{a test object is given}{
+	    let $\psi$ be the colift of $\pi'$ along the epimorphism $\pi$\;
+	}
+	\BlankLine
+	\Return $\Lambda$ and $\pi$, and additionally $\psi$ if a test object is given\;
+\end{algorithm}
+
+\begin{prop}
+\algoref{Coequalizers} terminates and yields the correct result.
+\end{prop}
+\begin{proof}
+We first check that the algorithm terminates, that is, that the loops in lines \ref{line:looping_over_connected_components} and \ref{line:finding_a_connected_component} terminate after finitely many steps. We start with the loop in line \ref{line:finding_a_connected_component}. If $L$ is empty, we do not change $I$ and thus exit the loop. If $L$ is non-empty, the size of $I$ cannot get smaller because taking preimage positions of a set and afterwards the image positions of these is monotonically increasing. Since the set of positions of $\Delta$ is finite, $I$ cannot grow infinitely and thus gets stationary. Then, we exit the loop. Additionally, this shows that after the loop, $I$ cannot be empty. Thus, at the end of the loop in line \ref{line:looping_over_connected_components}, we remove at least one element from the finite set $P$. Therefore, after finitely many iterations, $P$ is empty and we exit the loop.
+For the explanation why the loop in line \ref{line:looping_over_connected_components} indeed loops over all connected components, see \exmpref{finding_connected_components}. For the correctness of the rest of the algorithm see \remref{CoproductFunctorial} and \propref{coequalizers_in_G_sets}.
+\end{proof}

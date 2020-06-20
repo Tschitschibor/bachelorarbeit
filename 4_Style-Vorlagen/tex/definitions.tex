@@ -1,0 +1,127 @@
+% no breaks in math mode
+\relpenalty=10000
+\binoppenalty=10000
+
+\newcommand{\emphindex}[2][]{%
+\emph{#2}%
+\ifthenelse{\equal{#1}{}}{\index{#2}}{\index{#1}}%
+}
+
+\newcommand{\abs}[1]{{\lvert#1\rvert}}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Ical}{\mathcal{I}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\openinterval}[2]{\mathopen{}\left]#1,#2\right[\mathclose{}}
+\newcommand{\AMod}{{\ensuremath{\mathbf{A}{\operatorname{\mathbf{-Mod}}}}}}
+\newcommand{\Set}{{\ensuremath{{\operatorname{\mathbf{Sets}}}}}}
+\newcommand{\FinSets}{{\texttt{FinSets}}}
+\newcommand{\SkeletalFinSets}{{\texttt{SkeletalFinSets}}}
+\newcommand{\Gset}{{\texorpdfstring{\ensuremath{\mathbf{G}{\operatorname{\mathbf{-Sets}}}}}{G-Sets}}}
+\newcommand{\SkeletalGSets}{{\texorpdfstring{\ensuremath{{\operatorname{\mathbf{Skeletal-}}}\mathbf{G}{\operatorname{\mathbf{-Sets}}}}}{Skeletal-G-Sets}}}
+\newcommand{\CapPkg}{\textsc{Cap}}
+\newcommand{\ReprSet}{\mathcal{U}}
+
+% greek letters
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\phi}{\varphi}
+
+% algorithms
+\let\oldnl\nl% Store \nl in \oldnl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one line
+\newcommand{\rememberlines}{\nonl \hfill \ensuremath{\hookrightarrow\space} \xdef\rememberedlines{\number\value{AlgoLine}}}
+\newcommand{\resumenumbering}{\setcounter{AlgoLine}{\rememberedlines}}
+\SetKw{KwBreak}{break}
+\SetKwRepeat{Do}{do}{while}
+\SetKwInput{KwNote}{Note}
+\SetKwInput{KwImpl}{Implementation}
+
+% theorems
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{exmp}[defn]{Example}
+
+\theoremstyle{plain}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{lem}[defn]{Lemma}
+\newtheorem{cor}[defn]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{rem}[defn]{Remark}
+\newtheorem{constr}[defn]{Construction}
+
+\newtheoremstyle{break}
+{}{}%
+{}{}%
+{\bfseries}{}%  % Note that final punctuation is omitted.
+{\newline}{}
+\theoremstyle{break}
+\newtheorem{algo}[defn]{Algorithm}
+
+\newcommand{\Defnref}[1]{%
+	\hyperref[defn:#1]{Definition~\ref*{defn:#1}}%
+}
+\newcommand{\defnref}[1]{%
+	\hyperref[defn:#1]{Definition~\ref*{defn:#1}}%
+}
+\newcommand{\Exmpref}[1]{%
+	\hyperref[exmp:#1]{Example~\ref*{exmp:#1}}%
+}
+\newcommand{\exmpref}[1]{%
+	\hyperref[exmp:#1]{Example~\ref*{exmp:#1}}%
+}
+\newcommand{\Thmref}[1]{%
+	\hyperref[thm:#1]{Theorem~\ref*{thm:#1}}%
+}
+\newcommand{\thmref}[1]{%
+	\hyperref[thm:#1]{Theorem~\ref*{thm:#1}}%
+}
+\newcommand{\Propref}[1]{%
+	\hyperref[prop:#1]{Proposition~\ref*{prop:#1}}%
+}
+\newcommand{\propref}[1]{%
+	\hyperref[prop:#1]{Proposition~\ref*{prop:#1}}%
+}
+\newcommand{\Lemref}[1]{%
+	\hyperref[lem:#1]{Lemma~\ref*{lem:#1}}%
+}
+\newcommand{\lemref}[1]{%
+	\hyperref[lem:#1]{Lemma~\ref*{lem:#1}}%
+}
+\newcommand{\Remref}[1]{%
+	\hyperref[rem:#1]{Remark~\ref*{rem:#1}}%
+}
+\newcommand{\remref}[1]{%
+	\hyperref[rem:#1]{Remark~\ref*{rem:#1}}%
+}
+\newcommand{\Figref}[1]{%
+	\hyperref[fig:#1]{Figure~\ref*{fig:#1}}%
+}
+\newcommand{\figref}[1]{%
+	\hyperref[fig:#1]{Figure~\ref*{fig:#1}}%
+}
+\newcommand{\Appref}[1]{%
+	\hyperref[app:#1]{Appendix~\ref*{app:#1}}%
+}
+\newcommand{\appref}[1]{%
+	\hyperref[app:#1]{Appendix~\ref*{app:#1}}%
+}
+\newcommand{\Algoref}[1]{%
+	\hyperref[algo:#1]{Algorithm~\ref*{algo:#1}}%
+}
+\newcommand{\algoref}[1]{%
+	\hyperref[algo:#1]{Algorithm~\ref*{algo:#1}}%
+}
+\newcommand{\Funcref}[1]{%
+	\hyperref[func:#1]{Function~\ref*{func:#1}}%
+}
+\newcommand{\funcref}[1]{%
+	\hyperref[func:#1]{Function~\ref*{func:#1}}%
+}
