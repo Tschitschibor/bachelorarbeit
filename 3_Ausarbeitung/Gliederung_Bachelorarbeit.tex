@@ -116,7 +116,7 @@
 \usepackage{hyperref}
 \usepackage[figure]{hypcap}
 
-\title{Bachelorarbeit Representations of Concrete Categories as Objects in the Functor Category}
+\title{Representations of a concrete category as objects in the functor category}
 
 \author{Tibor Gr{\"u}n}
 
@@ -133,8 +133,9 @@
 
 	\pagenumbering{arabic}
 
-%\input{tex/en/01_introduction.tex}
-\input{tex/de/01_introduction.tex}
+%\input{tex/en/ZZZintroduction.tex}
+
+\section{Introduction}
 
 \[
 \mathbf{Quiv}\rightarrow^{CatClosure}\leftarrow_{U}\mathbf{Cats}
@@ -142,9 +143,25 @@
 \rightarrow^{AdditiveClosure}\leftarrow_{U}\mathbf{k-Cats^{\oplus}}
 \]
 
-\input{tex/en/02_Quiver_Path-Algebra_Algebroid.tex}
-%\input{tex/de/02_Quiver_Path-Algebra_Algebroid.tex}
+\input{tex/en/Short_overview_of_the_tools_used.tex}
 
+\input{tex/en/Quiver_Category_k-Algebroid.tex}
+
+\input{tex/en/Co_Limits_Kernel_Direct_Sum.tex}
+
+\input{tex/en/Functors_Natural_Transformations.tex}
+
+\input{tex/en/Adjunctions_Free_Forgetful.tex}
+
+\input{tex/en/Yoneda_Lemma_Co_Completion.tex}
+
+\input{tex/en/Functor_Categories_CatReps.tex}
+
+Yonedas Einbettungs-Lemma: Fehlende Limiten bzw. Kolimiten exitieren nach der Einbettung.
+
+Einbettung in Kategorien, die mehr Limiten haben als die Zielkategorie.
+
+"(Ko-)Vervollständigung" der Kategorie (Completion / Cocompletion)
 
 Quiver = unvollständige Struktur einer Kategorie
 Erzeugendensystem einer Kategorie.
@@ -152,12 +169,17 @@ Erzeugendensystem einer Kategorie.
 K-linearer Abschluss einer Kategorie
 
 Pfadalgebra = Kategorien-Algebra
+path algebra = 1 Object, welches eine Algebra ist. Dabei verliert man wieder die Informationen über die
+mehreren Objekte.
 
 So wie Menge ein Erz-system eines Monoid.
 
-\input{tex/en/03_Relations_of_the_Algebroid.tex}
-%\input{tex/de/03_Relations_of_the_Algebroid.tex}
+\input{tex/en/Relations_of_the_Algebroid.tex}
 
+Beschreibung der Algorithmen
+
+WeakDirectSumDecomposition <-- Tiefensuche.
+Objekte (Funktoren) in indecomposable Functors.
 
 
 \section{Category}
