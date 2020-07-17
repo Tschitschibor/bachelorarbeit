@@ -1,6 +1,17 @@
 % mainfile: ../main.tex
 
-\section{Quivers, categories and k-algebroids}
+\section{The categories Quiv, Cats, FinSets, k-Mat, CatReps and the Functor Category}
+In this section, we first want to define the category \textbf{Quiv} and how it is the prototype for the category \textbf{Cats}.
+We want to restrict ourselves to finite concrete categories, which brings us to the category \textbf{FinSets}. 
+Our goal is to represent concrete categories, for this we need the source and target categories of our representations.
+The source category is \textbf{k-Algebroids} which we compute algorithmically from a concrete category.
+The target category of our category representations is \textbf{k-Mat}.
+The category where our category representations lie in is \textbf{CatReps} for which we show that it's a subcategory of the
+\textbf{Functor Category}.
+
+\subsection{The category Quiv}
+In order to describe the category \textbf{Quiv} of quivers, we first have to define what a category is and for this we need
+the definition of a quiver. Lateron we will revisit this definition as we can define quivers as the objects in the quiver category \textbf{Quiv}.
 
 \begin{definition}{(Quiver)}\\
 A \ul{directed graph} or \ul{quiver} $q$ consists of a class of \ul{objects} (or \ul{vertices}) $q_{0} = \textup{Obj}\,q$ and
@@ -13,9 +24,7 @@ a class of \ul{morphisms} (or \ul{arrows}) $q_{1} = \textup{Mor}\,q$ together wi
 $s$ called \ul{source} and $t$ called \ul{target}.
 \end{definition}
 
-\noindent In \texttt{QPA}, the objects are coded by natural numbers, so the first object is $1$, the second $2$ and so on. The arrows are denoted by
-small letters $a, b, c$ and so on. There is a difference between \texttt{RightQuiver} and \texttt{LeftQuiver} in that the right quiver is \ul{right-oriented}
-(that is, the convention for order in multiplication of paths is the opposite of that used for \ul{left-oriented} quivers).
+In the next definition we are giving a new characterization for $q_{1}$ by looking at all arrows between two fixed objects.
 
 \begin{definition}{(Hom-set of a (locally) small quiver)}
 \renewcommand{\labelenumi}{(\theenumi)}
@@ -67,7 +76,7 @@ $e_{i}e_{i}$ has length zero starting at $i$ therefore $e_{i}^{2}=e_{i}$.
 \end{definition}
 
 \begin{lemma} Let Q be a quiver. If there is a path of length at least $\abs{Q_{0}}$, then there are cyclic paths,
-and thus infinitely many paths.
+and thus infinitely many paths.\cite{[leit4]}
 \begin{proof}
 Assume that there exists a path of length greater or equal to $\abs{Q_{0}}$. Then there exists a path of length $n = \abs{Q_{0}}$, say
 $\alpha_{1}\cdots \alpha_{n}$. Consider the vertices $x_{i}=s(\alpha_{i})$ for $1 \leq i \leq n$ and $x_{n+1}=t(\alpha_{n})$. Then these
@@ -87,6 +96,8 @@ $\omega^{m}$ has length $m(j-i)$. This shows that these paths are pairwise diffe
 1 \arrow[uuu, "\varphi"] \arrow[rrrruuu, "\varphi\psi", pos=0.3] \arrow[rrrr, "\varphi\psi\rho" '] &  &  &  & 4
 \end{tikzcd}
 \]
+The longest path $1\rightarrow2\rightarrow3\rightarrow4$ has length 3. If after the object $4$ another arrow would go to either $1,2,3$ or $4$ itself,
+we would have a cyclic path and thus infinitely many paths.
 \end{example}
 
 \begin{definition}{(Category)}\\
@@ -133,6 +144,50 @@ for all composable morphisms $\varphi, \psi \in \mathcal{C}$.
 The identity is a left and right \ul{unit} of the composition.
 \end{enumerate}
 \end{definition}
+
+The concept of a functor is central in category theory. It is how the objects and morphisms of two categories relate to one another.
+The following 
+
+\begin{definition}{(Functor)}\\
+In the category \textbf{Cat} which has categories as objects, \ul{functors} are the morphisms between these objects.
+Let $\mathcal{C},\mathcal{D} \in \textup{Obj}\,\textbf{Cat}$ be categories. A \ul{functor} \begin{tikzcd}
+F: \mathcal{C} \arrow[r] & \mathcal{D}
+\end{tikzcd} between $\mathcal{C}$ and $\mathcal{D}$ consists
+of the following data:
+\renewcommand{\labelenumi}{(\theenumi)}
+\begin{enumerate}
+\item For every object $c \in \mathcal{C}_{0}$ there is an object $Fc \in \mathcal{D}$.
+\item For every morphism $f \in \mathcal{C}_{1}$, i.e. \begin{tikzcd} c \arrow[r, "f"] & c' \end{tikzcd} there is a morphism
+$Ff \in \mathcal{D}_{1}$ with \begin{tikzcd} Fc \arrow[r, "Ff"] & Fc' \end{tikzcd}, i.e. $s(Ff) = F\,s(f)$ and $t(Ff) = F\,t(f)$
+\newcounter{saveenum}
+\setcounter{saveenum}{\value{enumi}}
+\end{enumerate}
+Functors are compatible with the identity map and the composition map:
+\begin{enumerate}
+\setcounter{enumi}{\value{saveenum}}
+\item For every object $c \in \mathcal{C}_{0}$ we have $1_{c} \in \mathcal{C}_{1}$ and for the functor $F$ we demand that
+$F\,1_{c} = 1_{Fc} \in \mathcal{D}_{1}$. 
+\item For every pair of morphisms $f,g \in \mathcal{C}_{1}$ with $t(f) = s(g)$ we have $fg \in \mathcal{C}_{1}$ and we demand that
+$Fg\,Fg = F\,gf$.
+\end{enumerate}
+\end{definition}
+
+
+
+With the definition of a category and the category of functors finished, we can come back and use them to define the category of quivers
+\textbf{Quiv}.
+
+\begin{definition}{(The category \textbf{Quiv})}\cite{[4681]}
+Let the \ul{Kronecker category} $\mathcal{K}$ be the category with two objects, $0$ and $1$, and two non-identity morphisms, s and t
+\begin{tikzcd}
+1 \arrow[r, "s", shift left] \arrow[r, "t"', shift right] & 0
+\end{tikzcd}.
+Let \textbf{FinSets} be the category of finite sets with morphisms being maps between those sets.
+The \ul{category of quivers} \textbf{Quiv} is the category of functors from $\mathcal{K}$ to \textbf{FinSets}.
+For a quiver $q \in \textup{Obj}\,\textbf{Quiv}$ we write $q_{x}$ for the image of $x \in \{0,1\}$ under $q$.
+The images under $q$ ofthe morphisms $s$ and $t$ are again denoted by $s$ and $t$.
+\end{definition}
+
 
 \noindent As we have seen, every category is a quiver, but in general, to become a category, a quiver is lacking identity morphisms
 and the composition of morphisms. To be more precise, there is a \ul{functor} $U$ from the \ul{category of categories} $\textup{CAT}$ to the
