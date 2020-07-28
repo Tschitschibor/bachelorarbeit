@@ -1,0 +1,146 @@
+% mainfile: ../main.tex
+
+\section{The categories Cat and Quiv}
+In this section, we first want to define the category \textbf{Quiv} and how it is the prototype for the category \textbf{Cats}.
+In order to describe the category \textbf{Quiv} of quivers, we first have to define what a category is and for this we need
+the definition of a quiver. Lateron we will revisit this definition as we can define quivers as the objects in the quiver category \textbf{Quiv}.
+
+\begin{definition}{(Quiver)}\\
+A \ul{directed graph} or \ul{quiver} $q$ consists of a class of \ul{objects} (or \ul{vertices}) $q_{0} = \textup{Obj}\,q$ and
+a class of \ul{morphisms} (or \ul{arrows}) $q_{1} = \textup{Mor}\,q$ together with two defining maps
+\[
+\begin{tikzcd}[column sep=small]
+{s,t\colon q_{1}} \arrow[rr, shift left = 0.7ex] \arrow[rr, shift right = 0.7ex] & & q_{0}
+\end{tikzcd}
+\]
+$s$ called \ul{source} and $t$ called \ul{target}.
+\end{definition}
+
+In the next definition we are giving a new characterization for $q_{1}$ by looking at all arrows between two fixed objects.
+
+\begin{definition}{(Hom-set of a (locally) small quiver)}
+\renewcommand{\labelenumi}{(\theenumi)}
+\begin{enumerate}
+\item Given two objects $M, N \in q_{0}$ we write $\textup{Hom}_{q}(M,N)$ or $q(M,N)$ for the fiber
+$(s,t)^{-1} (\{(M,N)\})$ of the product map 
+\begin{tikzcd}[column sep=small]
+(s, t) : q_{1} \arrow[rr] &  & q_{0} \times q_{0} 
+\end{tikzcd} over the pair $(M,N) \in q_{0} \times q_{0}$.
+This is the class of all morphisms with source $= M$ and target $= N$.
+We indicate this by writing
+\begin{tikzcd}[column sep=small]
+\varphi : M \arrow[rr] &  & N
+\end{tikzcd} or 
+\begin{tikzcd}[column sep=small]
+M \arrow[rr,"\varphi"] &  & N.
+\end{tikzcd} Hence $q_{1}$ is the disjoint union $\bigcup\limits^{\bigcdot}_{M,N \in q_{0}} \textup{Hom}_{q}(M,N) = q_{1}$.
+As usual we define $\textup{End}_{q}(M):= \textup{Hom}_{q}(M,M)$.
+\item If the class $\textup{Hom}_{q}(M,N)$ is a \ul{set} for all pairs $(M,N)$ then we call the quiver \ul{locally small}.
+We therefore talk about \ul{Hom-sets}.
+If additionally, $q_{0}$ is a set, then the quiver is called \ul{small}.
+\end{enumerate}
+\end{definition}
+
+\begin{example}\label{q(2)}{(Quiver with 2 objects and 3 morphisms)}\\
+\[
+\begin{tikzcd}
+1 \arrow["a"', loop, distance=2em, in=305, out=235] \arrow[rr, "b"] &  & 2 \arrow["c"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
+\]
+The objects of this quiver $q$ are $q_{0} = \{1, 2\}$, and the morphisms are $q_{1} = \{a, b, c\}$ with\\
+$s (a) = 1 = t (a)$, $s (c) = 2 = t (c)$ and $s (b) = 1, t (b) = 2$.\\
+\noindent Thus $\textup{End}_{q}(1) = \{a\}, \textup{End}_{q}(2) = \{c\}$ and $\textup{Hom}_{q}(1,2) = \{b\}$ whereas
+$\textup{Hom}_{q}(2,1)=\emptyset$.\\
+
+\noindent In \texttt{QPA} this quiver is encoded as \texttt{q(2)[a:1->1,b:1->2,c:2->2]} where the first \texttt{(2)} in parentheses stands for the total
+number of objects.
+\end{example}
+
+\begin{definition}{(Composable arrows; path in a quiver)}\\
+Since we already have the source and target maps, we say two arrows $a, b \in q_{1}$ are \ul{composable} if $t(a) = s(b)$ or
+$t(b) = s(a)$. In this case we can write a sequence of composable arrows $p = a_{1}a_{2}\cdots a_{n}$ where $t(a_{i}) = s(a_{i+1})$ for $i=1,\dots,n-1$.
+We call this sequence a \ul{path} from $s(a_{1})$ to $t(a_{n})$ and the integer $n \in \mathbb{Z}_{\geq0}$ the \ul{length} $l(p)$ of the path $p$.
+Although it's not an arrow, we can define the source and target of a path $p = a_{1}\cdots a_{n}$ as $s(p) := s(a_{1})$ and $t(p) := t(a_{n})$.
+A path $p = a_{1}\cdots a_{n}$ with $s(a_{1}) = t(a_{n})$, i.e. $s(p) = t(p)$, is called \ul{cyclic}.\\
+For an endomorphism $a \in \textup{End}_{q}(M)$ we write $a^{n}$ for $aa \cdots a$ ($n$ times). In the case of $n=0$ an \ul{empty path}
+whose source and target are the vertex $i \in q_{0}$ is called the \ul{trivial path at $i$} and is denoted $e_{i}$. Note that the composition of paths
+$e_{i}e_{i}$ has length zero starting at $i$ therefore $e_{i}^{2}=e_{i}$.
+\end{definition}
+
+\begin{lemma} Let Q be a quiver. If there is a path of length at least $\abs{Q_{0}}$, then there are cyclic paths,
+and thus infinitely many paths.\cite{[leit4]}
+\begin{proof}
+Assume that there exists a path of length greater or equal to $\abs{Q_{0}}$. Then there exists a path of length $n = \abs{Q_{0}}$, say
+$\alpha_{1}\cdots \alpha_{n}$. Consider the vertices $x_{i}=s(\alpha_{i})$ for $1 \leq i \leq n$ and $x_{n+1}=t(\alpha_{n})$. Then these
+are $n+1$ vertices, thus there has to exist $i<j$ with $x_{i}=x_{j}$. Let $\omega=\alpha_{i}\cdots \alpha_{j-1}$, this is a path with source and target
+$x_{i}=x_{j}$, thus a cyclic path. But then $\omega^{m}$ is a path for any natural number $m$. The path $\omega$ has length $j-i\geq1$, thus
+$\omega^{m}$ has length $m(j-i)$. This shows that these paths are pairwise different.
+\end{proof}
+\end{lemma}
+
+\begin{example}{(A quiver with no cycles)}\\
+\[
+\begin{tikzcd}
+2 \arrow[rrrr, "\psi"] \arrow[rrrrddd, "\psi\rho", pos=0.3] &  &  &  &
+3 \arrow[ddd, "\rho"] \\
+ &  &  &  & \\
+ &  &  &  & \\
+1 \arrow[uuu, "\varphi"] \arrow[rrrruuu, "\varphi\psi", pos=0.3] \arrow[rrrr, "\varphi\psi\rho" '] &  &  &  & 4
+\end{tikzcd}
+\]
+The longest path $1\rightarrow2\rightarrow3\rightarrow4$ has length 3. If after the object $4$ another arrow would go to either $1,2,3$ or $4$ itself,
+we would have a cyclic path and thus infinitely many paths.
+\end{example}
+
+\begin{definition}{(Category)}\\
+\noindent A \ul{category} $\mathcal{C}$ is a quiver with two further maps:
+\begin{enumerate}
+\renewcommand{\labelenumi}{(id)}
+\item The \ul{identity map} $1_{( )}$ mapping every object $X \in\mathcal{C}_{0}$ to its \ul{identity morphism} $1_{X}$:
+\[
+\begin{tikzcd}[column sep=small]
+\mathcal{C}_{0} \arrow[rr,"1"] &  & \mathcal{C}_{1}
+\end{tikzcd}
+\]
+\renewcommand{\labelenumi}{($\mu$)}
+\item And for any two \ul{composable} morphisms $\varphi$ and $\psi \in \mathcal{C}_{1}$, i.e. with $t(\varphi) = s(\psi)$, the
+\ul{composition map} $\mu$, which maps $\varphi, \psi \in \mathcal{C}_{1}\times\mathcal{C}_{1}$ to $\mu(\varphi,\psi) \in \mathcal{C}_{1}$ which
+we also write as $\varphi\psi$. 
+\[
+\begin{tikzcd}[column sep=small]
+\mathcal{C}_{1} \times \mathcal{C}_{1} \arrow[rr,"\mu"] &  & \mathcal{C}_{1}
+\end{tikzcd}
+\]
+\end{enumerate}
+\noindent The defining properties for $1$ and $\mu$ are:
+\renewcommand{\labelenumi}{(\theenumi)}
+\begin{enumerate}
+\item $s(1_{M}) = M = t(1_{M})$, i.e.\\
+$1_{M} \in \textup{End}_{\mathcal{C}} \forall M \in \mathcal{C}$.
+
+\item $s(\varphi\psi) = s(\varphi)$ and\\
+$t(\varphi\psi) = t(\psi)$\\
+for all composable morphisms $\varphi, \psi \in \mathcal{C}$.
+\[
+\begin{tikzcd}[column sep=small]
+\mu : \textup{Hom}_{\mathcal{C}}(M,L) \times \textup{Hom}_{\mathcal{C}}(L,N) \arrow[rr] &  & \textup{Hom}_{\mathcal{C}}(M,N)
+\end{tikzcd}
+\]
+\item \begin{minipage}{.55\textwidth} $(\varphi\psi)\rho = \varphi(\psi\rho)$ \hfill{} [associativity of composition]\end{minipage}
+\begin{minipage}{.45\textwidth}\phantom{}\end{minipage}
+\item \begin{minipage}{.55\textwidth} $1_{s(\varphi)}\varphi = \varphi = \varphi1_{t(\varphi)}$ \hfill{} [unit property]\end{minipage}
+\begin{minipage}{.45\textwidth}\phantom{}\end{minipage}\\
+The identity is a left and right \ul{unit} of the composition.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}{(Finite and concrete categories)}
+\renewcommand{\labelenumi}{(\theenumi)}
+\begin{enumerate}
+\item A \ul{finite} category is a category with a finite set of objects and a finite set of morphisms.
+\item A \ul{concrete} category is a category whose objects have \ul{underlying sets} and whose morphisms are functions between these
+underlying sets. Otherwise it's called an \ul{abstract} category.
+\end{enumerate}
+\end{definition}
+
+Clearly every finite category is a small category.

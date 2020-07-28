@@ -10,3 +10,21 @@
 
 \end{proof}
 \end{lemma}
+\[
+\begin{pmatrix}1 \ampersand 2 \ampersand 3 \ampersand 4\end{pmatrix}
+\begin{pmatrix} 1\to5, \ampersand 2\to6 \\ 3\to7, \ampersand 4\to8 \end{pmatrix}
+\begin{pmatrix}6 \ampersand 8\end{pmatrix}
+\begin{pmatrix}5\to9\\6\to10\\7\to11\\8\to12\end{pmatrix}
+\begin{pmatrix}9\ampersand10\end{pmatrix}\begin{pmatrix}11\ampersand12\end{pmatrix}
+\begin{pmatrix}9\to13, \ampersand 10\to14\\11\to15 \ampersand 12\to16\end{pmatrix}
+\textup{id}
+\]
+
+\begin{tikzcd}
+{\{1,2,3,4\}} \arrow["{(1,2,3,4)}"', loop, distance=2em, in=125, out=55] \arrow[rr, "{\begin{pmatrix} 1\to5, 2\to6, \\ 3\to7, 4\to8 \end{pmatrix}}"] \arrow[dd] \arrow[rrdd] &  & {\{5,6,7,8\}} \arrow["{(6,8)}"', loop, distance=2em, in=125, out=55] \arrow[dd, " \begin{pmatrix}5\to9\\6\to10\\7\to11\\8\to12\end{pmatrix}"', bend left] \arrow[lldd] \\
+                                                                                                                                                                             &  &                                                                                                                                                                        \\
+{\{13,14,15,16\}} \arrow["\textup{id}"', loop, distance=2em, in=305, out=235]                                                                                                &  & {\{9,10,11,12\}} \arrow["{(9,10)(11,12)}"', loop, distance=2em, in=305, out=235] \arrow[ll, "{\begin{pmatrix}9\to13, 10\to14,\\ 11\to 15, 12\to16\end{pmatrix}}"]     
+\end{tikzcd}
+
+Dimension of the (quotient of the) path algebra is 43.
+Sum of all dimensions of the yoneda projectives on each objects is 43.

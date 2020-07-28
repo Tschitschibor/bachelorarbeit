@@ -145,17 +145,22 @@
 
 \input{tex/en/Short_overview_of_the_tools_used.tex}
 
-\input{tex/en/Quiver_Category_k-Algebroid.tex}
 
-\input{tex/en/Co_Limits_Kernel_Direct_Sum.tex}
+\input{tex/en/Quivers_and_Categories.tex}
+
+\input{tex/en/k-Algebroid.tex}
+
+%\input{tex/en/Co_Limits_Kernel_Direct_Sum.tex}
 
 \input{tex/en/Functors_Natural_Transformations.tex}
 
-\input{tex/en/Adjunctions_Free_Forgetful.tex}
+%\input{tex/en/Adjunctions_Free_Forgetful.tex}
 
 \input{tex/en/Yoneda_Lemma_Co_Completion.tex}
 
 \input{tex/en/Functor_Categories_CatReps.tex}
+
+%\input{tex/en/Big_CatReps_Example.tex}
 
 Yonedas Einbettungs-Lemma: Fehlende Limiten bzw. Kolimiten exitieren nach der Einbettung.
 
@@ -181,45 +186,6 @@ Beschreibung der Algorithmen
 WeakDirectSumDecomposition <-- Tiefensuche.
 Objekte (Funktoren) in indecomposable Functors.
 
-
-\section{Category}
-
-\begin{definition}{(Quiver)}\\
-A \ul{quiver} $A$ consists of a class of  \ul{objects} (or vertices) $A_{0} = \textup{Obj} A$ and 
-a class of \ul{morphisms} (or arrows) $A_{1} = \textup{Mor} A$ together with two defining maps
-\[
-\begin{tikzcd}[column sep=small]
-{s,t\colon A_{1}} \arrow[rr, shift left = 0.7ex] \arrow[rr, shift right = 0.7ex] & & A_{0}
-\end{tikzcd}
-\]
-$s$ called \ul{source} and $t$ called \ul{target}.\footnote{Some authors use maps $t, h$ for $tail$ and $head$ instead of source and target, defining the arrows to go from the tail to the head. This use of $t$ as the starting point instead of the end target as in our definition can lead to some confusion.}\\
-\noindent We write $\textup{Hom}_A (M,N)$ (sometimes also $A(M,N)$) for the fiber $(s,t)^{-1} (\{(M,N)\})$ of the product
-map $(s,t) : A_{1} \rightarrow A_{0} \times A_{0}$ over the pair $(M,N) \in A_{0} \times A_{0}$.\\
-This is the class of all morphisms with source $= M$ and target $= N$.\\
-For a morphism $\varphi \in \textup{Hom}_{A}(M,N)$ we write
-\[
-\begin{tikzcd}[column sep=small]
-\varphi : M \arrow[rr] & & N
-\end{tikzcd}
-or
-\begin{tikzcd}[column sep=small]
-M \arrow[rr, "\varphi"] & & N
-\end{tikzcd}
-\]
-Clearly $A_{1}$ is the disjoint union $\bigcup\limits^{\bigcdot}_{M,N \in A_{0}} \textup{Hom}_{A}(M,N) = A_{1}$. As usual we define 
-$\textup{End}_{A}(M):= \textup{Hom}_{A}(M,M)$.
-\end{definition}
-
-
-
-\begin{definition}{(Category)}\\
-A \ul{category} $\mathfrak{A}$ is a quiver with two further defining maps
-\[
-\begin{tikzcd}[column sep=small]
-A_{0} \arrow[rr,"1"] &  & A_{1} &  & A_{1} \times_{s,A_{0},t} A_{1} \arrow[ll,"\mu"]
-\end{tikzcd}
-\]
-\end{definition}
 
 \begin{example}\label{representation}{(Representation of a concrete category)}\\
 \begin{center}
@@ -298,8 +264,6 @@ EmbeddingOfSumOfImages
 What is an Algebroid? Bialgebroid?
 
 \section{Additive Category}
-
-
 
 \section{Abelian Category}
 
