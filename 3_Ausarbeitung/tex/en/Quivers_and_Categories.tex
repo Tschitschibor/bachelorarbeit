@@ -1,10 +1,10 @@
 % mainfile: ../main.tex
 
-\section{The categories Cat and Quiv}
+\section{Introduction in category theory}
 This section serves two purposes: On the one hand, it is an introduction to quivers and category theory. On the other hand it introduces
 concrete categories which we want to represent, and all the additional constructions that are needed to that goal.
 
-\subsection{Introduction to quivers and category theory}
+\subsection{Quivers}
 In this section, we first want to define the category \textbf{Quiv} and how it is the prototype for the category \textbf{Cats}.
 In order to describe the category \textbf{Quiv} of quivers, we first have to define what a category is and for this we need
 the definition of a quiver. Lateron we will revisit this definition as we can define quivers as the objects in the quiver category \textbf{Quiv}.
@@ -42,6 +42,7 @@ As usual we define $\textup{End}_{q}(M):= \textup{Hom}_{q}(M,M)$.
 \item If the class $\textup{Hom}_{q}(M,N)$ is a \ul{set} for all pairs $(M,N)$ then we call the quiver \ul{locally small}.
 We therefore talk about \ul{Hom-sets}.
 If additionally, $q_{0}$ is a set, then the quiver is called \ul{small}.
+\item A quiver with a finite set of objects and a finite set of morphisms is called a \ul{finite} quiver.
 \end{enumerate}
 \end{definition}
 
@@ -96,6 +97,8 @@ The longest path $1\rightarrow2\rightarrow3\rightarrow4$ has length 3. If after 
 we would have a cyclic path and thus infinitely many paths.
 \end{example}
 
+\subsection{Categories}
+
 \begin{definition}{(Category)}\\
 \noindent A \ul{category} $\mathcal{C}$ is a quiver with two further maps:
 \begin{enumerate}
@@ -134,17 +137,76 @@ for all composable morphisms $\varphi, \psi \in \mathcal{C}$.
 \begin{minipage}{.45\textwidth}\phantom{}\end{minipage}
 \item \begin{minipage}{.55\textwidth} $1_{s(\varphi)}\varphi = \varphi = \varphi1_{t(\varphi)}$ \hfill{} [unit property]\end{minipage}
 \begin{minipage}{.45\textwidth}\phantom{}\end{minipage}\\
-The identity is a left and right \ul{unit} of the composition.
+The identity is a left and right unit of the composition.
 \end{enumerate}
 \end{definition}
 
-\begin{definition}{(Finite and concrete categories)}
-\renewcommand{\labelenumi}{(\theenumi)}
-\begin{enumerate}
-\item A \ul{finite} category is a category with a finite set of objects and a finite set of morphisms.
-\item A \ul{concrete} category is a category whose objects have \ul{underlying sets} and whose morphisms are functions between these
-underlying sets. Otherwise it's called an \ul{abstract} category.
-\end{enumerate}
+\subsection{Functors}
+
+Categories are themselves objects in the category of categories, which leads to a question: What is a morphism between categories?
+
+\begin{definition}{(Functor)}\\
+\noindent A \ul{functor} $F : \mathcal{C} \rightarrow \mathcal{D}$, between categories $\mathcal{C}$ and $\mathcal{D}$, consists of the
+following data:
+
+\begin{itemize}
+\item An object $Fc\in\mathcal{D}_{0}$, for each object $c \in \mathcal{C}_{0}$.
+\item A morphism $Ff : Fc \rightarrow Fc' \in \mathcal{D}_{1}$, for each morphism $f : c \rightarrow c' \in \mathcal{C}_{1}$, so that the
+domain and codomain of $Ff$ are, respectively, equal to $F$ applied to the domain or codomain of $f$.
+\end{itemize}
+
+\noindent The assignments are required to satisfy the following two \ul{functoriality axioms}:
+\begin{itemize}
+\item For any composable pair $f, g \in \mathcal{C}_{1}, Fg \cdot Ff = F(g \cdot f)$.
+\item For each object $c \in \mathcal{C}_{0}, F(1_{c}) = 1_{Fc}$.
+\end{itemize}
+
+Put concisely, a functor consists of a mapping on objects and a mapping on morphisms that preserves all of the structure of a category,
+namely domains and codomains, composition, and identities.
 \end{definition}
 
-Clearly every finite category is a small category.
+\subsection{Natural transformations}
+
+With fixed categories $\mathcal{C}$ and $\mathcal{D}$ we can consider functors $F, G \in \textup{Hom}(\mathcal{C},\mathcal{D})$ themselves
+as objects in the category $\textup{Hom}(\mathcal{C},\mathcal{D})$ of functors between $\mathcal{C}$ and $\mathcal{D}$. In this \ul{functor category},
+the morphisms between two functors are called \ul{natural transformations}.
+
+\begin{definition}{(Natural transformations)}\\
+\noindent Given categories $\mathcal{C}$ and $\mathcal{D}$ and functors $F : \mathcal{C} \rightarrow \mathcal{D}$ and
+$G : \mathcal{C} \rightarrow \mathcal{D}$, a \ul{natural transformation} $\alpha : F \Rightarrow G$ consists of:
+\begin{itemize}
+\item an arrow $\alpha_{c} : Fc \rightarrow Gc \in \mathcal{D}_{1}$ for each object $c \in \mathcal{C}_{0}$, the collection of which
+define the \ul{components} of the natural transformation, so that, for any morphism $f : c \rightarrow c' \in \mathcal{C}_{1}$, the following
+square of morphisms in $\mathcal{D}$
+\[\begin{tikzcd}
+Fc \arrow[rr, "\alpha_{c}"] \arrow[dd, "Ff"] &  & Gc \arrow[dd, "Gf"] \\
+                                             &  &                     \\
+Fc' \arrow[rr, "\alpha_{c'}"]                &  & Gc'                
+\end{tikzcd}\]
+
+\ul{commutes}, i.e., has a a common composite $Fc \rightarrow Gc' \in \mathcal{D}_{1}$.
+\end{itemize}
+
+\end{definition}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

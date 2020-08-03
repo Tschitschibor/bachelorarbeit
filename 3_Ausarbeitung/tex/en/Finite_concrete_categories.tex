@@ -2,6 +2,17 @@
 
 \section{Finite concrete categories}
 
+\begin{definition}{(Finite and concrete categories)}
+\renewcommand{\labelenumi}{(\theenumi)}
+\begin{enumerate}
+\item A \ul{finite} category is a category with a finite set of objects and a finite set of morphisms.
+\item A \ul{concrete} category is a category whose objects have \ul{underlying sets} and whose morphisms are functions between these
+underlying sets. Otherwise it's called an \ul{abstract} category.
+\end{enumerate}
+\end{definition}
+
+Clearly every finite category is a small category.
+
 As we have seen in the previous section, a quiver $q$ with a path of length greater than $\abs{q_{0}}$ must have loops and is thus infinite.
 We will construct finite concrete categories by paying attention that the arrows between different objects are only one-directional, thus we
 have a partial order on the set of objects.
