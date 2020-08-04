@@ -35,6 +35,17 @@
 \end{tikzpicture}
 %\cite{facchini_2019}
 \begin{lemma}[$\sigma$-Lemma]
-For each endomorphism $f$ in a finite concrete category $\mathcal{C}$ there exist $m,n\in\mathbb{N}$
-such that $f^{(m+n)}=f^{m}$.
+Let $\mathcal{C}$ be a finite concrete category. Then for each object $M \in \mathcal{C}_{0}$ the set
+$\textup{End}_{\mathcal{C}}(M)$ is a monoid and for each endomorphism $f \in \textup{End}_{\mathcal{C}}(M)$
+there exist $m,n \in \mathbb{N}$ such that $f^{(m+n)}=f^{m}$. If $m = 0$ and $n \geq 1$ then $f$ is bijective with $f^{-1} = f^{n-1}$.
+\begin{proof}
+The properties of a monoid are precisely the associativity of composition and the unit property from \ref{associativity_of_composition} and \ref{unit_property}.
+Since $\abs{\textup{End}_{\mathcal{C}}(M)}<\infty$ there are only finitely many endomorphisms $f_{1},\dots, f_{N} \in \textup{End}_{\mathcal{C}}(M)$.
+Let $\{f^{k} | k \in \mathbb{N} \} \subset \textup{End}_{\mathcal{C}}(M)$, i.e. there is a function 
+$\{f^{k} | k \in \mathbb{N}\} \rightarrow \{f_{j} | j \in \{1,\dots,N\}\}; f^{k} \mapsto f_{j}$ not necessarily surjective and 
+by the pigeonhole principle highly non injective, since $\abs{\mathbb{N}}>\abs{\textup{End}_{\mathcal{C}}(M)}$.
+Let $m := Min \{ k \in \mathbb{N}| f^{k} =  f_{j} \}$
+
+\begin{minipage}{.45\textwidth}\phantom{}\end{minipage}
+\end{proof}
 \end{lemma}
