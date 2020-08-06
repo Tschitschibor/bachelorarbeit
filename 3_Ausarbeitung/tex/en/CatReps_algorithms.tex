@@ -24,6 +24,11 @@
       \Return MapOfFinSets( S, G, T );
 \end{algorithm}
 
+We can now create finite concrete categories with objects not starting from 1, to demonstrate that
+\texttt{ConcreteCategoryForCAP( [ [,,,5,6,4], [,,,7,8,9], [,,,,,,8,9,7] ] )} and\\
+\texttt{ConcreteCategoryForCAP( [ [2,3,1], [4,5,6], [,,,5,6,4] ] )} yield
+equivalent categories, i.e. their underlying quivers are the same and they give the same category of representations.
+
 \begin{algorithm}\capstart
     \caption{\texttt{RightQuiverFromConcreteCategory}}\label{algo:RightQuiverFromConcreteCategory}
 	\SetKwInput{Input}{Input~}
