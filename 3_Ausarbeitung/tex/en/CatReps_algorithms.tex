@@ -9,12 +9,13 @@
       \Input{~a list $objects$ of objects in FinSets and a morphism $gen$ given as a list of images in the convention of catreps}
       \Output{~the corresponding map of finite sets from source $S$ to target $T$}
       \BlankLine
-      let $T$ be the first object $O \in objects$ such that $mor \cap O \not= \emptyset$\;
-      \If{$mor \cap O = \emptyset \, \forall O \in objects$}{
+      let $T$ be the first object $O \in objects$ such that $gen \cap O \not= \emptyset$\;
+      \If{$gen \cap O = \emptyset \, \forall O \in objects$}{
          Error "unable to find target set"
       }
-      let $S$ be the list of positions $i$ such that $gen[i]$ is bound\;
-      let $S$ be the first object $O \in objects$ such that $O = S$\;
+      let $fl$ be the flattening of $objects$ as a list\;
+      let $S$ be the sublist of $fl$ according to positions $i$ such that $gen[i]$ is bound\;
+      set $S$ to be the first object $O \in objects$ such that $O = S$\;
       \If{$S \not= O \, \forall O \in objects$}{
           Error "unable to find source set"
       }
