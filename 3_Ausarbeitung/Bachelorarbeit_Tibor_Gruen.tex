@@ -1,11 +1,57 @@
 \documentclass{article}
-\usepackage[utf8]{inputenc}
 \usepackage[top=37mm,bottom=37mm,left=27mm,right=27mm]{geometry}
 
+\usepackage[utf8]{inputenc}
+\usepackage{fancyvrb}
+
+%%% For captions and references
 \usepackage{hyperref}
 \usepackage{hypcap}
+\newcommand{\Algoref}[1]{%
+	\hyperref[algo:#1]{Algorithm~\ref*{algo:#1}}%
+}
+\newcommand{\algoref}[1]{%
+	\hyperref[algo:#1]{Algorithm~\ref*{algo:#1}}%
+}
+\newcommand{\Funcref}[1]{%
+	\hyperref[func:#1]{Function~\ref*{func:#1}}%
+}
+\newcommand{\funcref}[1]{%
+	\hyperref[func:#1]{\texttt{#1}}%
+}
+
+%%% For quotation
+\usepackage{csquotes}
 
 \usepackage{xcolor}
+\usepackage{color}
+\definecolor{FireBrick}{rgb}{0.5812,0.0074,0.0083}
+\definecolor{RoyalBlue}{rgb}{0.0236,0.0894,0.6179}
+\definecolor{RoyalGreen}{rgb}{0.0236,0.6179,0.0894}
+\definecolor{RoyalRed}{rgb}{0.6179,0.0236,0.0894}
+\definecolor{LightBlue}{rgb}{0.8544,0.9511,1.0000}
+\definecolor{Black}{rgb}{0.0,0.0,0.0}
+
+\definecolor{linkColor}{rgb}{0.0,0.0,0.554}
+\definecolor{citeColor}{rgb}{0.0,0.0,0.554}
+\definecolor{fileColor}{rgb}{0.0,0.0,0.554}
+\definecolor{urlColor}{rgb}{0.0,0.0,0.554}
+\definecolor{promptColor}{rgb}{0.0,0.0,0.589}
+\definecolor{brkpromptColor}{rgb}{0.589,0.0,0.0}
+\definecolor{gapinputColor}{rgb}{0.589,0.0,0.0}
+\definecolor{gapoutputColor}{rgb}{0.0,0.0,0.0}
+
+%%  for a long time these were red and blue by default,
+%%  now black, but keep variables to overwrite
+\definecolor{FuncColor}{rgb}{0.0,0.0,0.0}
+%% strange name because of pdflatex bug:
+\definecolor{Chapter }{rgb}{0.0,0.0,0.0}
+\definecolor{DarkOlive}{rgb}{0.1047,0.2412,0.0064}
+
+%% command for ColorPrompt style examples
+\newcommand{\gapprompt}[1]{\color{promptColor}{\bfseries #1}}
+\newcommand{\gapbrkprompt}[1]{\color{brkpromptColor}{\bfseries #1}}
+\newcommand{\gapinput}[1]{\color{gapinputColor}{#1}}
 
 %%% For source code listings
 \usepackage{listings}[2013/08/05]
@@ -15,10 +61,24 @@
 %%% For algorithm styles
 \usepackage[linesnumbered,ruled]{algorithm2e}
 
+%%% Math theorem styles
+\usepackage{amsthm}
+
+\newtheorem{thm}{Theorem}[subsection]
+\newtheorem{lemma}[thm]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{example}[thm]{Example}
+
 \begin{document}
 \tableofcontents\label{toc}
 \section{Preface}
 \section{Introduction to quivers and category theory}
+
+\section{Datatype convention of catreps}
+\input{tex/en/Datatype_convention_of_catreps.tex}
+
 \section{The category FinSets}
 
 There are algorithms whose sole purpose is to convert data structures, so they are not of much interest to the mathematical theory,
@@ -60,8 +120,10 @@ more of the data structure conversion type, while
 
 \section{The categories Functor-Categories and Cat-Reps}
 \section{Conclusion}
+
 \addcontentsline{toc}{section}{References}
-\section*{References}
+\input{bib/sources.bib}
+
 \appendix
 \renewcommand{\thesection}{\Alph{section}}
 \section{Implementation in \textsc{Cap}}
