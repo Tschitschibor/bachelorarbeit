@@ -1,2 +1,5 @@
 1_Literatur
 *.lnk
+*.pdf
+*.synctex.gz
+pfad.tex
