@@ -18,7 +18,6 @@
 \usepackage{mathtools}
 \usepackage{commath}
 \usepackage[sc,osf]{mathpazo}
-\usepackage{mnsymbol}
 
 %%% For calculations inside tikz and latex
 \usepackage{calc}
@@ -331,7 +330,7 @@ get a finite Gröbner basis.
 	    }
 	    let $m := 0$ and let $powers$ be the empty set\;
 	    let $foundEqual$ be false\;
-	    \While{$mor^{m}\nin powers$}{
+	    \While{$mor^{m}\notin powers$}{
 		let $n := 1$\;
 		\While{$\neg foundEqual$}{
 		    \If{$mor^{(m+n)} = mor^{m}$}{

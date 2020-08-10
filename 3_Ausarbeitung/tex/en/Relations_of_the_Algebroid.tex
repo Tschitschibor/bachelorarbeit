@@ -84,10 +84,10 @@ the endomorphism relations.
 	    let $m := 0$\;
 	    set $mpowers := \emptyset$\;
 	    let $foundEqual$ be false\;
-	    \While{ $f^{m}\nin mpowers$ }{
+	    \While{ $f^{m}\notin mpowers$ }{
 		let $n := 1$\;
 	        set $npowers := \emptyset$\;
-		\While{ $\neg foundEqual$ and $f^{m+n} \nin npowers$ }{
+		\While{ $\neg foundEqual$ and $f^{m+n} \notin npowers$ }{
 		    \If{ $f^{m+n} = f^{m}$ }{
 		    	Add the relation $kq.(A_{i})^{m+n}-kq.(A_{i})^{m}$ to relsEndo\;
 		    	foundEqual := true\;
