@@ -68,6 +68,35 @@
     },
 }
 
+%%% For dotted arrows in math and in text
+\makeatletter
+\newbox\dottedarrow@box
+\setbox\dottedarrow@box\hbox
+  {%
+    \begin{tikzpicture}
+      \draw[dotted,->] (0,0) -- (1.5em,0);
+    \end{tikzpicture}%
+  }
+\newcommand*\dottedarrow
+  {\relax\ifmmode\expandafter\dottedarrow@m\else\expandafter\dottedarrow@t\fi}
+\newcommand*\dottedarrow@t[1][1.5em]
+  {\resizebox{#1}{!}{\raisebox{.5ex}{\usebox\dottedarrow@box}}}
+\newcommand*\dottedarrow@m[1][]
+  {%
+    \if\relax\detokenize{#1}\relax
+      \mathchoice% values are trial and error based\ldots
+        {\dottedarrow@t}
+        {\dottedarrow@t}
+        {\dottedarrow@t[1.1em]}
+        {\dottedarrow@t[0.9em]}%
+    \else
+      \dottedarrow@t[#1]%
+    \fi
+  }
+\makeatother
+\let\olddottedarrow\dottedarrow
+\renewcommand{\dottedarrow}{\raisebox{-.2em}{\olddottedarrow}}
+
 %%% For some big dots
 \makeatletter
 \newcommand*{\bigcdot}{}% Check if undefined

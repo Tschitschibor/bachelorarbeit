@@ -149,14 +149,14 @@ Categories are themselves objects in the category of categories, which leads to 
 \noindent A \ul{functor} $F : \mathcal{C} \rightarrow \mathcal{D}$, between categories $\mathcal{C}$ and $\mathcal{D}$, consists of the
 following data:
 
-\begin{itemize}
+\begin{itemize}\label{def:functor}
 \item An object $Fc\in\mathcal{D}_{0}$, for each object $c \in \mathcal{C}_{0}$.
 \item A morphism $Ff : Fc \rightarrow Fc' \in \mathcal{D}_{1}$, for each morphism $f : c \rightarrow c' \in \mathcal{C}_{1}$, so that the
 domain and codomain of $Ff$ are, respectively, equal to $F$ applied to the domain or codomain of $f$.
 \end{itemize}
 
 \noindent The assignments are required to satisfy the following two \ul{functoriality axioms}:
-\begin{itemize}
+\begin{itemize}\label{functoriality}
 \item For any composable pair $f, g \in \mathcal{C}_{1}, Fg \cdot Ff = F(g \cdot f)$.
 \item For each object $c \in \mathcal{C}_{0}, F(1_{c}) = 1_{Fc}$.
 \end{itemize}

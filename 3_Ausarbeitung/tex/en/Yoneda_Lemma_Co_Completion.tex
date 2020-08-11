@@ -11,7 +11,45 @@
 \end{proof}
 \end{lemma}
 
-Projective objects?
+\begin{lemma}\label{la:Hom_exact_projective_Lift_along_epis}
+Let $\mathcal{C}$ be a category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
+\begin{itemize}
+\item The functor $\textup{Hom}(P,-)$ is exact.
+\item For all epimorphisms $\varphi : M \twoheadrightarrow N$ and morphisms $\theta : P \rightarrow N$, there exists a
+projective lift $\psi : P\,\dottedarrow\,M$ such that $\theta = \psi\varphi$.
+
+\begin{tikzcd}
+	& P \arrow[d, "\psi\varphi"] \arrow[ld, "\psi"', dotted] \\
+M \arrow[r, "\varphi", two heads] & N                                                     
+\end{tikzcd}
+\end{itemize}
+\begin{proof}
+For an object $L\in \mathcal{C}_{0}$, $\textup{Hom}(L,-)$ is always left exact, i.e. respects monos.\\
+\ul{''$\Leftarrow$'' :} Prove that $\textup{Hom}(P,-)$  is right exact, i.e. respects epis. 
+For this, let $M, N \in \mathcal{C}_{0}$ and $\varphi : M \twoheadrightarrow N$ be an epi. The Hom-functor works on morphisms
+by mapping the Hom-sets of the source and target objects of the morphism, i.e.
+$\textup{Hom}(P,\varphi) : \textup{Hom}(P,M) \rightarrow \textup{Hom}(P,N)$, given by $\rho \mapsto \varphi\rho\, \forall \rho \in \textup{Hom}(P,M)$.
+%with $\textup{Hom}(P,s(\varphi)) = s( \textup{Hom}(P,\varphi) )$ and likewise $\textup{Hom}(P, t(\varphi)) = t( \textup{Hom}(P,\varphi))$.
+Now given that $\varphi$ is an epi, we want to show that $\textup{Hom}(P,\varphi)$ is also an epi.\\
+
+Let $O \in \mathcal{C}_{0}$,  $\gamma : N \rightarrow O$ and $\varepsilon : N \rightarrow O$ such that
+$\textup{Hom}(P,\gamma) : \textup{Hom}(P,N) \rightarrow \textup{Hom}(P,O)$ and
+$\textup{Hom}(P,\varepsilon) : \textup{Hom}(P,N) \rightarrow \textup{Hom}(P,O)$ and
+$\textup{Hom}(P,\varphi)\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varphi)\textup{Hom}(P,\varepsilon)$. 
+From the functoriality axioms it follows that $\textup{Hom}(P,\varphi\gamma) = \textup{Hom}(P,\varphi\varepsilon)$. This implies
+$\forall \rho \in \textup{Hom}(P,M)$, $\rho(\varphi\gamma) = \rho(\varphi\varepsilon)$. Since $\phi$ is epi, it follows that
+$\rho\gamma = \rho\varepsilon$ and therefore $\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varepsilon)$, i.e.
+$\textup{Hom}(P,\varphi)$ is epi.
+
+\noindent\ul{''$\Rightarrow$'':} Let $\textup{Hom}(P,-)$ be right exact.
+
+
+\end{proof}
+\end{lemma}
+
+\begin{definition}{(Projective object)}
+
+\end{definition}
 
 \[
 \begin{pmatrix}1 \ampersand 2 \ampersand 3 \ampersand 4\end{pmatrix}
