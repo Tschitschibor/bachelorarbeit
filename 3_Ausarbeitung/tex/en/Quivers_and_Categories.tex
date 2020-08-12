@@ -9,7 +9,7 @@ In this section, we first want to define the category \textbf{Quiv} and how it i
 In order to describe the category \textbf{Quiv} of quivers, we first have to define what a category is and for this we need
 the definition of a quiver. Lateron we will revisit this definition as we can define quivers as the objects in the quiver category \textbf{Quiv}.
 
-\begin{definition}{(Quiver)}\\
+\begin{definition}{(Quiver)}\label{def:quiver}\\
 A \ul{directed graph} or \ul{quiver} $q$ consists of a class of \ul{objects} (or \ul{vertices}) $q_{0} = \textup{Obj}\,q$ and
 a class of \ul{morphisms} (or \ul{arrows}) $q_{1} = \textup{Mor}\,q$ together with two defining maps
 \[
@@ -22,7 +22,7 @@ $s$ called \ul{source} and $t$ called \ul{target}.
 
 In the next definition we are giving a new characterization for $q_{1}$ by looking at all arrows between two fixed objects.
 
-\begin{definition}{(Hom-set of a (locally) small quiver)}
+\begin{definition}{(Hom-set of a (locally) small quiver)}\label{def:hom-set}
 \renewcommand{\labelenumi}{(\theenumi)}
 \begin{enumerate}
 \item Given two objects $M, N \in q_{0}$ we write $\textup{Hom}_{q}(M,N)$ or $q(M,N)$ for the fiber
@@ -61,7 +61,7 @@ $\textup{Hom}_{q}(2,1)=\emptyset$.\\
 number of objects.
 \end{example}
 
-\begin{definition}{(Composable arrows; path in a quiver)}\\
+\begin{definition}{(Composable arrows; path in a quiver)}\label{def:path}\\
 Since we already have the source and target maps, we say two arrows $a, b \in q_{1}$ are \ul{composable} if $t(a) = s(b)$ or
 $t(b) = s(a)$. In this case we can write a sequence of composable arrows $p = a_{1}a_{2}\cdots a_{n}$ where $t(a_{i}) = s(a_{i+1})$ for $i=1,\dots,n-1$.
 We call this sequence a \ul{path} from $s(a_{1})$ to $t(a_{n})$ and the integer $n \in \mathbb{Z}_{\geq0}$ the \ul{length} $l(p)$ of the path $p$.
@@ -99,7 +99,7 @@ we would have a cyclic path and thus infinitely many paths.
 
 \subsection{Categories}
 
-\begin{definition}{(Category)}\\
+\begin{definition}{(Category)}\label{def:category}\\
 \noindent A \ul{category} $\mathcal{C}$ is a quiver with two further maps:
 \begin{enumerate}
 \renewcommand{\labelenumi}{(id)}
@@ -145,11 +145,11 @@ The identity is a left and right unit of the composition.
 
 Categories are themselves objects in the category of categories, which leads to a question: What is a morphism between categories?
 
-\begin{definition}{(Functor)}\\
+\begin{definition}{(Functor)}\label{def:functor}\\
 \noindent A \ul{functor} $F : \mathcal{C} \rightarrow \mathcal{D}$, between categories $\mathcal{C}$ and $\mathcal{D}$, consists of the
 following data:
 
-\begin{itemize}\label{def:functor}
+\begin{itemize}
 \item An object $Fc\in\mathcal{D}_{0}$, for each object $c \in \mathcal{C}_{0}$.
 \item A morphism $Ff : Fc \rightarrow Fc' \in \mathcal{D}_{1}$, for each morphism $f : c \rightarrow c' \in \mathcal{C}_{1}$, so that the
 domain and codomain of $Ff$ are, respectively, equal to $F$ applied to the domain or codomain of $f$.
@@ -177,7 +177,7 @@ With fixed categories $\mathcal{C}$ and $\mathcal{D}$ we can consider functors $
 as objects in the category $\textup{Hom}(\mathcal{C},\mathcal{D})$ of functors between $\mathcal{C}$ and $\mathcal{D}$. In this \ul{functor category},
 the morphisms between two functors are called \ul{natural transformations}.
 
-\begin{definition}{(Natural transformations)}\\
+\begin{definition}{(Natural transformations)}\label{def:natural_transformation}\\
 \noindent Given categories $\mathcal{C}$ and $\mathcal{D}$ and functors $F : \mathcal{C} \rightarrow \mathcal{D}$ and
 $G : \mathcal{C} \rightarrow \mathcal{D}$, a \ul{natural transformation} $\alpha : F \Rightarrow G$ consists of:
 \begin{itemize}

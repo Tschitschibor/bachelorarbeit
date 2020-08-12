@@ -20,12 +20,12 @@ projective lift $\psi : P\,\dottedarrow\,M$ such that $\theta = \psi\varphi$.
 
 \begin{tikzcd}
 M \arrow[r, "\varphi", two heads] & N \\
-	& P \arrow[u, "\psi\varphi"'] \arrow[lu, "\psi", dotted]
+	& P \arrow[u, "\theta", "=\,\psi\varphi"'] \arrow[lu, "\psi", dotted]
 \end{tikzcd}
 \end{itemize}
 \begin{proof}
 For an object $L\in \mathcal{C}_{0}$, $\textup{Hom}(L,-)$ is always left exact, i.e. respects monos.\\
-\ul{''$\Leftarrow$'' :} Prove that $\textup{Hom}(P,-)$  is right exact, i.e. respects epis. 
+\ul{''$\Leftarrow$'' :} Prove that $\textup{Hom}(P,-)$  is right exact, i.e. respects epis.\\
 For this, let $M, N \in \mathcal{C}_{0}$ and $\varphi : M \twoheadrightarrow N$ be an epi. The Hom-functor works on morphisms
 by mapping the Hom-sets of the source and target objects of the morphism, i.e.
 $\textup{Hom}(P,\varphi) : \textup{Hom}(P,M) \rightarrow \textup{Hom}(P,N)$, given by $\rho \mapsto \rho\varphi\, \forall \rho \in \textup{Hom}(P,M)$.
@@ -34,29 +34,47 @@ Let $O \in \mathcal{C}_{0}$,  $\gamma : N \rightarrow O$ and $\varepsilon : N \r
 $\textup{Hom}(P,\gamma) : \textup{Hom}(P,N) \rightarrow \textup{Hom}(P,O);\, \theta \mapsto \theta\gamma$ and
 $\textup{Hom}(P,\varepsilon) : \textup{Hom}(P,N) \rightarrow \textup{Hom}(P,O);\, \theta \mapsto \theta\varepsilon$ and
 $\textup{Hom}(P,\varphi)\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varphi)\textup{Hom}(P,\varepsilon)$. 
-From the functoriality axioms it follows that $\textup{Hom}(P,\varphi\gamma) = \textup{Hom}(P,\varphi\varepsilon)$. This implies
-$\forall \rho \in \textup{Hom}(P,M)$, $\rho(\varphi\gamma) = \rho(\varphi\varepsilon)$. 
+From the functoriality axioms (ref. definition \ref{def:functor} of a functor) it follows that $\textup{Hom}(P,\varphi\gamma) = \textup{Hom}(P,\varphi\varepsilon)$. This implies
+\begin{equation}\label{eqn:Hom_functoriality}\rho(\varphi\gamma) = \rho(\varphi\varepsilon)\, \forall \rho \in \textup{Hom}(P,M)\end{equation}. 
 
 \begin{tikzcd}
-M \arrow[r, "\varphi", shift right, two heads] & N \arrow[r, "\gamma"'] \arrow[r, shift left, "\varepsilon"] & O \\
+M \arrow[r, "\varphi", shift right, two heads] & N \arrow[r, "\gamma"'] \arrow[r, shift left=2, "\varepsilon"] & O \\
 	& P \arrow[lu, "\rho"] \arrow[u, "\theta"] \arrow[ru, outer sep=2, pos=.55, "\rho(\varphi\gamma) = \rho(\varphi\varepsilon)"'] \arrow[ru, shift right=2]
 \end{tikzcd}
 
 We want to show that the parallel morphisms $\textup{Hom}(P,\gamma)$ and $\textup{Hom}(P,\varepsilon)$ are the same, i.e. for all
 $\theta \in \textup{Hom}(P,N), \theta\gamma = \theta\varepsilon$. Our assumtion that there exists a projective lift helps us in this situation:
-$\forall \theta \in \textup{Hom}(P,N) \exists \rho \in \textup{Hom}(P,M)$ such that $\theta = \rho\varphi$ and therefore with the above equation,
+$\forall \theta \in \textup{Hom}(P,N)\, \exists\, \rho \in \textup{Hom}(P,M)$ such that $\theta = \rho\varphi$ and therefore with the above 
+equation \eqref{eqn:Hom_functoriality},
 $\theta\gamma = (\rho\varphi)\gamma = \rho(\varphi\gamma) = \rho(\varphi\varepsilon) = (\rho\varphi)\varepsilon = \theta\varepsilon$
-and therefore $\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varepsilon)$, i.e. $\textup{Hom}(P,\varphi)$ is epi.
+and therefore $\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varepsilon)$, i.e. $\textup{Hom}(P,\varphi)$ is epi.\\
 
-\noindent\ul{''$\Rightarrow$'':} Let $\textup{Hom}(P,-)$ be right exact.
-
-
+\noindent\ul{''$\Rightarrow$'':} Let $\textup{Hom}(P,-)$ be right exact. Let $M, N \in \mathcal{C}_{0}$, the morphism
+$\varphi : M \twoheadrightarrow N$ be an epi and $\theta : P \rightarrow N$ any morphism.
+We want to show the existence of a morphism $\psi : P \dottedarrow\, M$ such that $\theta = \psi\varphi$.
+With $\textup{Hom}(P,-)$ being exact, we have that $\textup{Hom}(P,\varphi) : \textup{Hom}(P,M) \twoheadrightarrow \textup{Hom}(P,N)$ is
+an epi, and is given by $\textup{Hom}(P,M) \ni \rho \mapsto \rho\varphi \in \textup{Hom}(P,N)$.\\
+The $\textup{Hom}$-functor moves the morphisms from a general categorical context in $\mathcal{C}$ into the category of sets,
+i.e. $\textup{Hom}(P,\varphi)$ is a function in the category of sets.
+And for those it's true that every epimorphism is surjective. Thus $\forall \theta \in \textup{Hom}(P,N)\, \exists \rho \in \textup{Hom}(P,M)$ such
+that $\theta = (\textup{Hom}(P,\varphi))(\rho) = \rho\varphi$. This $\rho$ is the projective lift $\psi := \rho$ we were looking for.
 \end{proof}
 \end{lemma}
 
-\begin{definition}{(Projective object)}
+\begin{definition}{(Projective object)}\label{def:projective_object}\\
+An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of the equivalent properties in Lemma
+ \ref{la:Hom_exact_projective_Lift_along_epis} is called a \ul{projective object}.
+\end{definition}
+
+\begin{definition}{(Yoneda projective)}\label{la:yoneda_projective}\\
 
 \end{definition}
+
+\begin{lemma}
+Yoneda projectives are projective objects.
+\begin{proof}
+\end{proof}
+\end{lemma}
 
 \[
 \begin{pmatrix}1 \ampersand 2 \ampersand 3 \ampersand 4\end{pmatrix}
