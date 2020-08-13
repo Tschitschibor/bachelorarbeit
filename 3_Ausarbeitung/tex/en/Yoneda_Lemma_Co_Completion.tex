@@ -53,11 +53,20 @@ and therefore $\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varepsilon)$, i.e. $\tex
 $\varphi : M \twoheadrightarrow N$ be an epi and $\theta : P \rightarrow N$ any morphism.
 We want to show the existence of a morphism $\psi : P \dottedarrow\, M$ such that $\theta = \psi\varphi$.
 With $\textup{Hom}(P,-)$ being exact, we have that $\textup{Hom}(P,\varphi) : \textup{Hom}(P,M) \twoheadrightarrow \textup{Hom}(P,N)$ is
-an epi, and is given by $\textup{Hom}(P,M) \ni \rho \mapsto \rho\varphi \in \textup{Hom}(P,N)$.\\
-The $\textup{Hom}$-functor moves the morphisms from a general categorical context in $\mathcal{C}$ into the category of sets,
-i.e. $\textup{Hom}(P,\varphi)$ is a function in the category of sets.
+an epi, and is given by $\textup{Hom}(P,M) \ni \rho \mapsto \rho\varphi \in \textup{Hom}(P,N)$.
+\begin{itemize}
+\item \ul{Case 1}: $\mathcal{C}$ is locally small, i.e. for the two objects $P, N \in \mathcal{C}_{0},$ there is a \ul{set} $\textup{Hom}(P,N)$
+of morphisms between them. The $\textup{Hom}$-functor moves the morphisms from a general categorical context 
+in $\mathcal{C}$ into the category of sets, i.e. $\textup{Hom}(P,\varphi)$ is a function in the category of sets.
 And for those it's true that every epimorphism is surjective. Thus $\forall \theta \in \textup{Hom}(P,N)\, \exists \rho \in \textup{Hom}(P,M)$ such
 that $\theta = (\textup{Hom}(P,\varphi))(\rho) = \rho\varphi$. This $\rho$ is the projective lift $\psi := \rho$ we were looking for.
+\item \ul{Case 2}: If $\mathcal{C}$ is not locally small, we have to argument from the epimorphism itself and can't use surjectivity.
+In $\mathcal{C}^{\text{op}}$ the morphism $\textup{Hom}(\varphi,P) : \textup{Hom}(N,P) \hookrightarrow \textup{Hom}(M,P)$
+becomes a monomorphism, i.e. for two parallel morphisms
+$h : \textup{Hom}(O,P) \rightarrow \textup{Hom}(N,P)$, $k : \textup{Hom}(O,P) \rightarrow \textup{Hom}(N,P)$, 
+$\textup{Hom}(O,P) \ni \rho \mapsto h\rho = k\rho \textup{Hom}(N,P)$ it follows $h = k$.
+Let $\theta \in \textup{Hom}(P,N)$
+\end{itemize}
 \end{proof}
 \end{lemma}
 
