@@ -45,6 +45,9 @@ If additionally, $q_{0}$ is a set, then the quiver is called \ul{small}.
 \end{enumerate}
 \end{definition}
 
+When we don't assume the category to be locally small, but still talk about its hom-sets, we mean the class of morphisms,
+if we don't explicitly use the fact that it's a set of morphisms.
+
 \begin{example}\label{q(2)}{(Quiver with 2 objects and 3 morphisms)}\\
 \[
 \begin{tikzcd}
@@ -140,6 +143,14 @@ The identity is a left and right unit of the composition.
 \end{enumerate}
 \end{definition}
 
+So with categories you always answer the four questions
+\begin{itemize}
+\item What are the objects? (which includes the question What are the identity morphisms?)
+\item What are the morphisms?
+\item How do you compose morphisms?
+\item Why is the composition associative?
+\end{itemize}
+
 \subsection{Functors}
 
 Categories are themselves objects in the category of categories, which leads to a question: What is a morphism between categories?
@@ -151,7 +162,8 @@ following data:
 \begin{itemize}
 \item An object $Fc\in\mathcal{D}_{0}$, for each object $c \in \mathcal{C}_{0}$.
 \item A morphism $Ff : Fc \rightarrow Fc' \in \mathcal{D}_{1}$, for each morphism $f : c \rightarrow c' \in \mathcal{C}_{1}$, so that the
-domain and codomain of $Ff$ are, respectively, equal to $F$ applied to the domain or codomain of $f$.
+source and target of $Ff$ are, respectively, equal to $F$ applied to the source or target of $f$, in other words,
+$s(Ff) = Fs(f)$ and $t(Ff) = Ft(f)$.
 \end{itemize}
 
 \noindent The assignments are required to satisfy the following two \ul{functoriality axioms}:
@@ -164,16 +176,66 @@ Put concisely, a functor consists of a mapping on objects and a mapping on morph
 namely domains and codomains, composition, and identities.
 \end{definition}
 
+So with functors you always answer the four questions
+\begin{itemize}
+\item How does it work on objects?
+\item How does it work on morphisms?
+\item Why does it respect composition?
+\item Why does it respect identity morphisms?
+\end{itemize}
+
+We have already seen an example for a functor in definition \ref{def:hom-set} where we defined the hom-set $\textup{Hom}(M,N)$ between two
+objects $M$ and $N$. There are two ways to leave blank one of the objects and thus define the 
+
+\begin{example}{(partial Hom-functor)}\label{def:Hom_functor}
+Let $\mathcal{C}$ be a category and $P \in \mathcal{C}_{0}$ any object. The \ul{Hom-functor}, also called \ul{partial Hom-functor},
+\begin{enumerate}
+\item $\textup{Hom}(P,-)$ is a functor from $\mathcal{C}$ to $\mathcal{C}_{1}$ where objects in $\mathcal{C}_{1}$ are the hom-sets 
+$\textup{Hom}(P,N)$, and morphisms are maps from one hom-set to another.
+$\textup{Hom}(P,-)$ works on objects by mapping the object $N \in \mathcal{C}_{0}$ to
+the hom-set $\textup{Hom}(P,N) \in \mathcal{C}_{1}$.
+$\textup{Hom}(P,-)$ works on morphisms by mapping the morphism $(f : M \rightarrow N ) \in \mathcal{C}_{1}$ to the transformation
+$\textup{Hom}(P,f) : \textup{Hom}(P,M) \rightarrow \textup{Hom}(P,N); \varphi \mapsto \varphi f$, so for every morphism
+$\varphi \in \textup{Hom}(P,M)$, you post-compose $f \in \textup{Hom}(M,N)$ to get a new morphism $\varphi f \in \textup{Hom}(P,N)$.
+
+\item $\textup{Hom}(-,P)$ is a functor from $\mathcal{C}$ to $\mathcal{C}_{1}$ where objects in $\mathcal{C}_{1}$ are the hom-sets 
+$\textup{Hom}(N,P)$, and morphisms are maps from one hom-set to another.
+$\textup{Hom}(-,P)$ works on objects by mapping the object $N \in \mathcal{C}_{0}$ to
+the hom-set $\textup{Hom}(N,P) \in \mathcal{C}_{1}$.
+$\textup{Hom}(-,P)$ works on morphisms by mapping the morphism $(f : M \rightarrow N ) \in \mathcal{C}_{1}$ to the transformation
+$\textup{Hom}(f,P) : \textup{Hom}(N,P) \rightarrow \textup{Hom}(M,P); \varphi \mapsto f\varphi$, so for every morphism
+$\varphi \in \textup{Hom}(N,P)$, you pre-compose $f \in \textup{Hom}(M,N)$ to get a new morphism $f\varphi \in \textup{Hom}(M,P)$.
+\end{enumerate}
+
+The important difference between these two functors was how they worked on morphisms. If in both cases we take a morphism
+$f : M \rightarrow N$ as given, then we have to arrange the source and target for $\textup{Hom}(P,f)$ and $\textup{Hom}(f,P)$
+according to the post-composition and pre-composition. Thus if we wanted $\textup{Hom}(f,P)$ to be defined by pre-composition
+$\varphi \mapsto f\varphi$, then we were forced to invert $M$ and $N$ as source and target to get 
+$\textup{Hom}(f,P): \textup{Hom}(N,P) \rightarrow \textup{Hom}(M,P)$. 
+This process of inverting source and target is caught in the following definition.
+\end{example}
+
+\begin{definition}{(covariant / contravariant functor)}\endnote{(Def 1.3.5. in \cite{[context]}, p. 17 (35/258))}\\
+The way we defined a functor in definition \ref{def:functor} was in the \ul{covariant} way.\\
+A \ul{contravariant} functor $F : \mathcal{C} \rightarrow \mathcal{D}$ works on objects the same way as a covariant one, i.e.
+an object $Fc \in \mathcal{D}_{0}$ for each object $c \in \mathcal{C}_{0}$. For morphisms on the other hand, we have
+a morphism $F f : Fc' \rightarrow Fc \in \mathcal{D}_{1}$ for each morphism $f : c \rightarrow c' \in \mathcal{C}_{1}$, so that
+$s(F f) = F t(f)$ and $t(F f) = F s(f)$.
+The \ul{functoriality axioms} are also inverted for a contravariant functor:
+For any composable pair, $f, g \in \mathcal{C}_{1}$, $F f \cdot F g = F(g \cdot f)$.
+For the identity morphisms, it is again the same as in the covariant case:
+For each object $c \in \mathcal{C}_{0}$, $F(1_{c}) = 1_{Fc}$.
+\end{definition}
+
 In the following definition, we define different subclasses of functors. These adjectives often come in opposite pairs, so that you may be
 tempted to think, duality lets you just swap all the adjectives for the opposite ones, but be careful there. E.g. when 
 $\textup{Hom}(P,-)$ is a \ul{covariant}, \ul{left-exact} functor, the opposite $\textup{Hom}(-,P)$ is a \ul{contravariant}, but still \ul{left-exact} functor.
+But their respective \ul{right-exactedness} is equivalent to opposite concepts concerning \ul{projective} and \ul{injective} objects.
 
-\begin{definition}{(Exact functor)}\label{def:exact_functor}\endnote{(Def 4.5.9 in \cite{[context]}, p. 139 (157/258))}
-
+\begin{definition}{(Exact functor)}\label{def:exact_functor}\endnote{(Def 4.5.9. in \cite{[context]}, p. 139 (157/258))}
+A functor 
 \end{definition}
 left-/ right- exact
-
-covariant / contravariant
 
 full
 
