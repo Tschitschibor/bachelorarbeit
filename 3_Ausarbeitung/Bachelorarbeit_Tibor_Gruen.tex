@@ -20,9 +20,29 @@
 	\hyperref[func:#1]{\texttt{#1}}%
 }
 
+%%% For footnotes at end of text
+\usepackage{endnotes}
+%\let\footnote{\endnote}
+%% Heading of endnotes section
+\renewcommand*{\notesname}{Annotations}
+
+\makeatletter
+\renewcommand*{\enoteheading}{%
+   \section*{\notesname%
+   \@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
+\mbox{}\par\vskip-\baselineskip}
+\makeatother
+
 %%% For quotation
 \usepackage{csquotes}
 
+%%% For proper underline
+\usepackage{soul}
+%\setuldepth{gjpqy}
+%\setuldepth\strut
+\setuldepth{-1}
+
+%%% Color
 \usepackage{xcolor}
 \usepackage{color}
 \definecolor{FireBrick}{rgb}{0.5812,0.0074,0.0083}
@@ -71,10 +91,129 @@
 \newtheorem{remark}[thm]{Remark}
 \newtheorem{example}[thm]{Example}
 
+
+%%% For Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsbsy}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\usepackage{mathtools}
+\usepackage{commath}
+\usepackage[sc,osf]{mathpazo}
+
+%%% For arrows and categories
+\usepackage[all]{xy}
+\usepackage{tikz-cd}
+
+%%% tikz
+\usetikzlibrary{positioning}
+
+%%% For dotted box around diagrams
+\tikzcdset{
+    boxedcd/.style={
+        every matrix/.append style={
+            draw=black,
+            dotted,
+            rounded corners,
+            #1
+        },
+    },
+}
+
+%%% For dotted arrows in math and in text
+%% dottedrightarrow
+\makeatletter
+\newbox\dottedrightarrow@box
+\setbox\dottedrightarrow@box\hbox
+  {%
+    \begin{tikzpicture}
+      \draw[dotted,->] (0,0) -- (1.5em,0);
+    \end{tikzpicture}%
+  }
+\newcommand*\dottedrightarrow
+  {\relax\ifmmode\expandafter\dottedrightarrow@m\else\expandafter\dottedrightarrow@t\fi}
+\newcommand*\dottedrightarrow@t[1][1.5em]
+  {\resizebox{#1}{!}{\raisebox{.5ex}{\usebox\dottedrightarrow@box}}}
+\newcommand*\dottedrightarrow@m[1][]
+  {%
+    \if\relax\detokenize{#1}\relax
+      \mathchoice% values are trial and error based\ldots
+        {\dottedrightarrow@t}
+        {\dottedrightarrow@t}
+        {\dottedrightarrow@t[1.1em]}
+        {\dottedrightarrow@t[0.9em]}%
+    \else
+      \dottedrightarrow@t[#1]%
+    \fi
+  }
+\makeatother
+\let\olddottedrightarrow\dottedrightarrow
+\renewcommand{\dottedrightarrow}{\raisebox{-.2em}{\olddottedrightarrow}}
+%% dottedleftarrow
+\makeatletter
+\newbox\dottedleftarrow@box
+\setbox\dottedleftarrow@box\hbox
+  {%
+    \begin{tikzpicture}
+      \draw[dotted,<-] (0,0) -- (1.5em,0);
+    \end{tikzpicture}%
+  }
+\newcommand*\dottedleftarrow
+  {\relax\ifmmode\expandafter\dottedleftarrow@m\else\expandafter\dottedleftarrow@t\fi}
+\newcommand*\dottedleftarrow@t[1][1.5em]
+  {\resizebox{#1}{!}{\raisebox{.5ex}{\usebox\dottedleftarrow@box}}}
+\newcommand*\dottedleftarrow@m[1][]
+  {%
+    \if\relax\detokenize{#1}\relax
+      \mathchoice% values are trial and error based\ldots
+        {\dottedleftarrow@t}
+        {\dottedleftarrow@t}
+        {\dottedleftarrow@t[1.1em]}
+        {\dottedleftarrow@t[0.9em]}%
+    \else
+      \dottedleftarrow@t[#1]%
+    \fi
+  }
+\makeatother
+\let\olddottedleftarrow\dottedleftarrow
+\renewcommand{\dottedleftarrow}{\raisebox{-.2em}{\olddottedleftarrow}}
+
+
+%%% For some big dots
+\makeatletter
+\newcommand*{\bigcdot}{}% Check if undefined
+\DeclareRobustCommand*{\bigcdot}{%
+  \mathbin{\mathpalette\bigcdot@{}}%
+}
+\newcommand*{\bigcdot@scalefactor}{.5}
+\newcommand*{\bigcdot@widthfactor}{1.15}
+\newcommand*{\bigcdot@}[2]{%
+  % #1: math style
+  % #2: unused
+  \sbox0{$#1\vcenter{}$}% math axis
+  \sbox2{$#1\cdot\m@th$}%
+  \hbox to \bigcdot@widthfactor\wd2{%
+    \hfil
+    \raise\ht0\hbox{%
+      \scalebox{\bigcdot@scalefactor}{%
+        \lower\ht0\hbox{$#1\bullet\m@th$}%
+      }%
+    }%
+    \hfil
+  }%
+}
+\makeatother
+
+
+
 \begin{document}
 \tableofcontents\label{toc}
 \section{Preface}
+
 \section{Introduction to quivers and category theory}
+\input{tex/en/Quivers_and_Categories.tex}
 
 \section{Datatype convention of catreps}
 \input{tex/en/Datatype_convention_of_catreps.tex}
@@ -120,6 +259,17 @@ and \hyperref[func:WeakDirectSumDecomposition]{\texttt{WeakDirectSumDecompositio
 
 \section{The categories Functor-Categories and Cat-Reps}
 \section{Conclusion}
+
+%% best endnotes are in Westend-Verlag style: 
+%% All at the end, sorted by chapter, starting from 1 at each new chapter.
+
+%%% insert endnotes in some way
+\begingroup
+     \parindent 0pt
+     \parskip 2ex
+     \def\enotesize{\normalsize}
+     \theendnotes
+\endgroup 
 
 \addcontentsline{toc}{section}{References}
 \input{bib/sources.bib}

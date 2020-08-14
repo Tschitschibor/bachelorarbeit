@@ -11,20 +11,19 @@
 \end{proof}
 \end{lemma}
 
-\begin{lemma}\label{la:Hom_exact_projective_Lift_along_epis}
+\begin{lemma}\label{la:Hom_exact_proj_Lift_along_epis}
 Let $\mathcal{C}$ be a category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
 \begin{itemize}
-\item The functor $\textup{Hom}(P,-)$ is exact.
+\item The covariant functor $\textup{Hom}(P,-)$ is exact.
 \item For all epimorphisms $\varphi : M \twoheadrightarrow N$ and morphisms $\theta : P \rightarrow N$, there exists a
-projective lift $\psi : P\,\dottedarrow\,M$ such that $\theta = \psi\varphi$.
-
+projective lift $\psi : P\,\dottedrightarrow\,M$ such that $\theta = \psi\varphi$.\\
 \begin{tikzcd}
 M \arrow[r, "\varphi", two heads] & N \\
 	& P \arrow[u, "\theta", "=\,\psi\varphi"'] \arrow[lu, "\psi", dotted]
 \end{tikzcd}
 \end{itemize}
 \begin{proof}
-For an object $L\in \mathcal{C}_{0}$, $\textup{Hom}(L,-)$ is always left exact, i.e. respects monos.\\
+For an object $L\in \mathcal{C}_{0}$, $\textup{Hom}(L,-)$ is always a covariant left-exact functor, i.e. respects monos.\\
 \ul{''$\Leftarrow$'' :} Prove that $\textup{Hom}(P,-)$  is right exact, i.e. respects epis.\\
 For this, let $M, N \in \mathcal{C}_{0}$ and $\varphi : M \twoheadrightarrow N$ be an epi. The Hom-functor works on morphisms
 by mapping the Hom-sets of the source and target objects of the morphism, i.e.
@@ -51,7 +50,7 @@ and therefore $\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varepsilon)$, i.e. $\tex
 
 \noindent\ul{''$\Rightarrow$'':} Let $\textup{Hom}(P,-)$ be right exact. Let $M, N \in \mathcal{C}_{0}$, the morphism
 $\varphi : M \twoheadrightarrow N$ be an epi and $\theta : P \rightarrow N$ any morphism.
-We want to show the existence of a morphism $\psi : P \dottedarrow\, M$ such that $\theta = \psi\varphi$.
+We want to show the existence of a morphism $\psi : P \dottedrightarrow\, M$ such that $\theta = \psi\varphi$.
 With $\textup{Hom}(P,-)$ being exact, we have that $\textup{Hom}(P,\varphi) : \textup{Hom}(P,M) \twoheadrightarrow \textup{Hom}(P,N)$ is
 an epi, and is given by $\textup{Hom}(P,M) \ni \rho \mapsto \rho\varphi \in \textup{Hom}(P,N)$.
 \begin{itemize}
@@ -70,10 +69,28 @@ Let $\theta \in \textup{Hom}(P,N)$
 \end{proof}
 \end{lemma}
 
-\begin{definition}{(Projective object)}\label{def:projective_object}\\
+\begin{definition}{(Projective object)}\label{def:proj_object}\\
 An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of the equivalent properties in Lemma
- \ref{la:Hom_exact_projective_Lift_along_epis} is called a \ul{projective object}.
+ \ref{la:Hom_exact_proj_Lift_along_epis} is called a \ul{projective object}.
 \end{definition}
+
+\begin{lemma}{(dual to Lemma \ref{la:Hom_exact_proj_Lift_along_epis})}\label{la:dual_Hom_exact_proj_colift}
+Let $\mathcal{C}$ be a category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
+\begin{itemize}
+\item The contravariant functor $\textup{Hom}(-,P)$ is exact.
+\item For all monomorphisms $\varphi : M \hookleftarrow N$ and morphisms $\theta : P \leftarrow N$, there exists a
+projective colift $\psi : P \dottedleftarrow M$ such that $\theta = \varphi\psi$.\\
+\begin{tikzcd}
+M \arrow[rd, "\psi"', dotted] & N \arrow[l, "\varphi", hook] \arrow[d, "=\,\varphi\psi", "\theta"'] \\
+	& P 
+\end{tikzcd}
+\end{itemize}
+\begin{proof}
+For an object $L \in \mathcal{C}_{0}, \textup{Hom}(-,L)$ is always a contravariant left-exact functor, i.e. respects monos.\\
+\ul{''$\Leftarrow$'' :} Prove that $\textup{Hom}(-,P)$  is right exact, i.e. respects epis.
+
+\end{proof}
+\end{lemma}
 
 (ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]})
 \begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\\

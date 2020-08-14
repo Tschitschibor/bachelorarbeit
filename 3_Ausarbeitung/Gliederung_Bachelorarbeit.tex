@@ -69,33 +69,63 @@
 }
 
 %%% For dotted arrows in math and in text
+%% dottedrightarrow
 \makeatletter
-\newbox\dottedarrow@box
-\setbox\dottedarrow@box\hbox
+\newbox\dottedrightarrow@box
+\setbox\dottedrightarrow@box\hbox
   {%
     \begin{tikzpicture}
       \draw[dotted,->] (0,0) -- (1.5em,0);
     \end{tikzpicture}%
   }
-\newcommand*\dottedarrow
-  {\relax\ifmmode\expandafter\dottedarrow@m\else\expandafter\dottedarrow@t\fi}
-\newcommand*\dottedarrow@t[1][1.5em]
-  {\resizebox{#1}{!}{\raisebox{.5ex}{\usebox\dottedarrow@box}}}
-\newcommand*\dottedarrow@m[1][]
+\newcommand*\dottedrightarrow
+  {\relax\ifmmode\expandafter\dottedrightarrow@m\else\expandafter\dottedrightarrow@t\fi}
+\newcommand*\dottedrightarrow@t[1][1.5em]
+  {\resizebox{#1}{!}{\raisebox{.5ex}{\usebox\dottedrightarrow@box}}}
+\newcommand*\dottedrightarrow@m[1][]
   {%
     \if\relax\detokenize{#1}\relax
       \mathchoice% values are trial and error based\ldots
-        {\dottedarrow@t}
-        {\dottedarrow@t}
-        {\dottedarrow@t[1.1em]}
-        {\dottedarrow@t[0.9em]}%
+        {\dottedrightarrow@t}
+        {\dottedrightarrow@t}
+        {\dottedrightarrow@t[1.1em]}
+        {\dottedrightarrow@t[0.9em]}%
     \else
-      \dottedarrow@t[#1]%
+      \dottedrightarrow@t[#1]%
     \fi
   }
 \makeatother
-\let\olddottedarrow\dottedarrow
-\renewcommand{\dottedarrow}{\raisebox{-.2em}{\olddottedarrow}}
+\let\olddottedrightarrow\dottedrightarrow
+\renewcommand{\dottedrightarrow}{\raisebox{-.2em}{\olddottedrightarrow}}
+
+%% dottedleftarrow
+\makeatletter
+\newbox\dottedleftarrow@box
+\setbox\dottedleftarrow@box\hbox
+  {%
+    \begin{tikzpicture}
+      \draw[dotted,<-] (0,0) -- (1.5em,0);
+    \end{tikzpicture}%
+  }
+\newcommand*\dottedleftarrow
+  {\relax\ifmmode\expandafter\dottedleftarrow@m\else\expandafter\dottedleftarrow@t\fi}
+\newcommand*\dottedleftarrow@t[1][1.5em]
+  {\resizebox{#1}{!}{\raisebox{.5ex}{\usebox\dottedleftarrow@box}}}
+\newcommand*\dottedleftarrow@m[1][]
+  {%
+    \if\relax\detokenize{#1}\relax
+      \mathchoice% values are trial and error based\ldots
+        {\dottedleftarrow@t}
+        {\dottedleftarrow@t}
+        {\dottedleftarrow@t[1.1em]}
+        {\dottedleftarrow@t[0.9em]}%
+    \else
+      \dottedleftarrow@t[#1]%
+    \fi
+  }
+\makeatother
+\let\olddottedleftarrow\dottedleftarrow
+\renewcommand{\dottedleftarrow}{\raisebox{-.2em}{\olddottedleftarrow}}
 
 %%% For some big dots
 \makeatletter
@@ -139,7 +169,12 @@
 
 %%% For footnotes at end of text
 \usepackage{endnotes}
-\let\footnote=\endnote
+%\let\footnote{\endnote}
+\makeatletter
+\def\enoteheading{\section{\notesname
+\@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
+\mbox{}\par\vskip-\baselineskip}
+\makeatother
 
 %%% For captions and references
 \usepackage{hyperref}
@@ -174,7 +209,7 @@
 
 \input{tex/en/Short_overview_of_the_tools_used.tex}
 
-
+\section{Introduction to quivers and category theory}
 \input{tex/en/Quivers_and_Categories.tex}
 
 \input{tex/en/Finite_concrete_categories.tex}
@@ -377,6 +412,7 @@ Proof that it terminates.
 Wir haben BasisOfExternalHom benutzt um Decompose in CAP umzusetzen um EmbeddingOfSubRepresentation umzusetzen um
 WeakDirectSumDecomposition umzusetzen.
 
+%%% insert endnotes in some way
 \begingroup
      \parindent 0pt
      \parskip 2ex
