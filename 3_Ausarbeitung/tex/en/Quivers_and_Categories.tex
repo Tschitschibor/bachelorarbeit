@@ -74,7 +74,8 @@ whose source and target are the vertex $i \in q_{0}$ is called the \ul{trivial p
 $e_{i}e_{i}$ has length zero starting at $i$ therefore $e_{i}^{2}=e_{i}$.
 \end{definition}
 
-\begin{lemma} Let Q be a quiver. If there is a path of length at least $\abs{Q_{0}}$, then there are cyclic paths,
+\begin{lemma}\label{la:cyclic_paths}
+Let Q be a quiver. If there is a path of length at least $\abs{Q_{0}}$, then there are cyclic paths,
 and thus infinitely many paths.\cite{[leit4]}
 \begin{proof}
 Assume that there exists a path of length greater or equal to $\abs{Q_{0}}$. Then there exists a path of length $n = \abs{Q_{0}}$, say
@@ -98,6 +99,10 @@ $\omega^{m}$ has length $m(j-i)$. This shows that these paths are pairwise diffe
 The longest path $1\rightarrow2\rightarrow3\rightarrow4$ has length 3. If after the object $4$ another arrow would go to either $1,2,3$ or $4$ itself,
 we would have a cyclic path and thus infinitely many paths.
 \end{example}
+
+\begin{definition}{(Path algebra)}\label{def:path_algebra}
+TODO
+\end{definition}
 
 \subsection{Categories}
 
@@ -187,7 +192,7 @@ namely domains and codomains, composition, and identities.
 We have already seen an example for a functor in definition \ref{def:hom-set} where we defined the hom-set $\textup{Hom}(M,N)$ between two
 objects $M$ and $N$. There are two ways to leave blank one of the objects and thus define the 
 
-\begin{example}{(partial Hom-functor)}\label{def:Hom_functor}
+\begin{example}{(partial Hom-functor)}\label{ex:Hom_functor}
 Let $\mathcal{C}$ be a category and $P \in \mathcal{C}_{0}$ any object. The \ul{Hom-functor}, also called \ul{partial Hom-functor},
 \begin{enumerate}
 \item $\textup{Hom}(P,-)$ is a functor from $\mathcal{C}$ to $\mathcal{C}_{1}$ where objects in $\mathcal{C}_{1}$ are the hom-sets 
@@ -240,6 +245,12 @@ left-/ right- exact
 full
 
 faithful functor
+
+\begin{example}{(Forgetful functor)}\label{ex:forgetful_functor}
+TODO
+
+$U : \mathbf{Cat} \Rightarrow \mathbf{Quiv}$
+\end{example}
 
 \subsection{Natural transformations}
 

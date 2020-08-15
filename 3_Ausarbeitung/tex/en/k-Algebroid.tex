@@ -1,16 +1,44 @@
 % mainfile: ../main.tex
 
-Our goal is to represent concrete categories, for this we need the source and target categories of our representations.
-The source category is a \textbf{$\Bbbk$-Algebroid} which we compute algorithmically in multiple steps from a concrete category.
+Our goal is to represent finite concrete categories, for this we need the source and target categories of our functors, which the
+representations are.
+As subcategories of $\textup{FinSets}$, our finite concrete categories only have definitions for their objects and their
+morphisms, methods to check when two morphisms are congruent or equivalent, but not much else.
+A competing theory to category theory is that of quivers and path algebras. We already used their terminology in
+\ref{def:path}, \ref{la:cyclic_paths} and \ref{def:path_algebra}, for instance when talking about the trivial path,
+which in the language of category theory is nothing but the identity morphism, composition of arrows to a path is nothing but
+composition of morphisms (if you make the path explicit by writing a new arrow for every path).
 
-The target category of our category representations is \textbf{k-Mat}.
-The category where our category representations lie in is \textbf{CatReps} for which we show that it's a subcategory of the
-\textbf{Functor Category}.
+So what we called a \ul{path algebra} in \ref{def:path_algebra} is a different data structure for a category. 
+For one, the path algebra is an algebra, i.e. a vector space with additional structure, and thus a single set, comparable to the
+class of morphisms $\mathcal{C}_{1}$ of a category $\mathcal{C}$.
+But as it is an algebra, it not only contains the generating morphisms of the category, but also $\Bbbk$-linear combinations of
+morphisms and paths. This is what our concrete categories lack, and what additional structure we have to give them in order
+to represent them by matrices.
+
+In practise, there is already developed software for \ul{q}uivers and \ul{p}ath \ul{a}lgebras, namely the \textsc{Gap} package
+\textsc{QPA$2$}\endnote{(see \cite{[QPA2]})}.
+What we are actually doing to represent finite concrete categories, is going from $\mathcal{C} \in \mathbf{Cats}$ to $q \in \mathbf{Quiv}$,
+in theory by \ul{forgetting} (see \ref{ex:forgetful_functor}) the category concepts of identity morphism and composition, in practise by calculating the
+underlying quiver $q$, and then for a commutative ring $\Bbbk$, constructing the path algebra $\Bbbk q$, which we then
+take back into the category theoretical context by constructing the $\Bbbk$-\textbf{Algebroid} $\mathcal{A}$ from the path algebra $\Bbbk q$.
+
+The source category for our representation is then the $\Bbbk$-\textbf{Algebroid} $\mathcal{A}$ and not anymore our finite concrete
+category $\mathcal{C}$, but it behaves in the same way regarding composition of morphisms and which morphisms are congruent.
+
+The target category of our category representations will be $\Bbbk$-\textbf{Mat} which we will describe in the next section.\endnote{In \cite{[Ab-Cat]},
+Posur used the equivalence between categories $\textup{mat}_{\Bbbk} \cong \textup{vec}^{\text{fd}}_{\Bbbk}$, as described in \cite{[context]},
+\textsc{Example} 1.5.6 on page 30 (48/258), to justify that $\Bbbk$-\textbf{Mat} is a good \textbf{computational model} to 
+''transform otherwise inaccessible mathematical objects into computationally easily graspable entities'', which is what we are doing with \textbf{CatReps}.}
+
+With source and target categories defined, the category where our category representations lie in is \textbf{CatReps} for which we
+show that it's a subcategory of the \textbf{Functor Category}.
 
 \subsection{Ab-categories}
 
-\begin{example}
-A group G defines a category BG with a single object. The group elements are its morphisms, which are all automorphisms of the single object.
+\begin{example}{(Group as a category)}\\
+\noindent A group $\mathbf{G}$ defines a category $\mathcal{B}\mathbf{G}$ with a single object $\ast$. The group elements are its morphisms, which are
+all automorphisms (i.e. bijective endomorphisms) of the single object. Composition of morphisms is defined by the binary group operation.
 The identity element $e \in G$ acts as the identity morphism for the unique object in this category. The hom-set of that category is itself
 a group.
 \end{example}
