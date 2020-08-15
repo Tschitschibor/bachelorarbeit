@@ -92,12 +92,17 @@ For an object $L \in \mathcal{C}_{0}, \textup{Hom}(-,L)$ is always a contravaria
 \end{proof}
 \end{lemma}
 
-(ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]})
-\begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\\
+\begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\endnote{(ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]})}\\
 Consider the category of functors $\textup{Hom}( \mathcal{A}, \Bbbk\textup{-Mat} )$ from a $\Bbbk$-Algebroid $\mathcal{A}$ to the matrix category
 over the same field $\Bbbk$, where the objects are representations of the algebroid by matrices, i.e. functors between the two categories, and
-the morphisms are natural transformations between these functors.
+the morphisms are natural transformations between these functors.\\
+\noindent Given an object $o \in \mathcal{A}$, the \ul{Yoneda projective} is the submodule of the category algebra consisting of all arrows
+starting at $o$.
 \end{definition}
+
+Given that Yoneda projectives are objects, we can ask questions about their properties as objects in a category. On the other hand, they are
+functors in the functor category, so addressing them as functors we can ask our four questions \ref{four_functor_questions} 
+How does it work on objects? How does it work on morphisms? Why does it respect composition? Why does it respect identity morphisms?
 
 \begin{lemma}
 Yoneda projectives are projective objects.
