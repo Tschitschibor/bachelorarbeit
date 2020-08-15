@@ -1,15 +1,13 @@
 % mainfile: ../main.tex
 
-\section{The categories Quiv, Cat, FinSets, k-Mat, CatReps and the Functor Category}
-In this section, we first want to define the category \textbf{Quiv} and how it is the prototype for the category \textbf{Cats}.
-We want to restrict ourselves to finite concrete categories, which brings us to the category \textbf{FinSets}. 
 Our goal is to represent concrete categories, for this we need the source and target categories of our representations.
-The source category is \textbf{k-Algebroids} which we compute algorithmically from a concrete category.
+The source category is a \textbf{$\Bbbk$-Algebroid} which we compute algorithmically in multiple steps from a concrete category.
+
 The target category of our category representations is \textbf{k-Mat}.
 The category where our category representations lie in is \textbf{CatReps} for which we show that it's a subcategory of the
 \textbf{Functor Category}.
 
-\subsection{Additional structure on the Hom-set of a category}
+\subsection{Ab-categories}
 
 \begin{example}
 A group G defines a category BG with a single object. The group elements are its morphisms, which are all automorphisms of the single object.
@@ -138,8 +136,8 @@ an abelian group (with the neutral element called \ul{zero morphism}), and for a
 (\gamma + \delta)\alpha = \gamma\alpha + \delta\alpha \textup{ and }\]\[
 \gamma(\alpha+\beta) = \gamma\alpha + \gamma\beta.
 \]
-Note that every hom-set has its own unique zero morphism. E.g. in $\textup{Mat}_{\mathbb{Q}}$ the 2-by-3 zero-matrix $0 \in \textup{Hom}(2,3)$ is different from
-the 4-by-4 zero-matrix $0 \in \textup{Hom}(4,4)$.
+Note that every hom-set has its own unique zero morphism. E.g. in $\textup{Mat}_{\mathbb{Q}}$ the 2-by-3 zero-matrix $\mathbf{0} \in \textup{Hom}(2,3)$ is different from
+the 4-by-4 zero-matrix $\mathbf{0} \in \textup{Hom}(4,4)$.
 \end{definition}
 
 \begin{definition}{(Initial object, terminal object, zero object)}
