@@ -192,7 +192,7 @@ namely domains and codomains, composition, and identities.
 We have already seen an example for a functor in definition \ref{def:hom_set} where we defined the hom-set $\textup{Hom}(M,N)$ between two
 objects $M$ and $N$. There are two ways to leave blank one of the objects and thus define the 
 
-\begin{example}{(partial Hom-functor)}\label{ex:Hom_functor}
+\begin{example}{(partial Hom-functor)}\label{ex:hom_functor}
 Let $\mathcal{C}$ be a category and $P \in \mathcal{C}_{0}$ any object. The \ul{Hom-functor}, also called \ul{partial Hom-functor},
 \begin{enumerate}
 \item $\textup{Hom}(P,-)$ is a functor from $\mathcal{C}$ to $\mathcal{C}_{1}$ where objects in $\mathcal{C}_{1}$ are the hom-sets 
@@ -237,16 +237,37 @@ tempted to think, duality lets you just swap all the adjectives for the opposite
 $\textup{Hom}(P,-)$ is a \ul{covariant}, \ul{left-exact} functor, the opposite $\textup{Hom}(-,P)$ is a \ul{contravariant}, but still \ul{left-exact} functor.
 But their respective \ul{right-exactedness} is equivalent to opposite concepts concerning \ul{projective} and \ul{injective} objects.
 
-\begin{definition}{(Exact functor)}\label{def:exact_functor}\endnote{(Def 4.5.9. in \cite{[context]}, p. 139 (157/258))}
+\begin{definition}{(Exact functor)}\label{def:exact_functor}\endnote{(Def 4.5.9. in \cite{[context]}, p. 139 (157/258))}\\
 A functor 
 \end{definition}
 left-/ right- exact
 
-full
+\begin{definition}{(Full functor)}\label{def:full_functor}\endnote{(Def 1.5.7. in \cite{[context]}, p. 30 (48/258))}\\
+A functor $F : \mathcal{C} \rightarrow \mathcal{D}$ is \ul{full} if
+$\forall x, y \in \mathcal{C}_{0}$, the map $\mathcal{C}(x, y) \rightarrow \mathcal{D}(Fx, Fy)$ is surjective.
+\end{definition}
 
-faithful functor
+\begin{definition}{(Faithful functor)}\label{def:faithful_functor}\endnote{(ebd.)}\\
+A functor $F$ as in \ref{def:full_functor} is \ul{faithful} if
+$\forall x, y \in \mathcal{C}_{0}$, the map $\mathcal{C}(x, y) \rightarrow \mathcal{D}(Fx, Fy)$ is injective.
+\end{definition}
 
-\begin{example}{(Forgetful functor)}\label{ex:forgetful_functor}
+\begin{definition}{(Essentially surjective on objects)}\label{def:ess_surj_o_o}\endnote{(ebd.)}\\
+A functor $F$ as in \ref{def:full_functor} is \ul{essentially surjective on objects} if for every object $d \in \mathcal{D}_{0}$ there
+is some $c \in \mathcal{C}_{0}$ such that $d$ is isomorphic to $Fc$.
+\end{definition}
+
+\begin{definition}{(Embedding)}\label{def:embedding}\endnote{(Rmk 1.5.8. in \cite{[context]}, p. 31 (49/258))}\\
+A faithful functor that is injective on objects is called an \ul{embedding} and identifies the source category
+as a subcategory of the target. In this case, faithfulness implies that the functor is (globally) injective on arrows.
+\end{definition}
+
+\begin{definition}{(Full embedding / full subcategory)}\label{def:full_fully}\endnote{(ebd.)}\\
+A full and faithful functor, called \ul{fully faithful} for short, that is injective on objects defines a \ul{full embedding} of the
+source category into the target category. The source then defines a \ul{full subcategory} of the target category.
+\end{definition}
+
+\begin{example}{(Forgetful functor)}\label{ex:forgetful_functor}\\
 TODO
 
 $U : \mathbf{Cat} \Rightarrow \mathbf{Quiv}$
@@ -274,6 +295,18 @@ Fc' \arrow[rr, "\alpha_{c'}"]                &  & Gc'
 \ul{commutes}, i.e., has a a common composite $Fc \rightarrow Gc' \in \mathcal{D}_{1}$.
 \end{itemize}
 
+\end{definition}
+
+\begin{definition}{(The functor category)}\endnote{(cited from ncatlab \cite{[ncatlab_functor_category]})}\\
+Given categories $\mathcal{C}$ and $\mathcal{D}$, the \ul{functor category} - written $\mathcal{D}^{\mathcal{C}}$, $\textup{Hom}(\mathcal{C},
+\mathcal{D})$ or $[\mathcal{C}, \mathcal{D}]$ -
+is the category whose
+\begin{itemize}
+\item objects are functors $F : \mathcal{C} \rightarrow \mathcal{D}$
+\item morphisms are natural transformations between these functors.
+\end{itemize}
+Main usage of functor categories is as $\textup{Hom}$ categories in place of hom-sets (comp. \ref{def:hom_set} and \ref{ex:hom_functor}) where
+we have much more than a set, namely a whole category of morphisms between two objects (together with the morphisms between morphisms).
 \end{definition}
 
 

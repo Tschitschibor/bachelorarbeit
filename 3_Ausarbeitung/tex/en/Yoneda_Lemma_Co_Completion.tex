@@ -1,8 +1,19 @@
 % mainfile: ../main.tex
 
-\section{Yoneda's Lemma: Completion and cocompletion of a category}
+%% What does completion and cocompletion mean?
+%% What does embedding mean?
+\subsection{The category of presheaves}
 
-\subsection{Embedding categories}
+\begin{definition}{(The category of presheaves)}\endnote{(cited from ncatlab \cite{[ncatlab_presheaves]})}\\
+For $\mathcal{C}$ a small category, its \ul{category of presheaves} is the functor category
+\[ \textup{PSh}(\mathcal{C}) := [\mathcal{C}^{\text{op}}, \textup{Set}] \]
+from the opposite category of $\mathcal{C}$ to $\textup{Set}$.
+An object in this category is a \ul{presheaf}.
+\end{definition}
+
+\begin{remark}{(General properties of presheaves)}\\
+The category of presheaves $\textup{PSh}(\mathcal{C})$ is the \ul{free cocompletion} of $\mathcal{C}$.
+\end{remark}
 
 \begin{lemma}{(Yoneda's Lemma)}
 
@@ -10,6 +21,33 @@
 
 \end{proof}
 \end{lemma}
+
+\begin{definition}{(Yoneda Embedding)}\label{def_func:yoneda_embedding}\endnote{(quoted directly from the \texttt{FunctorCategories} \cite{[FunctorCat]} documentation}\\
+$\mathtt{YonedaEmbedding(B)}$\\
+Returns: A \textsc{CAP} functor.
+
+\noindent The input is an algebroid $\mathcal{B}$ defined by some quiver $\Bbbk$-algebra $\mathcal{A}$. The output is the Yoneda embedding functor
+from $\mathcal{B}$ into the functors category $\textup{Hom}( \mathtt{AlgebroidOverOppositeAlgebra}(\mathcal{B}), \mathcal{C} )$, where
+$\mathcal{C}$ is a matrix category over $\Bbbk$.
+\end{definition}
+
+\begin{definition}{(Yoneda embedding)}\label{def:yoneda_embedding}\endnote{(cited from ncatlab \cite{[ncatlab_yoneda_emb]})}\\
+The \ul{Yoneda embedding} for a locally small category $\mathcal{C}$ is the functor
+\[
+Y : \mathcal{C} \rightarrow [\mathcal{C}^{\text{op}}, \textup{Set}]
+\]
+from $\mathcal{C}$ to the category of presheaves over $\mathcal{C}$ which is the image of the hom-functor
+\[
+\textup{Hom} : \mathcal{C}^{\text{op}}\times\mathcal{C} \rightarrow \textup{Set}
+\]
+under the $\textup{Hom}$ adjunction
+\[
+\textup{Hom}(\mathcal{C}^{\text{op}}\times\mathcal{C}, \textup{Set}) \simeq \textup{Hom}(\mathcal{C},[\mathcal{C}^{\text{op}}, \textup{Set}])
+\]
+in the closed symmetric monoidal category $\textup{Cat}$.
+\end{definition}
+
+\subsection{Projective objects and the Yoneda projective}
 
 \begin{lemma}\label{la:Hom_exact_proj_Lift_along_epis}
 Let $\mathcal{C}$ be a category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
@@ -125,7 +163,7 @@ Yoneda projectives are projective objects.
 \textup{id}
 \]
 
-\subsection{Yoneda Projective}
+\subsection{Yoneda Projective: a concrete example}
 
 Consider the concrete category 
 \[
