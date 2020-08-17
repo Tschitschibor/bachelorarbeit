@@ -92,7 +92,8 @@ For an object $L \in \mathcal{C}_{0}, \textup{Hom}(-,L)$ is always a contravaria
 \end{proof}
 \end{lemma}
 
-\begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\endnote{(ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]})}\\
+\begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\endnote{(ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]}; I first
+want to understand Yoneda projectives in the context of CatReps, and then follow up with the general case)}\\
 Consider the category of functors $\textup{Hom}( \mathcal{A}, \Bbbk\textup{-Mat} )$ from a $\Bbbk$-Algebroid $\mathcal{A}$ to the matrix category
 over the same field $\Bbbk$, where the objects are representations of the algebroid by matrices, i.e. functors between the two categories, and
 the morphisms are natural transformations between these functors.\\
@@ -103,6 +104,10 @@ starting at $o$.
 Given that Yoneda projectives are objects, we can ask questions about their properties as objects in a category. On the other hand, they are
 functors in the functor category, so addressing them as functors we can ask our four questions \ref{four_functor_questions} 
 How does it work on objects? How does it work on morphisms? Why does it respect composition? Why does it respect identity morphisms?
+
+If we want to check the property of a projective object for a yoneda projective $Y \in \textup{CatReps}_{0}$, we have to consider the
+hom-sets $\textup{Hom}(Y,-)$, i.e. how exactly do the morphisms $\eta \in \textup{CatReps}_{1}$ work?
+
 
 \begin{lemma}
 Yoneda projectives are projective objects.

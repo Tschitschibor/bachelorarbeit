@@ -10,35 +10,93 @@
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
 \let\endchangemargin=\endlist
 
+\usepackage[utf8]{inputenc}
+\usepackage{fancyvrb}
 
-%%% For Math
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amsbsy}
-\usepackage{amsthm}
-\usepackage{amssymb}
-
-\usepackage{mathtools}
-\usepackage{commath}
-\usepackage[sc,osf]{mathpazo}
-
-%%% For calculations inside tikz and latex
-\usepackage{calc}
-
-\newcounter{modresult}
-
-\newcommand*{\themodulo}[2]{%
-\setcounter{modresult}{%
-#1-(#1/#2)*#2%
-}%
-#1 mod #2 = \themodresult\par
+%%% For captions and references
+\usepackage{hyperref}
+\usepackage[figure]{hypcap}
+\newcommand{\Algoref}[1]{%
+	\hyperref[algo:#1]{Algorithm~\ref*{algo:#1}}%
 }
+\newcommand{\algoref}[1]{%
+	\hyperref[algo:#1]{Algorithm~\ref*{algo:#1}}%
+}
+\newcommand{\Funcref}[1]{%
+	\hyperref[func:#1]{Function~\ref*{func:#1}}%
+}
+\newcommand{\funcref}[1]{%
+	\hyperref[func:#1]{\texttt{#1}}%
+}
+
+%%% For footnotes at end of text
+\usepackage{endnotes}
+%\let\footnote{\endnote}
+%% Heading of endnotes section
+\renewcommand*{\notesname}{Annotations}
+
+\makeatletter
+\def\enoteheading{\section{\notesname
+\@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
+\mbox{}\par\vskip-\baselineskip}
+\makeatother
+
+%%% For switching languages in quotes
+\usepackage[english]{babel}
+%\usepackage[english, german]{babel} %% makes troubles
+
+%%% For quotation
+%% english guillemets have to be custom defined in /tex/latex/csquotes/csquotes.cfg
+\usepackage[english = guillemets, autostyle = true,autopunct,csdisplay = true]{csquotes}
+
+%%% For proper underline
+\usepackage{soul}
+%\setuldepth{gjpqy}
+%\setuldepth\strut
+\setuldepth{-1}
+
+%%% Color
+\usepackage{xcolor}
+\usepackage{color}
+\definecolor{FireBrick}{rgb}{0.5812,0.0074,0.0083}
+\definecolor{RoyalBlue}{rgb}{0.0236,0.0894,0.6179}
+\definecolor{RoyalGreen}{rgb}{0.0236,0.6179,0.0894}
+\definecolor{RoyalRed}{rgb}{0.6179,0.0236,0.0894}
+\definecolor{LightBlue}{rgb}{0.8544,0.9511,1.0000}
+\definecolor{Black}{rgb}{0.0,0.0,0.0}
+
+\definecolor{linkColor}{rgb}{0.0,0.0,0.554}
+\definecolor{citeColor}{rgb}{0.0,0.0,0.554}
+\definecolor{fileColor}{rgb}{0.0,0.0,0.554}
+\definecolor{urlColor}{rgb}{0.0,0.0,0.554}
+\definecolor{promptColor}{rgb}{0.0,0.0,0.589}
+\definecolor{brkpromptColor}{rgb}{0.589,0.0,0.0}
+\definecolor{gapinputColor}{rgb}{0.589,0.0,0.0}
+\definecolor{gapoutputColor}{rgb}{0.0,0.0,0.0}
+
+%%  for a long time these were red and blue by default,
+%%  now black, but keep variables to overwrite
+\definecolor{FuncColor}{rgb}{0.0,0.0,0.0}
+%% strange name because of pdflatex bug:
+\definecolor{Chapter }{rgb}{0.0,0.0,0.0}
+\definecolor{DarkOlive}{rgb}{0.1047,0.2412,0.0064}
+
+%% command for ColorPrompt style examples
+\newcommand{\gapprompt}[1]{\color{promptColor}{\bfseries #1}}
+\newcommand{\gapbrkprompt}[1]{\color{brkpromptColor}{\bfseries #1}}
+\newcommand{\gapinput}[1]{\color{gapinputColor}{#1}}
+
+%%% For source code listings
+\usepackage{listings}[2013/08/05]
+\input{pfad.tex}
+%\lstloadlanguages{GAP} %% not needed in new listings version
 
 %%% For algorithm styles
 \usepackage[linesnumbered,ruled]{algorithm2e}
 
-
 %%% Math theorem styles
+\usepackage{amsthm}
+
 \newtheorem{thm}{Theorem}[subsection]
 \newtheorem{lemma}[thm]{Lemma}
 \theoremstyle{definition}
@@ -46,15 +104,39 @@
 \newtheorem{remark}[thm]{Remark}
 \newtheorem{example}[thm]{Example}
 
-%%% Math operators bold
-%\newcommand{\Category}{Category}
+
+%%% For Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsbsy}
+%%\usepackage{amsthm} (doubled)
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{commath}
+\usepackage[sc,osf]{mathpazo}
 
 %%% For arrows and categories
-\usepackage[all]{xy}
+%\usepackage[all]{xy} %%not used anymore
 \usepackage{tikz-cd}
+
+%%% For calculations and loops inside tikz and latex
+\usepackage{calc}
+\usepackage{pgffor}
+
+\newcounter{modresult}
+\newcommand*{\themodulo}[2]{%
+\setcounter{modresult}{%
+#1-(#1/#2)*#2%
+}%
+#1 mod #2 = \themodresult\par
+}
 
 %%% For matrices
 \let\ampersand =&
+
+%%% Math operators bold
+%\newcommand{\Category}{Category}
+% just use /textup{#1} inside math environment instead of redefining every math operator.
 
 %%% tikz
 \usetikzlibrary{positioning}
@@ -130,7 +212,7 @@
 \let\olddottedleftarrow\dottedleftarrow
 \renewcommand{\dottedleftarrow}{\raisebox{-.2em}{\olddottedleftarrow}}
 
-%%% For some big dots
+%%% For some big dots (they still don't look very big)
 \makeatletter
 \newcommand*{\bigcdot}{}% Check if undefined
 \DeclareRobustCommand*{\bigcdot}{%
@@ -154,34 +236,6 @@
   }%
 }
 \makeatother
-
-%%% For horizontal times
-
-
-%%% For proper underline
-\usepackage{soul}
-%\setuldepth{gjpqy}
-%\setuldepth\strut
-\setuldepth{-1}
-
-\usepackage{pgffor}
-
-%%% For source code listings
-\usepackage{listings}
-\input{pfad.tex}
-
-%%% For footnotes at end of text
-\usepackage{endnotes}
-%\let\footnote{\endnote}
-\makeatletter
-\def\enoteheading{\section{\notesname
-\@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
-\mbox{}\par\vskip-\baselineskip}
-\makeatother
-
-%%% For captions and references
-\usepackage{hyperref}
-\usepackage[figure]{hypcap}
 
 \title{Representations of a concrete category as objects in the functor category}
 

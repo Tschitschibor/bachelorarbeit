@@ -1,5 +1,13 @@
 \usepackage[top=37mm,bottom=37mm,left=27mm,right=27mm]{geometry}
 
+%% From Gliederung preambel
+%\usepackage[a4paper,%
+%            left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,%
+%            footskip=.6cm]{geometry}
+            
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
+
 \usepackage[utf8]{inputenc}
 \usepackage{fancyvrb}
 
@@ -34,8 +42,10 @@
 
 %%% For switching languages in quotes
 \usepackage[english]{babel}
+%\usepackage[english, german]{babel} %% makes troubles
 
 %%% For quotation
+%% english guillemets have to be custom defined in /tex/latex/csquotes/csquotes.cfg
 \usepackage[english = guillemets, autostyle = true,autopunct,csdisplay = true]{csquotes}
 
 %%% For proper underline
@@ -98,16 +108,34 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amsbsy}
-\usepackage{amsthm}
+%%\usepackage{amsthm} (doubled)
 \usepackage{amssymb}
-
 \usepackage{mathtools}
 \usepackage{commath}
 \usepackage[sc,osf]{mathpazo}
 
 %%% For arrows and categories
-\usepackage[all]{xy}
+%\usepackage[all]{xy} %%not used anymore
 \usepackage{tikz-cd}
+
+%%% For calculations and loops inside tikz and latex
+\usepackage{calc}
+\usepackage{pgffor}
+
+\newcounter{modresult}
+\newcommand*{\themodulo}[2]{%
+\setcounter{modresult}{%
+#1-(#1/#2)*#2%
+}%
+#1 mod #2 = \themodresult\par
+}
+
+%%% For matrices
+\let\ampersand =&
+
+%%% Math operators bold
+%\newcommand{\Category}{Category}
+% just use /textup{#1} inside math environment instead of redefining every math operator.
 
 %%% tikz
 \usetikzlibrary{positioning}
@@ -182,8 +210,7 @@
 \let\olddottedleftarrow\dottedleftarrow
 \renewcommand{\dottedleftarrow}{\raisebox{-.2em}{\olddottedleftarrow}}
 
-
-%%% For some big dots
+%%% For some big dots (they still don't look very big)
 \makeatletter
 \newcommand*{\bigcdot}{}% Check if undefined
 \DeclareRobustCommand*{\bigcdot}{%
