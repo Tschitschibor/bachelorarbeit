@@ -20,8 +20,15 @@ In practise, there is already developed software for \ul{q}uivers and \ul{p}ath 
 \textsc{QPA$2$}\endnote{(see \cite{[QPA2]})}.
 What we are actually doing to represent finite concrete categories, is going from $\mathcal{C} \in \mathbf{Cats}$ to $q \in \mathbf{Quiv}$,
 in theory by \ul{forgetting} (see \ref{ex:forgetful_functor}) the category concepts of identity morphism and composition, in practise by calculating the
-underlying quiver $q$, and then for a commutative ring $\Bbbk$, constructing the path algebra $\Bbbk q$, which we then
-take back into the category theoretical context by constructing the $\Bbbk$-\textbf{Algebroid} $\mathcal{A}$ from the path algebra $\Bbbk q$.
+underlying quiver $q$, and then for a commutative ring $\Bbbk$, constructing the path algebra $\Bbbk q$. In this step the path algebra
+is infinite-dimensional, since there are infinitely many paths according to lemma \ref{la:cyclic_paths}, and \textsc{QPA$2$}'s function
+\texttt{BasisPathsBetweenVertices} only works for finite-dimensional path algebras. Thus in a next step we have to provide
+additional data in the form of generators of ideals of the path algebra, by which we can divide and build the quotient path algebra,
+which is then finite-dimensional. This is the purpose of \texttt{RelationsOfEndomorphisms}.
+
+Once we have a finite-dimensional path algebra $\Bbbk q$, we let \textsc{QPA$2$} calculate generators of the non-endomorphism relations,
+and when we have a complete set of relations, that will be our definitive quotient quiver algebra $\Bbbk q$, which we then take it back into the category
+theoretical context by constructing the $\Bbbk$-\textbf{Algebroid} $\mathcal{A}$ from the path algebra $\Bbbk q$.
 
 The source category for our representation is then the $\Bbbk$-\textbf{Algebroid} $\mathcal{A}$ and not anymore our finite concrete
 category $\mathcal{C}$, but it behaves in the same way regarding composition of morphisms and which morphisms are congruent.
@@ -37,7 +44,7 @@ as described in \cite{[context]}, \textsc{Example} 1.5.6 on page 30 (48/258), to
 }
 
 With source and target categories defined, the category where our category representations lie in is \textbf{CatReps} for which we
-show that it's a subcategory of the \textbf{Functor Category}.
+show that it's a subcategory of the \textbf{Functor Category}. And even more in the next section.
 
 \subsection{Ab-categories}
 
@@ -50,13 +57,6 @@ a group.
 
 This example can be generalized to categories where the hom-set is a ring or an R-algebra. But for this we need a commutative ring R and thus
 the category R-Mod.
-
-\begin{definition}{Ab-Category}
-An \ul{Ab-category} is a category in which all homomorphism sets are abelian groups. That means in addition to the composition
-of morphisms \begin{tikzcd}[column sep=small] \mu:\mathcal{C}_{1} \times \mathcal{C}_{1} \arrow[rr] &  & \mathcal{C}_{1}
-\end{tikzcd} we have another binary operation \begin{tikzcd}[column sep=small] +:\mathcal{C}_{1} \times \mathcal{C}_{1} \arrow[rr] &  & \mathcal{C}_{1}
-\end{tikzcd}, that distributes over the composition, i.e. \[\mu(f+g,h) = \mu(f,h)+\mu(g,h)\].
-\end{definition}
 
 \begin{definition}{(Ab-category)}
 An \ul{Ab-category} is a category in which all homomorphism sets are abelian groups, and composition distributes over addition.\\
@@ -84,9 +84,17 @@ the 4-by-4 zero-matrix $\mathbf{0} \in \textup{Hom}(4,4)$.
 
 \end{definition}
 
-\begin{definition}{(Abelian category)}
-
+\begin{definition}{(Abelian category)}\endnote{(From \cite{[context]}, appendix E.5, Def. E.5.1)}
+A category $\mathcal{C}$ is \ul{abelian} if
+\begin{itemize}
+\item it has a \ul{zero object} $0$, that is both initial and terminal,
+\item it has all \ul{binary products} and \ul{binary coproducts},
+\item it has all \ul{kernels} and \ul{cokernels}, defined repsectively to be the \ul{equalizer} and
+\ul{coequalizer} of a map $f : A \rightarrow B$ with the zero map $A \rightarrow 0 \rightarrow B$, and
+\item all monomorphisms and epimorphisms arise as kernels or cokernels, respectively.
+\end{itemize}
 \end{definition}
+
 \begin{definition}{(k-linear category)}
 
 \end{definition}
