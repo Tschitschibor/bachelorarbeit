@@ -326,11 +326,110 @@ A full and faithful functor, called \ul{fully faithful} for short, that is injec
 source category into the target category. The source then defines a \ul{full subcategory} of the target category.
 \end{definition}
 
+% cut-pasted from k-Algebroid.tex
+\noindent As we have seen, every category is a quiver, but in general, to become a category, a quiver is lacking identity morphisms
+and the composition of morphisms. To be more precise, there is a \ul{functor} $U$ from the \ul{category of categories} $\textup{CAT}$ to the
+\ul{category of quivers} $\textup{Quiv}$, called the \ul{underlying quiver} or \ul{forgetful functor}.
+\[
+\begin{tikzcd}
+\textup{Cat} \arrow[rr,"U"] &  & \textup{Quiv}
+\end{tikzcd}
+\]
+mapping every object $M \in \mathcal{C}_{0}$ to the same objects in $q_{0}$, mapping every arrow $\varphi \in \mathcal{C}_{1}$ to 
+an arrow $a \in q_{1}$, respecting source and target, but forgetting the special role of the identity morphisms and of the composition morphisms.
+
 \begin{example}{(Forgetful functor)}\label{ex:forgetful_functor}\\
 TODO
 
 $U : \mathbf{Cat} \Rightarrow \mathbf{Quiv}$
 \end{example}
+
+% Was bisher bei Category Closure geschah...
+\begin{example}{(Underlying quiver)}\\
+
+\noindent\begin{minipage}{.08\textwidth}
+\phantom{}
+\end{minipage}
+\begin{minipage}{.37\textwidth}
+\begin{tikzcd}[boxedcd={inner xsep=1.5em, inner ysep=3em}]
+B \arrow[rrrr, "\psi"] &  &  &  & C \arrow[ddd, "\rho"] \\
+ &  &  &  & \\
+ &  &  &  & \\
+A \arrow[uuu, "\varphi"] &  &  &  & D
+\end{tikzcd}
+\end{minipage}
+%
+\begin{minipage}{.10\textwidth}
+\begin{tikzcd}
+{} \arrow[r, "Free", Rightarrow] & {}
+\end{tikzcd}
+\end{minipage}
+%
+\begin{minipage}{.37\textwidth}
+\begin{tikzcd}[boxedcd={inner xsep=1.5em, inner ysep=3em}]
+B \arrow[rrrr, "\psi"] \arrow[rrrrddd, "\psi\rho", pos=0.3] \arrow["1_{B}"', loop, distance=2em, in=125, out=55] &  &  &  &
+C \arrow[ddd, "\rho"] \arrow["1_{C}"', loop, distance=2em, in=125, out=55]\\
+ &  &  &  & \\
+ &  &  &  & \\
+A \arrow[uuu, "\varphi"] \arrow[rrrruuu, "\varphi\psi", pos=0.3] \arrow[rrrr, bend left, "(\varphi\psi)\rho" ', shift right=2]
+\arrow[rrrr, "\varphi(\psi\rho)", bend right] \arrow["1_{A}"', loop, distance=2em, in=305, out=235] &  &  &  &
+D \arrow["1_{D}"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
+\end{minipage}
+\begin{minipage}{.08\textwidth}
+\phantom{}
+\end{minipage}\\
+
+\end{example}
+
+% to be seen how useful this example is...
+\begin{example}{(Underlying quiver)}\\
+
+\noindent\begin{minipage}{.08\textwidth}
+\phantom{}
+\end{minipage}
+\begin{minipage}{.37\textwidth}
+\begin{tikzcd}[boxedcd={inner xsep=1.5em, inner ysep=3em}]
+B \arrow[rrrr, "\psi"] \arrow[rrrrddd, "\psi\rho", pos=0.3] \arrow["1_{B}"', loop, distance=2em, in=125, out=55] &  &  &  &
+C \arrow[ddd, "\rho"] \arrow["1_{C}"', loop, distance=2em, in=125, out=55]\\
+ &  &  &  & \\
+ &  &  &  & \\
+A \arrow[uuu, "\varphi"] \arrow[rrrruuu, "\varphi\psi", pos=0.3] \arrow[rrrr, bend left, "(\varphi\psi)\rho" ', shift right=2]
+\arrow[rrrr, "\varphi(\psi\rho)", bend right] \arrow["1_{A}"', loop, distance=2em, in=305, out=235] &  &  &  &
+D \arrow["1_{D}"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
+\end{minipage}
+%
+\begin{minipage}{.10\textwidth}
+\begin{tikzcd}
+{} \arrow[r, "U", Rightarrow] & {}
+\end{tikzcd}
+\end{minipage}
+%
+\begin{minipage}{.37\textwidth}
+\begin{tikzcd}[boxedcd={inner xsep=1.5em, inner ysep=3em}]
+2 \arrow[rrrr, "b"] \arrow[rrrrddd, "e", pos=0.3] \arrow["h"', loop, distance=2em, in=125, out=55] &  &  &  &
+3 \arrow[ddd, "c"] \arrow["i"', loop, distance=2em, in=125, out=55]\\
+ &  &  &  & \\
+ &  &  &  & \\
+1 \arrow[uuu, "a"] \arrow[rrrruuu, "d", pos=0.3] \arrow[rrrr, bend left, "f" ', shift right=2]
+\arrow[rrrr, "f", bend right] \arrow["g"', loop, distance=2em, in=305, out=235] &  &  &  &
+4 \arrow["j"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
+\end{minipage}
+\begin{minipage}{.08\textwidth}
+\phantom{}
+\end{minipage}\\
+
+\noindent In the category on the left, associativity of composition guaranteed that $(\varphi\psi)\rho = \varphi(\psi\rho)$, so those two arrows
+were already the same, so they are mapped to the same arrow $f = U((\varphi\psi)\rho) = U(\varphi(\psi\rho))$ in the quiver on the right.
+We didn't have to draw both arrows for $f$, but since they are equal, there is still only one arrow in the hom-set $\textup{Hom}_{q}(1,4)=\{f,f\} = \{f\}$.\\
+All the other identities are not preserved under the forgetful functor, e.g. $d$ doesn't know what it has to do with $a$ and $b$ apart from
+$s(d) = s(a)$ and $t(d) = t(b)$. Especially the former identity arrows are now just endomorphisms with no defining property.\\
+The paths $g^{2}f, gf$ and $fj^{3}$ are all different, while in the category, they all simplify to
+$1_{A}1_{A}(\varphi\psi)\rho = 1_{A}(\varphi\psi)\rho = (\varphi\psi)\rho1_{D}1_{D}1_{D} =  (\varphi\psi)\rho$ due to the unit property and associativity.
+\end{example}
+
 
 \subsection{Natural transformations}
 
