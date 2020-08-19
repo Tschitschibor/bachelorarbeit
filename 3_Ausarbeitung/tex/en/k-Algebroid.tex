@@ -11,7 +11,7 @@ A competing theory to category theory is that of quivers and path algebras. We a
 which in the language of category theory is nothing but the identity morphism, composition of arrows to a path is nothing but
 composition of morphisms (if you make the path explicit by writing a new arrow for every path).
 
-So what we called a \ul{path algebra} in \ref{def:path_algebra} is a different data structure for a category. 
+So what we called a path algebra in \ref{def:path_algebra} is a different data structure for a category. 
 For one, the path algebra is an algebra, i.e. a vector space with additional structure, and thus a single set, comparable to the
 class of morphisms $\mathcal{C}_{1}$ of a category $\mathcal{C}$.
 But as it is an algebra, it not only contains the generating morphisms of the category, but also $\Bbbk$-linear combinations of
@@ -35,8 +35,9 @@ theoretical context by constructing the $\Bbbk$-\textbf{Algebroid} $\mathcal{A}$
 The source category for our representation is then the $\Bbbk$-\textbf{Algebroid} $\mathcal{A}$ and not anymore our finite concrete
 category $\mathcal{C}$, but it behaves in the same way regarding composition of morphisms and which morphisms are congruent.
 
-The target category of our category representations will be $\Bbbk$-\textbf{Mat} which we will describe in the next section.
-\endnote{
+The target category of our category representations will be $\Bbbk$-\textbf{Mat} which we will describe in the next section,
+especially all the nice properties $\Bbbk$-\textbf{Mat} has, and how they get carried over to our functor category with $\Bbbk$-\textbf{Mat} as
+target.\endnote{
 In \cite{[Ab-Cat]}, Posur used the equivalence between categories $\textup{mat}_{\Bbbk} \cong \textup{vec}^{\text{fd}}_{\Bbbk}$,
 as described in \cite{[context]}, \textsc{Example} 1.5.6 on page 30 (48/258), to justify that $\Bbbk$-\textbf{Mat} is a good
 \textbf{computational model} to
@@ -47,6 +48,25 @@ as described in \cite{[context]}, \textsc{Example} 1.5.6 on page 30 (48/258), to
 
 With source and target categories defined, the category where our category representations lie in is \textbf{CatReps} for which we
 show that it's a subcategory of the \textbf{Functor Category}. And even more in the next section.
+\[
+\mathbf{CatReps_{\mathcal{C}}} = \textup{Hom}(\Bbbk\mathbf{-Algebroid_{\mathcal{C}}}, \Bbbk\mathbf{-Mat})
+\]
+
+\subsection{Generating morphisms of a category and the underlying quiver}
+
+$\textup{gmorphisms} := \{g_{1},\dots,g_{r}\} \rightarrow$ concrete category with set of generating morphisms $\textup{gmorphisms}$.
+
+This is the $\textup{Free}$ functor from $\mathbf{Quiv}$ to $\mathbf{Cat}$, taking a quiver and adding the missing structure of
+identity morphisms and composition of arrows to that category. The result is a category.
+
+The $\textup{forgetful}$ functor from $\mathbf{Cat}$ to $\mathbf{Quiv}$ is going the other way around and leaves all
+morphisms that we now have in the category, but forgets their relations, what was identity, what was composition.
+
+Given a field $\Bbbk$, we have the path algebra $\Bbbk q$ with all the arrows as a basis.
+
+Given relations on endomorphisms and on the other morphisms, we make the quotient path algebra.
+
+This is already a category, and now it has more structure.
 
 \subsection{Ab-categories}
 

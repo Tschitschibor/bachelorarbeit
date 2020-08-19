@@ -360,9 +360,7 @@ A \arrow[uuu, "\varphi"] &  &  &  & D
 \end{minipage}
 %
 \begin{minipage}{.10\textwidth}
-\begin{tikzcd}
-{} \arrow[r, "Free", Rightarrow] & {}
-\end{tikzcd}
+$\xrightarrow{\text{  Free }}$
 \end{minipage}
 %
 \begin{minipage}{.37\textwidth}
@@ -390,24 +388,6 @@ D \arrow["1_{D}"', loop, distance=2em, in=305, out=235]
 \end{minipage}
 \begin{minipage}{.37\textwidth}
 \begin{tikzcd}[boxedcd={inner xsep=1.5em, inner ysep=3em}]
-B \arrow[rrrr, "\psi"] \arrow[rrrrddd, "\psi\rho", pos=0.3] \arrow["1_{B}"', loop, distance=2em, in=125, out=55] &  &  &  &
-C \arrow[ddd, "\rho"] \arrow["1_{C}"', loop, distance=2em, in=125, out=55]\\
- &  &  &  & \\
- &  &  &  & \\
-A \arrow[uuu, "\varphi"] \arrow[rrrruuu, "\varphi\psi", pos=0.3] \arrow[rrrr, bend left, "(\varphi\psi)\rho" ', shift right=2]
-\arrow[rrrr, "\varphi(\psi\rho)", bend right] \arrow["1_{A}"', loop, distance=2em, in=305, out=235] &  &  &  &
-D \arrow["1_{D}"', loop, distance=2em, in=305, out=235]
-\end{tikzcd}
-\end{minipage}
-%
-\begin{minipage}{.10\textwidth}
-\begin{tikzcd}
-{} \arrow[r, "U", Rightarrow] & {}
-\end{tikzcd}
-\end{minipage}
-%
-\begin{minipage}{.37\textwidth}
-\begin{tikzcd}[boxedcd={inner xsep=1.5em, inner ysep=3em}]
 2 \arrow[rrrr, "b"] \arrow[rrrrddd, "e", pos=0.3] \arrow["h"', loop, distance=2em, in=125, out=55] &  &  &  &
 3 \arrow[ddd, "c"] \arrow["i"', loop, distance=2em, in=125, out=55]\\
  &  &  &  & \\
@@ -415,6 +395,22 @@ D \arrow["1_{D}"', loop, distance=2em, in=305, out=235]
 1 \arrow[uuu, "a"] \arrow[rrrruuu, "d", pos=0.3] \arrow[rrrr, bend left, "f" ', shift right=2]
 \arrow[rrrr, "f", bend right] \arrow["g"', loop, distance=2em, in=305, out=235] &  &  &  &
 4 \arrow["j"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
+\end{minipage}
+%
+\begin{minipage}{.10\textwidth}
+$\xleftarrow{\text{   U   }}$
+\end{minipage}
+%
+\begin{minipage}{.37\textwidth}
+\begin{tikzcd}[boxedcd={inner xsep=1.5em, inner ysep=3em}]
+B \arrow[rrrr, "\psi"] \arrow[rrrrddd, "\psi\rho", pos=0.3] \arrow["1_{B}"', loop, distance=2em, in=125, out=55] &  &  &  &
+C \arrow[ddd, "\rho"] \arrow["1_{C}"', loop, distance=2em, in=125, out=55]\\
+ &  &  &  & \\
+ &  &  &  & \\
+A \arrow[uuu, "\varphi"] \arrow[rrrruuu, "\varphi\psi", pos=0.3] \arrow[rrrr, bend left, "(\varphi\psi)\rho" ', shift right=2]
+\arrow[rrrr, "\varphi(\psi\rho)", bend right] \arrow["1_{A}"', loop, distance=2em, in=305, out=235] &  &  &  &
+D \arrow["1_{D}"', loop, distance=2em, in=305, out=235]
 \end{tikzcd}
 \end{minipage}
 \begin{minipage}{.08\textwidth}
