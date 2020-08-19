@@ -1,5 +1,7 @@
 % mainfile: ../main.tex
 
+\subsection{Additional structure on the Hom-set of a category}
+
 Our goal is to represent finite concrete categories, for this we need the source and target categories of our functors, which the
 representations are.
 As subcategories of $\textup{FinSets}$, our finite concrete categories only have definitions for their objects and their
@@ -60,29 +62,78 @@ the category R-Mod.
 
 \begin{definition}{(Ab-category)}
 An \ul{Ab-category} is a category in which all homomorphism sets are abelian groups, and composition distributes over addition.\\
-In other words,
-A category $\mathcal{C}$ is an \ul{Ab-category} if for every pair of objects $M,N \in \mathcal{C}_{0}$, $( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is
-an abelian group (with the neutral element called \ul{zero morphism}), and for all morphisms $\gamma, \delta \in \textup{Hom}_{\mathcal{C}}(M,N),
+In other words, a category $\mathcal{C}$ is an \ul{Ab-category} if for every pair of objects $M,N \in \mathcal{C}_{0}$,
+$( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the neutral element called \ul{zero morphism}),
+and for all morphisms $\gamma, \delta \in \textup{Hom}_{\mathcal{C}}(M,N),
 \alpha, \beta \in \textup{Hom}_{\mathcal{C}}(N,L)$
 \[
 (\gamma + \delta)\alpha = \gamma\alpha + \delta\alpha \textup{ and }\]\[
 \gamma(\alpha+\beta) = \gamma\alpha + \gamma\beta.
 \]
-Note that every hom-set has its own unique zero morphism. E.g. in $\textup{Mat}_{\mathbb{Q}}$ the 2-by-3 zero-matrix $\mathbf{0} \in \textup{Hom}(2,3)$ is different from
-the 4-by-4 zero-matrix $\mathbf{0} \in \textup{Hom}(4,4)$.
+Note that every hom-set has its own unique zero morphism. E.g. in $\textup{Mat}_{\mathbb{Q}}$ the $2 \times 3$ zero-matrix
+$\mathbf{0} \in \textup{Hom}(2,3)$ is different from the $4 \times 4$ zero-matrix $\mathbf{0} \in \textup{Hom}(4,4)$.
 \end{definition}
-
-\begin{definition}{(Initial object, terminal object, zero object)}
-
-\end{definition}
-
-\begin{example}{}
-
-\end{example}
 
 \begin{definition}{(Kernel of a morphism)}
 
 \end{definition}
+
+\begin{definition}{(Initial object, terminal object, zero object)}\label{def:init_term_zero_object}
+\renewcommand{\labelenumi}{(\theenumi)}
+\begin{enumerate}
+\item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
+\item An \ul{initial object} $I$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(I,-)$ is a singleton.
+\item An object is a \ul{zero object} if it is both initial and terminal.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}{(Zero morphism)}\label{def:zero_morphism}\\
+A \ul{zero morphism} in a category with a zero object $Z$ is a morphism factoring over $Z$, i.e. $\varphi : M \rightarrow N$ is called a zero
+morphism, if\\
+\begin{minipage}{.35\textwidth}
+\begin{tikzcd}
+M \arrow[rr, "\varphi"] \arrow[rd, "\varphi_{1}"] &                              & N \\
+                                                  & Z \arrow[ru, "\varphi_{2}"'] &  
+\end{tikzcd}
+\end{minipage}
+\begin{minipage}{.65\textwidth}
+$\exists \varphi_{1} : M \rightarrow Z, \varphi_{2} : Z \rightarrow N$\\
+such that $\varphi = \varphi_{1}\varphi_{2}$.
+\end{minipage}
+\end{definition}
+
+\begin{example}{(The matrix category $\textup{Mat}_{R}$ over a commutative ring $R$)}\label{ex:matrix_category}
+\begin{itemize}
+\item Objects are natural numbers $\textup{Obj}(\textup{Mat}_{R}) = \mathbb{N} = \mathbb{N}_{0} = \{0,1,2,\dots\}$
+\item Morphisms $\textup{Mor}(\textup{Mat}_{R}) \ni (m \rightarrow n)$ are $m \times n$ matrices over $R$.
+We write the set of morphisms between $m$ and $n$, as $R^{m\times n} := \textup{Hom}(m,n)$. Identity morphisms are the
+identity matrices.
+\item Composition is matrix multiplication (associative).
+\item It is a skeletal category, i.e. $m$ is isomorphic to $n \Rightarrow m = n$. Only quadratic matrices ($m = n$) can be
+isomorphisms.
+\end{itemize}
+In this category, the number $0$ is \ul{the} zero object.\\
+A zero matrix (zero morphism) is a matrix factoring through the zero object $0$.\\
+\begin{minipage}{.2\textwidth}\phantom{ }\end{minipage}
+\begin{minipage}{.25\textwidth}
+Matrix $R^{m\times n} \ni A = 0$
+\end{minipage}
+\begin{minipage}{.08\textwidth}
+$\Longleftrightarrow$
+\end{minipage}
+\begin{minipage}{.32\textwidth}
+\begin{tikzcd}
+m \arrow[rr, "A"] \arrow[rd, "(m \times 0)"'] &                               & n \\
+                                              & 0 \arrow[ru, "(0 \times n)"'] &  
+\end{tikzcd}\\
+$\Rightarrow A = (m \times 0) \cdot (0 \times n)$.
+\end{minipage}
+\begin{minipage}{.15\textwidth}\phantom{ }\end{minipage}\\
+\noindent The ``matrices'' $(m \times 0)$ and $(0 \times n)$ have zero columns or zero rows respectively, but it is
+important to note that for each $m \in \textup{Obj}(\textup{Mat}_{R})$ there is exactly one such matrix $(m \times 0)$ and $(0 \times m)$
+(that's what initial and terminal object means), and for different $m$, these morphisms are different.
+\end{example}
+
 
 \begin{definition}{(Abelian category)}\endnote{(From \cite{[context]}, appendix E.5, Def. E.5.1)}
 A category $\mathcal{C}$ is \ul{abelian} if
