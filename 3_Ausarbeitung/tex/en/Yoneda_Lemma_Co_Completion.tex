@@ -8,19 +8,57 @@
 For $\mathcal{C}$ a small category, its \ul{category of presheaves} is the functor category
 \[ \textup{PSh}(\mathcal{C}) := [\mathcal{C}^{\text{op}}, \textup{Set}] \]
 from the opposite category of $\mathcal{C}$ to $\textup{Set}$.
-An object in this category is a \ul{presheaf}.
+An object in this category is a \ul{presheaf}.\\
+\noindent Taking $\mathcal{C}^{\text{op}}$ instead of $\mathcal{C}$ (and with $(\mathcal{C}^{\text{op}})^{\text{op}} = \mathcal{C}$) we get the functor category
+\[ [\mathcal{C}, \textup{Set}] = \textup{PSh}(\mathcal{C}^{\text{op}}) \]
 \end{definition}
 
 \begin{remark}{(General properties of presheaves)}\\
 The category of presheaves $\textup{PSh}(\mathcal{C})$ is the \ul{free cocompletion} of $\mathcal{C}$.
 \end{remark}
 
-\begin{lemma}{(Yoneda's Lemma)}
+\begin{definition}{(Representable functor)}
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item A functor from a locally small category $\mathcal{C}$ to $\textup{Hom}$ is \ul{representable} if there is an object $c \in \mathcal{C}$ and a
+natural isomorphism between $F$ and $\textup{Hom}(c,-)$ (for a covariant $F$, otherwise $\textup{Hom}(-,c)$ for a contravariant $F$), in which case
+one says thet the functor $F$ is \ul{represented by} the object $c$.
+\item A \ul{representation} for a functor $F$ is a choice of object $c \in \mathcal{C}$ together with a specified natural isomorphism
+$\textup{Hom}(c,-) \cong F$ (for a covariant $F$, or $\textup{Hom}(-,c) \cong F$ for a contravariant $F$).
+\end{enumerate}
+\end{definition}
 
-\begin{proof}
+\begin{lemma}{(Yoneda's Lemma)}
+Let $\mathcal{C}$ be a locally small category. For $X \in [\mathcal{C}^{\text{op}}, \textup{Set}]$ any presheaf, there is a canonical isomorphism
+\[
+\textup{Hom}_{[\mathcal{C}^{\text{op}}, \textup{Set}]}(y(c), X) \cong X(c)
+\]
+between the hom-set of presheaf homomorphisms from the representable presheaf $y(c)$ to $X$, and the value of $X$ at $c$.
+\end{lemma}
+
+\begin{lemma}{(Yoneda's Lemma)}
+For any functor $F : \mathcal{C} \rightarrow \textup{Set}$, whose source $\mathcal{C}$ is locally small and any
+object $c \in \mathcal{C}$, there is a bijection
+\[
+\textup{Hom}(\mathcal{C}(c,-), F) \cong Fc
+\]
+that associates a natural transformation $\alpha : \mathcal{C}(c,-) \Rightarrow F$ to the element $\alpha_{c}(1_{c}) \in Fc$.
+Moreover, this correspondence is natural in both $c$ and $F$.
+\end{lemma}
+As $\mathcal{C}$ is locally small but not necessarily small, a priori the collection of natural transformations
+$\textup{Hom}(\mathcal{C}(c,-),F)$ might be large. However, the bijection in the Yoneda lemma proves that this particular
+collection of natural transformations indeed forms a set.
+\begin{proof}{of the bijection}
 
 \end{proof}
-\end{lemma}
+\begin{proof}{of naturality}
+
+\end{proof}
+
+What is the forgetful functor $U : \mathbf{Cat} \rightarrow \mathbf{Quiv}$ represented by? Is it even representable?
+A representation for $U$ is an object $c \in \mathcal{C}_{0}$, together with an isomorphism $\mathcal{C}(c,-) \cong U$.
+Target needs to be $\textup{Set}$.
+
 
 \begin{definition}{(Yoneda Embedding)}\label{def_func:yoneda_embedding}\endnote{(quoted directly from the \texttt{FunctorCategories} \cite{[FunctorCat]} documentation}\\
 $\mathtt{YonedaEmbedding(B)}$\\
