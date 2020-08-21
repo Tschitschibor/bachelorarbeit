@@ -17,7 +17,7 @@ An object in this category is a \ul{presheaf}.\\
 The category of presheaves $\textup{PSh}(\mathcal{C})$ is the \ul{free cocompletion} of $\mathcal{C}$.
 \end{remark}
 
-\begin{definition}{(Representable functor)}
+\begin{definition}{(Representable functor)}\label{def:repres_functor}\endnote{(from ncatlab \ref{[ncatlab_repres_functor]})}
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
 \item A functor from a locally small category $\mathcal{C}$ to $\textup{Hom}$ is \ul{representable} if there is an object $c \in \mathcal{C}$ and a
@@ -72,7 +72,7 @@ $\mathcal{C}$ is a matrix category over $\Bbbk$.
 \begin{definition}{(Yoneda embedding)}\label{def:yoneda_embedding}\endnote{(cited from ncatlab \cite{[ncatlab_yoneda_emb]})}\\
 The \ul{Yoneda embedding} for a locally small category $\mathcal{C}$ is the functor
 \[
-Y : \mathcal{C} \rightarrow [\mathcal{C}^{\text{op}}, \textup{Set}]
+Y : \mathcal{C} \rightarrow \textup{Hom}(\mathcal{C}^{\text{op}}, \textup{Set})
 \]
 from $\mathcal{C}$ to the category of presheaves over $\mathcal{C}$ which is the image of the hom-functor
 \[
@@ -85,10 +85,32 @@ under the $\textup{Hom}$ adjunction
 in the closed symmetric monoidal category $\textup{Cat}$.
 \end{definition}
 
+\begin{remark}
+The Yoneda embedding of the opposite category
+\[
+Y : \mathcal{C}^{\text{op}} \rightarrow \textup{Hom}(\mathcal{C}, \Bbbk\mathbf{-Mat})
+\]
+is defined on objects $o \in \mathcal{C}^{\text{op}} = \mathcal{C}$ such that
+\[
+\textup{YonedaProjective}(\textup{Hom}( \mathcal{C}, \Bbbk\mathbf{-Mat} ), o ) = Y(o)
+\]
+i.e. both yield the same functor in the functor category $\textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat})$.
+\end{remark}
+
+Is the argument \textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat}) necessary
+
+We use this as the definition for the Yoneda projective
+
+\begin{definition}{(Yoneda projective)}
+\[
+Y_{\text{proj}} : \textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat})\times \mathcal{C} \rightarrow \textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat})
+\]
+\end{definition}
+
 \subsection{Projective objects and the Yoneda projective}
 
 \begin{lemma}\label{la:Hom_exact_proj_Lift_along_epis}
-Let $\mathcal{C}$ be a category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
+Let $\mathcal{C}$ be a locally small category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
 \begin{itemize}
 \item The covariant functor $\textup{Hom}(P,-)$ is exact.
 \item For all epimorphisms $\varphi : M \twoheadrightarrow N$ and morphisms $\theta : P \rightarrow N$, there exists a
@@ -128,20 +150,12 @@ and therefore $\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varepsilon)$, i.e. $\tex
 $\varphi : M \twoheadrightarrow N$ be an epi and $\theta : P \rightarrow N$ any morphism.
 We want to show the existence of a morphism $\psi : P \dottedrightarrow\, M$ such that $\theta = \psi\varphi$.
 With $\textup{Hom}(P,-)$ being exact, we have that $\textup{Hom}(P,\varphi) : \textup{Hom}(P,M) \twoheadrightarrow \textup{Hom}(P,N)$ is
-an epi, and is given by $\textup{Hom}(P,M) \ni \rho \mapsto \rho\varphi \in \textup{Hom}(P,N)$.
-\begin{itemize}
-\item \ul{Case 1}: $\mathcal{C}$ is locally small, i.e. for the two objects $P, N \in \mathcal{C}_{0},$ there is a \ul{set} $\textup{Hom}(P,N)$
+an epi, and is given by $\textup{Hom}(P,M) \ni \rho \mapsto \rho\varphi \in \textup{Hom}(P,N)$.\\
+$\mathcal{C}$ is locally small, i.e. for the two objects $P, N \in \mathcal{C}_{0},$ there is a \ul{set} $\textup{Hom}(P,N)$
 of morphisms between them. The $\textup{Hom}$-functor moves the morphisms from a general categorical context 
 in $\mathcal{C}$ into the category of sets, i.e. $\textup{Hom}(P,\varphi)$ is a function in the category of sets.
 And for those it's true that every epimorphism is surjective. Thus $\forall \theta \in \textup{Hom}(P,N)\, \exists \rho \in \textup{Hom}(P,M)$ such
 that $\theta = (\textup{Hom}(P,\varphi))(\rho) = \rho\varphi$. This $\rho$ is the projective lift $\psi := \rho$ we were looking for.
-\item \ul{Case 2}: If $\mathcal{C}$ is not locally small, we have to argument from the epimorphism itself and can't use surjectivity.
-In $\mathcal{C}^{\text{op}}$ the morphism $\textup{Hom}(\varphi,P) : \textup{Hom}(N,P) \hookrightarrow \textup{Hom}(M,P)$
-becomes a monomorphism, i.e. for two parallel morphisms
-$h : \textup{Hom}(O,P) \rightarrow \textup{Hom}(N,P)$, $k : \textup{Hom}(O,P) \rightarrow \textup{Hom}(N,P)$, 
-$\textup{Hom}(O,P) \ni \rho \mapsto h\rho = k\rho \textup{Hom}(N,P)$ it follows $h = k$.
-Let $\theta \in \textup{Hom}(P,N)$
-\end{itemize}
 \end{proof}
 \end{lemma}
 
@@ -168,6 +182,15 @@ For an object $L \in \mathcal{C}_{0}, \textup{Hom}(-,L)$ is always a contravaria
 \end{proof}
 \end{lemma}
 
+\begin{definition}{(Injective object)}\label{def:inj_object}\\
+An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of the equivalent properties in Lemma
+ \ref{la:dual_Hom_exact_proj_colift} is called an \ul{injective object}.
+\end{definition}
+
+\begin{definition}{(Yoneda representation)}
+$F$
+\end{definition}
+
 \begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\endnote{(ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]}; I first
 want to understand Yoneda projectives in the context of CatReps, and then follow up with the general case)}\\
 Consider the category of functors $\textup{Hom}( \mathcal{A}, \Bbbk\textup{-Mat} )$ from a $\Bbbk$-Algebroid $\mathcal{A}$ to the matrix category
@@ -185,11 +208,18 @@ If we want to check the property of a projective object for a yoneda projective 
 hom-sets $\textup{Hom}(Y,-)$, i.e. how exactly do the morphisms $\eta \in \textup{CatReps}_{1}$ work?
 
 
+
 \begin{lemma}
 Yoneda projectives are projective objects.
 \begin{proof}
+The category $\textup{CatReps} := \textup{Hom}(\Bbbk \mathbf{q}, \Bbbk\mathbf{Mat})$ is locally small.
+Let $o \in \Bbbk \mathbf{q}_{0}$ be any object, and $P \in \textup{CatReps}_{0}$ be the yoneda representation of $o$ in $\textup{CatReps}$.
+Let $M, N \in \textup{CatReps}_{0}$, and $\textup{CatReps}_{1} \ni \eta : M \twoheadrightarrow N$ be an epimorphism.
+A morphism $\theta : P \rightarrow N$ is a natural transformation between the yoneda representation $P$ and another functor $N$.
 \end{proof}
 \end{lemma}
+
+\subsection{Yoneda Projective: a concrete example}
 
 \[
 \begin{pmatrix}1 \ampersand 2 \ampersand 3 \ampersand 4\end{pmatrix}
@@ -201,7 +231,6 @@ Yoneda projectives are projective objects.
 \textup{id}
 \]
 
-\subsection{Yoneda Projective: a concrete example}
 
 Consider the concrete category 
 \[

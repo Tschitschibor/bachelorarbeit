@@ -437,7 +437,7 @@ the morphisms between two functors are called \ul{natural transformations}.
 \noindent Given categories $\mathcal{C}$ and $\mathcal{D}$ and functors $F : \mathcal{C} \rightarrow \mathcal{D}$ and
 $G : \mathcal{C} \rightarrow \mathcal{D}$, a \ul{natural transformation} $\alpha : F \Rightarrow G$ consists of:
 \begin{itemize}
-\item an arrow $\alpha_{c} : Fc \rightarrow Gc \in \mathcal{D}_{1}$ for each object $c \in \mathcal{C}_{0}$, the collection of which
+\item a morphism $\alpha_{c} : Fc \rightarrow Gc \in \mathcal{D}_{1}$ for each object $c \in \mathcal{C}_{0}$, the collection of which
 define the \ul{components} of the natural transformation, so that, for any morphism $f : c \rightarrow c' \in \mathcal{C}_{1}$, the following
 square of morphisms in $\mathcal{D}$
 \[\begin{tikzcd}
@@ -448,7 +448,7 @@ Fc' \arrow[rr, "\alpha_{c'}"]                &  & Gc'
 
 \ul{commutes}, i.e., has a a common composite $Fc \rightarrow Gc' \in \mathcal{D}_{1}$.
 \end{itemize}
-
+When each component $\alpha_{c}$ is an isomorphism, we call $\alpha$ a \ul{natural isomorphism}.
 \end{definition}
 
 \begin{definition}{(The functor category)}\endnote{(cited from ncatlab \cite{[ncatlab_functor_category]})}\\
