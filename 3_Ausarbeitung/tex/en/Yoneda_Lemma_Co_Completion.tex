@@ -6,11 +6,13 @@
 
 \begin{definition}{(The category of presheaves)}\endnote{(cited from ncatlab \cite{[ncatlab_presheaves]})}\\
 For $\mathcal{C}$ a small category, its \ul{category of presheaves} is the functor category
-\[ \textup{PSh}(\mathcal{C}) := [\mathcal{C}^{\text{op}}, \textup{Set}] \]
+\[ \textup{PSh}(\mathcal{C}) := \textup{Hom}(\mathcal{C}^{\text{op}}, \textup{Set}) \]
 from the opposite category of $\mathcal{C}$ to $\textup{Set}$.
 An object in this category is a \ul{presheaf}.\\
-\noindent Taking $\mathcal{C}^{\text{op}}$ instead of $\mathcal{C}$ (and with $(\mathcal{C}^{\text{op}})^{\text{op}} = \mathcal{C}$) we get the functor category
-\[ [\mathcal{C}, \textup{Set}] = \textup{PSh}(\mathcal{C}^{\text{op}}) \]
+\noindent Taking $\mathcal{C}^{\text{op}}$ instead of $\mathcal{C}$ (and with $(\mathcal{C}^{\text{op}})^{\text{op}} = \mathcal{C}$) we get the
+functor category
+\[
+\textup{Hom}(\mathcal{C}, \textup{Set}) = \textup{PSh}(\mathcal{C}^{\text{op}}) \]
 \end{definition}
 
 \begin{remark}{(General properties of presheaves)}\\
@@ -97,7 +99,7 @@ is defined on objects $o \in \mathcal{C}^{\text{op}} = \mathcal{C}$ such that
 i.e. both yield the same functor in the functor category $\textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat})$.
 \end{remark}
 
-Is the argument \textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat}) necessary
+Is the argument $\textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat})$ necessary
 
 We use this as the definition for the Yoneda projective
 
