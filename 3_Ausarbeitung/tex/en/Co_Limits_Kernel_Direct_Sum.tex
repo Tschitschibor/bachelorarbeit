@@ -1,6 +1,53 @@
 % mainfile: ../main.tex
 
-\section{Limits and colimits}
+\subsection{Limit and colimit of a functor}
+
+\begin{definition}{(Source of a functor)}
+Let $D : \mathbf{I} \rightarrow \mathcal{C}$ be a functor. A \ul{source} of $D$ consists of the following data:
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item An object $S \in \mathcal{C}$.
+\item A dependent function $s$ mapping an object $i \in \mathbf{I}$ to a morphism
+$s(i) : S \rightarrow D(i)$ such that for all $i, j \in \mathbf{I}, \iota : i \rightarrow j$, we have $D(\iota) \cdot s(i) = s(j)$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}{(Limit and colimit of a functor)}
+Let $D : \mathbf{I} \rightarrow \mathcal{C}$ be a functor. A \ul{limit} of $D$ consists of the
+following data:
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item A source of $D$ given by the data $(\mathrm{lim}\, D, (\lambda(i) : \mathrm{lim}\, D \rightarrow D(i))_{i\in\mathbf{I}})$.
+\item A dependent function $u$ mapping every source $\tau = (T, (\tau(i) : T \rightarrow D(i))_{i \in \mathbf{I}})$ to a
+morphism $u(\tau) : T \rightarrow \mathrm{lim}\, D$ such that $\lambda(i) \cdot u(\tau) = \tau(i)$ for all $i \in \mathbf{I}$.\label{itm:2}
+\item For any other dependent function $v$ satisfying (\ref{itm:2}), we have $u = v$.
+\end{enumerate}
+A \ul{colimit} of $D$ is a limit of $D' : \mathbf{I} \rightarrow \mathcal{C}^{\mathrm{op}}$.
+\end{definition}
+
+\begin{definition}{(Limits of type \textbf{I})}
+Let $\mathbf{I}$ be a category. We say a category $\mathcal{C}$ \ul{has limits of type} $\mathbf{I}$ if it is
+equipped with a dependent function $\lambda$ mapping a functor $D : \mathbf{I} \rightarrow \mathcal{C}$ to a limit
+$(\mathrm{lim}\, D, \lambda_{D}, u_{D})$ of $D$.
+We say $\mathcal{C}$ \ul{has colimits of type} $\mathbf{I}$ if $\mathcal{C}^{\mathrm{op}}$ has limits of that type.
+\end{definition}
+
+
+
+\begin{example}
+Depending on \textbf{I} some limits and colimits have special names:\\
+\begin{center}
+\begin{tabular}{c|c|c}
+\textbf{I} & limit & colimit \\
+\hline
+$\emptyset$ & terminal object & initial object \\
+a set & direct product & coproduct \\
+$\cdot \rightarrow \cdot \leftarrow \cdot$ & pullback & - \\
+$\cdot \leftarrow \cdot \rightarrow \cdot$  & - & pushout \\
+$ \cdot \rightrightarrows \cdot$ & equalizer & coequalizer
+\end{tabular}
+\end{center}
+\end{example}
 
 \subsection{Monomorphisms and epimorphisms}
 

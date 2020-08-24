@@ -10,7 +10,7 @@ For $\mathcal{C}$ a small category, its \ul{category of presheaves} is the funct
 from the opposite category of $\mathcal{C}$ to $\textup{Set}$.
 An object in this category is a \ul{presheaf}.\\
 \noindent Taking $\mathcal{C}^{\text{op}}$ instead of $\mathcal{C}$ (and with $(\mathcal{C}^{\text{op}})^{\text{op}} = \mathcal{C}$) we get the
-functor category
+functor category as in \ref{def:functor_category}
 \[
 \textup{Hom}(\mathcal{C}, \textup{Set}) = \textup{PSh}(\mathcal{C}^{\text{op}}) \]
 \end{definition}
@@ -74,7 +74,7 @@ $\mathcal{C}$ is a matrix category over $\Bbbk$.
 \begin{definition}{(Yoneda embedding)}\label{def:yoneda_embedding}\endnote{(cited from ncatlab \cite{[ncatlab_yoneda_emb]})}\\
 The \ul{Yoneda embedding} for a locally small category $\mathcal{C}$ is the functor
 \[
-Y : \mathcal{C} \rightarrow \textup{Hom}(\mathcal{C}^{\text{op}}, \textup{Set})
+Y : \mathcal{C} \hookrightarrow \textup{Hom}(\mathcal{C}^{\text{op}}, \textup{Set})
 \]
 from $\mathcal{C}$ to the category of presheaves over $\mathcal{C}$ which is the image of the hom-functor
 \[
@@ -82,7 +82,8 @@ from $\mathcal{C}$ to the category of presheaves over $\mathcal{C}$ which is the
 \]
 under the $\textup{Hom}$ adjunction
 \[
-\textup{Hom}(\mathcal{C}^{\text{op}}\times\mathcal{C}, \textup{Set}) \simeq \textup{Hom}(\mathcal{C},[\mathcal{C}^{\text{op}}, \textup{Set}])
+\textup{Hom}(\mathcal{C}^{\text{op}}\times\mathcal{C}, \textup{Set}) \simeq
+\textup{Hom}(\mathcal{C},\textup{Hom}(\mathcal{C}^{\text{op}}, \textup{Set}))
 \]
 in the closed symmetric monoidal category $\textup{Cat}$.
 \end{definition}
@@ -90,9 +91,9 @@ in the closed symmetric monoidal category $\textup{Cat}$.
 \begin{remark}
 The Yoneda embedding of the opposite category
 \[
-Y : \mathcal{C}^{\text{op}} \rightarrow \textup{Hom}(\mathcal{C}, \Bbbk\mathbf{-Mat})
+Y : \mathcal{C}^{\text{op}} \hookrightarrow \textup{Hom}(\mathcal{C}, \Bbbk\mathbf{-Mat})
 \]
-is defined on objects $o \in \mathcal{C}^{\text{op}} = \mathcal{C}$ such that
+is defined on objects $o \in \mathcal{C}^{\text{op}}_{0} = \mathcal{C}_{0}$ such that
 \[
 \textup{YonedaProjective}(\textup{Hom}( \mathcal{C}, \Bbbk\mathbf{-Mat} ), o ) = Y(o)
 \]
@@ -220,6 +221,12 @@ Let $M, N \in \textup{CatReps}_{0}$, and $\textup{CatReps}_{1} \ni \eta : M \two
 A morphism $\theta : P \rightarrow N$ is a natural transformation between the yoneda representation $P$ and another functor $N$.
 \end{proof}
 \end{lemma}
+
+Direct summands and direct sums of projectives are projective.
+
+Yoneda projectives, projective indecomposables -> every projective object is a direct sum of projective indecomposables
+
+projective indecomposables for a given concrete category
 
 \subsection{Yoneda Projective: a concrete example}
 

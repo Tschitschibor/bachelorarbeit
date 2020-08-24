@@ -237,8 +237,19 @@ tempted to think, duality lets you just swap all the adjectives for the opposite
 $\textup{Hom}(P,-)$ is a \ul{covariant}, \ul{left-exact} functor, the opposite $\textup{Hom}(-,P)$ is a \ul{contravariant}, but still \ul{left-exact} functor.
 But their respective \ul{right-exactedness} is equivalent to dual concepts concerning \ul{projective} and \ul{injective} objects.
 
+Limiten 
+
+(mit Beispielen / dual)
+Kernel
+
+Pullback
+
+Terminal object
+
+Equalizer
+
 \begin{definition}{(Exact functor)}\label{def:exact_functor}\endnote{(Def 4.5.9. in \cite{[context]}, p. 139 (157/258))}\\
-A functor is \ul{right exact} if it preserves finite colimits, and \ul{left exact} if it preserves finite limits.
+A functor is \ul{right exact} or \ul{finitely cocontinuous} if it preserves finite colimits, and \ul{left exact} or \ul{finitely continuous} if it preserves finite limits.
 \end{definition}
 
 \begin{remark}
@@ -276,17 +287,9 @@ after pullback square and pushout square respectively)}
 \end{enumerate}
 \end{corollary}
 
-\begin{definition}{(Exact functor)}\label{def:exact_functor_epi_mono}\\
-A functor is \ul{right exact} if it preserves epimorphisms, and \ul{left exact} if it preserves monomorphisms.\\
-\noindent In other words, the functor $F : \mathcal{C} \rightarrow \mathcal{D}$ is \ul{left exact}, if
-for all monomorphisms $f : M \rightarrow N \in \mathcal{C}_{1}$, the morphism (in the case that $F$ is covariant)
-$Ff : F(M) \rightarrow F(N) \in \mathcal{D}_{1}$ is also a monomorphism. And dually for epimorphisms.
-\end{definition}
-
-\begin{remark}
-Of course we should be aware that corollary \ref{cor:preserve_mono_epi} does not claim that every functor that preserves
-monos and thus finite pullbacks automatically preserves all finite limits and thus is left exact in the sense of \ref{def:exact_functor}.
-\end{remark}
+\begin{lemma}
+For functors between Abelian categories, left/right exactness is equivalent to preserving monos/epis.
+\end{lemma}
 
 \begin{lemma}\label{la:hom_functor_left_exact}
 The hom functors $\textup{Hom}(P,-)$ and $\textup{Hom}(-,P)$ from \ref{ex:hom_functor} are left exact, i.e. respect monos.
@@ -298,6 +301,7 @@ such that $\textup{Hom}(P,f) \cdot \mathfrak{g} : \textup{Hom}(P,M) \rightarrow 
 and  $\textup{Hom}(P,f) \cdot \mathfrak{h} : \textup{Hom}(P,M) \rightarrow \textup{Hom}(P,O); \psi \mapsto \mathfrak{h}(\psi f)$
 yield the same morphism, i.e. $\forall \psi \in \textup{Hom}(P,M), \mathfrak{g}(\psi f) = \mathfrak{h}(\psi f)$.
 We want to show that - under the assumption that $f : M \rightarrow N$ was a monomorphism, already $\mathfrak{g} = \mathfrak{h}$.
+TODO
 \end{proof}
 \end{lemma}
 
@@ -338,14 +342,16 @@ and the composition of morphisms. To be more precise, there is a \ul{functor} $U
 mapping every object $M \in \mathcal{C}_{0}$ to the same objects in $q_{0}$, mapping every arrow $\varphi \in \mathcal{C}_{1}$ to 
 an arrow $a \in q_{1}$, respecting source and target, but forgetting the special role of the identity morphisms and of the composition morphisms.
 
-\begin{example}{(Forgetful functor)}\label{ex:forgetful_functor}\\
+\begin{example}{(Free / Forgetful functor)}\label{ex:forgetful_functor}\\
 TODO
 
-$U : \mathbf{Cat} \Rightarrow \mathbf{Quiv}$
+$Free : \mathbf{Quiv} \rightarrow \mathbf{Cat}$
+
+$U : \mathbf{Cat} \rightarrow \mathbf{Quiv}$
 \end{example}
 
 % Was bisher bei Category Closure geschah...
-\begin{example}{(Underlying quiver)}\\
+\begin{example}{(Category closure)}\\
 
 \noindent\begin{minipage}{.08\textwidth}
 \phantom{}
@@ -378,6 +384,8 @@ D \arrow["1_{D}"', loop, distance=2em, in=305, out=235]
 \phantom{}
 \end{minipage}\\
 
+We can think of a quiver as a prototype for a category. That means we can construct the missing data for a category
+from a quiver by adding the identity morphisms and the composed arrows.
 \end{example}
 
 % to be seen how useful this example is...
@@ -451,7 +459,7 @@ Fc' \arrow[rr, "\alpha_{c'}"]                &  & Gc'
 When each component $\alpha_{c}$ is an isomorphism, we call $\alpha$ a \ul{natural isomorphism}.
 \end{definition}
 
-\begin{definition}{(The functor category)}\endnote{(cited from ncatlab \cite{[ncatlab_functor_category]})}\\
+\begin{definition}{(The functor category)}\label{def:functor_category}\endnote{(cited from ncatlab \cite{[ncatlab_functor_category]})}\\
 Given categories $\mathcal{C}$ and $\mathcal{D}$, the \ul{functor category} - written $\mathcal{D}^{\mathcal{C}}$, $\textup{Hom}(\mathcal{C},
 \mathcal{D})$ or $[\mathcal{C}, \mathcal{D}]$ -
 is the category whose
