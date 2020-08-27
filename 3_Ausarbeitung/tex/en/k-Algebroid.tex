@@ -60,7 +60,7 @@ as described in \cite{[context]}, \textsc{Example} 1.5.6 on page 30 (48/258), to
 With source and target categories defined, the category where our category representations lie in is \textbf{CatReps} for which we
 show that it's a subcategory of the \textbf{Functor Category}. And even more in the next section.
 \[
-\mathbf{CatReps_{\mathcal{C}}} = \textup{Hom}(\Bbbk\mathbf{-Algebroid_{\mathcal{C}}}, \Bbbk\mathbf{-Mat})
+\mathbf{CatReps_{\mathcal{C}}} = \textup{Hom}(\Bbbk\mathbf{-Algebroid_{\mathcal{C}}}, \kmat)
 \]
 
 \subsection{Generating morphisms of a category and the underlying quiver}
@@ -87,54 +87,19 @@ In other words, a category $\mathcal{C}$ is an \ul{Ab-category} if for every pai
 $( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the neutral element called \ul{zero morphism}),
 and for all morphisms $\gamma, \delta \in \textup{Hom}_{\mathcal{C}}(M,N),
 \alpha, \beta \in \textup{Hom}_{\mathcal{C}}(N,L)$
-\[
-(\gamma + \delta)\alpha = \gamma\alpha + \delta\alpha \textup{ and }\]\[
-\gamma(\alpha+\beta) = \gamma\alpha + \gamma\beta.
-\]
+\begin{align}\label{eq:dist}
+(\gamma + \delta)\alpha &= \gamma\alpha + \delta\alpha \textup{ and }\\
+\gamma(\alpha+\beta) &= \gamma\alpha + \gamma\beta.
+\end{align}
 Note that every hom-set has its own unique zero morphism. E.g. in $\textup{Mat}_{\mathbb{Q}}$ the $2 \times 3$ zero-matrix
 $\mathbf{0} \in \textup{Hom}(2,3)$ is different from the $4 \times 4$ zero-matrix $\mathbf{0} \in \textup{Hom}(4,4)$.
 \end{definition}
 
-\begin{example}{($\Bbbk\mathbf{-mat}$ is an Ab-category)}
-For two natural numbers $m,n \in \mathbb{N} = \mathrm{Obj}\,\Bbbk\mathbf{-mat}$, the set of morphisms is
-$\Bbbk^{m\times n}$, the set of $m \times n$-matrices. This is an abelian group:
-\begin{itemize}
-\item The identity (zero) element is the $m \times n$ zero matrix $\mathbf{0}$.
-\item Addition of matrices is associative and commutative, so it's an abelian group.
-\end{itemize}
-The distributive laws hold.
-\end{example}
-
-
-
-
-
-
-\begin{definition}{(Initial object, terminal object, zero object)}\label{def:init_term_zero_object}
-\renewcommand{\labelenumi}{(\theenumi)}
-\begin{enumerate}
-\item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
-\item An \ul{initial object} $I$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(I,-)$ is a singleton.
-\item An object is a \ul{zero object} if it is both initial and terminal.
-\end{enumerate}
+\begin{definition}{(semisimple)}
+A ring R is semisimple if ...
 \end{definition}
 
-\begin{definition}{(Zero morphism)}\label{def:zero_morphism}\\
-A \ul{zero morphism} in a category with a zero object $Z$ is a morphism factoring over $Z$, i.e. $\varphi : M \rightarrow N$ is called a zero
-morphism, if\\
-\begin{minipage}{.35\textwidth}
-\begin{tikzcd}
-M \arrow[rr, "\varphi"] \arrow[rd, "\varphi_{1}"] &                              & N \\
-                                                  & Z \arrow[ru, "\varphi_{2}"'] &  
-\end{tikzcd}
-\end{minipage}
-\begin{minipage}{.65\textwidth}
-$\exists \varphi_{1} : M \rightarrow Z, \varphi_{2} : Z \rightarrow N$\\
-such that $\varphi = \varphi_{1}\varphi_{2}$.
-\end{minipage}
-\end{definition}
-
-\begin{example}{(The matrix category $\textup{Mat}_{R}$ over a commutative ring $R$)}\label{ex:matrix_category}
+\begin{example}{(The matrix category $\Rmat$ over a commutative ring $R$)}\label{ex:matrix_category}
 \begin{itemize}
 \item Objects are natural numbers $\textup{Obj}(\textup{Mat}_{R}) = \mathbb{N} = \mathbb{N}_{0} = \{0,1,2,\dots\}$
 \item Morphisms $\textup{Mor}(\textup{Mat}_{R}) \ni (m \rightarrow n)$ are $m \times n$ matrices over $R$.
@@ -167,6 +132,24 @@ important to note that for each $m \in \textup{Obj}(\textup{Mat}_{R})$ there is 
 \end{example}
 
 
+\begin{example}{($\kmat$ is an Ab-category)}
+For two natural numbers $m,n \in {\kmat}_{0} = \mathbb{N} = \mathbb{N}_{0}$, the set of morphisms with source $m$ and target $n$ is
+$\Bbbk^{m\times n}$, the set of $m \times n$-matrices. This is an abelian group:
+\begin{itemize}
+\item The neutral element of the addition is the $m \times n$ zero matrix $\mathbf{0}$.
+\item Addition of matrices is associative and commutative, so it's an abelian group.
+\end{itemize}
+The distributive laws \eqref{eq:dist} for composable morphisms hold.
+\end{example}
+
+
+
+
+
+
+
+
+
 \begin{definition}{(Abelian category)}\endnote{(From \cite{[context]}, appendix E.5, Def. E.5.1)}
 A category $\mathcal{C}$ is \ul{abelian} if
 \begin{itemize}
@@ -178,16 +161,17 @@ A category $\mathcal{C}$ is \ul{abelian} if
 \end{itemize}
 \end{definition}
 
-\begin{definition}{(k-linear category)}
+\begin{definition}{($R$-linear category)}
+Let $R$ be a commutative ring.
+\end{definition}
 
+For $R = \mathbb{Z}$ an $R$-linear category is nothing but an Ab-category.
+
+
+\begin{definition}
+Once source and target categories $\mathcal{C}, \mathcal{D}$ are both $R$-linear categories we define the functor category
+$\mathrm{Hom_{R}}(\mathcal{C},\mathcal{D})$ the subcategory of $R$-linear functors.
 \end{definition}
 
 
-Quiver -> CAT: U: forget 1, forget composition
 
-search $U^{-1}$
-
-Beispiel für Adjunktion
-
-
-Path Algebra:

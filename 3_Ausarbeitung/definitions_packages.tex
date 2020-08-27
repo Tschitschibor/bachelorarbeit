@@ -99,13 +99,13 @@
 %%% Math theorem styles
 \usepackage{amsthm}
 
-\newtheorem{thm}{Theorem}[subsection]
+\newtheorem{theorem}{Theorem}[subsection]
 \theoremstyle{definition}
-\newtheorem{lemma}[thm]{Lemma}
-\newtheorem{corollary}[thm]{Corollary}
-\newtheorem{definition}[thm]{Definition}
-\newtheorem{remark}[thm]{Remark}
-\newtheorem{example}[thm]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
 
 
 %%% For Math
@@ -117,6 +117,14 @@
 \usepackage{mathtools}
 \usepackage{commath}
 \usepackage[sc,osf]{mathpazo}
+
+%%% Macros for our recurring categories
+\newcommand{\kmat}{\Bbbk\textnormal{-}\mathbf{mat}}
+\newcommand{\Rmat}{R\textnormal{-}\mathbf{mat}}
+\newcommand{\HomAkmat}{\mathrm{Hom_{\Bbbk}}(\mathcal{A},\kmat)}
+\newcommand{\HomARmat}{\mathrm{Hom_{R}}(\mathcal{A},\Rmat)}
+
+
 
 %%% For arrows and categories
 %\usepackage[all]{xy} %%not used anymore

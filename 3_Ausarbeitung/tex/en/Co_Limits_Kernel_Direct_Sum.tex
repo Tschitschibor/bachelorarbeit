@@ -32,7 +32,14 @@ $(\mathrm{lim}\, D, \lambda_{D}, u_{D})$ of $D$.
 We say $\mathcal{C}$ \ul{has colimits of type} $\mathbf{I}$ if $\mathcal{C}^{\mathrm{op}}$ has limits of that type.
 \end{definition}
 
-
+\begin{definition}{(Initial object, terminal object, zero object)}\label{def:init_term_zero_object}
+\renewcommand{\labelenumi}{(\theenumi)}
+\begin{enumerate}
+\item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
+\item An \ul{initial object} $I$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(I,-)$ is a singleton.
+\item An object is a \ul{zero object} if it is both initial and terminal.
+\end{enumerate}
+\end{definition}
 
 \begin{example}
 Depending on \textbf{I} some limits and colimits have special names:\\
@@ -48,6 +55,22 @@ $ \cdot \rightrightarrows \cdot$ & equalizer & coequalizer
 \end{tabular}
 \end{center}
 \end{example}
+
+\begin{definition}{(Zero morphism)}\label{def:zero_morphism}\\
+A \ul{zero morphism} in a category with a zero object $Z$ is a morphism factoring over $Z$, i.e. $\varphi : M \rightarrow N$ is called a zero
+morphism, if\\
+\begin{minipage}{.35\textwidth}
+\begin{tikzcd}
+M \arrow[rr, "\varphi"] \arrow[rd, "\varphi_{1}"] &                              & N \\
+                                                  & Z \arrow[ru, "\varphi_{2}"'] &  
+\end{tikzcd}
+\end{minipage}
+\begin{minipage}{.65\textwidth}
+$\exists \varphi_{1} : M \rightarrow Z, \varphi_{2} : Z \rightarrow N$\\
+such that $\varphi = \varphi_{1}\varphi_{2}$.
+\end{minipage}
+\end{definition}
+
 
 \subsection{Monomorphisms and epimorphisms}
 

@@ -1,25 +1,25 @@
 Goal is to show that
 
-CatReps is an Abelian category with enough projectives (constructively) and direct sum decomposition (constructively).
+The functor category with values in $\kmat$ is an Abelian category with enough projectives (constructively) and direct sum decomposition (constructively).
 
 \subsection{Abelian category}
 
 \begin{lemma}
 Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category
 \[
-\mathrm{Hom}(\mathcal{A},\Bbbk\mathbf{-mat})
+\HomAkmat
 \]
 is an Ab-category.
 \begin{proof}
 \begin{itemize}
 \renewcommand{\labelenumi}{(\theenumi)}
-\item Let $F, G \in \mathrm{Hom}(\mathcal{A},\Bbbk\mathbf{-mat})$. We want to show that
-$\mathrm{Hom}_{\mathrm{Hom}(\mathcal{A},\Bbbk\mathbf{-mat})}(F,G)$ is an abelian group.
-We define the morphisms in $\mathrm{Hom}(\mathcal{A},\Bbbk\mathbf{-mat})_{1}$ as natural transformations
+\item Let $F, G \in \mathrm{Hom}(\mathcal{A},\kmat)$. We want to show that
+$\mathrm{Hom}_{\mathrm{Hom}(\mathcal{A},\kmat)}(F,G)$ is an abelian group.
+We define the morphisms in $\mathrm{Hom}(\mathcal{A},\kmat)_{1}$ as natural transformations
 between the functors, i.e. a morphism $\eta F \Rightarrow G$ is defined by its components $\eta_{o}$ for each object $o \in \mathcal{A}$,
-such that $G(o) = \eta_{o} F(o)$. Each $\eta_{o}$ is a morphism in $\Bbbk\mathbf{-mat}$, i.e. a matrix. And for these we already
-showed that it's an abelian category, therefore $\mathrm{Hom}_{\mathrm{Hom}(\mathcal{A},\Bbbk\mathbf{-mat})}(F,G)$ is an abelian group.
-\item The composition of two morphisms $\eta, \gamma \in \mathrm{Hom}(\mathcal{A},\Bbbk\mathbf{-mat})_{1}$ 
+such that $G(o) = \eta_{o} F(o)$. Each $\eta_{o}$ is a morphism in $\kmat$, i.e. a matrix. And for these we already
+showed that it's an abelian category, therefore $\mathrm{Hom}_{\mathrm{Hom}(\mathcal{A},\kmat)}(F,G)$ is an abelian group.
+\item The composition of two morphisms $\eta, \gamma \in \mathrm{Hom}(\mathcal{A},\kmat)_{1}$ 
 \end{itemize}
 \end{proof}
 \end{lemma}
@@ -27,7 +27,7 @@ showed that it's an abelian category, therefore $\mathrm{Hom}_{\mathrm{Hom}(\mat
 \begin{lemma}
 Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category
 \[
-\mathrm{Hom}(\mathcal{A},\Bbbk\mathbf{-mat})
+\mathrm{Hom}(\mathcal{A},\kmat)
 \]
 is an additive category.
 \begin{proof}
@@ -42,7 +42,7 @@ is an additive category.
 \begin{lemma}
 Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category
 \[
-\mathrm{Hom}(\mathcal{A},\Bbbk\mathbf{-mat})
+\mathrm{Hom}(\mathcal{A},\kmat)
 \]
 is a pre-abelian category.
 \begin{proof}
@@ -54,20 +54,19 @@ is a pre-abelian category.
 \end{proof}
 \end{lemma}
 
-\begin{lemma}
-Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category
-\[
-\mathrm{Hom}(\mathcal{A},\Bbbk\mathbf{-mat})
-\]
+\begin{theorem}
+Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category $\HomAkmat$
 is an abelian category.
+\end{theorem}
 \begin{proof}
+We prove that $\HomAkmat$ is an Ab-category, then that it is also an additive category and a pre-abelian category and finally that
+it is an abelian category.
 \begin{itemize}
 \renewcommand{\labelenumi}{(\theenumi)}
 \item It is a pre-abelian category, which we showed in \ref{}.
 \item 
 \end{itemize}
 \end{proof}
-\end{lemma}
 
 \subsection{Enough Projective objects (constructively)}
 
