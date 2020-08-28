@@ -5,10 +5,11 @@
 ....
 
 \begin{example}{(Group as a category)}\\
-\noindent A group $\mathbf{G}$ defines a category $\mathcal{B}\mathbf{G}$ with a single object $\ast$. The group elements are its morphisms, which are
+\noindent A group $\mathbf{G}$ defines a category $\mathcal{B}\mathbf{G}$ with a single object $\ast$ and the morphisms being the group elements. The group elements are its morphisms, which are
 all automorphisms (i.e. bijective endomorphisms) of the single object. Composition of morphisms is defined by the binary group operation.
 The identity element $e \in G$ acts as the identity morphism for the unique object in this category. The hom-set of that category is itself
 a group.
+$\Bbbk G$ group algebra, $\Bbbk \mathcal{C}$ category algebra
 \end{example}
 
 This example can be generalized to categories where the hom-set is a ring or an R-algebra. But for this we need a commutative ring R.
@@ -43,6 +44,8 @@ Once we have a finite-dimensional path algebra $\Bbbk q$, we let \textsc{QPA$2$}
 and when we have a complete set of relations, that will be our definitive quotient quiver algebra $\Bbbk q$, which we then take it back into the category
 theoretical context by constructing the $\Bbbk$-\textbf{Algebroid} $\mathcal{A}$ from the path algebra $\Bbbk q$.
 
+An algebra with idempotents defines an algebroid.
+
 The source category for our representation is then the $\Bbbk$-\textbf{Algebroid} $\mathcal{A}$ and not anymore our finite concrete
 category $\mathcal{C}$, but it behaves in the same way regarding composition of morphisms and which morphisms are congruent.
 
@@ -60,7 +63,7 @@ as described in \cite{[context]}, \textsc{Example} 1.5.6 on page 30 (48/258), to
 With source and target categories defined, the category where our category representations lie in is \textbf{CatReps} for which we
 show that it's a subcategory of the \textbf{Functor Category}. And even more in the next section.
 \[
-\mathbf{CatReps_{\mathcal{C}}} = \textup{Hom}(\Bbbk\mathbf{-Algebroid_{\mathcal{C}}}, \kmat)
+\textup{Hom}(\Bbbk\mathcal{C}, \kmat)
 \]
 
 \subsection{Generating morphisms of a category and the underlying quiver}
@@ -126,7 +129,7 @@ m \arrow[rr, "A"] \arrow[rd, "(m \times 0)"'] &                               & 
 $\Rightarrow A = (m \times 0) \cdot (0 \times n)$.
 \end{minipage}
 \begin{minipage}{.15\textwidth}\phantom{ }\end{minipage}\\
-\noindent The ``matrices'' $(m \times 0)$ and $(0 \times n)$ have zero columns or zero rows respectively, but it is
+\noindent The matrices $(m \times 0)$ and $(0 \times n)$ have zero columns or zero rows respectively, but it is
 important to note that for each $m \in \textup{Obj}(\textup{Mat}_{R})$ there is exactly one such matrix $(m \times 0)$ and $(0 \times m)$
 (that's what initial and terminal object means), and for different $m$, these morphisms are different.
 \end{example}
@@ -167,10 +170,13 @@ Let $R$ be a commutative ring.
 
 For $R = \mathbb{Z}$ an $R$-linear category is nothing but an Ab-category.
 
+\begin{definition}{($R$-linear functor)}
+
+\end{definition}
 
 \begin{definition}
 Once source and target categories $\mathcal{C}, \mathcal{D}$ are both $R$-linear categories we define the functor category
-$\mathrm{Hom_{R}}(\mathcal{C},\mathcal{D})$ the subcategory of $R$-linear functors.
+$\mathrm{Hom_{R}}(\mathcal{C},\mathcal{D})$ as the subcategory of $R$-linear functors.
 \end{definition}
 
 

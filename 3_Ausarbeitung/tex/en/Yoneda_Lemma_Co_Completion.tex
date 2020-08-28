@@ -86,29 +86,25 @@ under the $\textup{Hom}$ adjunction
 \textup{Hom}(\mathcal{C},\textup{Hom}(\mathcal{C}^{\text{op}}, \textup{Set}))
 \]
 in the closed symmetric monoidal category $\textup{Cat}$.
+If instead we have the opposite category $\mathcal{C}^{\text{op}}$, then we get the embedding into the functor category:
+\[
+Y : \mathcal{C}^{\text{op}} \hookrightarrow \textup{Hom}(\mathcal{C},\textup{Set})
+\]
 \end{definition}
 
 \begin{remark}
-The Yoneda embedding of the opposite category
+Let $\mathcal{A}$ be a $\Bbbk$-linear category with finite $\Bbbk$-dimensional hom-sets. Then we get
+a $\Bbbk$-linear version of Yoneda's lemma:
+
 \[
-Y : \mathcal{C}^{\text{op}} \hookrightarrow \textup{Hom}(\mathcal{C}, \Bbbk\mathbf{-Mat})
+Y : \mathcal{A} \hookrightarrow \mathrm{Hom_{\Bbbk}}(\mathcal{A^{\text{op}}},\kmat)
 \]
-is defined on objects $o \in \mathcal{C}^{\text{op}}_{0} = \mathcal{C}_{0}$ such that
+
 \[
-\textup{YonedaProjective}(\textup{Hom}( \mathcal{C}, \Bbbk\mathbf{-Mat} ), o ) = Y(o)
+Y : \mathcal{A}^{\text{op}} \hookrightarrow \HomAkmat
 \]
-i.e. both yield the same functor in the functor category $\textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat})$.
+
 \end{remark}
-
-Is the argument $\textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat})$ necessary
-
-We use this as the definition for the Yoneda projective
-
-\begin{definition}{(Yoneda projective)}
-\[
-Y_{\text{proj}} : \textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat})\times \mathcal{C} \rightarrow \textup{Hom}(\mathcal{C},\Bbbk\mathbf{-Mat})
-\]
-\end{definition}
 
 \subsection{Projective objects and the Yoneda projective}
 
@@ -296,11 +292,6 @@ Sum of all dimensions of the yoneda projectives on each objects is 43.
 
 \begin{definition}{(Projective object)}
 
-\end{definition}
-
-\begin{definition}{(Yoneda projective)}
-Yoneda's projective representation given by the object $o$ is the submodule of the category algebra
-consisting of all arrows starting at $o$.
 \end{definition}
 
 \begin{theorem}
