@@ -61,13 +61,105 @@ is an abelian category.
 \begin{proof}
 We prove that $\HomAkmat$ is an Ab-category, then that it is also an additive category and a pre-abelian category and finally that
 it is an abelian category.
-\begin{itemize}
+\begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
-\item It is a pre-abelian category, which we showed in \ref{}.
-\item 
-\end{itemize}
+\item In order to show that $\HomAkmat$ is an Ab-category, we must show that 
+\begin{enumerate}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+\item for any two objects $F,G \in \HomAkmat_{0}$ the hom-set $\mathrm{Hom}_{\HomAkmat}(F,G)$ between them is an Abelian group, and
+\item that the composition of two morphisms\\
+$\mu : \mathrm{Hom}_{\HomAkmat}(F,G) \times \mathrm{Hom}_{\HomAkmat}(G,H) \rightarrow \mathrm{Hom}_{\HomAkmat}(F,H)$ is a
+bilinear map, i.e. for $\eta, \varepsilon \in \mathrm{Hom}_{\HomAkmat}(F,G)$ and $\varphi, \psi \in \mathrm{Hom}_{\HomAkmat}(G,H)$ and
+for $x \in \Bbbk$
+\begin{align}
+(\eta + \varepsilon)\varphi &= \eta\varphi + \varepsilon\varphi \\
+\eta(\varphi + \psi) &= \eta\varphi + \eta\psi \\
+(x\eta)\varphi &= \eta(x\varphi) = x(\eta\varphi).
+\end{align}
+\end{enumerate}
+
+\begin{subproof}[Proof of (i)]
+For any object $c \in \mathcal{A}$, the set of components $\mathrm{Hom}_{\kmat}(Fc,Gc)$ is a $\Bbbk$-vector space and therefore an
+Abelian group.
+
+We define the addition and scalar multiplication
+\begin{align*}
++ :&& \mathrm{Hom}_{\HomAkmat}(F,G) &\times \mathrm{Hom}_{\HomAkmat}(F,G) \rightarrow \mathrm{Hom}_{\HomAkmat}(F,G)\\
+\cdot :&& \Bbbk &\times \mathrm{Hom}_{\HomAkmat}(F,G) \rightarrow \mathrm{Hom}_{\HomAkmat}(F,G)
+\end{align*}
+component-wise: $\forall \eta, \varepsilon \in \mathrm{Hom}_{\HomAkmat}(F,G), \forall x \in \Bbbk, \forall c \in \mathcal{A}$
+\begin{align}
+(\eta+\varepsilon)_{c} &:= \eta_{c} + \varepsilon_{c}\\
+(x \eta)_{c} &:= x\eta_{c}
+\end{align}
+where the right-hand side is the usual addition and scalar multiplication of matrices.
+
+We identify as the neutral element $0_{F,G} \in \mathrm{Hom}_{\HomAkmat}(F,G)$ (or simply $0$ when the context is clear)
+the natural transformation $0$ with each component $0_{c}$ being the $Fc\times Gc$ zero matrix.
+For each natural transformation $\eta$ the additive inverse $-\eta$ is defined component-wise as
+\begin{align}
+(-\eta)_{c} &:= -\eta_{c}.
+\end{align}
+We also confirm that the addition is commutative:
+\begin{align}
+(\eta+\varepsilon)_{c} &= \eta_{c} + \varepsilon_{c}\\
+    &= \varepsilon_{c} + \eta_{c}\\
+    &= (\varepsilon + \eta)_{c}
+\end{align}
+This concludes that for each $F, G \in \HomAkmat,\, \mathrm{Hom}_{\HomAkmat}(F,G)$ is an Abelian group.
+\end{subproof}
+\begin{subproof}[Proof of (ii)]
+Let $F, G, H \in \HomAkmat$ and let $\eta, \varepsilon \in \mathrm{Hom}_{\HomAkmat}(F,G)$,
+$\varphi, \psi \in \mathrm{Hom}_{\HomAkmat}(G,H)$ and $x \in \Bbbk$.\\
+The composition $\eta\varphi \in \mathrm{Hom}_{\HomAkmat}(F,H)$ is defined by component-wise matrix-multiplication,
+i.e. $\forall c \in \mathcal{A}$
+\begin{align*}
+(\eta\varphi)_{c} := \eta_{c}\varphi_{c}
+\end{align*}
+and from this follows the bilinearity of the composition, since the matrix multiplication is bilinear.\\
+This concludes the first part of the proof, i.e. $\HomAkmat$ is an Ab-category.
+\end{subproof}
+
+\item Next we show that $\HomAkmat$ is an additive category, i.e. it is
+\begin{enumerate}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+\item An Ab-category with
+\item A dependent function $\oplus$ mapping a finite set $I$ and a collection $(F_{i})_{i\in I}$ of objects in $\HomAkmat$
+to a corresponding direct sum $( \oplus_{i\in I} F_{i}, (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I} )$.
+\end{enumerate}
+\begin{subproof}[Proof of (ii)]
+Let $I = \{1,\dots,n\}$ be a finite set, and $F_{i} \in \HomAkmat, 1\leq i\leq n$. The object $\oplus_{i=1}^{n} F_{i}$ is a functor, mapping
+each object $c \in \mathcal{A}$ to the natural number $\oplus_{i=1}^{n} F_{i}c := \sum_{i=1}^{n} F_{i}c \in \kmat_{0}$.\\
+A morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ with $F_{i} a : F_{i} c \rightarrow F_{i} c', \, 1\leq i\leq n$ gets mapped to the matrix 
+$\oplus_{i=1}^{n} F_{i} a : \oplus_{i=1}^{n} F_{i}c \rightarrow \oplus_{i=1}^{n} F_{i}c'$ that is the block-diagonal matrix of the $F_{i}a$'s.
+In other words, we can identify each $F_{j}a$ as a $F_{j} c \times F_{j} c'$ submatrix:
+\[
+\left(F_{j}a\right)_{k,l} = \left(\oplus_{i=1}^{n} F_{i} a\right)_{\sum_{i=1}^{j-1} F_{i}c + k,\sum_{i=1}^{j-1} F_{i}c' + l},
+1 \leq k \leq F_{j}c, 1 \leq l \leq F_{j}c'
+\]
+\end{subproof}
+
+\item
+\end{enumerate}
 \end{proof}
 
 \subsection{Enough Projective objects (constructively)}
 
+\begin{theorem}{($\HomAkmat$ has enough projectives)}
+Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category $\HomAkmat$ has sufficiently many
+projectives (ref. \ref{def:enough_projectives}).
+\end{theorem}
+\begin{proof}
+Let $F \in \HomAkmat_{0}$. We want to find a projective object $P \in \HomAkmat_{0}$ and an epimorphism $\eta: P \twoheadrightarrow F$.
+
+
+
+
+
+
+\end{proof}
+
 \subsection{Direct sum decomposition (constructively)}
+
+\input{tex/en/System_of_equations.tex}
+

@@ -107,6 +107,13 @@
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{example}[theorem]{Example}
 
+%%% for nested proofs
+\newenvironment{subproof}[1][\proofname]{%
+  \renewcommand{\qedsymbol}{$\mathbin{/\mkern-6mu/}$}%
+  \begin{proof}[#1]%
+}{%
+  \end{proof}%
+}
 
 %%% For Math
 \usepackage{amsmath}

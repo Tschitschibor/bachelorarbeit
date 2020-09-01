@@ -1,0 +1,25 @@
+\begin{tikzcd}
+F1 \arrow["Fa"', loop, distance=2em, in=125, out=55] \arrow[rr, "Fb"] \arrow[dd, "\eta_{1}"]
+&  & F2 \arrow["Fc"', loop, distance=2em, in=125, out=55] \arrow[dd, "\eta_{2}"] \\
+&  &                                                                                 \\
+G1 \arrow["Ga"', loop, distance=2em, in=305, out=235] \arrow[rr, "Gb"]
+&  & G2 \arrow["Gc"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
+
+\begin{align}
+Fa\,\eta_{1} &= \eta_{1} Ga \\
+Fb\,\eta_{2} &= \eta_{1} Gb \\
+Fc\,\eta_{2} &= \eta_{2} Gc
+\end{align}
+
+For the first equation we have
+
+\begin{align}
+Fa\,\eta_{1} - \eta_{1} Ga = 0
+\end{align}
+
+thus
+
+\begin{align}
+\left( Fa\,\eta_{1} - \eta_{1} Ga \right)_{i,j} = 0,\, 1\leq i \leq 5, 1\leq j \leq 3
+\end{align}

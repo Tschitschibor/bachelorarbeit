@@ -63,20 +63,28 @@ $\textup{Hom}_{q}(2,1)=\emptyset$.\\
 number of objects.
 \end{example}
 
-\begin{definition}{(Composable arrows; path in a quiver)}\label{def:path}\\
-Since we already have the source and target maps, we say two arrows $a, b \in q_{1}$ are \ul{composable} if $t(a) = s(b)$ or
-$t(b) = s(a)$. In this case we can write a sequence of composable arrows $p = a_{1}a_{2}\cdots a_{n}$ where $t(a_{i}) = s(a_{i+1})$ for $i=1,\dots,n-1$.
+\begin{definition}{(Composable arrows; path in a quiver)}\label{def:path}\endnote{(ref. \ref{[leit4]} 4.1)}
+Let $q$ be a quiver.
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item We say two arrows $a, b \in q_{1}$ are \ul{composable} if $t(a) = s(b)$ or $t(b) = s(a)$. In this case we can write a
+sequence of composable arrows $p = a_{1}a_{2}\cdots a_{n}$ where $t(a_{i}) = s(a_{i+1})$ for $i=1,\dots,n-1$.
 We call this sequence a \ul{path} from $s(a_{1})$ to $t(a_{n})$ and the integer $n \in \mathbb{Z}_{\geq0}$ the \ul{length} $l(p)$ of the path $p$.
-Although it's not an arrow, we can define the source and target of a path $p = a_{1}\cdots a_{n}$ as $s(p) := s(a_{1})$ and $t(p) := t(a_{n})$.
-A path $p = a_{1}\cdots a_{n}$ with $s(a_{1}) = t(a_{n})$, i.e. $s(p) = t(p)$, is called \ul{cyclic}.\\
-For an endomorphism $a \in \textup{End}_{q}(M)$ we write $a^{n}$ for $aa \cdots a$ ($n$ times). In the case of $n=0$ an \ul{empty path}
-whose source and target are the vertex $i \in q_{0}$ is called the \ul{trivial path at $i$} and is denoted $e_{i}$. Note that the composition of paths
-$e_{i}e_{i}$ has length zero starting at $i$ therefore $e_{i}^{2}=e_{i}$.
+Although it may not be an arrow, we can define the source and target of a path $p = a_{1}\cdots a_{n}$ as $s(p) := s(a_{1})$ and $t(p) := t(a_{n})$.
+Then again we define two paths $p$ and $q$ as composable, if $t(p) = s(q)$ (or $t(q) = s(p)$) and we call $pq$ (or $qp$) the \ul{concatenation} or
+\ul{composition} of the two paths. We can identify each arrow again as a path of length 1.
+A path $p = a_{1}\cdots a_{n}$ with $s(a_{1}) = t(a_{n})$, i.e. $s(p) = t(p)$, is called \ul{cyclic}.
+\item For an endomorphism $a \in \textup{End}_{q}(M)$ we write $a^{n}$ for $aa \cdots a$ ($n$ times).
+\item In the case of $n=0$ an \ul{empty path} whose source and target are the vertex $i \in q_{0}$ is called the \ul{trivial path at $i$} and
+is denoted $e_{i}$. Note that the composition of paths $e_{i}e_{i}$ has length zero starting at $i$ therefore $e_{i}^{2}=e_{i}$,
+in other words, each $e_{i}$ is an \ul{idempotent}.
+\end{enumerate}
 \end{definition}
 
 \begin{lemma}\label{la:cyclic_paths}
 Let Q be a quiver. If there is a path of length at least $\abs{Q_{0}}$, then there are cyclic paths,
 and thus infinitely many paths.\cite{[leit4]}
+\end{lemma}
 \begin{proof}
 Assume that there exists a path of length greater or equal to $\abs{Q_{0}}$. Then there exists a path of length $n = \abs{Q_{0}}$, say
 $\alpha_{1}\cdots \alpha_{n}$. Consider the vertices $x_{i}=s(\alpha_{i})$ for $1 \leq i \leq n$ and $x_{n+1}=t(\alpha_{n})$. Then these
@@ -84,7 +92,6 @@ are $n+1$ vertices, thus there has to exist $i<j$ with $x_{i}=x_{j}$. Let $\omeg
 $x_{i}=x_{j}$, thus a cyclic path. But then $\omega^{m}$ is a path for any natural number $m$. The path $\omega$ has length $j-i\geq1$, thus
 $\omega^{m}$ has length $m(j-i)$. This shows that these paths are pairwise different.
 \end{proof}
-\end{lemma}
 
 \begin{example}{(A quiver with no cycles)}\\
 \[
@@ -100,9 +107,32 @@ The longest path $1\rightarrow2\rightarrow3\rightarrow4$ has length 3. If after 
 we would have a cyclic path and thus infinitely many paths.
 \end{example}
 
-\begin{definition}{(Path algebra)}\label{def:path_algebra}
-TODO
+\begin{definition}{(Path algebra of a quiver)}\label{def:path_algebra}\endnote{(from \ref{[leit4]} 4.1 )}
+Let $\Bbbk$ be a field. For a quiver $Q$ let $\Bbbk Q$ be the vector space with basis the set of all paths in $Q$, together with the
+following multiplication: if $w, w'$ are paths, let $ww'$ be the concatenation of $w$ and $w'$ if they are composable, and the zero vector
+otherwise, and extend this multiplication bilinearly to $\Bbbk Q$. We call $\Bbbk Q$ the \ul{path algebra} of the quiver $Q$.
 \end{definition}
+
+Note that the addition of two paths $w + w'$ doesn't necessarily yield a path as result, but instead an abstract element of the
+path algebra, that you can't easily see in the quiver.
+
+\begin{lemma}\label{la:path_algebra_is_ass_algebra}\endnote{(from \ref{[leit4]} 4.1 )}
+For a quiver $Q$ and a field $\Bbbk$, the path algebra $\Bbbk Q$ is an associative $\Bbbk$-algebra.
+\end{lemma}
+\begin{proof}
+Let $w, w', w''$ be paths. Then both $(ww')w''$ and $w(w'w'')$ are the concatenation of $w$ on the left,
+$w'$ in the middle and $w''$ on the right, in case both conditions $t(w) = s(w')$ and $t(w') = s(w'')$ are satisfied, and
+otherwise the zero element (since $(ww')0 = 0, 0(w'w'') = 0$, according to bilinearity).\\
+Since the multiplication was defined on a basis and extended bilinearly, the axioms of an algebra are clearly satisfied.
+\end{proof}
+
+\begin{lemma}\label{la:unit_in_path_algebra}
+If the set of vertices of a quiver $Q_{0}$ is finite, then $\Bbbk Q$ has a unit element $\sum_{x\in Q_{0}} e_{x}$. In this case, $\Bbbk Q$ is a unital ring.
+\end{lemma}
+\begin{proof}
+Let $e := \sum_{x\in Q_{0}} e_{x}$. Let $w$ be a path with $s(w) = x$ and $t(w) = y$, then $e_{x}w = w$ and $e_{z}w = 0$ for all $z \neq x$,
+thus $ew = e_{x}w + \sum_{z\neq x} e_{z}w = w + 0 = w$. Similarly, $we_{y} = w$ and $we_{z} = 0$ for $z \neq x$.
+\end{proof}
 
 \subsection{Categories}
 
