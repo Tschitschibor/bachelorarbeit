@@ -32,17 +32,8 @@ $(\mathrm{lim}\, D, \lambda_{D}, u_{D})$ of $D$.
 We say $\mathcal{C}$ \ul{has colimits of type} $\mathbf{I}$ if $\mathcal{C}^{\mathrm{op}}$ has limits of that type.
 \end{definition}
 
-\begin{definition}{(Initial object, terminal object, zero object)}\label{def:init_term_zero_object}
-\renewcommand{\labelenumi}{(\theenumi)}
-\begin{enumerate}
-\item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
-\item An \ul{initial object} $I$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(I,-)$ is a singleton.
-\item An object is a \ul{zero object} if it is both initial and terminal.
-\end{enumerate}
-\end{definition}
-
-\begin{example}
-Depending on \textbf{I} some limits and colimits have special names:\\
+\begin{example}\label{ex:limits}
+Depending on \textbf{I} some limits and colimits have special names:
 \begin{center}
 \begin{tabular}{c|c|c}
 \textbf{I} & limit & colimit \\
@@ -55,6 +46,58 @@ $ \cdot \rightrightarrows \cdot$ & equalizer & coequalizer
 \end{tabular}
 \end{center}
 \end{example}
+
+In the following section, we give explicit definitions for the limits in \ref{ex:limits} and examples for categories with such limits.
+
+\subsection{Examples for limits and colimits}
+
+\begin{definition}{(Product, coproduct)}\label{def:prod_coprod}
+Let $I$ be an index set and $\{A_{i}\}_{i\in I}$ a family of objects in a category $\mathcal{C}$.
+\begin{enumerate}
+\renewcommand{\labelenumi}{(prod)}
+\item The \ul{product} of the family $\{A_{i}\}_{i\in I}$ is an object $\invamalg A_{i}$ together with a family of morphisms
+\[
+\{ \pi_{i} : \invamalg A_{i} \twoheadrightarrow A_{i} \}
+\]
+called \ul{projections}, such that the following universal property is satisfied:\\
+For any object $M \in \mathcal{C}_{0}$ and any family $\{ \varphi_{i} : M \rightarrow A_{i} \}_{i\in I}$ of morphisms, there exists
+a unique morphism $\varphi : M \rightarrow \invamalg A_{i}$ called the \ul{product morphism} such that
+\[
+\varphi \pi_{i} = \varphi_{i} \, \forall i \in I.
+\]
+\begin{tikzcd}
+                                                                                                                            &  &                                                          & A_{1} \\
+M \arrow[rrru, "\varphi_{1}", bend left] \arrow[rrrd, "\varphi_{2}"', bend right] \arrow[rr, "\exists^{1} \varphi", dashed] &  & A_{1}\invamalg A_{2} \arrow[ru, "\pi_{1}"] \arrow[rd, "\pi_2"] &       \\
+                                                                                                                            &  &                                                          & A_{2}
+\end{tikzcd}
+\renewcommand{\labelenumi}{(coprod)}
+\item The dual notion to product is the \ul{coproduct} of the family $\{A_{i}\}_{i\in I}$, that is an object $\amalg A_{i}$ together with
+a family of morphisms
+\[
+\{ \iota_{i} : A_{i} \hookrightarrow \amalg A_{i} \}
+\]
+called \ul{coprojections} or sometimes \ul{injections} or \ul{inclusions}, such that the following universal property is satisfied:\\
+For any object $M \in \mathcal{C}$ and any family $\{ \psi_{i} : A_{i} \rightarrow M \}$ of morphisms, there exists a unique
+morphism $\psi : \amalg A_{i} : M$ called the \ul{coproduct morphism} such that
+\[
+\iota_{i} \psi = \psi_{i} \, \forall i \in I.
+\]
+\begin{tikzcd}
+  &  &                                                           & A_{1} \arrow[llld, "\psi_{1}"', bend right] \arrow[ld, "\iota_{1}"'] \\
+M &  & A_{1}\amalg A_{2} \arrow[ll, "\exists^{1} \psi"', dashed] &                                                                      \\
+  &  &                                                           & A_{2} \arrow[lllu, "\psi_{2}", bend left] \arrow[lu, "\iota_2"]     
+\end{tikzcd}
+\end{enumerate}
+\end{definition}
+
+\begin{definition}{(Terminal object, initial object, zero object)}\label{def:init_term_zero_object}
+\renewcommand{\labelenumi}{(\theenumi)}
+\begin{enumerate}
+\item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
+\item An \ul{initial object} $I$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(I,-)$ is a singleton.
+\item An object is a \ul{zero object} if it is both initial and terminal.
+\end{enumerate}
+\end{definition}
 
 \begin{definition}{(Zero morphism)}\label{def:zero_morphism}\\
 A \ul{zero morphism} in a category with a zero object $Z$ is a morphism factoring over $Z$, i.e. $\varphi : M \rightarrow N$ is called a zero
@@ -70,6 +113,142 @@ $\exists \varphi_{1} : M \rightarrow Z, \varphi_{2} : Z \rightarrow N$\\
 such that $\varphi = \varphi_{1}\varphi_{2}$.
 \end{minipage}
 \end{definition}
+
+%%% insert definition of Ab-Category.
+
+
+\begin{definition}{(Direct sum)}\label{def:direct_sum}
+Let $\mathcal{C}$ be an Ab-category. Let $I$ be an index set and $\{A_{i}\}_{i\in I}$ a family of objects in $\mathcal{C}$.
+A \ul{direct sum} consists of the following data:
+\begin{itemize}
+\item an object $S$,
+\item a family of morphisms $\pi = \{ \pi_{i} : S \rightarrow S_{i} \}_{i\in I}$,
+\item a family of morphisms $\iota = \{ \iota_{i} : S_{i} \rightarrow S \}_{i\in I}$,
+\item a dependent function $u_{\text{in}}$ mapping every family $\tau = \{ \tau_{i} : T \rightarrow S_{i} \}_{i\in I}$ to a morphism
+$u_{\text{in}}(\tau) : T \rightarrow S$ such that $u_{\text{in}}(\tau) \pi_{i} \sim \tau_{i}$ for all $i \in I$,
+\item a dependent function $u_{\text{out}}$ mapping every family $\rho = \{ \rho_{i} : S_{i} \rightarrow R \}_{i\in I}$ to a morphism
+$u_{\text{out}}(\rho) : S \rightarrow R$ such that $\iota_{i} u_{\text{out}}(\rho) \sim \rho_{i}$ for all $i \in I$,
+\end{itemize}
+such that
+\begin{itemize}
+\item $\sum_{i\in I} \iota_{i} \pi_{i} \sim 1_{S}$,
+\item $\pi_{j} \iota_{i} \sim \delta_{i, j} =  \begin{cases}
+            1_{S_{i}} & \text{ if } i = j  \\
+            0_{ij} & \text{ if } i \neq j
+        \end{cases}$,
+\end{itemize}
+where $\delta_{i, j} \in \mathrm{Hom}(S_{i}, S_{j})$ is the identity if $i = j$, and the zero morphism $0_{ij} = 0_{S_{i}, S_{j}}$ otherwise.
+\end{definition}
+
+\begin{example}{($\kmat$ has direct sums)}\label{ex:kmat_has_direct_sum}
+The matrix category $\kmat$ is an Ab-category. The direct sum of two ($I = \{1,2\}$) natural numbers $S_{1} = m, S_{2} = n \in \kmat_{0}$ is
+\begin{itemize}
+\item the object $S = m+n$,
+\item the two morphisms $\pi_{1} : m+n \rightarrow m$, $\pi_{2} : m+n \rightarrow n$ which are $(m+n) \times m$- and $(m+n) \times n$-matrices.
+\item the two morphisms $\iota_{1} : m \rightarrow m+n$, $\iota_{2} : n \rightarrow m+n$ which are $m \times (m+n)$- and $n \times (m+n)$-matrices.
+\item a family of two morphisms $\tau = \{ \tau_{1} : t \rightarrow m, \tau_{2} : t \rightarrow n\}$ gets mapped to a $t \times (m+n)$-matrix
+$u_{\text{in}}(\tau) : t \rightarrow m+n$ with $u_{\text{in}}(\tau) \pi_{1} = \tau_{1}$ and $u_{\text{in}}(\tau) \pi_{2} = \tau_{2}$.
+\item a family of two morphisms $\rho = \{ \rho_{1} : m \rightarrow r, \rho_{2} : n \rightarrow r \}$ gets mapped to a $(m+n) \times r$-matrix
+$u_{\text{out}}(\rho) : m+n \rightarrow r$ with $\iota_{1} u_{\text{out}} = \rho_{1}$ and $\iota_{2} u_{\text{out}} = \rho_{2}$.
+\end{itemize}
+\end{example}
+
+\begin{example}{(number example)}
+$m = 3, n = 5$
+\begin{align*}
+\pi_{1} = \begin{pmatrix}
+1 \ampersand 0 \ampersand 0 \\
+0 \ampersand 1 \ampersand 0 \\
+0 \ampersand 0 \ampersand 1 \\
+0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0
+\end{pmatrix},
+\pi_{2} = \begin{pmatrix}
+0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
+1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1
+\end{pmatrix}, 
+\begin{array}{rr}
+\iota_{1} &= \begin{pmatrix}
+1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0
+\end{pmatrix} \\
+\\
+\iota_{2} &= \begin{pmatrix}
+0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \\
+0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1
+\end{pmatrix}
+\end{array}
+\end{align*}
+\begin{minipage}[t]{.5\textwidth}
+and for $t = 4$, $\tau = \{\tau_{1}, \tau_{2}\}$ defined as
+\begin{align*}
+\tau_{1} = \begin{pmatrix}
+1 \ampersand 2 \ampersand 2 \\
+4 \ampersand 3 \ampersand 1 \\
+0 \ampersand 1 \ampersand 0 \\
+1 \ampersand 2 \ampersand 1
+\end{pmatrix},
+\tau_{2} = \begin{pmatrix}
+1 \ampersand 1 \ampersand 2 \ampersand 2 \ampersand 3 \\
+3 \ampersand 4 \ampersand 4 \ampersand 5 \ampersand 5 \\
+6 \ampersand 6 \ampersand 7 \ampersand 7 \ampersand 8 \\
+8 \ampersand 9 \ampersand 9 \ampersand 10 \ampersand 10
+\end{pmatrix}
+\end{align*}
+we get the matrix
+\begin{align*}
+u_{\text{in}}(\tau) = \begin{pmatrix}
+1 \ampersand 2 \ampersand 2 \ampersand 1 \ampersand 1 \ampersand 2 \ampersand 2 \ampersand 3 \\
+4 \ampersand 3 \ampersand 1 \ampersand 3 \ampersand 4 \ampersand 4 \ampersand 5 \ampersand 5 \\
+0 \ampersand 1 \ampersand 0 \ampersand 6 \ampersand 6 \ampersand 7 \ampersand 7 \ampersand 8 \\
+1 \ampersand 2 \ampersand 1 \ampersand 8 \ampersand 9 \ampersand 9 \ampersand 10 \ampersand 10
+\end{pmatrix}
+\end{align*}
+\end{minipage}
+\begin{minipage}[t]{.5\textwidth}
+and for $r = 2$, $\rho = \{\rho_{1}, \rho_{2}\}$ we get the matrix
+\begin{align*}
+\begin{array}{rr}
+\rho_{1} &= \begin{pmatrix}
+0 \ampersand 1 \\
+1 \ampersand 1 \\
+2 \ampersand 2
+\end{pmatrix} \\
+\\
+\rho_{2} &= \begin{pmatrix}
+4 \ampersand 5 \\
+-7 \ampersand 0 \\
+0 \ampersand 5 \\
+0 \ampersand 0 \\
+1 \ampersand 1
+\end{pmatrix}
+\end{array}
+u_{\text{in}}(\rho) = \begin{pmatrix}
+0 \ampersand 1 \\
+1 \ampersand 1 \\
+2 \ampersand 2 \\
+4 \ampersand 5 \\
+-7 \ampersand 0 \\
+0 \ampersand 5 \\
+0 \ampersand 0 \\
+1 \ampersand 1
+\end{pmatrix}
+\end{align*}
+\end{minipage}
+\end{example}
 
 
 \subsection{Monomorphisms and epimorphisms}
