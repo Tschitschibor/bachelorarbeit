@@ -125,18 +125,60 @@ This concludes the first part of the proof, i.e. $\HomAkmat$ is an Ab-category.
 \renewcommand{\labelenumii}{(\roman{enumii})}
 \item An Ab-category with
 \item A dependent function $\oplus$ mapping a finite set $I$ and a collection $(F_{i})_{i\in I}$ of objects in $\HomAkmat$
-to a corresponding direct sum $( \oplus_{i\in I} F_{i}, (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I} )$.
+to a corresponding direct sum $( \oplus_{i\in I} F_{i}, (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I}, u_{\mathrm{in}}, u_{\mathrm{out}} )$.
 \end{enumerate}
 \begin{subproof}[Proof of (ii)]
-Let $I = \{1,\dots,n\}$ be a finite set, and $F_{i} \in \HomAkmat, 1\leq i\leq n$. The object $\oplus_{i=1}^{n} F_{i}$ is a functor, mapping
-each object $c \in \mathcal{A}$ to the natural number $\oplus_{i=1}^{n} F_{i}c := \sum_{i=1}^{n} F_{i}c \in \kmat_{0}$.\\
+Let $I = \{1,\dots,n\}$ be a finite set, and $F_{i} \in \HomAkmat, 1\leq i\leq n$. The object $F := \oplus_{i=1}^{n} F_{i}$ is a functor, mapping
+each object $c \in \mathcal{A}_{0}$ to the natural number $Fc = \oplus_{i=1}^{n} F_{i}c := \sum_{i=1}^{n} F_{i}c \in \kmat_{0}$.\\
 A morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ with $F_{i} a : F_{i} c \rightarrow F_{i} c', \, 1\leq i\leq n$ gets mapped to the matrix 
-$\oplus_{i=1}^{n} F_{i} a : \oplus_{i=1}^{n} F_{i}c \rightarrow \oplus_{i=1}^{n} F_{i}c'$ that is the block-diagonal matrix of the $F_{i}a$'s.
+$F a : Fc \rightarrow Fc'$ that is the block-diagonal matrix of the $F_{i}a$'s.
 In other words, we can identify each $F_{j}a$ as a $F_{j} c \times F_{j} c'$ submatrix:
 \[
-\left(F_{j}a\right)_{k,l} = \left(\oplus_{i=1}^{n} F_{i} a\right)_{\sum_{i=1}^{j-1} F_{i}c + k,\sum_{i=1}^{j-1} F_{i}c' + l},
+\left(F_{j}a\right)_{k,l} = \left(F a\right)_{\sum_{i=1}^{j-1} F_{i}c + k,\,\sum_{i=1}^{j-1} F_{i}c' + l},
 1 \leq k \leq F_{j}c, 1 \leq l \leq F_{j}c'
 \]
+The sets of projections $\pi = \{ \pi_{i} : F \rightarrow F_{i} \}_{i = 1,\dots,n}$ and coprojections
+$\iota = \{ \iota_{i} : F_{i} \rightarrow F \}_{i = 1,\dots,n}$ are sets of natural transformations,
+where each $\pi_{i}$ and $\iota_{i}$ is defined by its components:\\
+For $c \in \mathcal{A}_{0}$ we have $(\pi_{i})_{c} : Fc \rightarrow F_{i}c$ and $(\iota_{i})_{c} : F_{i}c \rightarrow Fc$ with\\
+\begin{minipage}{.35\textwidth}
+\[
+\sum_{i=1}^{n} (\pi_{i})_{c} (\iota_{i})_{c} = 1_{Fc}
+\]
+\end{minipage}
+\begin{minipage}{.1\textwidth}
+and
+\end{minipage}
+\begin{minipage}{.55\textwidth}
+\[
+(\iota_{i})_{c}(\pi_{j})_{c} = (\delta_{i,j})_{c} = \begin{cases}
+1_{F_{i}c} & \text{ if } i = j \\
+0_{F_{i}c, F_{j}c} & \text{ if } i \neq j
+\end{cases}
+\]
+\end{minipage}
+
+For a family of natural transformations $\tau = \{ \tau_{i} : G \rightarrow F_{i} \}_{i = 1,\dots,n}$
+
+\begin{align*}
+\forall c \in \mathcal{A}_{0},&& &&  (\oplus_{i \in I} F_{i}) c &= \oplus_{i \in I} (F_{i} c) \\
+\forall c \in \mathcal{A}_{0},&& \forall i \in I,&& (\pi_{i} : F \rightarrow F_{i})_{c} &= (\pi_{i})_{c} : Fc \rightarrow F_{i} c \\
+\forall c \in \mathcal{A}_{0},&& \forall i \in I,&& (\iota_{i} : F_{i} \rightarrow F)_{c} &= (\iota_{i})_{c} : F_{i} c \rightarrow Fc \\
+\forall c \in \mathcal{A}_{0},&& \forall \tau = \{ \tau_{i} : G \rightarrow F_{i} \}_{i = 1,\dots,n},&&
+(u_{\mathrm{in}}(\tau))_{c} &= u_{\mathrm{in}}(\tau_{c}) \\
+\forall c \in \mathcal{A}_{0},&& \forall \rho = \{ \rho_{i} : F_{i} \rightarrow H \}_{i = 1,\dots,n},&&
+(u_{\mathrm{out}}(\rho))_{c} &= u_{\mathrm{out}}(\rho_{c})
+\end{align*}
+
+where $\tau_{c} = \{ (\tau_{i})_{c} : Gc \rightarrow F_{i} c \}_{i \in I}$ and $\rho_{c} = \{ (\rho_{i})_{c} : F_{i} c \rightarrow Hc \}_{i \in I}$.
+
+The direct sum of a family of functors $\{ F_{i}\}_{i \in I}$ is a functor $F := \oplus_{i \in I} F_{i}$, mapping each object $c \in \mathcal{A}_{0}$
+to an object $Fc \in \kmat_{0}$, where $Fc$ is the direct sum of the family $\{ F_{i}c \}_{i \in I}$.
+The family of projections $\{ \pi_{i} : F \rightarrow F_{i} \}$ of the direct sum $F$ of functors is a family of natural transformations.
+The components of the $\pi_{i}$ under the same object $c \in \mathcal{A}_{0}$ form a family of projections $\{ (\pi_{i})c : Fc \rightarrow F_{i} c\}$
+that are the projections in factors of the direct sum $Fc$. Likewise for the family of injections.
+
+We conclude that the 
 \end{subproof}
 
 \item

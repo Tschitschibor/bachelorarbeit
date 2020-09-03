@@ -118,7 +118,7 @@ such that $\varphi = \varphi_{1}\varphi_{2}$.
 
 
 \begin{definition}{(Direct sum)}\label{def:direct_sum}
-Let $\mathcal{C}$ be an Ab-category. Let $I$ be an index set and $\{A_{i}\}_{i\in I}$ a family of objects in $\mathcal{C}$.
+Let $\mathcal{C}$ be an Ab-category. Let $I$ be an index set and $\{S_{i}\}_{i\in I}$ a family of objects in $\mathcal{C}$.
 A \ul{direct sum} consists of the following data:
 \begin{itemize}
 \item an object $S$,
@@ -131,8 +131,8 @@ $u_{\text{out}}(\rho) : S \rightarrow R$ such that $\iota_{i} u_{\text{out}}(\rh
 \end{itemize}
 such that
 \begin{itemize}
-\item $\sum_{i\in I} \iota_{i} \pi_{i} \sim 1_{S}$,
-\item $\pi_{j} \iota_{i} \sim \delta_{i, j} =  \begin{cases}
+\item $\sum_{i\in I}  \pi_{i} \iota_{i} \sim 1_{S}$,
+\item $ \iota_{i} \pi_{j} \sim \delta_{i, j} =  \begin{cases}
             1_{S_{i}} & \text{ if } i = j  \\
             0_{ij} & \text{ if } i \neq j
         \end{cases}$,
@@ -191,9 +191,11 @@ $m = 3, n = 5$
 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1
 \end{pmatrix}
 \end{array}
-\end{align*}
-\begin{minipage}[t]{.5\textwidth}
-and for $t = 4$, $\tau = \{\tau_{1}, \tau_{2}\}$ defined as
+\end{align*}\\
+\noindent One can easily verify that $\pi_{1} \iota_{1} + \pi_{2} \iota_{2} = 1_{(3+5)} = 1_{8}$ and e.g. $\iota_{1} \pi_{2} = 0_{3,5}$.\\
+
+\noindent \begin{minipage}[t]{.5\textwidth}
+For $t = 4$, $\tau = \{\tau_{1}, \tau_{2}\}$ defined as
 \begin{align*}
 \tau_{1} = \begin{pmatrix}
 1 \ampersand 2 \ampersand 2 \\
@@ -230,24 +232,26 @@ and for $r = 2$, $\rho = \{\rho_{1}, \rho_{2}\}$ we get the matrix
 \\
 \rho_{2} &= \begin{pmatrix}
 4 \ampersand 5 \\
--7 \ampersand 0 \\
+7 \ampersand 0 \\
 0 \ampersand 5 \\
 0 \ampersand 0 \\
 1 \ampersand 1
 \end{pmatrix}
 \end{array}
-u_{\text{in}}(\rho) = \begin{pmatrix}
+u_{\text{out}}(\rho) = \begin{pmatrix}
 0 \ampersand 1 \\
 1 \ampersand 1 \\
 2 \ampersand 2 \\
 4 \ampersand 5 \\
--7 \ampersand 0 \\
+7 \ampersand 0 \\
 0 \ampersand 5 \\
 0 \ampersand 0 \\
 1 \ampersand 1
 \end{pmatrix}
 \end{align*}
-\end{minipage}
+\end{minipage}\\
+
+\noindent One can easily verify that e.g. $\tau_{1} = u_{\mathrm{in}}(\tau) \pi_{1}$ and $\rho_{2} = \iota_{2} u_{\mathrm{out}}(\rho)$.
 \end{example}
 
 
