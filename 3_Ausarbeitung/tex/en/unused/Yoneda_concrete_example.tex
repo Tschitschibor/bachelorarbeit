@@ -1,0 +1,80 @@
+
+\subsection{Yoneda Projective: a concrete example}
+
+\[
+\begin{pmatrix}1 \ampersand 2 \ampersand 3 \ampersand 4\end{pmatrix}
+\begin{pmatrix} 1\to5, \ampersand 2\to6 \\ 3\to7, \ampersand 4\to8 \end{pmatrix}
+\begin{pmatrix}6 \ampersand 8\end{pmatrix}
+\begin{pmatrix}5\to9\\6\to10\\7\to11\\8\to12\end{pmatrix}
+\begin{pmatrix}9\ampersand10\end{pmatrix}\begin{pmatrix}11\ampersand12\end{pmatrix}
+\begin{pmatrix}9\to13, \ampersand 10\to14\\11\to15 \ampersand 12\to16\end{pmatrix}
+\textup{id}
+\]
+
+
+Consider the concrete category 
+\[
+\begin{tikzcd}
+{\{1,2,3,4\}} \arrow["{(1,2,3,4)}"', loop, distance=2em, in=125, out=55] \arrow[rr, "{\begin{pmatrix} 1\to5, 2\to6, \\ 3\to7, 4\to8 \end{pmatrix}}"] \arrow[dd] \arrow[rrdd] &  & {\{5,6,7,8\}} \arrow["{(6,8)}"', loop, distance=2em, in=125, out=55] \arrow[dd, " \begin{pmatrix}5\to9\\6\to10\\7\to11\\8\to12\end{pmatrix}"', bend left] \arrow[lldd] \\
+                                                                                                                                                                             &  &                                                                                                                                                                        \\
+{\{13,14,15,16\}} \arrow["\textup{id}"', loop, distance=2em, in=305, out=235]                                                                                                &  & {\{9,10,11,12\}} \arrow["{(9,10)(11,12)}"', loop, distance=2em, in=305, out=235] \arrow[ll, "{\begin{pmatrix}9\to13, 10\to14,\\ 11\to 15, 12\to16\end{pmatrix}}"]     
+\end{tikzcd}
+\]
+
+and its $\mathbb{K}$-Algebroid $\textup{kq}$
+
+\[
+\begin{tikzcd}
+1 \arrow["a"', loop, distance=2em, in=125, out=55] \arrow[rrr, "b"] \arrow[ddd, "d"', bend right] \arrow[rrrddd, "c", pos=0.25] &  &  & 2 \arrow["e"', loop, distance=2em, in=125, out=55] \arrow[ddd, "f", bend left] \arrow[lllddd, "g", pos=0.25] \\
+                                                                                                                      &  &  &                                                                                                     \\
+                                                                                                                      &  &  &                                                                                                     \\
+4 \arrow["j"', loop, distance=2em, in=215, out=145]                                                                   &  &  & 3 \arrow["h"', loop, distance=2em, in=35, out=325] \arrow[lll, "i"]                                
+\end{tikzcd}
+\]
+
+together with the relations
+
+\[
+[a^{4} - (1), e^{2} - (2), h^{2} - (3), j^{1} - (4), bf - c, bef-ach, bg-d, ci-d, achi-beg, a^{3}beg-chi, fi-g]
+\]
+
+The resulting category algebra has dimension 43.
+
+We can look at the submodule of the category algebra consisting of all arrows starting at \texttt{kq.1}.
+This is what the function \texttt{YonedaProjective( CatReps, kq.1 )} gives us:
+
+\texttt{
+proj1 := YonedaProjective( CatReps, kq.1 );
+<(1)->4, (2)->8, (3)->8, (4)->8; (a)->4x4, (b)->4x8, (c)->4x8,
+(d)->4x8, (e)->8x8, (f)->8x8, (g)->8x8, (h)->8x8, (i)->8x8, (4)->8x8>
+}
+
+The number 4 associated with object (1) tells us that the submodule of all arrows starting and ending at (1) has dimension 4.
+Its basis is the set of paths $\{a, a^{2}, a^{3}, a^{4} = (1) \}$.
+
+Likewise in
+
+\texttt{
+proj4 := YonedaProjective( CatReps, kq.4 );
+<(1)->0, (2)->0, (3)->0, (4)->1; (a)->0x0, (b)->0x0, (c)->0x0,
+(d)->0x1, (e)->0x0, (f)->0x0, (g)->0x1, (h)->0x0, (i)->0x1, (4)->1x1>
+}
+
+The submodule of all arrows starting at (4) is only of dimension 1, since it's already the identity arrow $\{j = (4)\}$.
+
+Dimension of the (quotient of the) path algebra is 43.
+Sum of all dimensions of the yoneda projectives on each objects is 43.
+
+
+Conjecture: 
+
+Dimension of the path algebra = Sum of dimensions of the yoneda projectives on each object.
+
+What does the yoneda projective mean???
+
+Function that creates examples for concrete categories so that I can check my conjecture.
+
+Proof: Follows from Yoneda
+
+Bilder der Yoneda-Einbettung sind projektive Objekte in der Funktor-Kategorie. Das sind die YonedaProjectives.
+

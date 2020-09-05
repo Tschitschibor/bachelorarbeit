@@ -489,6 +489,8 @@ Fc' \arrow[rr, "\alpha_{c'}"]                &  & Gc'
 When each component $\alpha_{c}$ is an isomorphism, we call $\alpha$ a \ul{natural isomorphism}.
 \end{definition}
 
+\subsection{The functor category}
+
 \begin{definition}{(The functor category)}\label{def:functor_category}\endnote{(cited from ncatlab \cite{[ncatlab_functor_category]})}\\
 Given categories $\mathcal{C}$ and $\mathcal{D}$, the \ul{functor category} - written $\mathcal{D}^{\mathcal{C}}$, $\textup{Hom}(\mathcal{C},
 \mathcal{D})$ or $[\mathcal{C}, \mathcal{D}]$ -
@@ -501,24 +503,10 @@ Main usage of functor categories is as $\textup{Hom}$ categories in place of hom
 we have much more than a set, namely a whole category of morphisms between two objects (together with the morphisms between morphisms).
 \end{definition}
 
+\begin{theorem}
+The functor category has all limits, colimits and bilimits which exist in the target category.
+\end{theorem}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Instead of proving this in general, we prove this as part of \ref{thm:functor_category_abelian} for the direct sum, which is a very special bilimit.
 
 

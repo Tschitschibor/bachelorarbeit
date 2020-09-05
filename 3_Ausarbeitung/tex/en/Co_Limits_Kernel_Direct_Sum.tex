@@ -36,13 +36,13 @@ We say $\mathcal{C}$ \ul{has colimits of type} $\mathbf{I}$ if $\mathcal{C}^{\ma
 Depending on \textbf{I} some limits and colimits have special names:
 \begin{center}
 \begin{tabular}{c|c|c}
-\textbf{I} & limit & colimit \\
+generating quiver of $\mathbf{I}$ & limit & colimit \\
 \hline
 $\emptyset$ & terminal object & initial object \\
-a set & direct product & coproduct \\
-$\cdot \rightarrow \cdot \leftarrow \cdot$ & pullback & - \\
-$\cdot \leftarrow \cdot \rightarrow \cdot$  & - & pushout \\
-$ \cdot \rightrightarrows \cdot$ & equalizer & coequalizer
+$\cdot \text{\phantom{$\rightarrow$}} \cdot$ & binary product & binary coproduct \\
+$\cdot \rightarrow \cdot \leftarrow \cdot$ & binary pullback & - \\
+$\cdot \leftarrow \cdot \rightarrow \cdot$  & - & binary pushout \\
+$ \cdot \rightrightarrows \cdot$ & binary equalizer & binary coequalizer
 \end{tabular}
 \end{center}
 \end{example}
@@ -57,7 +57,7 @@ Let $I$ be an index set and $\{A_{i}\}_{i\in I}$ a family of objects in a catego
 \renewcommand{\labelenumi}{(prod)}
 \item The \ul{product} of the family $\{A_{i}\}_{i\in I}$ is an object $\invamalg A_{i}$ together with a family of morphisms
 \[
-\{ \pi_{i} : \invamalg A_{i} \twoheadrightarrow A_{i} \}
+\{ \pi_{i} : \invamalg A_{i} \rightarrow A_{i} \}
 \]
 called \ul{projections}, such that the following universal property is satisfied:\\
 For any object $M \in \mathcal{C}_{0}$ and any family $\{ \varphi_{i} : M \rightarrow A_{i} \}_{i\in I}$ of morphisms, there exists
@@ -74,7 +74,7 @@ M \arrow[rrru, "\varphi_{1}", bend left] \arrow[rrrd, "\varphi_{2}"', bend right
 \item The dual notion to product is the \ul{coproduct} of the family $\{A_{i}\}_{i\in I}$, that is an object $\amalg A_{i}$ together with
 a family of morphisms
 \[
-\{ \iota_{i} : A_{i} \hookrightarrow \amalg A_{i} \}
+\{ \iota_{i} : A_{i} \rightarrow \amalg A_{i} \}
 \]
 called \ul{coprojections} or sometimes \ul{injections} or \ul{inclusions}, such that the following universal property is satisfied:\\
 For any object $M \in \mathcal{C}$ and any family $\{ \psi_{i} : A_{i} \rightarrow M \}$ of morphisms, there exists a unique
@@ -90,14 +90,14 @@ M &  & A_{1}\amalg A_{2} \arrow[ll, "\exists^{1} \psi"', dashed] &              
 \end{enumerate}
 \end{definition}
 
-\begin{definition}{(Terminal object, initial object, zero object)}\label{def:init_term_zero_object}
+\begin{remark}{(Terminal object, initial object, zero object)}\label{def:init_term_zero_object}
 \renewcommand{\labelenumi}{(\theenumi)}
 \begin{enumerate}
 \item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
 \item An \ul{initial object} $I$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(I,-)$ is a singleton.
 \item An object is a \ul{zero object} if it is both initial and terminal.
 \end{enumerate}
-\end{definition}
+\end{remark}
 
 \begin{definition}{(Zero morphism)}\label{def:zero_morphism}\\
 A \ul{zero morphism} in a category with a zero object $Z$ is a morphism factoring over $Z$, i.e. $\varphi : M \rightarrow N$ is called a zero
@@ -114,14 +114,12 @@ such that $\varphi = \varphi_{1}\varphi_{2}$.
 \end{minipage}
 \end{definition}
 
-%%% insert definition of Ab-Category.
 
-
-\begin{definition}{(Direct sum)}\label{def:direct_sum}
-Let $\mathcal{C}$ be an Ab-category. Let $I$ be an index set and $\{S_{i}\}_{i\in I}$ a family of objects in $\mathcal{C}$.
-A \ul{direct sum} consists of the following data:
+\begin{definition}{(Biproduct)}\label{def:biproduct}
+Let $I$ be an index set and $\{S_{i}\}_{i\in I}$ a family of objects in a category $\mathcal{C}$.
+A \ul{biproduct} is a product and a coproduct simultaneously, i.e. consists of the following data:
 \begin{itemize}
-\item an object $S$,
+\item an object $S \in \mathcal{C}_{0}$,
 \item a family of morphisms $\pi = \{ \pi_{i} : S \rightarrow S_{i} \}_{i\in I}$,
 \item a family of morphisms $\iota = \{ \iota_{i} : S_{i} \rightarrow S \}_{i\in I}$,
 \item a dependent function $u_{\text{in}}$ mapping every family $\tau = \{ \tau_{i} : T \rightarrow S_{i} \}_{i\in I}$ to a morphism
@@ -129,7 +127,12 @@ $u_{\text{in}}(\tau) : T \rightarrow S$ such that $u_{\text{in}}(\tau) \pi_{i} \
 \item a dependent function $u_{\text{out}}$ mapping every family $\rho = \{ \rho_{i} : S_{i} \rightarrow R \}_{i\in I}$ to a morphism
 $u_{\text{out}}(\rho) : S \rightarrow R$ such that $\iota_{i} u_{\text{out}}(\rho) \sim \rho_{i}$ for all $i \in I$,
 \end{itemize}
-such that
+\end{definition}
+
+%%% insert definition of Ab-Category.
+
+\begin{definition}{(Direct sum)}\label{def:direct_sum}
+A \ul{direct sum} is a biproduct of objects in an Ab-category such that
 \begin{itemize}
 \item $\sum_{i\in I}  \pi_{i} \iota_{i} \sim 1_{S}$,
 \item $ \iota_{i} \pi_{j} \sim \delta_{i, j} =  \begin{cases}
@@ -154,60 +157,60 @@ $u_{\text{out}}(\rho) : m+n \rightarrow r$ with $\iota_{1} u_{\text{out}} = \rho
 \end{example}
 
 \begin{example}{(number example)}
-$m = 3, n = 5$
+The direct sum of $m = 3, n = 5 \in \kmat_{0}$ is the object $m+n = 8 \in \kmat_{0}$ together with the following morphisms:
 \begin{align*}
 \pi_{1} = \begin{pmatrix}
-1 \ampersand 0 \ampersand 0 \\
-0 \ampersand 1 \ampersand 0 \\
-0 \ampersand 0 \ampersand 1 \\
-0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0
+1 \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand 1 \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand 1 \\
+\cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot
 \end{pmatrix},
 \pi_{2} = \begin{pmatrix}
-0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
-1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1
 \end{pmatrix}, 
 \begin{array}{rr}
 \iota_{1} &= \begin{pmatrix}
-1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0
+1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot
 \end{pmatrix} \\
 \\
 \iota_{2} &= \begin{pmatrix}
-0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1 \ampersand 0 \\
-0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 0 \ampersand 1
+\cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1
 \end{pmatrix}
 \end{array}
 \end{align*}\\
 \noindent One can easily verify that $\pi_{1} \iota_{1} + \pi_{2} \iota_{2} = 1_{(3+5)} = 1_{8}$ and e.g. $\iota_{1} \pi_{2} = 0_{3,5}$.\\
 
 \noindent \begin{minipage}[t]{.5\textwidth}
-For $t = 4$, $\tau = \{\tau_{1}, \tau_{2}\}$ defined as
+For $t = 4$, $\tau = (\tau_{1}, \tau_{2})$ defined as
 \begin{align*}
 \tau_{1} = \begin{pmatrix}
 1 \ampersand 2 \ampersand 2 \\
 4 \ampersand 3 \ampersand 1 \\
-0 \ampersand 1 \ampersand 0 \\
+\cdot \ampersand 1 \ampersand \cdot \\
 1 \ampersand 2 \ampersand 1
 \end{pmatrix},
 \tau_{2} = \begin{pmatrix}
 1 \ampersand 1 \ampersand 2 \ampersand 2 \ampersand 3 \\
 3 \ampersand 4 \ampersand 4 \ampersand 5 \ampersand 5 \\
 6 \ampersand 6 \ampersand 7 \ampersand 7 \ampersand 8 \\
-8 \ampersand 9 \ampersand 9 \ampersand 10 \ampersand 10
+8 \ampersand 9 \ampersand 9 \ampersand 4 \ampersand 4
 \end{pmatrix}
 \end{align*}
 we get the matrix
@@ -215,37 +218,37 @@ we get the matrix
 u_{\text{in}}(\tau) = \begin{pmatrix}
 1 \ampersand 2 \ampersand 2 \ampersand 1 \ampersand 1 \ampersand 2 \ampersand 2 \ampersand 3 \\
 4 \ampersand 3 \ampersand 1 \ampersand 3 \ampersand 4 \ampersand 4 \ampersand 5 \ampersand 5 \\
-0 \ampersand 1 \ampersand 0 \ampersand 6 \ampersand 6 \ampersand 7 \ampersand 7 \ampersand 8 \\
-1 \ampersand 2 \ampersand 1 \ampersand 8 \ampersand 9 \ampersand 9 \ampersand 10 \ampersand 10
+\cdot \ampersand 1 \ampersand \cdot \ampersand 6 \ampersand 6 \ampersand 7 \ampersand 7 \ampersand 8 \\
+1 \ampersand 2 \ampersand 1 \ampersand 8 \ampersand 9 \ampersand 9 \ampersand 4 \ampersand 4
 \end{pmatrix}
 \end{align*}
 \end{minipage}
 \begin{minipage}[t]{.5\textwidth}
-and for $r = 2$, $\rho = \{\rho_{1}, \rho_{2}\}$ we get the matrix
+and for $r = 2$, $\rho = (\rho_{1}, \rho_{2})$ we get the matrix
 \begin{align*}
 \begin{array}{rr}
 \rho_{1} &= \begin{pmatrix}
-0 \ampersand 1 \\
+\cdot \ampersand 1 \\
 1 \ampersand 1 \\
 2 \ampersand 2
 \end{pmatrix} \\
 \\
 \rho_{2} &= \begin{pmatrix}
 4 \ampersand 5 \\
-7 \ampersand 0 \\
-0 \ampersand 5 \\
-0 \ampersand 0 \\
+7 \ampersand \cdot \\
+\cdot \ampersand 5 \\
+\cdot \ampersand \cdot \\
 1 \ampersand 1
 \end{pmatrix}
 \end{array}
 u_{\text{out}}(\rho) = \begin{pmatrix}
-0 \ampersand 1 \\
+\cdot \ampersand 1 \\
 1 \ampersand 1 \\
 2 \ampersand 2 \\
 4 \ampersand 5 \\
-7 \ampersand 0 \\
-0 \ampersand 5 \\
-0 \ampersand 0 \\
+7 \ampersand \cdot \\
+\cdot \ampersand 5 \\
+\cdot \ampersand \cdot \\
 1 \ampersand 1
 \end{pmatrix}
 \end{align*}
@@ -254,6 +257,14 @@ u_{\text{out}}(\rho) = \begin{pmatrix}
 \noindent One can easily verify that e.g. $\tau_{1} = u_{\mathrm{in}}(\tau) \pi_{1}$ and $\rho_{2} = \iota_{2} u_{\mathrm{out}}(\rho)$.
 \end{example}
 
+\begin{remark}{(Addition of matrices)}
+The abelian group structure on $\mathrm{Hom}_{\kmat}(m,n)$ can be derived from the direct sum:
+For $\rho_{1}, \rho_{2} \in \mathrm{Hom}_{\kmat}(m,n)$
+\[
+\rho_{1} + \rho_{2} = u_{\mathrm{in}}(1_{m},1_{m}) u_{\mathrm{out}}(\rho_{1},\rho_{2}) 
+= u_{\mathrm{in}}(\rho_{1},\rho_{2})u_{\mathrm{out}}(1_{n},1_{n})
+\]
+\end{remark}
 
 \subsection{Monomorphisms and epimorphisms}
 
