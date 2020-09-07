@@ -102,19 +102,6 @@ This is already a category, and now it has more structure.
 
 \subsection{Ab-categories}
 
-\begin{definition}{(Ab-category)}
-An \ul{Ab-category} is a category in which all homomorphism sets are abelian groups, and composition distributes over addition.\\
-In other words, a category $\mathcal{C}$ is an \ul{Ab-category} if for every pair of objects $M,N \in \mathcal{C}_{0}$,
-$( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the neutral element called \ul{zero morphism}),
-and for all morphisms $\gamma, \delta \in \textup{Hom}_{\mathcal{C}}(M,N),
-\alpha, \beta \in \textup{Hom}_{\mathcal{C}}(N,L)$
-\begin{align}\label{eq:dist}
-(\gamma + \delta)\alpha &= \gamma\alpha + \delta\alpha \textup{ and }\\
-\gamma(\alpha+\beta) &= \gamma\alpha + \gamma\beta.
-\end{align}
-Note that every hom-set has its own unique zero morphism. E.g. in $\textup{Mat}_{\mathbb{Q}}$ the $2 \times 3$ zero-matrix
-$\mathbf{0} \in \textup{Hom}(2,3)$ is different from the $4 \times 4$ zero-matrix $\mathbf{0} \in \textup{Hom}(4,4)$.
-\end{definition}
 
 \begin{definition}{(semisimple)}
 semisimple category
@@ -125,67 +112,12 @@ $\kmat$ of a semisimple ring k is a semisimple category.
 \end{theorem}
 TODO
 
-\begin{example}{(The matrix category $\Rmat$ over a commutative ring $R$)}\label{ex:matrix_category}
-\begin{itemize}
-\item Objects are natural numbers $\textup{Obj}(\textup{Mat}_{R}) = \mathbb{N} = \mathbb{N}_{0} = \{0,1,2,\dots\}$
-\item Morphisms $\textup{Mor}(\textup{Mat}_{R}) \ni (m \rightarrow n)$ are $m \times n$ matrices over $R$.
-We write the set of morphisms between $m$ and $n$, as $R^{m\times n} := \textup{Hom}(m,n)$. Identity morphisms are the
-identity matrices.
-\item Composition is matrix multiplication (associative).
-\item It is a skeletal category, i.e. $m$ is isomorphic to $n \Rightarrow m = n$. Only quadratic matrices ($m = n$) can be
-isomorphisms.
-\end{itemize}
-In this category, the number $0$ is \ul{the} zero object.\\
-A zero matrix (zero morphism) is a matrix factoring through the zero object $0$.\\
-\begin{minipage}{.2\textwidth}\phantom{ }\end{minipage}
-\begin{minipage}{.25\textwidth}
-Matrix $R^{m\times n} \ni A = 0$
-\end{minipage}
-\begin{minipage}{.08\textwidth}
-$\Longleftrightarrow$
-\end{minipage}
-\begin{minipage}{.32\textwidth}
-\begin{tikzcd}
-m \arrow[rr, "A"] \arrow[rd, "(m \times 0)"'] &                               & n \\
-                                              & 0 \arrow[ru, "(0 \times n)"'] &  
-\end{tikzcd}\\
-$\Rightarrow A = (m \times 0) \cdot (0 \times n)$.
-\end{minipage}
-\begin{minipage}{.15\textwidth}\phantom{ }\end{minipage}\\
-\noindent The matrices $(m \times 0)$ and $(0 \times n)$ have zero columns or zero rows respectively, but it is
-important to note that for each $m \in \textup{Obj}(\textup{Mat}_{R})$ there is exactly one such matrix $(m \times 0)$ and $(0 \times m)$
-(that's what initial and terminal object means), and for different $m$, these morphisms are different.
-\end{example}
-
-
-\begin{example}{($\kmat$ is an Ab-category)}
-For two natural numbers $m,n \in {\kmat}_{0} = \mathbb{N} = \mathbb{N}_{0}$, the set of morphisms with source $m$ and target $n$ is
-$\Bbbk^{m\times n}$, the set of $m \times n$-matrices. This is an abelian group:
-\begin{itemize}
-\item The neutral element of the addition is the $m \times n$ zero matrix $\mathbf{0}$.
-\item Addition of matrices is associative and commutative, so it's an abelian group.
-\end{itemize}
-The distributive laws \eqref{eq:dist} for composable morphisms hold.
-\end{example}
 
 
 
 
 
 
-
-
-
-\begin{definition}{(Abelian category)}\endnote{(From \cite{[context]}, appendix E.5, Def. E.5.1)}
-A category $\mathcal{C}$ is \ul{abelian} if
-\begin{itemize}
-\item it has a \ul{zero object} $0$, that is both initial and terminal,
-\item it has all \ul{binary products} and \ul{binary coproducts},
-\item it has all \ul{kernels} and \ul{cokernels}, defined repsectively to be the \ul{equalizer} and
-\ul{coequalizer} of a map $f : A \rightarrow B$ with the zero map $A \rightarrow 0 \rightarrow B$, and
-\item all monomorphisms and epimorphisms arise as kernels or cokernels, respectively.
-\end{itemize}
-\end{definition}
 
 \begin{definition}{($R$-linear category)}
 Let $R$ be a commutative ring.

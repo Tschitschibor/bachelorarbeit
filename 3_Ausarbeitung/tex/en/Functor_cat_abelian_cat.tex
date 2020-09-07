@@ -170,20 +170,20 @@ We conclude that the
 \begin{subproof}[Proof of (ii)]
 Let $I = \{1,\dots,n\}$ be a finite set. For each $c \in \mathcal{A}_{0}$ the family $(F_{i})_{i\in I}$ of functors in $\HomAkmat_{0}$ gets mapped to a
 family $(S_{i})_{i\in I} := (F_{i}c)_{i\in I}$ of objects in $\kmat_{0}$. Let $S := \oplus_{i\in I} S_{i}$ be the direct sum of the $S_{i}$'s with projections
-$p = \{ p_{i} : S \rightarrow S_{i}\}_{i\in I}$ and coprojections $j = \{ j_{i} : S_{i} \rightarrow S\}_{i\in I}$ as well as dependent functions
+$p = \{ p_{i} : S \rightarrow S_{i}\}_{i\in I}$ and coprojections $q = \{ q_{i} : S_{i} \rightarrow S\}_{i\in I}$ as well as dependent functions
 $v_{\text{in}}$ and $v_{\text{out}}$ such that each family of morphisms $t = \{ t_{i} : T \rightarrow S_{i}\}_{i\in I}$ gets mapped to a
 morphism $v_{\text{in}}(t)$ and each family of morphisms $r = \{ r_{i} : S_{i} \rightarrow R\}_{i\in I}$ gets mapped to a
 morphism $v_{\text{out}}(r)$ such that
 \begin{align*}
 v_{\text{in}}(t) p_{i} &= t_{i} \forall i\in I, \\
-j_{i} v_{\text{out}}(r) &= r_{i} \forall i\in I.
+q_{i} v_{\text{out}}(r) &= r_{i} \forall i\in I.
 \end{align*}
 The $p$ and $j$ also satisfy
 \begin{align*}
-\sum_{i\in I} p_{i} j_{i} &= 1_{S} \text{  and  } \\
-j_{i} p_{k} &= \begin{cases}
-            1_{S_{i}} & \text{ if } i = k \\
-            0_{ik} & \text{ if } i \neq k
+\sum_{i\in I} p_{i} q_{i} &= 1_{S} \text{  and  } \\
+q_{i} p_{j} &= \begin{cases}
+            1_{S_{i}} & \text{ if } i = j \\
+            0_{ij} & \text{ if } i \neq j
         \end{cases}
 \end{align*}
 We now want to define a direct sum in the functor category, i.e. for the family $(F_{i})_{i\in I}$ the tuple
