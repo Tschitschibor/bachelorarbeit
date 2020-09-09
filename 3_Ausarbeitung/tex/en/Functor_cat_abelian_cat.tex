@@ -178,7 +178,7 @@ morphism $v_{\text{out}}(r)$ such that
 v_{\text{in}}(t) p_{i} &= t_{i} \forall i\in I, \\
 q_{i} v_{\text{out}}(r) &= r_{i} \forall i\in I.
 \end{align*}
-The $p$ and $j$ also satisfy
+The $p$ and $q$ also satisfy
 \begin{align*}
 \sum_{i\in I} p_{i} q_{i} &= 1_{S} \text{  and  } \\
 q_{i} p_{j} &= \begin{cases}
@@ -197,7 +197,34 @@ Fa &: \oplus_{i\in I} F_{i}c \rightarrow \oplus_{i\in I} F_{i}c'
 $\pi$ such that $(\pi_{i})_{c} : Fc \rightarrow F_{i}c = p_{i} : S \rightarrow S_{i}$.
 \end{subproof}
 
-\item
+\item Next we show that $\HomAkmat$ is a pre-abelian category, i.e. an
+\begin{enumerate}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+\item additive category with
+\item a dependent function mapping a morphism $\eta : F \rightarrow G \in \HomAkmat_{1}$ to a kernel of $\eta$ and
+\item a dependent function mapping a morphism $\eta : F \rightarrow G \in \HomAkmat_{1}$ to a cokernel of $\eta$.
+\end{enumerate}
+\begin{subproof}[Proof of (ii)]
+The kernel of a morphism $\eta : F \rightarrow G \in \HomAkmat_{1}$ is
+\begin{itemize}
+\item an object $K := \mathrm{ker}(\eta) \in \HomAkmat_{0}$
+\item a kernel embedding function $\kappa : K \rightarrow F$ such that $\kappa \eta = 0_{K,G}$.
+\item a dependent function $\mathrm{KernelLift}(\eta) = ( - / \kappa)$ mapping $\tau : \tau\eta = 0_{K',G}$ to a unique morphism
+$(\tau / \kappa)$ such that $\tau = (\tau /\kappa )\cdot \kappa : K' \rightarrow F$.
+\end{itemize}
+
+$Kc \in \kmat_{0}$. $\kappa_{c} \eta_{c} = 0_{Kc,Gc}$.
+
+
+For each $c \in \mathcal{A}_{0}$ the component $\eta_{c} : Fc \rightarrow Gc \in \kmat_{1}$ is a morphism in an additive category and as such has a
+kernel $(K, \kappa : K \rightarrow Fc;\, \kappa \eta_{c} = 0,$ and for every other $\tau : \tau\eta_{c} = 0, $ a unique morphism
+$(\tau / \kappa) : \tau = (\tau / \kappa) \cdot \kappa$.
+
+
+\end{subproof}
+
+
+
 \end{enumerate}
 \end{proof}
 
