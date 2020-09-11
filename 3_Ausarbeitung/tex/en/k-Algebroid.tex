@@ -12,12 +12,30 @@ a group.
 $\Bbbk G$ group algebra, $\Bbbk \mathcal{C}$ category algebra
 \end{example}
 
-This example can be generalized to categories where the hom-set is a ring or an R-algebra. But for this we need a commutative ring R.
-
 Our goal is to represent finite concrete categories, for this we need the source and target categories of our functors, which the
 representations are.
 As subcategories of $\textup{FinSets}$, our finite concrete categories only have definitions for their objects and their
 morphisms, methods to check when two morphisms are congruent or equivalent, but not much else.
+
+
+\begin{definition}{(Idempotent)}
+
+\end{definition}
+
+\begin{theorem}
+Let $\mathcal{C}$ be a finite additive category.
+\end{theorem}
+
+
+
+
+
+
+
+
+
+
+
 A competing theory to category theory is that of quivers and path algebras. We already used their terminology in
 \ref{def:path}, \ref{la:cyclic_paths} and \ref{def:path_algebra}, for instance when talking about the trivial path,
 which in the language of category theory is nothing but the identity morphism, composition of arrows to a path is nothing but
@@ -120,12 +138,80 @@ TODO
 
 
 \begin{definition}{($R$-linear category)}
-Let $R$ be a commutative ring.
+Let $R$ be a commutative ring. An \ul{$R$-linear category} $\mathcal{A}$ is a category where every hom-set is an
+$R$-module, and where for $x,y,z \in \mathcal{A}_{0}$ composition of morphisms
+\[
+\mu : \mathrm{Hom}_{\mathcal{A}}(x,y) \times \mathrm{Hom}_{\mathcal{A}}(y,z) \rightarrow \mathrm{Hom}_{\mathcal{A}}(x,z)
+\]
+is $R$-linear.
+
+Note that this does imply that $\mathcal{A}$ is a pre-additive category, but it need not be additive.
 \end{definition}
 
-For $R = \mathbb{Z}$ an $R$-linear category is nothing but an Ab-category.
+\begin{example}
+Consider the following category $\mathcal{A}$ with four objects $\mathcal{A}_{0} = \{1,2,3,4\}$ and
+identity morphisms $e_{1}, e_{2}, e_{3}, e_{4}$:
+\[
+\begin{tikzcd}
+1 \arrow["e_{1}"', loop, distance=2em, in=215, out=145] \arrow[dd, "v"'] &  & 3 \arrow["x"', loop, distance=2em, in=35, out=325] \arrow["e_{3}"', loop, distance=2em, in=215, out=145] \arrow[dd, "w"', bend right=49] \arrow[dd, "xw" description, bend right=23] \arrow[dd, "wy" description, bend left=23] \arrow[dd, "xwy", bend left=49] \\
+                                                                         &  &                                                                                                                                                                                                                                                           \\
+2 \arrow["e_{2}"', loop, distance=2em, in=215, out=145]                  &  & 4 \arrow["y"', loop, distance=2em, in=5, out=295] \arrow["e_4"', loop, distance=2em, in=245, out=175]                                                                                                                                                   
+\end{tikzcd}
+\]
+Note that the existence of $xw$ and $wy$ follows from the composition axioms of our category, but with the same argument,
+we should also define $x^{2} = xx, x^{3} = xxx, ... $ and $y^{2} = yy, ... $ which are a priori all distinct morphisms.
+Defining a set of relations of endomorphisms fixes this problem, so we define $x^{2} = e_{3}$ and $y^{2} = e_{4}$.
+The identity axiom already implies the relations $e_{i}^{2} = e_{i}$ for $i = 1,2,3,4$.
+
+If we take a field $\Bbbk$ for the commutative ring, the identity morphisms $e_{1}, e_{2}, e_{3}, e_{4}$ together with the other morphisms
+\begin{align*}
+v &: 1 \rightarrow 2 \\
+x &: 3 \rightarrow 3 \\
+xw, w, wy, xwy &: 3 \rightarrow 4 \\
+y &: 4 \rightarrow 4
+\end{align*}
+form bases for the vector spaces
+\begin{align*}
+\HomA(1,1) &= \left< e_{1} \right> \\
+\HomA(1,2) &= \left< v \right> \\
+\HomA(2,2) &= \left< e_{2} \right> \\
+\HomA(3,3) &= \left< e_{3}, x \right> \\
+\HomA(3,4) &= \left< w, xw, wy, xwy \right> \\
+\HomA(4,4) &= \left< e_{4}, y \right>.
+\end{align*}
+Linearity of composition necessitates that adding two arrows and then composing the result with another arrow
+is the same as first composing each arrow and then adding them, e.g.
+\begin{align*}
+(x+x)w &= xw + xw \\
+(e_{3} + e_{3})w &= (2\,e_{3})w = e_{3}(2w) = 2w
+\end{align*}
+The $\Bbbk$-dimensions of the vector spaces are $1, 1, 1, 2, 4, 2$ with a total of 11. Does that mean that
+somewhere there exists an 11-dimensional $\Bbbk$-vector space that has these six vectorspaces as subspaces? Indeed it does.
+\end{example}
+
+\begin{remark}
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item For $R = \mathbb{Z}$ an $R$-linear category is nothing but an Ab-category. This follows directly from the fact
+that every abelian group is nothing but a $\mathbb{Z}$-module.
+\item For $R = \Bbbk$ a field, the hom-sets are $\Bbbk$-vector spaces and composition of morphisms is a $\Bbbk$-bilinear
+map for which there are many examples in Linear Algebra.
+\end{enumerate}
+\end{remark}
 
 \begin{definition}{($R$-linear functor)}
+Let $R$ be a commutative ring. A \ul{functor of $R$-linear categories} or an \ul{$R$-linear functor} is a functor
+$F : \mathcal{A} \rightarrow \mathcal{B} $ where for all objects $x, y \in \mathcal{A}_{0}$, the map
+$F : \mathrm{Hom}_{\mathcal{A}}(x,y) \rightarrow \mathrm{Hom}_{\mathcal{B}}(F(x), F(y))$ is a homomorphism
+of $R$-modules.
+\end{definition}
+
+\begin{definition}{(Category algebra)}
+Let $\Bbbk$ be a commutative unital ring. For a category $\mathcal{C}$, we define the \ul{category algebra} $\Bbbk \mathcal{C}$
+to be the free $\Bbbk$-module with $\mathcal{C}_{1}$ as a basis. 
+\end{definition}
+
+\begin{definition}{(Category algebra)}
 
 \end{definition}
 

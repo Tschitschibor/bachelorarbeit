@@ -134,7 +134,7 @@ $\mathbf{0} \in \textup{Hom}_{\kmat}(2,3)$ is different from the $4 \times 4$ ze
 \begin{example}{(The matrix category $\kmat$ over a commutative ring $\Bbbk$)}\label{ex:matrix_category}
 \begin{itemize}
 \item Objects are natural numbers $\kmat_{0} = \mathbb{N} = \mathbb{N}_{0} = \{0,1,2,\dots\}$
-\item Morphisms $\Rmat_{1} \ni (m \rightarrow n)$ are $m \times n$ matrices over $\Bbbk$.
+\item Morphisms $\kmat_{1} \ni (m \rightarrow n)$ are $m \times n$ matrices over $\Bbbk$.
 We write the set of morphisms between $m$ and $n$, as $\Bbbk^{m\times n} := \textup{Hom}_{\kmat}(m,n)$. Identity morphisms are the
 identity matrices.
 \item Composition is matrix multiplication (associative).
@@ -145,7 +145,7 @@ In this category, the number $0$ is \ul{the} zero object.\\
 A zero matrix (zero morphism) is a matrix factoring through the zero object $0$.\\
 \begin{minipage}{.2\textwidth}\phantom{ }\end{minipage}
 \begin{minipage}{.25\textwidth}
-$R^{m\times n} \ni A = 0_{m,n}$
+$\Bbbk^{m\times n} \ni A = 0_{m,n}$
 \end{minipage}
 \begin{minipage}{.08\textwidth}
 $\Longleftrightarrow$
@@ -321,7 +321,8 @@ For $\rho_{1}, \rho_{2} \in \mathrm{Hom}_{\kmat}(m,n)$
 \rho_{1} + \rho_{2} = u_{\mathrm{in}}(1_{m},1_{m}) u_{\mathrm{out}}(\rho_{1},\rho_{2}) 
 = u_{\mathrm{in}}(\rho_{1},\rho_{2})u_{\mathrm{out}}(1_{n},1_{n})
 \]
-This makes $\kmat$ an example of an additive category.
+This makes $\kmat$ an example of an additive category. The above equation illustrates that an additive category is
+pre-additive in at most one way, i.e. we don't have a choice how we define the abelian group structure on the hom-sets.
 \end{remark}
 
 \begin{definition}\label{def:additive_category}\endnote{ ref. \cite{[Posur]}, Def. 2.8}
