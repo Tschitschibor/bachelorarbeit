@@ -6,49 +6,49 @@
 
 \begin{definition}{(The category of presheaves)}\endnote{(cited from ncatlab \cite{[ncatlab_presheaves]})}\\
 For $\mathcal{C}$ a small category, its \ul{category of presheaves} is the functor category
-\[ \textup{PSh}(\mathcal{C}) := \textup{Hom}(\mathcal{C}^{\text{op}}, \textup{Set}) \]
-from the opposite category of $\mathcal{C}$ to $\textup{Set}$.
+\[ \mathrm{PSh}(\mathcal{C}) := \mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set}) \]
+from the opposite category of $\mathcal{C}$ to $\mathrm{Set}$.
 An object in this category is a \ul{presheaf}.\\
 \noindent Taking $\mathcal{C}^{\text{op}}$ instead of $\mathcal{C}$ (and with $(\mathcal{C}^{\text{op}})^{\text{op}} = \mathcal{C}$) we get the
 functor category as in \ref{def:functor_category}
 \[
-\textup{Hom}(\mathcal{C}, \textup{Set}) = \textup{PSh}(\mathcal{C}^{\text{op}}) \]
+\mathrm{Hom}(\mathcal{C}, \mathrm{Set}) = \mathrm{PSh}(\mathcal{C}^{\text{op}}) \]
 \end{definition}
 
 \begin{remark}{(General properties of presheaves)}\\
-The category of presheaves $\textup{PSh}(\mathcal{C})$ is the \ul{free cocompletion} of $\mathcal{C}$.
+The category of presheaves $\mathrm{PSh}(\mathcal{C})$ is the \ul{free cocompletion} of $\mathcal{C}$.
 \end{remark}
 
 \begin{definition}{(Representable functor)}\label{def:repres_functor}\endnote{(from ncatlab \ref{[ncatlab_repres_functor]})}
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
-\item A functor from a locally small category $\mathcal{C}$ to $\textup{Hom}$ is \ul{representable} if there is an object $c \in \mathcal{C}$ and a
-natural isomorphism between $F$ and $\textup{Hom}(c,-)$ (for a covariant $F$, otherwise $\textup{Hom}(-,c)$ for a contravariant $F$), in which case
+\item A functor from a locally small category $\mathcal{C}$ to $\mathrm{Hom}$ is \ul{representable} if there is an object $c \in \mathcal{C}$ and a
+natural isomorphism between $F$ and $\mathrm{Hom}(c,-)$ (for a covariant $F$, otherwise $\mathrm{Hom}(-,c)$ for a contravariant $F$), in which case
 one says thet the functor $F$ is \ul{represented by} the object $c$.
 \item A \ul{representation} for a functor $F$ is a choice of object $c \in \mathcal{C}$ together with a specified natural isomorphism
-$\textup{Hom}(c,-) \cong F$ (for a covariant $F$, or $\textup{Hom}(-,c) \cong F$ for a contravariant $F$).
+$\mathrm{Hom}(c,-) \cong F$ (for a covariant $F$, or $\mathrm{Hom}(-,c) \cong F$ for a contravariant $F$).
 \end{enumerate}
 \end{definition}
 
 \begin{lemma}{(Yoneda's Lemma)}
-Let $\mathcal{C}$ be a locally small category. For $X \in [\mathcal{C}^{\text{op}}, \textup{Set}]$ any presheaf, there is a canonical isomorphism
+Let $\mathcal{C}$ be a locally small category. For $X \in \mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set})$ any presheaf, there is a canonical isomorphism
 \[
-\textup{Hom}_{[\mathcal{C}^{\text{op}}, \textup{Set}]}(y(c), X) \cong X(c)
+\mathrm{Hom}_{\mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set})}(y(c), X) \cong X(c)
 \]
 between the hom-set of presheaf homomorphisms from the representable presheaf $y(c)$ to $X$, and the value of $X$ at $c$.
 \end{lemma}
 
 \begin{lemma}{(Yoneda's Lemma)}
-For any functor $F : \mathcal{C} \rightarrow \textup{Set}$, whose source $\mathcal{C}$ is locally small and any
+For any functor $F : \mathcal{C} \rightarrow \mathrm{Set}$, whose source $\mathcal{C}$ is locally small and any
 object $c \in \mathcal{C}$, there is a bijection
 \[
-\textup{Hom}(\mathcal{C}(c,-), F) \cong Fc
+\mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-), F) \cong Fc
 \]
 that associates a natural transformation $\alpha : \mathcal{C}(c,-) \Rightarrow F$ to the element $\alpha_{c}(1_{c}) \in Fc$.
 Moreover, this correspondence is natural in both $c$ and $F$.
 \end{lemma}
 As $\mathcal{C}$ is locally small but not necessarily small, a priori the collection of natural transformations
-$\textup{Hom}(\mathcal{C}(c,-),F)$ might be large. However, the bijection in the Yoneda lemma proves that this particular
+$\mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-),F)$ might be large. However, the bijection in the Yoneda lemma proves that this particular
 collection of natural transformations indeed forms a set.
 \begin{proof}{of the bijection}
 
@@ -59,41 +59,32 @@ collection of natural transformations indeed forms a set.
 
 What is the forgetful functor $U : \mathbf{Cat} \rightarrow \mathbf{Quiv}$ represented by? Is it even representable?
 A representation for $U$ is an object $c \in \mathcal{C}_{0}$, together with an isomorphism $\mathcal{C}(c,-) \cong U$.
-Target needs to be $\textup{Set}$.
+Target needs to be $\mathrm{Set}$.
 
-
-\begin{definition}{(Yoneda Embedding)}\label{def_func:yoneda_embedding}\endnote{(quoted directly from the \texttt{FunctorCategories} \cite{[FunctorCat]} documentation}\\
-$\mathtt{YonedaEmbedding(B)}$\\
-Returns: A \textsc{CAP} functor.
-
-\noindent The input is an algebroid $\mathcal{B}$ defined by some quiver $\Bbbk$-algebra $\mathcal{A}$. The output is the Yoneda embedding functor
-from $\mathcal{B}$ into the functors category $\textup{Hom}( \mathtt{AlgebroidOverOppositeAlgebra}(\mathcal{B}), \mathcal{C} )$, where
-$\mathcal{C}$ is a matrix category over $\Bbbk$.
-\end{definition}
 
 \begin{definition}{(Yoneda embedding)}\label{def:yoneda_embedding}\endnote{(cited from ncatlab \cite{[ncatlab_yoneda_emb]})}\\
 The \ul{Yoneda embedding} for a locally small category $\mathcal{C}$ is the functor
 \[
-Y : \mathcal{C} \hookrightarrow \textup{Hom}(\mathcal{C}^{\text{op}}, \textup{Set})
+Y : \mathcal{C} \hookrightarrow \mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set})
 \]
 from $\mathcal{C}$ to the category of presheaves over $\mathcal{C}$ which is the image of the hom-functor
 \[
-\textup{Hom} : \mathcal{C}^{\text{op}}\times\mathcal{C} \rightarrow \textup{Set}
+\mathrm{Hom} : \mathcal{C}^{\text{op}}\times\mathcal{C} \rightarrow \mathrm{Set}
 \]
-under the $\textup{Hom}$ adjunction
+under the $\mathrm{Hom}$ adjunction
 \[
-\textup{Hom}(\mathcal{C}^{\text{op}}\times\mathcal{C}, \textup{Set}) \simeq
-\textup{Hom}(\mathcal{C},\textup{Hom}(\mathcal{C}^{\text{op}}, \textup{Set}))
+\mathrm{Hom}(\mathcal{C}^{\text{op}}\times\mathcal{C}, \mathrm{Set}) \simeq
+\mathrm{Hom}(\mathcal{C},\mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set}))
 \]
-in the closed symmetric monoidal category $\textup{Cat}$.
+in the closed symmetric monoidal category $\mathrm{Cat}$.
 If instead we have the opposite category $\mathcal{C}^{\text{op}}$, then we get the embedding into the functor category:
 \[
-Y : \mathcal{C}^{\text{op}} \hookrightarrow \textup{Hom}(\mathcal{C},\textup{Set})
+Y : \mathcal{C}^{\text{op}} \hookrightarrow \mathrm{Hom}(\mathcal{C},\mathrm{Set})
 \]
 \end{definition}
 
 \begin{remark}
-Let $\mathcal{A}$ be a $\Bbbk$-linear category with finite $\Bbbk$-dimensional hom-sets. Then we get
+Let $\mathcal{A}$ be a $\Bbbk$-linear category with finite-dimensional $\Bbbk$-vector spaces as hom-sets. Then we get
 a $\Bbbk$-linear version of Yoneda's lemma:
 
 \[
@@ -111,7 +102,7 @@ Y : \mathcal{A}^{\text{op}} \hookrightarrow \HomAkmat
 \begin{lemma}\label{la:Hom_exact_proj_Lift_along_epis}
 Let $\mathcal{C}$ be a locally small category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
 \begin{itemize}
-\item The covariant functor $\textup{Hom}(P,-)$ is exact.
+\item The covariant functor $\mathrm{Hom}(P,-)$ is exact.
 \item For all epimorphisms $\varphi : M \twoheadrightarrow N$ and morphisms $\theta : P \rightarrow N$, there exists a
 projective lift $\psi : P\,\dottedrightarrow\,M$ such that $\theta = \psi\varphi$.\\
 \begin{tikzcd}
@@ -120,41 +111,41 @@ M \arrow[r, "\varphi", two heads] & N \\
 \end{tikzcd}
 \end{itemize}
 \begin{proof}
-For an object $L\in \mathcal{C}_{0}$, $\textup{Hom}(L,-)$ is always a covariant left-exact functor, i.e. respects monos.\\
-\ul{''$\Leftarrow$'' :} Prove that $\textup{Hom}(P,-)$  is right exact, i.e. respects epis.\\
+For an object $L\in \mathcal{C}_{0}$, $\mathrm{Hom}(L,-)$ is always a covariant left-exact functor, i.e. respects monos.\\
+\ul{''$\Leftarrow$'' :} Prove that $\mathrm{Hom}(P,-)$  is right exact, i.e. respects epis.\\
 For this, let $M, N \in \mathcal{C}_{0}$ and $\varphi : M \twoheadrightarrow N$ be an epi. The Hom-functor works on morphisms
 by mapping the Hom-sets of the source and target objects of the morphism, i.e.
-$\textup{Hom}(P,\varphi) : \textup{Hom}(P,M) \rightarrow \textup{Hom}(P,N)$, given by $\rho \mapsto \rho\varphi\, \forall \rho \in \textup{Hom}(P,M)$.
-Now given that $\varphi$ is an epi, we want to show that $\textup{Hom}(P,\varphi)$ is also an epi.\\
+$\mathrm{Hom}(P,\varphi) : \mathrm{Hom}(P,M) \rightarrow \mathrm{Hom}(P,N)$, given by $\rho \mapsto \rho\varphi\, \forall \rho \in \mathrm{Hom}(P,M)$.
+Now given that $\varphi$ is an epi, we want to show that $\mathrm{Hom}(P,\varphi)$ is also an epi.\\
 Let $O \in \mathcal{C}_{0}$,  $\gamma : N \rightarrow O$ and $\varepsilon : N \rightarrow O$ such that
-$\textup{Hom}(P,\gamma) : \textup{Hom}(P,N) \rightarrow \textup{Hom}(P,O);\, \theta \mapsto \theta\gamma$ and
-$\textup{Hom}(P,\varepsilon) : \textup{Hom}(P,N) \rightarrow \textup{Hom}(P,O);\, \theta \mapsto \theta\varepsilon$ and
-$\textup{Hom}(P,\varphi)\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varphi)\textup{Hom}(P,\varepsilon)$. 
-From the functoriality axioms (ref. definition \ref{def:functor} of a functor) it follows that $\textup{Hom}(P,\varphi\gamma) = \textup{Hom}(P,\varphi\varepsilon)$. This implies
-\begin{equation}\label{eqn:Hom_functoriality}\rho(\varphi\gamma) = \rho(\varphi\varepsilon)\, \forall \rho \in \textup{Hom}(P,M)\end{equation}. 
+$\mathrm{Hom}(P,\gamma) : \mathrm{Hom}(P,N) \rightarrow \mathrm{Hom}(P,O);\, \theta \mapsto \theta\gamma$ and
+$\mathrm{Hom}(P,\varepsilon) : \mathrm{Hom}(P,N) \rightarrow \mathrm{Hom}(P,O);\, \theta \mapsto \theta\varepsilon$ and
+$\mathrm{Hom}(P,\varphi)\mathrm{Hom}(P,\gamma) = \mathrm{Hom}(P,\varphi)\mathrm{Hom}(P,\varepsilon)$. 
+From the functoriality axioms (ref. definition \ref{def:functor} of a functor) it follows that $\mathrm{Hom}(P,\varphi\gamma) = \mathrm{Hom}(P,\varphi\varepsilon)$. This implies
+\begin{equation}\label{eqn:Hom_functoriality}\rho(\varphi\gamma) = \rho(\varphi\varepsilon)\, \forall \rho \in \mathrm{Hom}(P,M)\end{equation}. 
 
 \begin{tikzcd}
 M \arrow[r, "\varphi", shift right, two heads] & N \arrow[r, "\gamma"'] \arrow[r, shift left=2, "\varepsilon"] & O \\
 	& P \arrow[lu, "\rho"] \arrow[u, "\theta"] \arrow[ru, outer sep=2, pos=.55, "\rho(\varphi\gamma) = \rho(\varphi\varepsilon)"'] \arrow[ru, shift right=2]
 \end{tikzcd}
 
-We want to show that the parallel morphisms $\textup{Hom}(P,\gamma)$ and $\textup{Hom}(P,\varepsilon)$ are the same, i.e. for all
-$\theta \in \textup{Hom}(P,N), \theta\gamma = \theta\varepsilon$. Our assumtion that there exists a projective lift helps us in this situation:
-$\forall \theta \in \textup{Hom}(P,N)\, \exists\, \rho \in \textup{Hom}(P,M)$ such that $\theta = \rho\varphi$ and therefore with the above 
+We want to show that the parallel morphisms $\mathrm{Hom}(P,\gamma)$ and $\mathrm{Hom}(P,\varepsilon)$ are the same, i.e. for all
+$\theta \in \mathrm{Hom}(P,N), \theta\gamma = \theta\varepsilon$. Our assumtion that there exists a projective lift helps us in this situation:
+$\forall \theta \in \mathrm{Hom}(P,N)\, \exists\, \rho \in \mathrm{Hom}(P,M)$ such that $\theta = \rho\varphi$ and therefore with the above 
 equation \eqref{eqn:Hom_functoriality},
 $\theta\gamma = (\rho\varphi)\gamma = \rho(\varphi\gamma) = \rho(\varphi\varepsilon) = (\rho\varphi)\varepsilon = \theta\varepsilon$
-and therefore $\textup{Hom}(P,\gamma) = \textup{Hom}(P,\varepsilon)$, i.e. $\textup{Hom}(P,\varphi)$ is epi.\\
+and therefore $\mathrm{Hom}(P,\gamma) = \mathrm{Hom}(P,\varepsilon)$, i.e. $\mathrm{Hom}(P,\varphi)$ is epi.\\
 
-\noindent\ul{''$\Rightarrow$'':} Let $\textup{Hom}(P,-)$ be right exact. Let $M, N \in \mathcal{C}_{0}$, the morphism
+\noindent\ul{''$\Rightarrow$'':} Let $\mathrm{Hom}(P,-)$ be right exact. Let $M, N \in \mathcal{C}_{0}$, the morphism
 $\varphi : M \twoheadrightarrow N$ be an epi and $\theta : P \rightarrow N$ any morphism.
 We want to show the existence of a morphism $\psi : P \dottedrightarrow\, M$ such that $\theta = \psi\varphi$.
-With $\textup{Hom}(P,-)$ being exact, we have that $\textup{Hom}(P,\varphi) : \textup{Hom}(P,M) \twoheadrightarrow \textup{Hom}(P,N)$ is
-an epi, and is given by $\textup{Hom}(P,M) \ni \rho \mapsto \rho\varphi \in \textup{Hom}(P,N)$.\\
-$\mathcal{C}$ is locally small, i.e. for the two objects $P, N \in \mathcal{C}_{0},$ there is a \ul{set} $\textup{Hom}(P,N)$
-of morphisms between them. The $\textup{Hom}$-functor moves the morphisms from a general categorical context 
-in $\mathcal{C}$ into the category of sets, i.e. $\textup{Hom}(P,\varphi)$ is a function in the category of sets.
-And for those it's true that every epimorphism is surjective. Thus $\forall \theta \in \textup{Hom}(P,N)\, \exists \rho \in \textup{Hom}(P,M)$ such
-that $\theta = (\textup{Hom}(P,\varphi))(\rho) = \rho\varphi$. This $\rho$ is the projective lift $\psi := \rho$ we were looking for.
+With $\mathrm{Hom}(P,-)$ being exact, we have that $\mathrm{Hom}(P,\varphi) : \mathrm{Hom}(P,M) \twoheadrightarrow \mathrm{Hom}(P,N)$ is
+an epi, and is given by $\mathrm{Hom}(P,M) \ni \rho \mapsto \rho\varphi \in \mathrm{Hom}(P,N)$.\\
+$\mathcal{C}$ is locally small, i.e. for the two objects $P, N \in \mathcal{C}_{0},$ there is a \ul{set} $\mathrm{Hom}(P,N)$
+of morphisms between them. The $\mathrm{Hom}$-functor moves the morphisms from a general categorical context 
+in $\mathcal{C}$ into the category of sets, i.e. $\mathrm{Hom}(P,\varphi)$ is a function in the category of sets.
+And for those it's true that every epimorphism is surjective. Thus $\forall \theta \in \mathrm{Hom}(P,N)\, \exists \rho \in \mathrm{Hom}(P,M)$ such
+that $\theta = (\mathrm{Hom}(P,\varphi))(\rho) = \rho\varphi$. This $\rho$ is the projective lift $\psi := \rho$ we were looking for.
 \end{proof}
 \end{lemma}
 
@@ -166,7 +157,7 @@ An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of 
 \begin{lemma}{(dual to Lemma \ref{la:Hom_exact_proj_Lift_along_epis})}\label{la:dual_Hom_exact_proj_colift}
 Let $\mathcal{C}$ be a category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
 \begin{itemize}
-\item The contravariant functor $\textup{Hom}(-,P)$ is exact.
+\item The contravariant functor $\mathrm{Hom}(-,P)$ is exact.
 \item For all monomorphisms $\varphi : M \hookleftarrow N$ and morphisms $\theta : P \leftarrow N$, there exists a
 projective colift $\psi : P \dottedleftarrow M$ such that $\theta = \varphi\psi$.\\
 \begin{tikzcd}
@@ -175,8 +166,8 @@ M \arrow[rd, "\psi"', dotted] & N \arrow[l, "\varphi", hook] \arrow[d, "=\,\varp
 \end{tikzcd}
 \end{itemize}
 \begin{proof}
-For an object $L \in \mathcal{C}_{0}, \textup{Hom}(-,L)$ is always a contravariant left-exact functor, i.e. respects monos.\\
-\ul{''$\Leftarrow$'' :} Prove that $\textup{Hom}(-,P)$  is right exact, i.e. respects epis.
+For an object $L \in \mathcal{C}_{0}, \mathrm{Hom}(-,L)$ is always a contravariant left-exact functor, i.e. respects monos.\\
+\ul{''$\Leftarrow$'' :} Prove that $\mathrm{Hom}(-,P)$  is right exact, i.e. respects epis.
 
 \end{proof}
 \end{lemma}
@@ -192,7 +183,7 @@ $F$
 
 \begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\endnote{(ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]}; I first
 want to understand Yoneda projectives in the context of CatReps, and then follow up with the general case)}\\
-Consider the category of functors $\textup{Hom}( \mathcal{A}, \Bbbk\textup{-Mat} )$ from a $\Bbbk$-Algebroid $\mathcal{A}$ to the matrix category
+Consider the category of functors $\mathrm{Hom}( \mathcal{A}, \Bbbk\mathrm{-Mat} )$ from a $\Bbbk$-Algebroid $\mathcal{A}$ to the matrix category
 over the same field $\Bbbk$, where the objects are representations of the algebroid by matrices, i.e. functors between the two categories, and
 the morphisms are natural transformations between these functors.\\
 \noindent Given an object $o \in \mathcal{A}$, the \ul{Yoneda projective} is the submodule of the category algebra consisting of all arrows
@@ -203,17 +194,17 @@ Given that Yoneda projectives are objects, we can ask questions about their prop
 functors in the functor category, so addressing them as functors we can ask our four questions \ref{four_functor_questions} 
 How does it work on objects? How does it work on morphisms? Why does it respect composition? Why does it respect identity morphisms?
 
-If we want to check the property of a projective object for a yoneda projective $Y \in \textup{CatReps}_{0}$, we have to consider the
-hom-sets $\textup{Hom}(Y,-)$, i.e. how exactly do the morphisms $\eta \in \textup{CatReps}_{1}$ work?
+If we want to check the property of a projective object for a yoneda projective $Y \in \mathrm{CatReps}_{0}$, we have to consider the
+hom-sets $\mathrm{Hom}(Y,-)$, i.e. how exactly do the morphisms $\eta \in \mathrm{CatReps}_{1}$ work?
 
 
 
 \begin{lemma}
 Yoneda projectives are projective objects.
 \begin{proof}
-The category $\textup{CatReps} := \textup{Hom}(\Bbbk \mathbf{q}, \Bbbk\mathbf{Mat})$ is locally small.
-Let $o \in \Bbbk \mathbf{q}_{0}$ be any object, and $P \in \textup{CatReps}_{0}$ be the yoneda representation of $o$ in $\textup{CatReps}$.
-Let $M, N \in \textup{CatReps}_{0}$, and $\textup{CatReps}_{1} \ni \eta : M \twoheadrightarrow N$ be an epimorphism.
+The category $\mathrm{CatReps} := \mathrm{Hom}(\Bbbk \mathbf{q}, \Bbbk\mathbf{Mat})$ is locally small.
+Let $o \in \Bbbk \mathbf{q}_{0}$ be any object, and $P \in \mathrm{CatReps}_{0}$ be the yoneda representation of $o$ in $\mathrm{CatReps}$.
+Let $M, N \in \mathrm{CatReps}_{0}$, and $\mathrm{CatReps}_{1} \ni \eta : M \twoheadrightarrow N$ be an epimorphism.
 A morphism $\theta : P \rightarrow N$ is a natural transformation between the yoneda representation $P$ and another functor $N$.
 \end{proof}
 \end{lemma}
