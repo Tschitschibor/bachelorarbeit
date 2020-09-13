@@ -148,7 +148,7 @@ We conclude that the
 \end{subproof}
 
 \begin{subproof}[Proof of (ii)]
-Let $I = \{1,\dots,n\}$ be a finite set. For each $c \in \mathcal{A}_{0}$ the family $(F_{i})_{i\in I}$ of functors in $\HomAkmat_{0}$ gets mapped to a
+Let $I = \{1,\dots,n\}$ be a finite set. For each $c \in \mathcal{A}_{0}$ the family $(F_{i})_{i\in I}$ of functors in $\HomAkmat_{0}$ maps $c$ to a
 family $(S_{i})_{i\in I} := (F_{i}c)_{i\in I}$ of objects in $\kmat_{0}$. Let $S := \oplus_{i\in I} S_{i}$ be the direct sum of the $S_{i}$'s with projections
 $p = \{ p_{i} : S \rightarrow S_{i}\}_{i\in I}$ and coprojections $q = \{ q_{i} : S_{i} \rightarrow S\}_{i\in I}$ as well as dependent functions
 $v_{\text{in}}$ and $v_{\text{out}}$ such that each family of morphisms $t = \{ t_{i} : T \rightarrow S_{i}\}_{i\in I}$ gets mapped to a
@@ -191,6 +191,24 @@ has all finite limits and colimits of the target category.
 \end{enumerate}
 \end{proof}
 
+We have seen that there is a $\Bbbk$-vector space of natural transformations between two functors $F$ and $G$ in $\HomAkmat$.
+Numbering the finitely many objects in $\mathcal{A}_{0}$ by $1,2,\dots,o$ with $o \in \mathbb{N}$
+With $Fc$ and $Gc$ being natural numbers, the components $\alpha_{c}$ of a natural transformation $\alpha$ are matrices.
+The $\Bbbk$-vector space $\Bbbk^{Fc\times Gc}$ is $Fc\times Gc$-dimensional, so for all of $\mathcal{A}_{0}$ we have an
+upper bound for the vector space dimension:
+\begin{align}
+\mathrm{dim}_{\Bbbk} \mathrm{Hom}_{\HomAkmat}(F,G) &\leq \sum_{c\in \mathcal{A}_{0}} \mathrm{dim}_{\Bbbk} \Bbbk^{Fc\times Gc} \\
+    &= \sum_{c\in \mathcal{A}_{0}} Fc\times Gc
+\end{align}
+But in this calculation, we didn't include the naturality constraints, i.e. for each morphism $a : c -> c' \in \mathcal{A}_{1}$
+\begin{align}
+Fa \alpha_{c'} &= \alpha{c} Ga
+\end{align}
+
+The naive approach to build a basis for each object, and then take the cartesian product over all objects, and only then
+checking the naturality constraints, is terribly slow.
+
+Use Yoneda's Lemma!
 
 
 

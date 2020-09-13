@@ -148,6 +148,13 @@ is $R$-linear.
 Note that this does imply that $\mathcal{A}$ is a pre-additive category, but it need not be additive.
 \end{definition}
 
+\begin{definition}{($R$-linear functor)}
+Let $R$ be a commutative ring. A \ul{functor of $R$-linear categories} or an \ul{$R$-linear functor} is a functor
+$F : \mathcal{A} \rightarrow \mathcal{B} $ where for all objects $x, y \in \mathcal{A}_{0}$, the map
+$F : \mathrm{Hom}_{\mathcal{A}}(x,y) \rightarrow \mathrm{Hom}_{\mathcal{B}}(F(x), F(y))$ is a homomorphism
+of $R$-modules.
+\end{definition}
+
 \begin{example}
 Consider the following category $\mathcal{A}$ with four objects $\mathcal{A}_{0} = \{1,2,3,4\}$ and
 identity morphisms $e_{1}, e_{2}, e_{3}, e_{4}$:
@@ -186,34 +193,49 @@ is the same as first composing each arrow and then adding them, e.g.
 (e_{3} + e_{3})w &= (2\,e_{3})w = e_{3}(2w) = 2w
 \end{align*}
 The $\Bbbk$-dimensions of the vector spaces are $1, 1, 1, 2, 4, 2$ with a total of 11. Does that mean that
-somewhere there exists an 11-dimensional $\Bbbk$-vector space that has these six vectorspaces as subspaces? Indeed it does.
+somewhere there exists an 11-dimensional $\Bbbk$-vector space that has these six vectorspaces as subspaces? Indeed it does:
+
+The $\Bbbk$-vector space $\Bbbk\mathcal{A}$ with $\mathcal{A}_{1} = \{ e_{1},e_{2},e_{3},e_{4}, v,x,w,xw, wy, xwy, y \}$ as a basis.
+The composition of arrows is already partially defined in the cases where two arrows are composable. To extend composition for all
+arrows we first define for all arrows $\alpha, \beta \in \mathcal{A}_{1}$:
+\begin{equation}
+\alpha\beta :=\label{eq:cat_alg_mult} \begin{cases}
+\alpha\cdot\beta & \text{ if $\alpha$ and $\beta$ can be composed} \\
+0 & otherwise
+\end{cases}
+\end{equation}
+and then extend this product to the whole of $\Bbbk\mathcal{A}$ using bilinearity of multiplication.
+This construction turns $\Bbbk\mathcal{A}$ into not only a $\Bbbk$-vector space, but also an associative algebra.
 \end{example}
-
-\begin{remark}
-\begin{enumerate}
-\renewcommand{\labelenumi}{(\theenumi)}
-\item For $R = \mathbb{Z}$ an $R$-linear category is nothing but an Ab-category. This follows directly from the fact
-that every abelian group is nothing but a $\mathbb{Z}$-module.
-\item For $R = \Bbbk$ a field, the hom-sets are $\Bbbk$-vector spaces and composition of morphisms is a $\Bbbk$-bilinear
-map for which there are many examples in Linear Algebra.
-\end{enumerate}
-\end{remark}
-
-\begin{definition}{($R$-linear functor)}
-Let $R$ be a commutative ring. A \ul{functor of $R$-linear categories} or an \ul{$R$-linear functor} is a functor
-$F : \mathcal{A} \rightarrow \mathcal{B} $ where for all objects $x, y \in \mathcal{A}_{0}$, the map
-$F : \mathrm{Hom}_{\mathcal{A}}(x,y) \rightarrow \mathrm{Hom}_{\mathcal{B}}(F(x), F(y))$ is a homomorphism
-of $R$-modules.
-\end{definition}
 
 \begin{definition}{(Category algebra)}
 Let $\Bbbk$ be a commutative unital ring. For a category $\mathcal{C}$, we define the \ul{category algebra} $\Bbbk \mathcal{C}$
-to be the free $\Bbbk$-module with $\mathcal{C}_{1}$ as a basis. 
+to be the free $\Bbbk$-module with $\mathcal{C}_{1}$ as a basis and the product of morphisms defined as in \eqref{eq:cat_alg_mult}.
 \end{definition}
 
-\begin{definition}{(Category algebra)}
+\begin{lemma}
+If the set of objects $\mathcal{C}_{0}$ is finite, then the category algebra $\Bbbk\mathcal{C}$ has a unit element, namely
+$\sum_{i\in \mathcal{C}_{0}} e_{i}$.
+\end{lemma}
+\begin{proof}
+Let $e = \sum_{i\in \mathcal{C}_{0}} e_{i}$. We want to show for a general $w \in \Bbbk\mathcal{C}$ that $ew = w = we$.
+\begin{enumerate}
+\item Let $w = \sum_{l=1}^{N} \lambda_{l} b_{l}$ with $\{b_{l}\}_{1\leq l\leq N}$ a basis for $\mathrm{Hom}_{\mathcal{C}}(j,k)$ and
+$\lambda_{l} \in \Bbbk$. Then $ew = e_{j}w + \sum_{i \neq j} e_{i} w = \sum_{l=1}^{N} \lambda_{l} (e_{j} b_{l})
++ \sum_{i \neq j} \sum_{l=1}^{N} \lambda_{l} (e_{i} b_{l})$ with each $e_{j} b_{l} = b_{l}$ in the first sum and
+$e_{i} b_{l} = 0$ in the second sum, thus $ew = \sum_{l=1}^{N} \lambda_{l} b_{l} = w$ and similarly $we_{k} = w$ and $we_{i} = 0$ for
+$i \neq k$.
+\item 
+\end{enumerate}
+\end{proof}
 
+\begin{definition}{(Algebra with enough idempotents)}
+An \ul{algebra with enough idempotents} is an algebra $A$ which admits a family of nonzero orthogonal idempotents
+$(e_{i})_{i\in I}$ such that $\oplus_{i\in I} e_{i} A = A = \oplus_{i\in I} Ae_{i}$.
+This family $(e_{i})_{i\in I}$ is called \ul{complete} or \ul{distinguished family of orthogonal idempotents}.
 \end{definition}
+
+
 
 \begin{definition}
 Once source and target categories $\mathcal{C}, \mathcal{D}$ are both $R$-linear categories we define the functor category
