@@ -131,6 +131,11 @@ Note that every hom-set has its own unique zero morphism. E.g. in $\kmat$ the $2
 $\mathbf{0} \in \textup{Hom}_{\kmat}(2,3)$ is different from the $4 \times 4$ zero-matrix $\mathbf{0} \in \textup{Hom}_{\kmat}(4,4)$.
 \end{definition}
 
+\begin{definition}{(Ab-functor)}
+A functor between Ab-categories is called an \ul{Ab-functor} if in the functor definition \ref{def:functor} the function $Ff$ for each
+morphism $f$ is a homomorphism of abelian groups, i.e. $F(f+g) = Ff + Fg$.
+\end{definition}
+
 \begin{example}{(The matrix category $\kmat$ over a commutative ring $\Bbbk$)}\label{ex:matrix_category}
 \begin{itemize}
 \item Objects are natural numbers $\kmat_{0} = \mathbb{N} = \mathbb{N}_{0} = \{0,1,2,\dots\}$
@@ -331,7 +336,24 @@ a finite set $I$ and a family $(A_{i})_{i\in I}$ of objects in $\mathcal{C}$ to 
 (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I})$.
 \end{definition}
 
-%%% additive functor
+\begin{lemma}{(Additive functor)}\endnote{(Ref. Lemma 2.10 in \cite{[Posur]})}
+Any additive functor $F$ commutes with direct sums.
+Let $( \mathcal{A},\oplus^{\mathcal{A}} )$ and $( \mathcal{B}, \oplus^{\mathcal{B}} )$ be additive categories whose projections and injections
+we denote by $\pi_{i}, \iota_{i}$ and $p_{i}, q_{i}$, respectively. An Ab-functor $F : \mathcal{A} \rightarrow \mathcal{B}$ between their underlying
+Ab-categories preserves the additive structure. More precisely, $F$ can be equipped with the following data in a unique way:
+\begin{enumerate}
+\item A dependent function mapping a finite set $I$ and a collection $(A_{i})_{i\in I}$ of objects in $\mathcal{A}$ to an isomorphism
+\[
+\sigma_{F}( (A_{i})_{i\in I}) : F( \oplus_{i\in I}^{\mathcal{A}} A_{i} ) \xrightarrow{\sim} \oplus_{i\in I}^{\mathcal{B}} F( A_{i} ),
+\]
+which we simply denote by $\sigma_{F}$ or $\sigma$ if no confusion may occur.
+\item The equalities $\sigma p_{i} = F(\pi_{i})$ and $F(\iota_{i}) \sigma = q_{i}$ hold.
+\end{enumerate}
+In particular, we get an isomorphism $z : F( 0^{\mathcal{A}} ) \xrightarrow{\sim} 0^{\mathcal{B}}$.
+\end{lemma}
+\begin{proof}
+
+\end{proof}
 
 \subsection{Kernel and cokernel; image and coimage}
 
