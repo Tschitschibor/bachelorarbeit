@@ -325,16 +325,24 @@ Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k}
   \node[main node] (8) [above right=-0.84098cm and 0.80106cm of 4, circle, fill, inner sep=2pt] {};
   \node[main node] (9) [above right=-0.150cm and -0.150cm of 4, circle, fill, inner sep=2pt] {};
   
+  % draw the circle
+  \node[main node] (C) [below of=4, circle, draw, inner sep=0.70cm] {};
   
   \path[every node/.style={font=\sffamily\small}]
+  % arrows on the leg of sigma
     (1) edge[-] node [left] {} (2)
     (2) edge[-] node [left] {} (3)
     (3) edge[-] node [left] {} (4)
     (1) edge["$f^{0} = 1_{M}$"', pos=0.70, out=300, in=40, min distance=7mm, looseness=8] (1)
-    (1) edge["$f^{1}$"', bend right] node [left] {} (2)
-    (2) edge["$f^{2}$"', bend right] node [left] {} (3)
-    (3) edge["$f^{3}$"', bend right] node [left] {} (4)
-    (
+    (1) edge["$f^{1}$"', bend right] node [right] {} (2)
+    (2) edge["$f^{2}$"', bend right] node [right] {} (3)
+    (3) edge["$f^{3}$"', bend right] node [right] {} (4)
+    % arrows on the circle of sigma
+    (9) edge["$f^{3+1}$"', bend right=55] node [right] {} (5)
+    (5) edge["$f^{3+2}$"', bend right=55] node [right] {} (6)
+    (6) edge["$f^{3+3}$"', bend right=55] node [right] {} (7)
+    (7) edge["$f^{3+4}$"', bend right=55] node [right] {} (8)
+    (8) edge["$f^{3+5}$"', pos=0.5, bend left=55] node [right] {} (9);
 \end{tikzpicture}
 \phantom{}
 \end{minipage}
