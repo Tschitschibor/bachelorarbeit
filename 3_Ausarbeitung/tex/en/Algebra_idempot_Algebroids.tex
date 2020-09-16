@@ -300,7 +300,7 @@ there exist $m,n \in \mathbb{N}, n\geq 1$, such that $f^{m+n}=f^{m}$.
 \item When we restrict both the source and target of $f$ to $\mathrm{Im}(f^{m})$, then $f$ is an isomorphism, i.e.
 $f\restrict{\mathrm{Im}(f^{m})} \in \mathrm{Aut}_{\mathcal{C}}(\mathrm{Im}(f^{m}))$. Also $f^{n} = 1_{\mathrm{Im}(f^{m})}$.
 \item If $m = 0$ and $n \geq 1$ then $f \in \mathrm{Aut}_{\mathcal{C}}(M)$ is bijective with $f^{-1} = f^{n-1}$ and has order $n$.
-\item An upper bound for $m$ and $n$ is $g(N)$ with $N = \abs{M}$ and Landau's function\endnote{(My thanks to
+\item An upper bound for $m$ is $\abs{M}$ and for $n$ is $g(N)$ with $N = \abs{M}$ and Landau's function\endnote{(My thanks to
 Felix Potthast and Michael Figelius who both sent me in the direction of Landau's function)} $g(N)$
 defined as the largest order of an element of the symmetric group $S_{N}$.
 \end{enumerate}
@@ -392,6 +392,8 @@ defined as the largest order of an element of the symmetric group $S_{N}$.
 
 \begin{proof}[Proof\nopunct]
 \begin{subproof}[of (1)]
+The properties of a monoid are precisely the associativity of composition and the unit property from \ref{associativity_of_composition} and
+\ref{unit_property}.
 The object $M$ is a finite set. Let $f \in \mathrm{End}_{\mathcal{C}}(M)$ be an endomorphism, in particular $s(f) = M$. The image of $f$ is the set 
 \[
 \mathrm{Im}(f) = \{ y \in M | \exists x \in M : y = f(x)\} \subset M
@@ -427,14 +429,14 @@ is an iso with inverse $f^{n-1}$.
 \end{subproof}
 \begin{subproof}[Proof of (3).]
 Since $f^{m+n} = 1_{\mathrm{Im}(f^{m})}$, for $m = 0$ we have
-$\mathrm{im}(f^{0}) = \mathrm{Im}(1_{M}) = M$ and therefore
+$\mathrm{Im}(f^{0}) = \mathrm{Im}(1_{M}) = M$ and therefore
 $f^{n} = 1_{M}$, i.e. $f$ is bijective with $f^{-1} = f^{n-1}$.
 \end{subproof}
 \begin{subproof}[Proof of (4).]
 In the case of $m = 0$, the morphism $f$ is a bijective function, i.e. an element of $S_{M}$. With the obvious
-bijection $M \cong \{1,\dots,N\}$ we also have a bijection of groups $\varphi : S_{M} \cong S_{N}$, i.e. there is a permutation
-$a \in S_{N}$ of order at most $g(N)$ with $a = \varphi(f)$.
-$\mathrm{ord}(a) \leq g(N)$ in other words, $\exists n\leq g(N) : a^{n} = 1_{\{1,\dots,N\}}$. For the same $n$ we have
+bijection $M \cong \{1,\dots,N\}$ we also have a bijection of groups $\varphi : S_{M} \cong S_{N}$. By the definition
+of Landau's function $g$, there is a permutation $a \in S_{N}$ of order at most $g(N)$ with $a = \varphi(f)$, i.e.
+$\mathrm{ord}(a) \leq g(N)$, in other words, $\exists n\leq g(N) : a^{n} = 1_{\{1,\dots,N\}}$. For the same $n$ we have
 $f^{n} = (\varphi^{-1}a)^{n} = \varphi^{-1}(a^{n}) = \varphi^{-1}(1_{\{1,\dots,N\}}) = 1_{M}$.\\
 In \textit{(2)} we proved that $f\restrict{\mathrm{Im}(f^{m})}$ is bijective on $\mathrm{Im}(f^{m})$, therefore an element of
 $S_{\mathrm{Im}(f^{m})}$ and we can find with the same argument as above an upper bound $g(N') \leq g(N), N' := \abs{\mathrm{Im}(f^{m})}$
@@ -481,13 +483,11 @@ For an upper bound for $m$ let's imagine an example with $m=11$ and $n=1$:\\
 
 If by $f^{10}$ we had already nine distinct functions $f^{1},\dots,f^{9}$ with no repetitions, and also the inclusions
 $M \supsetneq \mathrm{Im}(f) \supsetneq \mathrm{Im}(f^{2}) \supsetneq \dots \supsetneq \mathrm{Im}(f^{9})$, we can only have
-so many proper subsets of M. If in the chain of images, $\abs{\mathrm{Im}(f^{k+1})} = \abs{\mathrm{Im}(f^{k})} - 1$ then after
+so many proper subsets of M. If in the chain of images, $|\mathrm{Im}(f^{k+1})| = |\mathrm{Im}(f^{k})| - 1$ then after
 $m = \abs{M}$ steps the set $\mathrm{Im}(f^{m})$ is a singleton and the next function $f : \mathrm{Im}(f^{m}) \rightarrow \mathrm{Im}(f^{m})$
 is forced to be bijective.
 \end{subproof}
 
-The properties of a monoid are precisely the associativity of composition and the unit property from \ref{associativity_of_composition} and
-\ref{unit_property}.
 Since $\abs{\textup{End}_{\mathcal{C}}(M)}<\infty$ there are only finitely many endomorphisms
 $f_{1},\dots, f_{N} \in \textup{End}_{\mathcal{C}}(M)$.
 Let $\{f^{k} | k \in \mathbb{N} \} \subset \textup{End}_{\mathcal{C}}(M)$, i.e. there is an inclusion function 
