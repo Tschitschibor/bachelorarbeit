@@ -280,7 +280,7 @@ We can learn two lessons from these examples:
 \item An adjunction is more general than an equivalence of categories. The free functor $F$ doesn't just \textit{undo} the forgetful functor $U$.
 You will end up with much more than you started with.
 \item If we want to still work with finite categories, we really need to control the size of our hom-sets, especially regarding the endomorphisms.
-This is the topic in the next section.
+This is the topic of the next section.
 \end{enumerate}
 
 \vspace{4em}
@@ -290,21 +290,21 @@ This is the topic in the next section.
 %
 \noindent\begin{minipage}[t]{.55\textwidth}\vspace{0pt}%
 \subsection{Relations of endomorphisms}
-\begin{lemma}{($\sigma$-Lemma)}\\
+\begin{lemma}{($\sigma$-Lemma)}
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item
 Let $\mathcal{C}$ be a finite concrete category. Then for each object $M \in \mathcal{C}_{0}$ the set
-$\textup{End}_{\mathcal{C}}(M)$ is a monoid and for each endomorphism $f \in \textup{End}_{\mathcal{C}}(M)$
-there exist $m,n \in \mathbb{N}$ such that $f^{(m+n)}=f^{m}$. If $m = 0$ and $n \geq 1$ then $f$ is bijective with $f^{-1} = f^{n-1}$.
+$\mathrm{End}_{\mathcal{C}}(M)$ is a monoid and for each endomorphism $f \in \mathrm{End}_{\mathcal{C}}(M)$
+there exist $m,n \in \mathbb{N}, n\geq 1$, such that $f^{m+n}=f^{m}$.
+\item When we restrict both the source and target of $f$ to $\mathrm{Im}(f^{m})$, then $f$ is an isomorphism, i.e.
+$f\restrict{\mathrm{Im}(f^{m})} \in \mathrm{Aut}_{\mathcal{C}}(\mathrm{Im}(f^{m}))$. Also $f^{n} = 1_{\mathrm{Im}(f^{m})}$.
+\item If $m = 0$ and $n \geq 1$ then $f \in \mathrm{Aut}_{\mathcal{C}}(M)$ is bijective with $f^{-1} = f^{n-1}$ and has order $n$.
+\item An upper bound for $m$ and $n$ is $g(N)$ with $N = \abs{M}$ and Landau's function\endnote{(My thanks to
+Felix Potthast and Michael Figelius who both sent me in the direction of Landau's function)} $g(N)$
+defined as the largest order of an element of the symmetric group $S_{N}$.
+\end{enumerate}
 \end{lemma}
-\begin{proof}
-The properties of a monoid are precisely the associativity of composition and the unit property from \ref{associativity_of_composition} and
-\ref{unit_property}.
-Since $\abs{\textup{End}_{\mathcal{C}}(M)}<\infty$ there are only finitely many endomorphisms
-$f_{1},\dots, f_{N} \in \textup{End}_{\mathcal{C}}(M)$.
-Let $\{f^{k} | k \in \mathbb{N} \} \subset \textup{End}_{\mathcal{C}}(M)$, i.e. there is an inclusion function 
-$\{f^{k} | k \in \mathbb{N}\} \rightarrow \{f_{j} | j \in \{1,\dots,N\}\}; f^{k} \mapsto f_{j}$ not necessarily surjective and 
-by the pigeonhole principle highly non injective, since $\abs{\mathbb{N}}>\abs{\textup{End}_{\mathcal{C}}(M)}$.
-Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k} =  f_{j} \}$
-\end{proof}
 \vspace{0pt}%
 \end{minipage}
 %
@@ -335,7 +335,7 @@ Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k}
     (1) edge[-] node [left] {} (2)
     (2) edge[-] node [left] {} (3)
     (3) edge[-] node [left] {} (4)
-    (1) edge["$f^{0} = 1_{M}$"', pos=0.70, out=300, in=40, min distance=7mm, looseness=8] (1)
+    (1) edge["$f^{0} = 1_{M}$"', pos=0.60, out=300, in=40, min distance=7mm, looseness=8] (1)
     (1) edge["$f^{1}$"', bend right] node [right] {} (2)
     (2) edge["$f^{2}$"', bend right] node [right] {} (3)
     (3) edge["$f^{3}$"', bend right] node [right] {} (4)
@@ -344,7 +344,7 @@ Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k}
     (5) edge["$f^{3+2}$"', bend right=55] node [right] {} (6)
     (6) edge["$f^{3+3}$"', bend right=55] node [right] {} (7)
     (7) edge["$f^{3+4}$"', bend right=55] node [right] {} (8)
-    (8) edge["$f^{3+5}$"', pos=0.5, bend left=55] node [right] {} (9);
+    (8) edge["$f^{3+5}$", pos=0.4, bend left=55] node [right] {} (9);
 \end{tikzpicture}
 \captionof{figure}{$\sigma$ lemma with $m=3$ and $n=5$.}
 %m=1, n=10
@@ -373,7 +373,7 @@ Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k}
   \path[every node/.style={font=\sffamily\small}]
     % arrows on the leg of sigma
     (1) edge[-] node [left] {} (2)
-    (1) edge["$f^{0} = 1_{M}$"', pos=0.70, out=300, in=40, min distance=7mm, looseness=8] (1)
+    (1) edge["$f^{0} = 1_{M}$"', pos=0.60, out=300, in=40, min distance=7mm, looseness=8] (1)
     (1) edge["$f^{1}$"', bend right] node [right] {} (2)
     % arrows on the circle of sigma
     (2) edge["$f^{1+1}$"', bend right=55] node [right] {} (3)
@@ -383,12 +383,119 @@ Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k}
     (6) edge["$f^{1+5}$"', bend right=55] node [right] {} (7)
     (7) edge["$f^{1+6}$"', bend right=55] node [right] {} (8)
     (8) edge["$f^{1+7}$"', bend right=55] node [right] {} (9)
-    (9) edge["$f^{1+8}$"', bend right=55] node [right] {} (10)
-    (10) edge["$f^{1+9}$"', bend right=55] node [right] {} (11)
+    (9) edge["$f^{1+8}$"', pos=0.65, bend right=55] node [right] {} (10)
+    (10) edge["$f^{1+9}$"', pos=0.3, bend right=55] node [right] {} (11)
     (11) edge["$f^{1+10}$", bend left=55] node [right] {} (2);
 \end{tikzpicture}
 \captionof{figure}{$\sigma$ lemma with $m=1$ and $n=10$.}
 \end{minipage}
+
+\begin{proof}[Proof\nopunct]
+\begin{subproof}[of (1)]
+The object $M$ is a finite set. Let $f \in \mathrm{End}_{\mathcal{C}}(M)$ be an endomorphism, in particular $s(f) = M$. The image of $f$ is the set 
+\[
+\mathrm{Im}(f) = \{ y \in M | \exists x \in M : y = f(x)\} \subset M
+\]
+in other words, there is a monomorphism of sets $\iota : \mathrm{Im}(f) \hookrightarrow M$ with $f(M) \subseteq \iota(\mathrm{Im}(f))$.
+From lemma \ref{la:lift_along_mono} we can find a set-theoretic lift of $f$ along $\iota$, i.e. a map $\psi : M \rightarrow \mathrm{im}(f)$ of sets
+such that the following diagram commutes:
+\[
+\begin{tikzcd}
+\mathrm{im}(f) \arrow[r, "\iota", hook] & M \\
+M \arrow[ru, "f"'] \arrow[u, "\psi"]    &  
+\end{tikzcd}
+\]
+Therefore the function $M \xrightarrow{f} \mathrm{im}(f)$ is surjective
+\end{subproof}
+\begin{subproof}[Proof of (2).]
+\begin{align*}
+&f^{m+n} &&= f^{m} \\
+\Rightarrow &f^{n}f^{m} &&= f^{m} \\
+\Rightarrow &f^{n}(y) &&= y, \text{ if } y = f^{m}(x), x \in M \\
+\Rightarrow &f^{n}(y) &&= y, \text{ if } y \in \mathrm{Im}(f^{m}) \\
+\Rightarrow &f^{n} &&= 1_{\mathrm{Im}(f^{m})}
+\end{align*}
+The identity on $\mathrm{Im}(f^{m})$ is $1_{\mathrm{Im}(f^{m})} : \mathrm{Im}(f^{m}) \rightarrow \mathrm{Im}(f^{m})$
+and maps $\mathrm{Im}(f^{m})\ni y \mapsto y \in \mathrm{Im}(f^{m})$.
+Let $x \in M$ and $y := f^{m}(x)$. Then we can identify as the identity on $\mathrm{Im}(f^{m})$ the function
+that maps $y \mapsto y$ iff it maps $f^{m}(x) \mapsto f^{m}(x)$.\\
+For $f : \mathrm{Im}(f^{m}) \rightarrow \mathrm{Im}(f^{m})$ we have
+$f^{n-1} : \mathrm{Im}(f^{m}) \rightarrow \mathrm{Im}(f^{m})$ such that for all
+$x \in M$ we have $(f\,f^{n-1})(f^{m}(x)) = f^{m+n}(x) = f^{m}(x)$ and
+$(f^{n-1}\,f)(f^{m}(x)) = f^{m+n}(x) = f^{m}(x)$. Therefore $f : \mathrm{Im}(f^{m}) \rightarrow \mathrm{Im}(f^{m})$
+is an iso with inverse $f^{n-1}$.
+\end{subproof}
+\begin{subproof}[Proof of (3).]
+Since $f^{m+n} = 1_{\mathrm{Im}(f^{m})}$, for $m = 0$ we have
+$\mathrm{im}(f^{0}) = \mathrm{Im}(1_{M}) = M$ and therefore
+$f^{n} = 1_{M}$, i.e. $f$ is bijective with $f^{-1} = f^{n-1}$.
+\end{subproof}
+\begin{subproof}[Proof of (4).]
+In the case of $m = 0$, the morphism $f$ is a bijective function, i.e. an element of $S_{M}$. With the obvious
+bijection $M \cong \{1,\dots,N\}$ we also have a bijection of groups $\varphi : S_{M} \cong S_{N}$, i.e. there is a permutation
+$a \in S_{N}$ of order at most $g(N)$ with $a = \varphi(f)$.
+$\mathrm{ord}(a) \leq g(N)$ in other words, $\exists n\leq g(N) : a^{n} = 1_{\{1,\dots,N\}}$. For the same $n$ we have
+$f^{n} = (\varphi^{-1}a)^{n} = \varphi^{-1}(a^{n}) = \varphi^{-1}(1_{\{1,\dots,N\}}) = 1_{M}$.\\
+In \textit{(2)} we proved that $f\restrict{\mathrm{Im}(f^{m})}$ is bijective on $\mathrm{Im}(f^{m})$, therefore an element of
+$S_{\mathrm{Im}(f^{m})}$ and we can find with the same argument as above an upper bound $g(N') \leq g(N), N' := \abs{\mathrm{Im}(f^{m})}$
+since $\mathrm{Im}(f^{m}) \subseteq M$. This gives us an upper bound for $n$ in the general case.\\
+For an upper bound for $m$ let's imagine an example with $m=11$ and $n=1$:\\
+
+%m=11, n=1
+\begin{tikzpicture}[->,>=stealth',auto,node distance=1cm,
+  thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  % nodes on the leg of sigma
+  \node[main node] (1) [circle, fill, inner sep=2pt] {};
+  \node[main node] (2) [left of=1, circle, fill, inner sep=2pt] {};
+  \node[main node] (3) [left of=2, circle, fill, inner sep=2pt] {};
+  \node[main node] (4) [left of=3, circle, fill, inner sep=2pt] {};
+  \node[main node] (5) [left of=4, circle, fill, inner sep=2pt] {};
+  \node[main node] (6) [left of=5, circle, fill, inner sep=2pt] {};
+  \node[main node] (7) [left of=6, circle, fill, inner sep=2pt] {};
+  \node[main node] (8) [left of=7, circle, fill, inner sep=2pt] {};
+  \node[main node] (9) [left of=8, circle, fill, inner sep=2pt] {};
+  \node[main node] (10) [left of=9, circle, fill, inner sep=2pt] {};
+  \node[main node] (11) [left of=10, circle, fill, inner sep=2pt] {};
+  \node[main node] (12) [left of=11, circle, fill, inner sep=2pt] {};
+  
+  % draw the circle
+  
+  \path[every node/.style={font=\sffamily\small}]
+    % arrows on the leg of sigma
+    (1) edge[-] node [left] {} (12)
+    (1) edge["$f^{0} = 1_{M}$"', pos=0.60, out=300, in=40, min distance=7mm, looseness=8] (1)
+    (12) edge["$f^{11+1}$"', pos=0.60, out=140, in=220, min distance=7mm, looseness=8] (12)
+    (1) edge["$f^{1}$"', bend right] node [right] {} (2)
+    (2) edge["$f^{2}$"', bend right] node [right] {} (3)
+    (3) edge["$f^{3}$"', bend right] node [right] {} (4)
+    (4) edge["$f^{4}$"', bend right] node [right] {} (5)
+    (5) edge["$f^{5}$"', bend right] node [right] {} (6)
+    (6) edge["$f^{6}$"', bend right] node [right] {} (7)
+    (7) edge["$f^{7}$"', bend right] node [right] {} (8)
+    (8) edge["$f^{8}$"', bend right] node [right] {} (9)
+    (9) edge["$f^{9}$"', bend right] node [right] {} (10)
+    (10) edge["$f^{10}$"', bend right] node [right] {} (11)
+    (11) edge["$f^{11}$"', bend right] node [right] {} (12);
+\end{tikzpicture}\\
+
+If by $f^{10}$ we had already nine distinct functions $f^{1},\dots,f^{9}$ with no repetitions, and also the inclusions
+$M \supsetneq \mathrm{Im}(f) \supsetneq \mathrm{Im}(f^{2}) \supsetneq \dots \supsetneq \mathrm{Im}(f^{9})$, we can only have
+so many proper subsets of M. If in the chain of images, $\abs{\mathrm{Im}(f^{k+1})} = \abs{\mathrm{Im}(f^{k})} - 1$ then after
+$m = \abs{M}$ steps the set $\mathrm{Im}(f^{m})$ is a singleton and the next function $f : \mathrm{Im}(f^{m}) \rightarrow \mathrm{Im}(f^{m})$
+is forced to be bijective.
+\end{subproof}
+
+The properties of a monoid are precisely the associativity of composition and the unit property from \ref{associativity_of_composition} and
+\ref{unit_property}.
+Since $\abs{\textup{End}_{\mathcal{C}}(M)}<\infty$ there are only finitely many endomorphisms
+$f_{1},\dots, f_{N} \in \textup{End}_{\mathcal{C}}(M)$.
+Let $\{f^{k} | k \in \mathbb{N} \} \subset \textup{End}_{\mathcal{C}}(M)$, i.e. there is an inclusion function 
+$\{f^{k} | k \in \mathbb{N}\} \rightarrow \{f_{j} | j \in \{1,\dots,N\}\}; f^{k} \mapsto f_{j}$ not necessarily surjective and 
+by the pigeonhole principle highly non injective, since $\abs{\mathbb{N}}>\abs{\textup{End}_{\mathcal{C}}(M)}$.
+Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k} =  f_{j} \}$
+\end{proof}
+
 
 \begin{example}
 
