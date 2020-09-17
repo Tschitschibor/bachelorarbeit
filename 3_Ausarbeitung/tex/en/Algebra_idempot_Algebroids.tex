@@ -72,7 +72,7 @@ of arrows.
 \end{minipage}
 %
 \begin{minipage}{.10\textwidth}
-$\xhookleftarrow{\text{   U   }}$
+\center$\xhookleftarrow{\text{   U   }}$
 \end{minipage}
 %
 \begin{minipage}{.37\textwidth}
@@ -151,7 +151,7 @@ A \arrow[uuu, "\varphi"] &  &  &  & D
 \end{minipage}
 %
 \begin{minipage}{.10\textwidth}
-$\xrightarrow{\text{     }F\text{     }}$
+\center$\xrightarrow{\text{     }F\text{     }}$
 \end{minipage}
 %
 \begin{minipage}{.37\textwidth}
@@ -187,7 +187,7 @@ D \arrow["1_{D}"', loop, distance=2em, in=305, out=235]
 \end{minipage}
 %
 \begin{minipage}{.10\textwidth}
-$\xrightarrow{\text{     }F\text{     }}$
+\center$\xrightarrow{\text{     }F\text{     }}$
 \end{minipage}
 %
 \begin{minipage}{.37\textwidth}
@@ -290,7 +290,7 @@ This is the topic of the next section.
 %
 \noindent\begin{minipage}[t]{.55\textwidth}\vspace{0pt}%
 \subsection{Relations of endomorphisms}
-\begin{lemma}{($\sigma$-Lemma)}
+\begin{lemma}{($\sigma$-Lemma)}\label{sigma-lemma}
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
 \item
@@ -299,13 +299,60 @@ $\mathrm{End}_{\mathcal{C}}(M)$ is a monoid and for each endomorphism $f \in \ma
 there exist $m,n \in \mathbb{N}, n\geq 1$, such that $f^{m+n}=f^{m}$.
 \item When we restrict both the source and target of $f$ to $\mathrm{Im}(f^{m})$, then $f$ is an isomorphism, i.e.
 $f\restrict{\mathrm{Im}(f^{m})} \in \mathrm{Aut}_{\mathcal{C}}(\mathrm{Im}(f^{m}))$. Also $f^{n} = 1_{\mathrm{Im}(f^{m})}$.
-\item If $m = 0$ and $n \geq 1$ then $f \in \mathrm{Aut}_{\mathcal{C}}(M)$ is bijective with $f^{-1} = f^{n-1}$ and has order $n$.
+\item If $m = 0$ and $n \geq 1$ then $f \in \mathrm{Aut}_{\mathcal{C}}(M)$ is an automorphism with $f^{-1} = f^{n-1}$ and has order $n$.
 \item An upper bound for $m$ is $\abs{M}$ and for $n$ is $g(N)$ with $N = \abs{M}$ and Landau's function\endnote{(My thanks to
 Felix Potthast and Michael Figelius who both sent me in the direction of Landau's function)} $g(N)$
 defined as the largest order of an element of the symmetric group $S_{N}$.
 \end{enumerate}
 \end{lemma}
-\vspace{0pt}%
+\noindent
+%m=1, n=1
+\begin{minipage}[b]{.45\textwidth}
+\begin{tikzpicture}[->,>=stealth',auto,node distance=1cm,
+  thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  % nodes on the leg of sigma
+  \node[main node] (1) [circle, fill, inner sep=2pt] {};
+  \node[main node] (2) [left of=1, circle, fill, inner sep=2pt] {};
+  
+  \path[every node/.style={font=\sffamily\small}]
+  % arrows on the leg of sigma
+    (1) edge[-] node [left] {} (2)
+    (1) edge["$f^{0} = 1_{M}$"', pos=0.60, out=300, in=40, min distance=7mm, looseness=8] (1)
+    (1) edge["$f^{1}$"', bend right] node [right] {} (2)
+    (2) edge["$f^{1+1}$"', pos=0.55, out=220, in=300, min distance=7mm, looseness=8] (2);
+\end{tikzpicture}
+\captionof{figure}{$f$ is idempotent. $m=1$ and $n=1$.}
+\end{minipage}\hfill
+%
+\begin{minipage}[b]{.02\textwidth}
+\phantom{}
+\end{minipage}
+\begin{minipage}[b]{.45\textwidth}
+%m=0, n=2
+\begin{tikzpicture}[->,>=stealth',auto,node distance=0.5cm,
+  thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  % nodes on the leg of sigma
+  \node[main node] (1) [circle, fill, inner sep=2pt] {};
+  % draw the circle
+  \node[main node] (C) [below of=1, circle, draw, inner sep=0.35cm] {};
+  
+  \node[main node] (2) [below of=C, circle, fill, inner sep=2pt] {};
+  
+  \path[every node/.style={font=\sffamily\small}]
+  % arrows on the leg of sigma
+    (1) edge["$f^{0} = 1_{M}$"', pos=0.32, out=40, in=100, min distance=7mm, looseness=8] (1)
+    (1) edge["$f^{0+1}$"', bend right=120, min distance=11mm] node [right] {} (2)
+%    (2) edge["$f^{0+2}$", pos=0.5, bend right=55] node [right] {} (1);
+    (2) edge["$f^{0+2}$"', bend right=120, min distance=11mm] node [right] {} (1);
+\end{tikzpicture}
+\captionof{figure}{$f$ is bijective with order $2$. $m=0$ and $n=2$.}
+\end{minipage}
+\end{minipage}
+%
+\begin{minipage}{.01\textwidth}
+\phantom{}
 \end{minipage}
 %
 \begin{minipage}[t]{.45\textwidth}\vspace{0pt}
@@ -497,9 +544,88 @@ Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k}
 \end{proof}
 
 
-\begin{example}
-
+\begin{example}{(Endomorphism $f$ satisfying the relation $f^{m+n} = f^{m}$)}
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item For any $m, n \in \mathbb{N}, n\geq 1$ we can find a finite set $M$ and an endomorphism $f \in \mathrm{End}_{\mathrm{FinSet}}(M)$
+with $f^{m+n} = f^{m}$:\\
+Let $\Bbbk$ be a field, e.g. $\Bbbk :=\{\cdot,1\}$ with 2 elements, then on the vector space $V := \Bbbk^{m+n}$ with
+standard basis $B = \{e_{1},\dots,e_{m+n}\}$ we can define the endomorphism $f$ via the companion matrix $\mathcal{M}_{p}$ to the polynomial
+$p(x) = x^{m+n}-x^{m} \in \Bbbk[x]$. This matrix defines an endomorphism\\
+$f : \{1,\dots,m+n\} \rightarrow \{1,\dots,m+n\}; 1 \mapsto 2, 2\mapsto 3, \dots, m+n-1 \mapsto m+n, m+n \mapsto m+1$
+on the finite set $M := \{1,\dots,m+n\}$ satisfying $f^{m+n} = f^{m}$.
+\item For $m = 3$ and $n = 5$ that is the matrix
+\[
+\mathcal{M}_{x^{8}-x^{3}} = \begin{pmatrix}
+\cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\cdot & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\cdot & \cdot & 1 & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\cdot & \cdot & \cdot & 1 & \cdot & \cdot & \cdot & \cdot \\
+\cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot & 1 \\
+\cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot \\
+\cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot
+\end{pmatrix}
+\]
+which has $p(x) = x^{3+5}-x^{3}$ as its minimal polynomial, i.e. $\mathcal{M}_{p}^{3+5} = \mathcal{M}_{p}^{3}$. The endomorphism is
+$f : \{1,\dots,8\} \rightarrow \{1,\dots,8\}; 1 \mapsto 2, 2 \mapsto 3,\dots, 7 \mapsto 8, 8 \mapsto 6$ and satisfies $f^{3+5} = f^{3}$.
+\end{enumerate}
 \end{example}
+
+With the $\sigma$ lemma \ref{sigma-lemma} as a tool in our toolbox, we can tackle the problem of the free category generated by a finite
+quiver of $\mathrm{FinSets}$ with endomorphisms.\\
+Recall definition \ref{def:path_algebra} of the path algebra $\Bbbk q$ of a quiver $q$, which is the
+$\Bbbk$-vector space with basis set of all paths in $q$ and concatenation of composable paths as multiplication. By lemma \ref{la:cyclic_paths} one cyclic
+path, i.e. an endomorphism, in $q$ is enough for there to be infinitely many paths, i.e. $\Bbbk q$ is infinite-dimensional.
+
+\begin{definition}{(Ideal of an algebra)}\endnote{(From \url{https://en.wikipedia.org/wiki/Algebra_over_a_field )}}\label{def:ideal_of_algebra}
+Let $\mathcal{A}$ be a $\Bbbk$-algebra over a field $\Bbbk$.
+A subset $L \subset \mathcal{A}$ is a \ul{left ideal} of $\mathcal{A}$, denoted $L \vartriangleleft \mathcal{A}$, if for every $x, y \in L$,
+$z \in \mathcal{A}$ and $c \in \Bbbk$ we have the following three statements:
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item $x + y \in L$ ($L$ is closed under addition),
+\item $cx \in L$ ($L$ is closed under scalar multiplication),
+\item $z \cdot x \in L$ ($L$ is closed under left multiplication by arbitrary elements).
+\end{enumerate}
+\noindent If (3) were replaced with $x \cdot z \in L$, then this would define a \ul{right ideal}, $\mathcal{A} \vartriangleright L$.
+A \ul{two-sided ideal} is a subset that is both a left and a right ideal.
+\end{definition}
+
+\begin{remark}{(Ideal of a unital algebra)}
+If in \ref{def:ideal_of_algebra} $\mathcal{A}$ is a unital associative algebra with unit $e$, then we only need statements
+(1) and (3). The statement (2) follows from (3).
+\end{remark}
+\begin{proof}
+For $c \in \Bbbk$ and $x\in L$, $ce \in \mathcal{A}$ and with (3) we have $L \ni (ce)\cdot x = c(e\cdot x) = cx$, i.e. (2).
+\end{proof}
+
+\begin{definition}{(Ideal of the path algebra; relation of endomorphism; quotient algebra)}
+Let the set of objects $q_{0}$ of a quiver $q$ be finite. Then from lemmata \ref{la:path_algebra_is_ass_algebra} and \ref{la:unit_in_path_algebra}
+we know that $\Bbbk q$ is a unital associative algebra.
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item A polynomial $p = \sum_{j=1}^{n} a_{j} x^{j} \in \Bbbk[x]$ together with an endomorphism $\alpha \in \mathrm{End}_{q}(o)$ for an object
+$o\in q_{0}$ defines a \ul{left ideal of the path algebra}
+\begin{align}
+\left< p(\alpha) \right> := \{ p(\alpha)\cdot \beta : \beta \in \Bbbk q \} \vartriangleleft \Bbbk q
+\end{align}
+and $p(\alpha) \in \Bbbk q$ is the \ul{generator of the ideal}.
+\item Such an ideal $\left< p(\alpha) \right>$ defines an congruence relation $\sim_{\left< p(\alpha) \right>}$ on $\Bbbk q$:
+\begin{align}
+\beta \sim_{\left< p(\alpha) \right>} \gamma &:\Leftrightarrow \beta - \gamma \in \left< p(\alpha) \right>
+\end{align}
+that we call a \ul{relation of the endomorphism} $\alpha$.\\
+The set $\Bbbk q\, / \left< p(\alpha) \right>$ of residue classes
+\begin{align}
+[\gamma]_{\sim_{\left< p(\alpha) \right>}} &:= \{ \beta \in \Bbbk q \,|\, \beta \sim_{\left< p(\alpha) \right>} \gamma \}, \\
+\Bbbk q / \left< p(\alpha) \right> &:= \{ [\gamma]_{\sim_{\left< p(\alpha) \right>}} : \gamma \in \Bbbk q \}
+\end{align}
+is again an algebra, called the \ul{quotient algebra} of $\Bbbk q$ by the ideal $\left< p(\alpha) \right>$.
+\item (non-endo relations)
+\end{enumerate}
+\end{definition}
+
 
 
 \subsection{$\Bbbk$-linear categories, Algebroids and Algebras with idempotents}
