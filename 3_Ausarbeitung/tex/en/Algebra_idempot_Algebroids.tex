@@ -549,7 +549,7 @@ Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k}
 \renewcommand{\labelenumi}{(\theenumi)}
 \item For any $m, n \in \mathbb{N}, n\geq 1$ we can find a finite set $M$ and an endomorphism $f \in \mathrm{End}_{\mathrm{FinSet}}(M)$
 with $f^{m+n} = f^{m}$:\\
-Let $\Bbbk$ be a field, e.g. $\Bbbk :=\{\cdot,1\}$ with 2 elements, then on the vector space $V := \Bbbk^{m+n}$ with
+Let $\Bbbk$ be a field, e.g. $\Bbbk :=\{\cdot,1\}$, then on the vector space $V := \Bbbk^{m+n}$ with
 standard basis $B = \{e_{1},\dots,e_{m+n}\}$ we can define the endomorphism $f$ via the companion matrix $\mathcal{M}_{p}$ to the polynomial
 $p(x) = x^{m+n}-x^{m} \in \Bbbk[x]$. This matrix defines an endomorphism\\
 $f : \{1,\dots,m+n\} \rightarrow \{1,\dots,m+n\}; 1 \mapsto 2, 2\mapsto 3, \dots, m+n-1 \mapsto m+n, m+n \mapsto m+1$
@@ -600,9 +600,9 @@ If in \ref{def:ideal_of_algebra} $\mathcal{A}$ is a unital associative algebra w
 For $c \in \Bbbk$ and $x\in L$, $ce \in \mathcal{A}$ and with (3) we have $L \ni (ce)\cdot x = c(e\cdot x) = cx$, i.e. (2).
 \end{proof}
 
-\begin{definition}{(Ideal of the path algebra; relation of endomorphism; quotient algebra)}
-Let the set of objects $q_{0}$ of a quiver $q$ be finite. Then from lemmata \ref{la:path_algebra_is_ass_algebra} and \ref{la:unit_in_path_algebra}
-we know that $\Bbbk q$ is a unital associative algebra.
+\begin{definition}{(Ideal of the path algebra; relation of endomorphism; quotient algebra)}\label{def:relation_of_endo}
+Let the set of objects $q_{0}$ and the set of morphisms $q_{1}$ of a quiver $q$ be finite. Then from lemmata
+\ref{la:path_algebra_is_ass_algebra} and \ref{la:unit_in_path_algebra} we know that $\Bbbk q$ is a unital associative algebra.
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
 \item A polynomial $p = \sum_{j=1}^{n} a_{j} x^{j} \in \Bbbk[x]$ together with an endomorphism $\alpha \in \mathrm{End}_{q}(o)$ for an object
@@ -619,14 +619,28 @@ that we call a \ul{relation of the endomorphism} $\alpha$.\\
 The set $\Bbbk q\, / \left< p(\alpha) \right>$ of residue classes
 \begin{align}
 [\gamma]_{\sim_{\left< p(\alpha) \right>}} &:= \{ \beta \in \Bbbk q \,|\, \beta \sim_{\left< p(\alpha) \right>} \gamma \}, \\
-\Bbbk q / \left< p(\alpha) \right> &:= \{ [\gamma]_{\sim_{\left< p(\alpha) \right>}} : \gamma \in \Bbbk q \}
+\Bbbk q \,/ \left< p(\alpha) \right> &:= \{ [\gamma]_{\sim_{\left< p(\alpha) \right>}} : \gamma \in \Bbbk q \}
 \end{align}
 is again an algebra, called the \ul{quotient algebra} of $\Bbbk q$ by the ideal $\left< p(\alpha) \right>$.
-\item (non-endo relations)
+\item More generally, for the finite generating set $q_{1}$ of morphisms, a polynomial $p \in \Bbbk[x_{1},\dots,x_{N}]$ with $N = \abs{q_{1}}$,
+the ideal $\left< p(\beta_{1},\dots,\beta_{N}) : \beta_{i} \in q_{1} \right>$ defines a relation and quotient algebra analogous to (2).
+\item If we have a relation $p_{i}(\alpha_{i})$ for each endomorphism $\alpha_{1},\dots,\alpha_{N'} \in \mathrm{End}_{q}$,
+$N' = |\mathrm{End}_{q}|$, we can iteratively divide by the ideals
+\begin{align}
+&(\dots(\Bbbk q\, / \left< p_{1}(\alpha_{1}) \right> )\, / \left< p_{2}(\alpha_{2}) \right> ) \dots )\, / \left< p_{N'}(\alpha_{N'}) \right> \\
+= \,&\Bbbk q\, / \left< p_{1}(\alpha_{1}), \dots, p_{N'}(\alpha_{N'}) \right>\label{eq:relations_ideal}
+\end{align}
+and end up with a finite-dimensional quotient algebra of the path algebra.
 \end{enumerate}
 \end{definition}
 
-
+\begin{algorithm}{(Relations of Endomorphisms)}
+The following algorithm calculates a list of relations as generators of the ideal $\left< p_{1}(\alpha_{1}), \dots, p_{N'}(\alpha_{N'}) \right>$ from
+\ref{def:relation_of_endo}\eqref{eq:relations_ideal}. For the finite concrete category $\mathcal{C}$ as input we assume at most one generating endomorphism per object.
+From the $\sigma$-lemma we know that each relation is of the form $p(x) = x^{m+n} - x^{m}$ for some natural numbers $m, n \in \mathbb{N}$,
+and the upper bounds for $m$ and $n$ ensure that the algorithm terminates.
+Something something Bahnenalgorithmus.
+\end{algorithm}
 
 \subsection{$\Bbbk$-linear categories, Algebroids and Algebras with idempotents}
 
