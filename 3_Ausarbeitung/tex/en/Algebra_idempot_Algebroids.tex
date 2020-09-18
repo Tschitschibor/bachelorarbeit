@@ -114,8 +114,9 @@ What we are looking for is a construction of a finite concrete category from a f
 the generated quiver from \ref{def:quiver_generated} and from it the free category.
 
 \begin{definition}{(The free category $F : \Quiv \rightarrow \Cat$)}\label{ex:free_category}\endnote{(ref. \cite{[context]} Example 4.1.13)}
-The \ul{free category} $Fq$ on a quiver $q$ has $q_{0}$ as its set of objects. The set $(Fq)_{1}$ of morphisms consists of identities $1_{c}$ for each
-object $c\in q_{0}$ together with all finite paths of arrows $a \in q_{1}$. Composition is defined by concatenation of paths.
+The \ul{free category} $Fq$ of a quiver $q$ has $q_{0}$ as its set of objects. The set $(Fq)_{1}$ of morphisms consists of all finite paths of arrows in
+$q_{1}$. The identity morphism $1_{c}$ of an object $c \in q_{0}$ is defined as the empty path from $c$ to itself. Composition is defined by
+concatenation of paths.
 \end{definition}
 
 \begin{definition}{(Free $\dashv$ forgetful adjunction)}
@@ -582,6 +583,14 @@ Recall definition \ref{def:path_algebra} of the path algebra $\Bbbk q$ of a quiv
 $\Bbbk$-vector space with basis set of all paths in $q$ and concatenation of composable paths as multiplication. By lemma \ref{la:cyclic_paths} one cyclic
 path, i.e. an endomorphism, in $q$ is enough for there to be infinitely many paths, i.e. $\Bbbk q$ is infinite-dimensional.
 
+\begin{definition}
+explicitly cyclic quiver
+\end{definition}
+
+counter examples
+
+
+
 \begin{definition}{(Ideal of an algebra)}\endnote{(From \url{https://en.wikipedia.org/wiki/Algebra_over_a_field )}}\label{def:ideal_of_algebra}
 Let $\mathcal{A}$ be a $\Bbbk$-algebra over a field $\Bbbk$.
 A subset $L \subset \mathcal{A}$ is a \ul{left ideal} of $\mathcal{A}$, denoted $L \vartriangleleft \mathcal{A}$, if for every $x, y \in L$,
@@ -604,41 +613,10 @@ If in \ref{def:ideal_of_algebra} $\mathcal{A}$ is a unital associative algebra w
 For $c \in \Bbbk$ and $x\in L$, $ce \in \mathcal{A}$ and with (3) we have $L \ni (ce)\cdot x = c(e\cdot x) = cx$, i.e. (2).
 \end{proof}
 
-\begin{definition}{(Ideal of the path algebra; relation of endomorphism; quotient algebra)}\label{def:relation_of_endo}
-Let the set of objects $q_{0}$ and the set of morphisms $q_{1}$ of a quiver $q$ be finite. Then from lemmata
-\ref{la:path_algebra_is_ass_algebra} and \ref{la:unit_in_path_algebra} we know that $\Bbbk q$ is a unital associative algebra.
-\begin{enumerate}
-\renewcommand{\labelenumi}{(\theenumi)}
-\item A polynomial $p = \sum_{j=1}^{n} a_{j} x^{j} \in \Bbbk[x]$ together with an endomorphism $\alpha \in \mathrm{End}_{q}(o)$ for an object
-$o\in q_{0}$ defines a \ul{left ideal of the path algebra}
-\begin{align}
-\left< p(\alpha) \right> := \{ p(\alpha)\cdot \beta : \beta \in \Bbbk q \} \vartriangleleft \Bbbk q
-\end{align}
-and $p(\alpha) \in \Bbbk q$ is the \ul{generator of the ideal}.
-\item Such an ideal $\left< p(\alpha) \right>$ defines an congruence relation $\sim_{\left< p(\alpha) \right>}$ on $\Bbbk q$:
-\begin{align}
-\beta \sim_{\left< p(\alpha) \right>} \gamma &:\Leftrightarrow \beta - \gamma \in \left< p(\alpha) \right>
-\end{align}
-that we call a \ul{relation of the endomorphism} $\alpha$.\\
-The set $\Bbbk q\, / \left< p(\alpha) \right>$ of residue classes
-\begin{align}
-[\gamma]_{\sim_{\left< p(\alpha) \right>}} &:= \{ \beta \in \Bbbk q \,|\, \beta \sim_{\left< p(\alpha) \right>} \gamma \}, \\
-\Bbbk q \,/ \left< p(\alpha) \right> &:= \{ [\gamma]_{\sim_{\left< p(\alpha) \right>}} : \gamma \in \Bbbk q \}
-\end{align}
-is again an algebra, called the \ul{quotient algebra} of $\Bbbk q$ by the ideal $\left< p(\alpha) \right>$.
-\item More generally, for the finite generating set $q_{1}$ of morphisms, a polynomial $p \in \Bbbk[x_{1},\dots,x_{N}]$ with $N = \abs{q_{1}}$,
-the ideal $\left< p(\beta_{1},\dots,\beta_{N}) : \beta_{i} \in q_{1} \right>$ defines a relation and quotient algebra analogous to (2).
-\item If we have a relation $p_{i}(\alpha_{i})$ for each endomorphism $\alpha_{1},\dots,\alpha_{N'} \in \mathrm{End}_{q}$,
-$N' = |\mathrm{End}_{q}|$, we can iteratively divide by the ideals
-\begin{align}
-&(\dots(\Bbbk q\, / \left< p_{1}(\alpha_{1}) \right> )\, / \left< p_{2}(\alpha_{2}) \right> ) \dots )\, / \left< p_{N'}(\alpha_{N'}) \right> \\
-= \,&\Bbbk q\, / \left< p_{1}(\alpha_{1}), \dots, p_{N'}(\alpha_{N'}) \right>\label{eq:relations_ideal}
-\end{align}
-and end up with a finite-dimensional quotient algebra of the path algebra.
-\end{enumerate}
-\end{definition}
+
 
 \begin{remark}{(Relations of Endomorphisms)}
+Let the generating quiver of our concrete category be explicitly cyclic.
 The following algorithm calculates a list of relations as generators of the ideal $\left< p_{1}(\alpha_{1}), \dots, p_{N'}(\alpha_{N'}) \right>$ from
 \ref{def:relation_of_endo}\eqref{eq:relations_ideal}. For the finite concrete category $\mathcal{C}$ as input we assume at most one generating endomorphism per object.
 From the $\sigma$-lemma we know that each relation is of the form $p(x) = x^{m+n} - x^{m}$ for some natural numbers $m, n \in \mathbb{N}$,
@@ -670,6 +648,42 @@ is $R$-bilinear.
 Note that this does imply that $\mathcal{A}$ is a pre-additive category, but it need not be additive.
 \end{definition}
 
+We can associate to any category a $\Bbbk$-linear category called its $\Bbbk$-linear closure:
+
+\begin{definition}{($\Bbbk$-linear closure of a category)}
+
+\end{definition}
+
+\begin{definition}{(Path algebra of a quiver)}\label{def:path_algebra}\endnote{(from \ref{[leit4]} 4.1 )}
+We define the \ul{path algebra} of a quiver $q$ over a commutative ring $\Bbbk$ by
+\[
+\Bbbk q := \Bbbk Fq,
+\]
+where $Fq$ is the free category of the quiver $q$ from definition \ref{}.
+\end{definition}
+
+a 1->2 b 2->1 c 1->1
+
+\begin{lemma}\label{la:path_algebra_is_ass_algebra}\endnote{(from \ref{[leit4]} 4.1 )}
+For a quiver $Q$ and a field $\Bbbk$, the path algebra $\Bbbk Q$ is an associative $\Bbbk$-algebra.
+\end{lemma}
+\begin{proof}
+Let $w, w', w''$ be paths. Then both $(ww')w''$ and $w(w'w'')$ are the concatenation of $w$ on the left,
+$w'$ in the middle and $w''$ on the right, in case both conditions $t(w) = s(w')$ and $t(w') = s(w'')$ are satisfied, and
+otherwise the zero element (since $(ww')0 = 0, 0(w'w'') = 0$, according to bilinearity).\\
+Since the multiplication was defined on a basis and extended bilinearly, the axioms of an algebra are clearly satisfied.
+\end{proof}
+
+\begin{lemma}\label{la:unit_in_path_algebra}
+If the set of vertices of a quiver $q_{0}$ is finite, then $\Bbbk q$ has a unit element $\sum_{x\in q_{0}} e_{x}$. In this case, $\Bbbk q$ is a unital ring.
+\end{lemma}
+\begin{proof}
+Let $e := \sum_{x\in q_{0}} e_{x}$. Let $w$ be a path with $s(w) = x$ and $t(w) = y$, then $e_{x}w = w$ and $e_{z}w = 0$ for all $z \neq x$,
+thus $ew = e_{x}w + \sum_{z\neq x} e_{z}w = w + 0 = w$. Similarly, $we_{y} = w$ and $we_{z} = 0$ for $z \neq x$.
+\end{proof}
+
+
+
 \begin{definition}{($R$-linear functor)}
 Let $R$ be a commutative ring. A \ul{functor of $R$-linear categories} or an \ul{$R$-linear functor} is a functor
 $F : \mathcal{A} \rightarrow \mathcal{B}$ between $R$-linear categories $\mathcal{A}$ and $\mathcal{B}$,
@@ -688,11 +702,6 @@ The unit $e$ of the algebra acts as the identity morphism.
 The hom-set $\mathrm{Hom}_{\mathcal{A}}(\ast,\ast) = \mathrm{End}_{\mathcal{A}}(\ast)$ is the whole algebra $\mathbf{A}$, which is
 a $\Bbbk$ module with bilinear multiplication as composition, i.e. $\mathcal{A}$ is a $\kAlgebroid$.
 \end{proposition}
-
-
-
-
-
 
 
 
