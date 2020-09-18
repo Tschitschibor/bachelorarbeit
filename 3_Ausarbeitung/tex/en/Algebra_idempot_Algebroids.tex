@@ -567,8 +567,12 @@ on the finite set $M := \{1,\dots,m+n\}$ satisfying $f^{m+n} = f^{m}$.
 \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot
 \end{pmatrix}
 \]
-which has $p(x) = x^{3+5}-x^{3}$ as its minimal polynomial, i.e. $\mathcal{M}_{p}^{3+5} = \mathcal{M}_{p}^{3}$. The endomorphism is
-$f : \{1,\dots,8\} \rightarrow \{1,\dots,8\}; 1 \mapsto 2, 2 \mapsto 3,\dots, 7 \mapsto 8, 8 \mapsto 6$ and satisfies $f^{3+5} = f^{3}$.
+which has $p(x) = x^{3+5}-x^{3}$ as its minimal polynomial, i.e. $\mathcal{M}_{p}^{3+5} = \mathcal{M}_{p}^{3}$. The endomorphism of
+vector spaces can be restricted to an endomorphism of the set of standard basis elements $\{e_{1},\dots,e_{8}\}$,
+\[
+f : \{1,\dots,8\} \rightarrow \{1,\dots,8\}; 1 \mapsto 2, 2 \mapsto 3,\dots, 7 \mapsto 8, 8 \mapsto 6
+\]
+and satisfies $f^{3+5} = f^{3}$.
 \end{enumerate}
 \end{example}
 
@@ -676,14 +680,14 @@ F : \mathrm{Hom}_{\mathcal{A}}(x,y) \rightarrow \mathrm{Hom}_{\mathcal{B}}(F(x),
 is a homomorphism of $R$-modules.
 \end{definition}
 
-\begin{example}{(A unital associative $\Bbbk$-algebra is a $\Bbbk$-algebroid with 1 object)}
+\begin{proposition}{(A unital associative $\Bbbk$-algebra is a $\Bbbk$-algebroid with 1 object)}
 Let $\Bbbk$ be a commutative unital ring and $\mathbf{A}$ a unital associative algebra over $\Bbbk$. This defines a category $\mathcal{A}$
 with a single object $\ast$ and the morphisms being the elements of the algebra, which are all endomorphisms since there is only one object.
 Composition of morphisms is defined by the multiplication in $\mathbf{A}$, which is assumed to be associative.
 The unit $e$ of the algebra acts as the identity morphism.
 The hom-set $\mathrm{Hom}_{\mathcal{A}}(\ast,\ast) = \mathrm{End}_{\mathcal{A}}(\ast)$ is the whole algebra $\mathbf{A}$, which is
 a $\Bbbk$ module with bilinear multiplication as composition, i.e. $\mathcal{A}$ is a $\kAlgebroid$.
-\end{example}
+\end{proposition}
 
 
 
