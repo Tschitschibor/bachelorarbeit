@@ -108,6 +108,10 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{example}[theorem]{Example}
 
+%%% make equations count from subsection
+\usepackage{chngcntr}
+\counterwithin{equation}{subsection}
+
 %%% for nested proofs
 \newenvironment{subproof}[1][\proofname]{%
   \renewcommand{\qedsymbol}{$\mathbin{/\mkern-6mu/}$}%
