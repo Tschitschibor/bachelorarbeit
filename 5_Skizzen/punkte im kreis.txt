@@ -1,0 +1,32 @@
+
+  \node[main node] (5) [above right=-0.691cm and -0.951cm of 4, circle, fill, inner sep=2pt] {};
+  \node[main node] (6) [above right=-1.809cm and -0.588cm of 4, circle, fill, inner sep=2pt] {};
+  \node[main node] (7) [above right=-1.809cm and 0.588cm of 4, circle, fill, inner sep=2pt] {};
+  \node[main node] (8) [above right=-0.691cm and 0.951cm of 4, circle, fill, inner sep=2pt] {};
+  \node[main node] (9) [above right=0.000cm and 0.000cm of 4, circle, fill, inner sep=2pt] {};
+  
+  Octave-code:
+  
+  L = [ 1, 2, 3, 4, 5 ]
+  
+  i.*e.^(i.*(2.*pi)/5.*L).-i.-0.150.-0.150*i
+  
+  r = (1/4 + 4)^(1/2) = 2.0616
+  
+  
+  \node[main node] (C) [above right=-2.4cm and -2.52cm of 1.center, circle, draw, inner sep=1.0308cm] {};
+  
+fast richtig:
+
+
+  \node[main node] (4) [above right=-2.00cm and -0.95774cm of 3, circle, fill, inner sep=2pt] {};
+  \node[main node] (5) [above right=-1.14316cm and 1.67933cm of 3, circle, fill, inner sep=2pt] {};
+  \node[main node] (6) [above right=-0.61361cm and 0.95047cm of 3, circle, fill, inner sep=2pt] {};
+  \node[main node] (7) [above right=-0.61361cm and 0.04953cm of 3, circle, fill, inner sep=2pt] {};
+  
+  \node[main node] (8) [above right=-1.14316cm and -0.67933cm of 3, circle, fill, inner sep=2pt] {};
+  \node[main node] (9) [above right=-2.00cm and -0.95774cm of 3, circle, fill, inner sep=2pt] {};
+  \node[main node] (10) [above right=-2.85684cm and -0.67933cm of 3, circle, fill, inner sep=2pt] {};
+  \node[main node] (11) [above right=-3.38639cm and 0.04953cm of 3, circle, fill, inner sep=2pt] {};
+  \node[main node] (12) [above right=-3.38639cm and 0.95047cm of 3, circle, fill, inner sep=2pt] {};
+  \node[main node] (13) [above right=-2.85684cm and 1.67933cm of 3, circle, fill, inner sep=2pt] {};

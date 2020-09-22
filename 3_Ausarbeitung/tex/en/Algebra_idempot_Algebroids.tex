@@ -115,7 +115,7 @@ one morphism $\alpha$.
 What we are looking for is a construction of a finite concrete category from a finite set of generating morphisms. For this we can take
 the generated quiver from \ref{def:quiver_generated} and from it the free category.
 
-\begin{definition}{(The free category $F : \Quiv \rightarrow \Cat$)}\label{ex:free_category}\endnote{(ref. \cite{[context]} Example 4.1.13)}
+\begin{definition}{(The free category $F : \Quiv \rightarrow \Cat$)}\label{def:free_category}\endnote{(ref. \cite{[context]} Example 4.1.13)}
 The \ul{free category} $Fq$ of a quiver $q$ has $q_{0}$ as its set of objects. The set $(Fq)_{1}$ of morphisms consists of all finite paths of arrows in
 $q_{1}$. The identity morphism $1_{c}$ of an object $c \in q_{0}$ is defined as the empty path from $c$ to itself. Composition is defined by
 concatenation of paths.
@@ -708,6 +708,14 @@ In the following subsection we show that this is equivalent to a $\Bbbk$-linear 
 
 \subsection{$\Bbbk$-linear categories, $\Bbbk$-Algebroids and $ \Bbbk$-Algebras with orthogonal idempotents}
 
+\begin{definition}{($\Bbbk$-category)}
+Let $\Bbbk$ be a commutative ring. A \ul{$\Bbbk$-category} is a category $\mathcal{A}$ together with a $\Bbbk$-module structure
+on each hom-set in such a way that composition induces $\Bbbk$-module homomorphisms
+\[
+\mathrm{Hom}_{\mathcal{A}}(A,A')\otimes_{\Bbbk}\mathrm{Hom}_{\mathcal{A}}(A',A'') \rightarrow \mathrm{Hom}_{\mathcal{A}}(A,A'').
+\]
+\end{definition}
+
 \begin{definition}{($R$-linear category)}
 Let $R$ be a commutative unital ring. An \ul{$R$-linear category}, also called \ul{$R$-$\mathrm{Algebroid}$}$\,\mathcal{A}$ is a category where every
 hom-set is an $R$-module, and where for $x,y,z \in \mathcal{A}_{0}$ composition of morphisms
@@ -719,10 +727,11 @@ is $R$-bilinear.
 Note that this does imply that $\mathcal{A}$ is a pre-additive category, but it need not be additive.
 \end{definition}
 
-We can associate to any category a $\Bbbk$-linear category called its $\Bbbk$-linear closure:
+\noindent We can associate to any category a $\Bbbk$-linear category called its $\Bbbk$-linear closure:
 
 \begin{definition}{($\Bbbk$-linear closure of a category)}
-
+Let $\mathcal{C}$ be a category, and $\Bbbk$ a commutative unital ring. We define the \ul{category algebra} $\Bbbk \mathcal{C}$ to be
+the free $\Bbbk$-module with the morphisms of the category $\mathcal{C}$ as a basis.
 \end{definition}
 
 \begin{definition}{(Path algebra of a quiver)}\label{def:path_algebra}
@@ -730,11 +739,11 @@ We define the \ul{path algebra} of a quiver $q$ over a commutative ring $\Bbbk$ 
 \[
 \Bbbk q := \Bbbk Fq,
 \]
-where $Fq$ is the free category of the quiver $q$ from definition \ref{}.
+where $Fq$ is the free category of the quiver $q$ from definition \ref{def:free_category}.
 \end{definition}
 
 \begin{lemma}\label{la:path_algebra_is_ass_algebra}\endnote{(from \ref{[leit4]} 4.1 )}
-For a quiver $Q$ and a field $\Bbbk$, the path algebra $\Bbbk Q$ is an associative $\Bbbk$-algebra.
+For a quiver $q$ and a field $\Bbbk$, the path algebra $\Bbbk q$ is an associative $\Bbbk$-algebra.
 \end{lemma}
 \begin{proof}
 Let $w, w', w''$ be paths. Then both $(ww')w''$ and $w(w'w'')$ are the concatenation of $w$ on the left,
@@ -744,7 +753,8 @@ Since the multiplication was defined on a basis and extended bilinearly, the axi
 \end{proof}
 
 \begin{lemma}\label{la:unit_in_path_algebra}
-If the set of vertices of a quiver $q_{0}$ is finite, then $\Bbbk q$ has a unit element $\sum_{x\in q_{0}} e_{x}$. In this case, $\Bbbk q$ is a unital ring.
+If the set of vertices of a quiver $q_{0}$ is finite, then $\Bbbk q$ has a unit element $\sum_{x\in q_{0}} e_{x}$. In this case, $\Bbbk q$ is a unital
+associative algebra, i.e. a unital ring that is also a vector space.
 \end{lemma}
 \begin{proof}
 Let $e := \sum_{x\in q_{0}} e_{x}$. Let $w$ be a path with $s(w) = x$ and $t(w) = y$, then $e_{x}w = w$ and $e_{z}w = 0$ for all $z \neq x$,
@@ -776,10 +786,18 @@ a $\Bbbk$ module with bilinear multiplication as composition, i.e. $\mathcal{A}$
 
 \end{definition}
 
-\begin{proposition}
-An algebra with a distinct set of orthogonal idempotents is an algebroid.
-\end{proposition}
+\begin{theorem}{(characterizing equivalences of categories)}\label{thm:equiv_of_categories}\endnote{(Cited from \cite{[context]} Theorem 1.5.9)}
+A functor defining an equivalence of categories is full, faithful, and essentially surjective on objects. Assuming the axiom of choice,
+any functor with these properties defines an equivalence of categories.
+\end{theorem}
 
+\begin{proposition}
+An algebra with a distinct set of orthogonal idempotents is an algebroid. The categories $\Bbbk\textnormal{-}\mathbf{Algebroid}$ and
+$\Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}}$ are equivalent.
+\end{proposition}
+\begin{proof}
+The equivalence is characterized by a fully faithful functor. I will show how the functor acts on objects.
+\end{proof}
 
 
 
