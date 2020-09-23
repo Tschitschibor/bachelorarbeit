@@ -706,7 +706,10 @@ This is a finite-dimensional $\Bbbk$-algebra with a distinct set of idempotents.
 In the following subsection we show that this is equivalent to a $\Bbbk$-linear category (also called $\kAlgebroid$).
 \end{remark}
 
+%% 
 \subsection{$\Bbbk$-linear categories, $\Bbbk$-Algebroids and $ \Bbbk$-Algebras with orthogonal idempotents}
+
+Throughout this section, let $\Bbbk$ be a commutative ring.
 
 \begin{definition}{($\Bbbk$-category)}
 Let $\Bbbk$ be a commutative ring. A \ul{$\Bbbk$-category} is a category $\mathcal{A}$ together with a $\Bbbk$-module structure
@@ -716,15 +719,30 @@ on each hom-set in such a way that composition induces $\Bbbk$-module homomorphi
 \]
 \end{definition}
 
-\begin{definition}{($R$-linear category)}
-Let $R$ be a commutative unital ring. An \ul{$R$-linear category}, also called \ul{$R$-$\mathrm{Algebroid}$}$\,\mathcal{A}$ is a category where every
-hom-set is an $R$-module, and where for $x,y,z \in \mathcal{A}_{0}$ composition of morphisms
+\begin{definition}{($\Bbbk$-linear category, $\Bbbk$-$\mathrm{Algebroid}$)}
+Let $\Bbbk$ be a commutative unital ring. A \ul{$\Bbbk$-linear category}, also called \ul{$\Bbbk$-$\mathrm{Algebroid}$},$\,\mathcal{A}$ is a
+category where every hom-set is a $\Bbbk$-module, and where for $x,y,z \in \mathcal{A}_{0}$ composition of morphisms
 \[
 \mu : \mathrm{Hom}_{\mathcal{A}}(x,y) \times \mathrm{Hom}_{\mathcal{A}}(y,z) \rightarrow \mathrm{Hom}_{\mathcal{A}}(x,z)
 \]
-is $R$-bilinear.
+is $\Bbbk$-bilinear.
 
 Note that this does imply that $\mathcal{A}$ is a pre-additive category, but it need not be additive.
+\end{definition}
+
+\begin{definition}{($\Bbbk$-linear functor)}
+Let $\Bbbk$ be a commutative ring. A \ul{functor of $\Bbbk$-linear categories} or a \ul{$\Bbbk$-linear functor} is a functor
+$F : \mathcal{A} \rightarrow \mathcal{B}$ between $\Bbbk$-linear categories $\mathcal{A}$ and $\mathcal{B}$,
+where for all objects $x, y \in \mathcal{A}_{0}$, the map
+\[
+F : \mathrm{Hom}_{\mathcal{A}}(x,y) \rightarrow \mathrm{Hom}_{\mathcal{B}}(F(x), F(y))
+\]
+is a homomorphism of $\Bbbk$-modules.
+\end{definition}
+
+\begin{definition}{(The category $\Bbbk$-$\mathbf{Algebroid}$)}
+For a fixed commutative ring $\Bbbk$, we define the category $\Bbbk\textnormal{-}\mathbf{Algebroid}$ with objects being
+$\Bbbk$-linear categories, and morphisms $\Bbbk$-linear functors between these categories.
 \end{definition}
 
 \noindent We can associate to any category a $\Bbbk$-linear category called its $\Bbbk$-linear closure:
@@ -742,8 +760,8 @@ We define the \ul{path algebra} of a quiver $q$ over a commutative ring $\Bbbk$ 
 where $Fq$ is the free category of the quiver $q$ from definition \ref{def:free_category}.
 \end{definition}
 
-\begin{lemma}\label{la:path_algebra_is_ass_algebra}\endnote{(from \ref{[leit4]} 4.1 )}
-For a quiver $q$ and a field $\Bbbk$, the path algebra $\Bbbk q$ is an associative $\Bbbk$-algebra.
+\begin{lemma}\label{la:path_algebra_is_ass_algebra}
+For a quiver $q$ and a field $\Bbbk$, the path algebra $\Bbbk q$ is an associative $\Bbbk$-algebra.\endnote{(From \cite{[leit4]} 4.1)}
 \end{lemma}
 \begin{proof}
 Let $w, w', w''$ be paths. Then both $(ww')w''$ and $w(w'w'')$ are the concatenation of $w$ on the left,
@@ -754,49 +772,167 @@ Since the multiplication was defined on a basis and extended bilinearly, the axi
 
 \begin{lemma}\label{la:unit_in_path_algebra}
 If the set of vertices of a quiver $q_{0}$ is finite, then $\Bbbk q$ has a unit element $\sum_{x\in q_{0}} e_{x}$. In this case, $\Bbbk q$ is a unital
-associative algebra, i.e. a unital ring that is also a vector space.
+associative algebra, i.e. a unital ring that is also a vector space.\endnote{(From \cite{[leit4]} 4.1)}
 \end{lemma}
 \begin{proof}
 Let $e := \sum_{x\in q_{0}} e_{x}$. Let $w$ be a path with $s(w) = x$ and $t(w) = y$, then $e_{x}w = w$ and $e_{z}w = 0$ for all $z \neq x$,
 thus $ew = e_{x}w + \sum_{z\neq x} e_{z}w = w + 0 = w$. Similarly, $we_{y} = w$ and $we_{z} = 0$ for $z \neq x$.
+
 \end{proof}
 
-
-
-\begin{definition}{($R$-linear functor)}
-Let $R$ be a commutative ring. A \ul{functor of $R$-linear categories} or an \ul{$R$-linear functor} is a functor
-$F : \mathcal{A} \rightarrow \mathcal{B}$ between $R$-linear categories $\mathcal{A}$ and $\mathcal{B}$,
-where for all objects $x, y \in \mathcal{A}_{0}$, the map
-\[
-F : \mathrm{Hom}_{\mathcal{A}}(x,y) \rightarrow \mathrm{Hom}_{\mathcal{B}}(F(x), F(y))
-\]
-is a homomorphism of $R$-modules.
+\begin{definition}{(Idempotent)}\label{def:idempotent}
+Let $\mathbf{A}$ be a unital algebra over a field $\Bbbk$.
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item An element $e\in \mathbf{A}$ is an \ul{idempotent} if $e^{2} = e$.
+\item If $e_{1}, e_{2} \in \mathbf{A}$ are idempotents, then we will say that they are \ul{orthogonal} iff $e_{1}e_{2} = e_{2}e_{1} = 0$.
+\item An idempotent $e \in \mathbf{A}$ is called \ul{primitive} if $e = e_{1} + e_{2} \Rightarrow e_{1} = 0 \vel e_{2} = 0$.
+\item An idempotent is called \ul{trivial} if it is either $0$ or $1$.
+\end{enumerate}
 \end{definition}
 
-\begin{proposition}{(A unital associative $\Bbbk$-algebra is a $\Bbbk$-algebroid with 1 object)}
+\begin{proposition}
+Let $\mathbf{A}$ be an $n$-dimensional unital algebra over a commutative ring $\Bbbk$, and two-sided $\Bbbk$-modules
+$M_{1},\dots,M_{n} \leq \mathbf{A}$ such that
+\begin{align}
+\mathbf{A} = \bigoplus_{i=1}^{n} M_{i},
+\end{align}
+i.e.
+\begin{align}
+\mathbf{A} &= \{ m_{1} + \dots + m_{n} : m_{i} \in M_{i} \}\, \text{ and }\\
+M_{i} \cap M_{j} &= \{0\}\, \text{ if }\, i\neq j 
+\end{align}
+If $1 = \sum_{i=1}^{n} m_{i}$ for some $m_{i} \in M_{i}$, then the $m_{i}$ are orthogonal idempotents in $\mathbf{A}$, and
+\begin{align}
+M_{i} = m_{i}\mathbf{A}m_{i},\, 1\leq i \leq n.
+\end{align}
+Furthermore, $M_{i}$ is indecomposable as a module if and only if $m_{i}$ is primitive.
+The set $\{e_{1},\dots,e_{n}\}$ of pairwise orthogonal, primitive idempotents is called \textbf{the}
+\ul{complete set of primitive orthogonal idempotents} of $\mathbf{A}$, and we can write $\mathbf{A}$ as
+\[
+\mathbf{A} = 1\mathbf{A}1 = \sum_{i}e_{i} \mathbf{A} \sum_{j} e_{j} = \sum_{i,j} e_{i}\mathbf{A}e_{j}.
+\]
+where for the sets $e_{i}\mathbf{A}e_{j}$:
+\begin{align}
+e_{i}\mathbf{A}e_{j} &\cap e_{i'}\mathbf{A}e_{j'} = \delta_{i,i'} \cdot \delta_{j,j'},\,\text{ since }\\
+x &= e_{i} \cdot a \cdot e_{j} = e_{i'} \cdot b \cdot e_{j'} \\
+x &= \underbrace{e_{i}e_{i}}_{e_{i}} \cdot a \cdot e_{j} = \underbrace{e_{i}e_{i'}}_{= 0} \cdot b \cdot e_{j'},\, &e_{i} \neq e_{i'} \\
+x &= e_{i} \cdot a \cdot \underbrace{e_{j}e_{j}}_{e_{j}} = e_{i'} \cdot b \cdot \underbrace{e_{j'}e_{j}}_{= 0},\, &e_{j} \neq e_{j'}
+\end{align}
+\end{proposition}
+\begin{proof}
+$\mathbf{A} = M_{1} \oplus M_{2}$ means $\mathbf{A} = \{m_{1} + m_{2} : m_{1} \in M_{1}, m_{2} \in M_{2}\}$ and
+$M_{1} \cap M_{2} = \{0\}$. The $M_{i}$ are closed under $\Bbbk$-linear combination and multiplication of elements in $M_{i}$, i.e.
+$m,m' \in M_{i}, \lambda \in \Bbbk \Rightarrow m + \lambda m' \in M_{i}\,\text{ and }\, mm' \in M_{i}$. If we have $1 = m_{1} + m_{2}$, then 
+\begin{align}
+m_{2} &= 1 - m_{1} \\
+m_{2}^{2} - m_{2} &= (1-m_{1})^{2} - (1 - m_{1}) = 1 - 2m_{1} + m_{1}^{2} - 1 + m_{1} = m_{1}^{2} - m_{1} \\
+m_{2}^{2} - m_{2} &\in M_{1}\cap M_{2} \\
+m_{1}^{2} - m_{1} &\in M_{1}\cap M_{2} \\
+m_{1} &= m_{1}^{2} \,\text{ and }\, m_{2} = m_{2}^{2}
+\end{align}
+i.e. $m_{1}, m_{2}$ are idempotent. They are also orthogonal, since
+\begin{align}
+m_{1} &= 1m_{1} = (m_{1}+m_{2})m_{1} = m_{1}^{2} + m_{2}m_{1} \\
+m_{1} &= m_{1}1 = m_{1}(m_{1}+m_{2}) = m_{1}^{2} + m_{1}m_{2}\,\text{ and with }\, m_{1}^{2} = m_{1}\,\text{ it follows that }\\
+m_{1}m_{2} &= 0 = m_{2}m_{1}
+\end{align}
+To prove $M_{1} = m_{1}\mathbf{A}$, we show both inclusions.
+\begin{enumerate}
+\renewcommand{\labelenumi}{(``$\subseteq$'')}
+\item Let $x \in M_{1}$. Then $x = 1x = (m_{1}+m_{2})x = m_{1}x + m_{2}x$. With $m_{2}x \in M_{2}\cap M_{1}$ if follows $m_{2}x = 0$
+and therefore $x = m_{1}x \in m_{1}\mathbf{A}$.
+\renewcommand{\labelenumi}{(``$\supseteq$'')}
+\item Let $a \in \mathbf{A}$. Then $m_{1}a$.
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+The path algebra $\Bbbk q$ of a quiver $q$ with a finite set of vertices $q_{0} = \{1,\dots,n\}$ has a complete set of
+primitive orthogonal idempotents, namely the set $\{e_{1},\dots,e_{n}\}$ of empty paths $e_{i}$ on each vertex $i \in q_{0}$.
+\end{remark}
+\begin{proof}
+Since $q_{0}$ is finite, $\Bbbk q$ has a unit $1 = \sum_{i=1}^{n} e_{i}$ (ref. \ref{la:unit_in_path_algebra}). We can write $\Bbbk q$ as the
+direct sum of all sub-algebras $e_{i} \Bbbk q$ of paths that start at vertex $i$ or of all sub-algebras $\Bbbk q e_{j}$ of paths ending at vertex $j$,
+and even as the direct sum of all paths from vertex $i$ to vertex $j$.
+\begin{align}
+\Bbbk q = \bigoplus_{i=1}^{n} e_{i} \Bbbk q = \bigoplus_{j=1}^{n} \Bbbk q e_{j} = \bigoplus_{i, j} e_{i} \Bbbk q e_{j} 
+\end{align}
+\end{proof}
+
+\begin{proposition}
+A unital associative $\Bbbk$-algebra is a $\Bbbk$-algebroid with 1 object
+\end{proposition}
+\begin{proof}
 Let $\Bbbk$ be a commutative unital ring and $\mathbf{A}$ a unital associative algebra over $\Bbbk$. This defines a category $\mathcal{A}$
 with a single object $\ast$ and the morphisms being the elements of the algebra, which are all endomorphisms since there is only one object.
 Composition of morphisms is defined by the multiplication in $\mathbf{A}$, which is assumed to be associative.
-The unit $e$ of the algebra acts as the identity morphism.
+The unit $e$ of the algebra acts as the identity morphism. The set $\{ e \}$ is trivially a set of orthogonal idempotents.
 The hom-set $\mathrm{Hom}_{\mathcal{A}}(\ast,\ast) = \mathrm{End}_{\mathcal{A}}(\ast)$ is the whole algebra $\mathbf{A}$, which is
 a $\Bbbk$ module with bilinear multiplication as composition, i.e. $\mathcal{A}$ is a $\kAlgebroid$.
-\end{proposition}
+\end{proof}
 
-\begin{definition}{(Orthogonal idempotent)}
+\[
+\Bbbk\textnormal{-}\mathbf{Algebra} \subset \Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}} \cong \Bbbk\textnormal{-}\mathbf{Algebroid}
+\]
 
+Algebra with complete set of orthogonal idempotents = Vector space with basis??
+
+Path algebras $\Bbbk q$ are algebras with distinct set of orthogonal idempotents.
+
+\begin{definition}
+The category $\Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}}$ of algebras with a complete set of primitive orthogonal idempotents has
+as objects pairs $(\mathbf{A},\{e_{1},\dots,e_{n}\})$ where $\mathbf{A}$ is an associative unital $\Bbbk$-algebra with
+$1 = \sum_{i=1}^{n} e_{i}$ and $\{e_{1},\dots,e_{n}\}$ is a set of pairwise orthogonal, primitive idempotents.
+Morphisms between algebras are $\Bbbk$-Algebra homomorphisms
+$g : (\mathbf{A},\{e_{1},\dots,e_{n}\}) \rightarrow (\mathbf{B},\{f_{1},\dots,f_{m}\})$, especially
+\begin{align}
+g(1_{\mathbf{A}}) &= 1_{\mathbf{B}} \\
+g( \sum_{i=1}^{n} e_{i} ) &=  \sum_{j=1}^{m} f_{j} \\
+ \sum_{i=1}^{n} g( e_{i} ) &=  \sum_{j=1}^{m} f_{j}
+\end{align}
 \end{definition}
-
-\begin{theorem}{(characterizing equivalences of categories)}\label{thm:equiv_of_categories}\endnote{(Cited from \cite{[context]} Theorem 1.5.9)}
-A functor defining an equivalence of categories is full, faithful, and essentially surjective on objects. Assuming the axiom of choice,
-any functor with these properties defines an equivalence of categories.
-\end{theorem}
 
 \begin{proposition}
 An algebra with a distinct set of orthogonal idempotents is an algebroid. The categories $\Bbbk\textnormal{-}\mathbf{Algebroid}$ and
 $\Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}}$ are equivalent.
 \end{proposition}
 \begin{proof}
-The equivalence is characterized by a fully faithful functor. I will show how the functor acts on objects.
+From theorem \ref{thm:equiv_fully_faithful} we know that the equivalence is characterized by a fully faithful functor that is essentially surjective.
+\[
+\begin{tikzcd}
+\Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}} \arrow[r, "F"] & \Bbbk\textnormal{-}\mathbf{Algebroid}
+\end{tikzcd}
+\]
+I will show how the functor $F$ acts on objects.
+Let $\{e_{1},\dots,e_{n}\}$ be the complete set of primitive orthogonal idempotents of $\mathbf{A}$. Then the algebroid
+$\mathcal{A} := F(\mathbf{A},\{e_{1},\dots,e_{n}\})$ has
+as set of objects the set $\mathcal{A}_{0} := \{1,\dots,n\}$ with identity morphisms $1_{i} = e_{i}, 1\leq i \leq n$. The set of morphisms between
+two objects $i,j$ is defined as $\mathrm{Hom}_{\mathcal{A}}(i,j) := e_{i}\mathbf{A}e_{j}$, i.e. a morphism is an element
+$e_{i}\mathbf{A}e_{j} \ni \alpha = e_{i}ae_{j}, a\in \mathbf{A}$.
+Composition of morphisms $i \xrightarrow{\alpha} j \xrightarrow{\beta} k$ is defined by the multiplication in $\mathbf{A}$.
+Let $\alpha = e_{i}ae_{j}, \beta = e_{j}be_{k}$ with $a, b\in \mathbf{A}$. Then
+\begin{align}
+\alpha \beta &= (e_{i}ae_{j})(e_{j}be_{k}) \\
+&= e_{i}(ae_{j}b)e_{k} \\
+&= e_{i}ce_{k}\,\text{ with }\, c := ae_{j}b \in \mathbf{A}.
+\end{align}
+Associativity of composition follows from associativity of multiplication in $\mathbf{A}$.
+To show that $F$ is fully faithful and essentially surjective, let $\mathcal{C} := \Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}}$ and
+$\mathcal{D} := \Bbbk\textnormal{-}\mathbf{Algebroid}$, and let $A := (\mathbf{A},\{e_{1},\dots,e_{n}\}),\, B := (\mathbf{B},\{f_{1},\dots,f_{m}\}) \in \mathcal{C}_{0}$. We have to show that the map
+\[
+\mathrm{Hom}_{\mathcal{C}}(A,B) \rightarrow \mathrm{Hom}_{\mathcal{D}}(FA,FB)
+\]
+\setlist[description]{font=\normalfont}
+\begin{description}
+\item[(full)] is surjective: Let $G : FA \rightarrow FB$ be a $\Bbbk$-linear functor between algebroids. Then there is an algebra-homomorphism
+$g : A \rightarrow B \in \mathrm{Hom}_{\mathcal{C}}(A,B)$ such that $G = Fg$.
+\item[(faithful)] is injective: Let $Fg := G : FA \rightarrow FB$ and $Fh := H : FA \rightarrow FB$ be the same morphism $Fg = G = H = Fh$.
+Then it follows that $g = h$ are the same algebra-homomorphism.
+\item[(essentially surjective)] And that for every algebroid $\mathcal{A} \in \mathcal{D}$ there is some
+$A := (\mathbf{A},\{e_{1},\dots,e_{n}\}) \in \mathcal{C}$ such that $\mathcal{A}$ is isomorphic to $FA$: 
+The path algebra $\Bbbk U(\mathcal{A})$.
+\end{description}
 \end{proof}
 
 
