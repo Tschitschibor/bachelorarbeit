@@ -792,7 +792,7 @@ Let $\mathbf{A}$ be a unital algebra over a field $\Bbbk$.
 \end{definition}
 
 \begin{proposition}
-Let $\mathbf{A}$ be an $n$-dimensional unital algebra over a commutative ring $\Bbbk$, and two-sided $\Bbbk$-modules
+Let $\mathbf{A}$ be an $n$-dimensional unital algebra over a commutative ring $\Bbbk$, and $\Bbbk$-submodules
 $M_{1},\dots,M_{n} \leq \mathbf{A}$ such that
 \begin{align}
 \mathbf{A} = \bigoplus_{i=1}^{n} M_{i},
@@ -807,11 +807,37 @@ If $1 = \sum_{i=1}^{n} m_{i}$ for some $m_{i} \in M_{i}$, then the $m_{i}$ are o
 M_{i} = m_{i}\mathbf{A}m_{i},\, 1\leq i \leq n.
 \end{align}
 Furthermore, $M_{i}$ is indecomposable as a module if and only if $m_{i}$ is primitive.
-The set $\{e_{1},\dots,e_{n}\}$ of pairwise orthogonal, primitive idempotents is called \textbf{the}
-\ul{complete set of primitive orthogonal idempotents} of $\mathbf{A}$, and we can write $\mathbf{A}$ as
+If we can write $\mathbf{A}$ as a direct sum
 \[
 \mathbf{A} = 1\mathbf{A}1 = \sum_{i}e_{i} \mathbf{A} \sum_{j} e_{j} = \sum_{i,j} e_{i}\mathbf{A}e_{j}.
 \]
+of indecomposable modules $e_{i}\mathbf{A}e_{j}$ for $\{e_{1},\dots,e_{n}\}$ pairwise orthogonal, primitive idempotents, then the
+set $\{e_{1},\dots,e_{n}\}$ is called \textbf{the} \ul{complete set of primitive orthogonal idempotents} of $\mathbf{A}$. 
+\end{proposition}
+\begin{proof}[Proof\nopunct]
+\begin{subproof}[that the $m_{i}$ are orthogonal idempotents]
+
+\end{subproof}
+\begin{subproof}[Proof of equivalence $M_{i}$ indecomposable $\Leftrightarrow$ $m_{i}$ primitive]\phantom{}\\
+\setlist[description]{font=\normalfont}
+\begin{description}
+\item[``$\Rightarrow$:''] Let $M_{i}$ be indecomposable. Let $m_{i} = n + p$ for some idempotent $n, p \in \mathbf{A}$. Then
+$M_{i} = m_{i}\mathbf{A} = (n+p)\mathbf{A} = \{nx + py : x,y \in \mathbf{A}\} = n\mathbf{A} \oplus p\mathbf{A}$. Since $M_{i}$ was
+indecomposable, it follows that $n\mathbf{A} = \{0\} \vel p\mathbf{A} = \{0\}$. Therefore $n = 0 \vel p = 0$, i.e. $m_{i}$ is primitive.
+\item[``$\Leftarrow$:''] Let $m_{i}$ be primitive. Let $m_{i}\mathbf{A} = M_{i} = N \oplus P$. Therefore
+$m_{i}\mathbf{A} = \{m_{i}x : x\in \mathbf{A}\} = \{n + p : n\in N, p \in P\}$. For $1 \in \mathbf{A}$ then there are some $n \in N, p\in P$
+such that $m_{i}1 = n+p$. If $m_{i} \in N$ then 
+
+
+Since
+\[
+\mathbf{A} = \bigoplus_{j=1}^{n} M_{j} = \bigoplus_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} M_{j} \oplus (N \oplus P)
+\]
+
+\end{description}
+\end{subproof}
+\end{proof}
+
 where for the sets $e_{i}\mathbf{A}e_{j}$:
 \begin{align}
 e_{i}\mathbf{A}e_{j} &\cap e_{i'}\mathbf{A}e_{j'} = \delta_{i,i'} \cdot \delta_{j,j'},\,\text{ since }\\
@@ -819,7 +845,6 @@ x &= e_{i} \cdot a \cdot e_{j} = e_{i'} \cdot b \cdot e_{j'} \\
 x &= \underbrace{e_{i}e_{i}}_{e_{i}} \cdot a \cdot e_{j} = \underbrace{e_{i}e_{i'}}_{= 0} \cdot b \cdot e_{j'},\, &e_{i} \neq e_{i'} \\
 x &= e_{i} \cdot a \cdot \underbrace{e_{j}e_{j}}_{e_{j}} = e_{i'} \cdot b \cdot \underbrace{e_{j'}e_{j}}_{= 0},\, &e_{j} \neq e_{j'}
 \end{align}
-\end{proposition}
 \begin{proof}
 $\mathbf{A} = M_{1} \oplus M_{2}$ means $\mathbf{A} = \{m_{1} + m_{2} : m_{1} \in M_{1}, m_{2} \in M_{2}\}$ and
 $M_{1} \cap M_{2} = \{0\}$. The $M_{i}$ are closed under $\Bbbk$-linear combination and multiplication of elements in $M_{i}$, i.e.
