@@ -804,7 +804,7 @@ M_{i} \cap M_{j} &= \{0\}\, \text{ if }\, i\neq j
 \end{align}
 If $1 = \sum_{i=1}^{n} m_{i}$ for some $m_{i} \in M_{i}$, then the $m_{i}$ are orthogonal idempotents in $\mathbf{A}$, and
 \begin{align}
-M_{i} = m_{i}\mathbf{A}m_{i},\, 1\leq i \leq n.
+M_{i} = m_{i}\mathbf{A},\, 1\leq i \leq n.
 \end{align}
 Furthermore, $M_{i}$ is indecomposable as a module if and only if $m_{i}$ is primitive.
 If we can write $\mathbf{A}$ as a direct sum
@@ -812,11 +812,62 @@ If we can write $\mathbf{A}$ as a direct sum
 \mathbf{A} = 1\mathbf{A}1 = \sum_{i}e_{i} \mathbf{A} \sum_{j} e_{j} = \sum_{i,j} e_{i}\mathbf{A}e_{j}.
 \]
 of indecomposable modules $e_{i}\mathbf{A}e_{j}$ for $\{e_{1},\dots,e_{n}\}$ pairwise orthogonal, primitive idempotents, then the
-set $\{e_{1},\dots,e_{n}\}$ is called \textbf{the} \ul{complete set of primitive orthogonal idempotents} of $\mathbf{A}$. 
+set $\{e_{1},\dots,e_{n}\}$ is called a \ul{complete set of primitive orthogonal idempotents} of $\mathbf{A}$. 
 \end{proposition}
 \begin{proof}[Proof\nopunct]
 \begin{subproof}[that the $m_{i}$ are orthogonal idempotents]
+\phantom{}\\
+\begin{align}
+m_{i} &= 1 - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j} \\
+\Rightarrow m_{i}^{2} - m_{i} &= (1 - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j})^{2}
+ - (1 - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j}) \\
+ &= 1 - 2\sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j}
+ + (\sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j})^{2}
+ - (1 - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j}) \\
+ &= (\sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j})^{2}
+ - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j}
+\end{align}
 
+Per induction over $n\in \mathbb{N}$.
+
+\setlist[description]{font=\normalfont}
+\begin{description}
+\item[\ul{Case $n = 2$:}] $\mathbf{A} = M_{1} \oplus M_{2}$, and the $M_{i}$ are closed under $\Bbbk$-linear combination of
+elements in $M_{i}$, i.e. $m,m' \in M_{i}, \lambda \in \Bbbk \Rightarrow m + \lambda m' \in M_{i}$. If we have
+$1 = m_{1} + m_{2}$, then 
+\begin{align}
+m_{2} &= 1 - m_{1} \\
+\Rightarrow m_{2}^{2} - m_{2} &= (1-m_{1})^{2} - (1 - m_{1}) = 1 - 2m_{1} + m_{1}^{2} - 1 + m_{1} = m_{1}^{2} - m_{1} \\
+\Rightarrow m_{2}^{2} - m_{2} &\in M_{1}\cap M_{2} = \{0\} \,\text{ and }\, m_{1}^{2} - m_{1} \in M_{1}\cap M_{2} = \{0\} \\
+\Rightarrow m_{1} &= m_{1}^{2} \,\text{ and }\, m_{2} = m_{2}^{2}
+\end{align}
+i.e. $m_{1}, m_{2}$ are idempotent. They are also orthogonal, since
+\begin{align}
+m_{1} &= 1m_{1} = (m_{1}+m_{2})m_{1} = m_{1}^{2} + m_{2}m_{1} \\
+m_{1} &= m_{1}1 = m_{1}(m_{1}+m_{2}) = m_{1}^{2} + m_{1}m_{2}\,\text{ and with }\, m_{1}^{2} = m_{1}\,\text{ it follows that }\\
+m_{1}m_{2} &= 0 = m_{2}m_{1}
+\end{align}
+\item[\ul{Induction hypothesis:}] Let for a fixed $n \in \mathbb{N}$, whenever $\mathbf{A} = \bigoplus_{i=1}^{n} M_{i}$ is a direct sum of
+modules $M_{i}$, and $1 = \sum_{i=1}^{n} m_{i}$ for some $m_{i} \in M_{i}$, then $\{m_{1},\dots,m_{n}\}$ is a set of orthogonal idempotents.
+\item[\ul{Case $n \rightarrow n+1$:}] 
+\end{description}
+\end{subproof}
+\begin{subproof}[Proof that $M_{i} = m_{i}\mathbf{A}$]\phantom{}\\
+We show both inclusions.
+\setlist[description]{font=\normalfont}
+\begin{description}
+\item[``$\subseteq$:''] Let $x \in M_{i} \subseteq \mathbf{A}$. Then $x = 1x = (\sum_{j=1}^{n} m_{j})x = m_{i}x + \sum_{j\neq i} (m_{j}x)$.
+With $m_{j}x \in M_{j}\cap M_{i} = \{0\}$, it follows $m_{j}x = 0$ for $j \neq i$  and therefore $x = m_{i}x \in m_{i}\mathbf{A}$, i.e.
+$M_{i} \subseteq m_{i}\mathbf{A}$
+
+\item[``$\supseteq$:''] Let $y \in \mathbf{A}$. Then $m_{i}y \in M_{i}$ iff $m_{i}y = x_{1}+\dots+x_{n}$ with $x_{j}\in M_{j}$ and
+$x_{j} = 0$ for all $j \neq i$. With the above $M_{j} \subseteq m_{j}\mathbf{A}$, we have $x_{j} = m_{j}x'_{j}$ for $1\leq j \leq n$. Therefore
+since the $m_{j}$ are orthogonal idempotent,
+\[
+m_{i}y = m_{i}(x_{1}+\dots+x_{n}) = m_{i}(m_{1}x'_{1}+\dots+m_{n}x'_{n}) = m_{i}^{2}x'_{i} +
+\sum_{j\neq i} (\underbrace{m_{i}m_{j}x'_{j}}_{=0}) = m_{i}x'_{i} \in M_{i}.
+\]
+\end{description}
 \end{subproof}
 \begin{subproof}[Proof of equivalence $M_{i}$ indecomposable $\Leftrightarrow$ $m_{i}$ primitive]\phantom{}\\
 \setlist[description]{font=\normalfont}
@@ -824,16 +875,14 @@ set $\{e_{1},\dots,e_{n}\}$ is called \textbf{the} \ul{complete set of primitive
 \item[``$\Rightarrow$:''] Let $M_{i}$ be indecomposable. Let $m_{i} = n + p$ for some idempotent $n, p \in \mathbf{A}$. Then
 $M_{i} = m_{i}\mathbf{A} = (n+p)\mathbf{A} = \{nx + py : x,y \in \mathbf{A}\} = n\mathbf{A} \oplus p\mathbf{A}$. Since $M_{i}$ was
 indecomposable, it follows that $n\mathbf{A} = \{0\} \vel p\mathbf{A} = \{0\}$. Therefore $n = 0 \vel p = 0$, i.e. $m_{i}$ is primitive.
-\item[``$\Leftarrow$:''] Let $m_{i}$ be primitive. Let $m_{i}\mathbf{A} = M_{i} = N \oplus P$. Therefore
-$m_{i}\mathbf{A} = \{m_{i}x : x\in \mathbf{A}\} = \{n + p : n\in N, p \in P\}$. For $1 \in \mathbf{A}$ then there are some $n \in N, p\in P$
-such that $m_{i}1 = n+p$. If $m_{i} \in N$ then 
 
-
-Since
+\item[``$\Leftarrow$:''] Let $m_{i}$ be primitive. Let $m_{i}\mathbf{A} = M_{i} = N \oplus P$. Since
 \[
 \mathbf{A} = \bigoplus_{j=1}^{n} M_{j} = \bigoplus_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} M_{j} \oplus (N \oplus P)
 \]
-
+there exist orthogonal idempotent $n, p \in \mathbf{A}$ such that $N = n\mathbf{A}$ and $P = p\mathbf{A}$ and also
+$1 = \sum_{j=1}^{n} m_{j} = \sum_{j\neq i} m_{j} + n + p$. Therefore $m_{i} = n + p$. With $m_{i}$ primitive, we have
+$n = 0 \vel p = 0$, and therefore $M_{i} = \{0\} \oplus (p\mathbf{A}) \vel M_{i} = (n\mathbf{A}) \oplus \{0\}$, i.e. $M_{i}$ is indecomposable.
 \end{description}
 \end{subproof}
 \end{proof}
@@ -845,23 +894,7 @@ x &= e_{i} \cdot a \cdot e_{j} = e_{i'} \cdot b \cdot e_{j'} \\
 x &= \underbrace{e_{i}e_{i}}_{e_{i}} \cdot a \cdot e_{j} = \underbrace{e_{i}e_{i'}}_{= 0} \cdot b \cdot e_{j'},\, &e_{i} \neq e_{i'} \\
 x &= e_{i} \cdot a \cdot \underbrace{e_{j}e_{j}}_{e_{j}} = e_{i'} \cdot b \cdot \underbrace{e_{j'}e_{j}}_{= 0},\, &e_{j} \neq e_{j'}
 \end{align}
-\begin{proof}
-$\mathbf{A} = M_{1} \oplus M_{2}$ means $\mathbf{A} = \{m_{1} + m_{2} : m_{1} \in M_{1}, m_{2} \in M_{2}\}$ and
-$M_{1} \cap M_{2} = \{0\}$. The $M_{i}$ are closed under $\Bbbk$-linear combination and multiplication of elements in $M_{i}$, i.e.
-$m,m' \in M_{i}, \lambda \in \Bbbk \Rightarrow m + \lambda m' \in M_{i}\,\text{ and }\, mm' \in M_{i}$. If we have $1 = m_{1} + m_{2}$, then 
-\begin{align}
-m_{2} &= 1 - m_{1} \\
-m_{2}^{2} - m_{2} &= (1-m_{1})^{2} - (1 - m_{1}) = 1 - 2m_{1} + m_{1}^{2} - 1 + m_{1} = m_{1}^{2} - m_{1} \\
-m_{2}^{2} - m_{2} &\in M_{1}\cap M_{2} \\
-m_{1}^{2} - m_{1} &\in M_{1}\cap M_{2} \\
-m_{1} &= m_{1}^{2} \,\text{ and }\, m_{2} = m_{2}^{2}
-\end{align}
-i.e. $m_{1}, m_{2}$ are idempotent. They are also orthogonal, since
-\begin{align}
-m_{1} &= 1m_{1} = (m_{1}+m_{2})m_{1} = m_{1}^{2} + m_{2}m_{1} \\
-m_{1} &= m_{1}1 = m_{1}(m_{1}+m_{2}) = m_{1}^{2} + m_{1}m_{2}\,\text{ and with }\, m_{1}^{2} = m_{1}\,\text{ it follows that }\\
-m_{1}m_{2} &= 0 = m_{2}m_{1}
-\end{align}
+
 To prove $M_{1} = m_{1}\mathbf{A}$, we show both inclusions.
 \begin{enumerate}
 \renewcommand{\labelenumi}{(``$\subseteq$'')}
@@ -870,7 +903,6 @@ and therefore $x = m_{1}x \in m_{1}\mathbf{A}$.
 \renewcommand{\labelenumi}{(``$\supseteq$'')}
 \item Let $a \in \mathbf{A}$. Then $m_{1}a$.
 \end{enumerate}
-\end{proof}
 
 \begin{remark}
 The path algebra $\Bbbk q$ of a quiver $q$ with a finite set of vertices $q_{0} = \{1,\dots,n\}$ has a complete set of
@@ -905,18 +937,13 @@ Algebra with complete set of orthogonal idempotents = Vector space with basis??
 
 Path algebras $\Bbbk q$ are algebras with distinct set of orthogonal idempotents.
 
-\begin{definition}
-The category $\Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}}$ of algebras with a complete set of primitive orthogonal idempotents has
-as objects pairs $(\mathbf{A},\{e_{1},\dots,e_{n}\})$ where $\mathbf{A}$ is an associative unital $\Bbbk$-algebra with
-$1 = \sum_{i=1}^{n} e_{i}$ and $\{e_{1},\dots,e_{n}\}$ is a set of pairwise orthogonal, primitive idempotents.
-Morphisms between algebras are $\Bbbk$-Algebra homomorphisms
-$g : (\mathbf{A},\{e_{1},\dots,e_{n}\}) \rightarrow (\mathbf{B},\{f_{1},\dots,f_{m}\})$, especially
-\begin{align}
-g(1_{\mathbf{A}}) &= 1_{\mathbf{B}} \\
-g( \sum_{i=1}^{n} e_{i} ) &=  \sum_{j=1}^{m} f_{j} \\
- \sum_{i=1}^{n} g( e_{i} ) &=  \sum_{j=1}^{m} f_{j}
-\end{align}
-\end{definition}
+\begin{proposition}
+Each $\Bbbk\textnormal{-}\mathbf{Algebra}$ with a (not necessarily complete) finite system of idempotents defines a
+$\Bbbk\textnormal{-}\mathbf{Algebroid}$ with finitely many objects.
+\end{proposition}
+\begin{proof}
+TODO!
+\end{proof}
 
 \begin{proposition}
 An algebra with a distinct set of orthogonal idempotents is an algebroid. The categories $\Bbbk\textnormal{-}\mathbf{Algebroid}$ and
