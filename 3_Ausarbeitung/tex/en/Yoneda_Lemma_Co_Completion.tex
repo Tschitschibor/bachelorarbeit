@@ -16,7 +16,7 @@ functor category as in \ref{def:functor_category}
 \end{definition}
 
 \begin{remark}{(General properties of presheaves)}\\
-The category of presheaves $\mathrm{PSh}(\mathcal{C})$ is the \ul{free cocompletion} of $\mathcal{C}$.
+The category of presheaves $\mathrm{PSh}(\mathcal{C})$ is called the \ul{free cocompletion} of $\mathcal{C}$.
 \end{remark}
 
 \begin{definition}{(Representable functor)}\label{def:repres_functor}\endnote{(from ncatlab \ref{[ncatlab_repres_functor]})}
@@ -29,14 +29,6 @@ one says thet the functor $F$ is \ul{represented by} the object $c$.
 $\mathrm{Hom}(c,-) \cong F$ (for a covariant $F$, or $\mathrm{Hom}(-,c) \cong F$ for a contravariant $F$).
 \end{enumerate}
 \end{definition}
-
-\begin{lemma}{(Yoneda's Lemma)}
-Let $\mathcal{C}$ be a locally small category. For $X \in \mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set})$ any presheaf, there is a canonical isomorphism
-\[
-\mathrm{Hom}_{\mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set})}(y(c), X) \cong X(c)
-\]
-between the hom-set of presheaf homomorphisms from the representable presheaf $y(c)$ to $X$, and the value of $X$ at $c$.
-\end{lemma}
 
 \begin{lemma}{(Yoneda's Lemma)}
 For any functor $F : \mathcal{C} \rightarrow \mathrm{Set}$, whose source $\mathcal{C}$ is locally small and any
@@ -56,11 +48,6 @@ collection of natural transformations indeed forms a set.
 \begin{proof}{of naturality}
 
 \end{proof}
-
-What is the forgetful functor $U : \mathbf{Cat} \rightarrow \mathbf{Quiv}$ represented by? Is it even representable?
-A representation for $U$ is an object $c \in \mathcal{C}_{0}$, together with an isomorphism $\mathcal{C}(c,-) \cong U$.
-Target needs to be $\mathrm{Set}$.
-
 
 \begin{definition}{(Yoneda embedding)}\label{def:yoneda_embedding}\endnote{(cited from ncatlab \cite{[ncatlab_yoneda_emb]})}\\
 The \ul{Yoneda embedding} for a locally small category $\mathcal{C}$ is the functor
@@ -83,7 +70,7 @@ Y : \mathcal{C}^{\text{op}} \hookrightarrow \mathrm{Hom}(\mathcal{C},\mathrm{Set
 \]
 \end{definition}
 
-\begin{remark}
+\begin{remark}[Our $\Bbbk$-linear version of Yoneda's embedding]
 Let $\mathcal{A}$ be a $\Bbbk$-linear category with finite-dimensional $\Bbbk$-vector spaces as hom-sets. Then we get
 a $\Bbbk$-linear version of Yoneda's lemma:
 
@@ -157,7 +144,8 @@ An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of 
  \ref{la:Hom_exact_proj_Lift_along_epis} is called a \ul{projective object}.
 \end{definition}
 
-\begin{lemma}{(dual to Lemma \ref{la:Hom_exact_proj_Lift_along_epis})}\label{la:dual_Hom_exact_proj_colift}
+The dual statement to Lemma \ref{la:Hom_exact_proj_Lift_along_epis} is
+\begin{lemma}\label{la:dual_Hom_exact_proj_colift}
 Let $\mathcal{C}$ be a category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
 \begin{itemize}
 \item The contravariant functor $\mathrm{Hom}(-,P)$ is exact.
@@ -168,17 +156,34 @@ M \arrow[rd, "\psi"', dotted] & N \arrow[l, "\varphi", hook] \arrow[d, "=\,\varp
 	& P 
 \end{tikzcd}
 \end{itemize}
-\begin{proof}
-For an object $L \in \mathcal{C}_{0}, \mathrm{Hom}(-,L)$ is always a contravariant left-exact functor, i.e. respects monos.\\
-\ul{''$\Leftarrow$'' :} Prove that $\mathrm{Hom}(-,P)$  is right exact, i.e. respects epis.
-
-\end{proof}
 \end{lemma}
 
 \begin{definition}{(Injective object)}\label{def:inj_object}\\
 An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of the equivalent properties in Lemma
  \ref{la:dual_Hom_exact_proj_colift} is called an \ul{injective object}.
 \end{definition}
+
+\begin{definition}{(Yoneda projective)}
+Let $\mathcal{A}$ be a $\Bbbk$-algebroid with finitely many objects and finite-dimensional hom-sets over $\Bbbk$.
+With the Yoneda embedding 
+\[
+Y : \begin{cases}\mathcal{A}^{\text{op}} \hookrightarrow \HomAkmat \\
+i \mapsto \mathrm{Hom}_{\mathcal{A}}(-,i)
+\end{cases}
+\]
+we see that the image
+$Y(i)$ of the object $i \in \mathcal{A}^{\text{op}}$ is the representable functor $\mathrm{Hom}_{\mathcal{A}}(-,i)$ in $\HomAkmat$. 
+It is called the \ul{$i$-th Yoneda projective}.
+\end{definition}
+
+Analogous to Prop. \ref{prop:Alg-Alg-Correspondence} one can easily prove that a $\Bbbk$-representation $F$ of $\mathcal{A}$ corresponds to a 
+module $\bigoplus_{i \in \mathcal{A}_{0}} F(i)$ over the algebra $\mathbf{A} = \mathrm{Algebra}(\mathcal{A})$.
+In particular the Yoneda projective $Y(i) = \mathrm{Hom}_{\mathcal{A}}(-,i)$ corresponds to the $\mathbf{A}$-module
+$M_{i} = \bigoplus_{j \in \mathcal{A}_{0}} \mathrm{Hom}_{\mathcal{A}}(j,i)$.
+
+\begin{lemma}
+Yoneda projectives are projective objects in $\HomAkmat$.
+\end{lemma}
 
 \begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\endnote{(ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]}; I first
 want to understand Yoneda projectives in the context of CatReps, and then follow up with the general case)}\\
@@ -198,15 +203,6 @@ hom-sets $\mathrm{Hom}(Y,-)$, i.e. how exactly do the morphisms $\eta \in \mathr
 
 
 
-\begin{lemma}
-Yoneda projectives are projective objects.
-\begin{proof}
-The category $\mathrm{CatReps} := \mathrm{Hom}(\Bbbk \mathbf{q}, \Bbbk\mathbf{Mat})$ is locally small.
-Let $o \in \Bbbk \mathbf{q}_{0}$ be any object, and $P \in \mathrm{CatReps}_{0}$ be the yoneda representation of $o$ in $\mathrm{CatReps}$.
-Let $M, N \in \mathrm{CatReps}_{0}$, and $\mathrm{CatReps}_{1} \ni \eta : M \twoheadrightarrow N$ be an epimorphism.
-A morphism $\theta : P \rightarrow N$ is a natural transformation between the yoneda representation $P$ and another functor $N$.
-\end{proof}
-\end{lemma}
 
 
 Direct summands and direct sums of projectives are projective.

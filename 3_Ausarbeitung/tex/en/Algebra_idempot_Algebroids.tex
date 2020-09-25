@@ -709,16 +709,6 @@ In the following subsection we show that this is equivalent to a $\Bbbk$-linear 
 %% 
 \subsection{$\Bbbk$-linear categories, $\Bbbk$-Algebroids and $ \Bbbk$-Algebras with orthogonal idempotents}
 
-Throughout this section, let $\Bbbk$ be a commutative ring.
-
-\begin{definition}{($\Bbbk$-category)}
-Let $\Bbbk$ be a commutative ring. A \ul{$\Bbbk$-category} is a category $\mathcal{A}$ together with a $\Bbbk$-module structure
-on each hom-set in such a way that composition induces $\Bbbk$-module homomorphisms
-\[
-\mathrm{Hom}_{\mathcal{A}}(A,A')\otimes_{\Bbbk}\mathrm{Hom}_{\mathcal{A}}(A',A'') \rightarrow \mathrm{Hom}_{\mathcal{A}}(A,A'').
-\]
-\end{definition}
-
 \begin{definition}{($\Bbbk$-linear category, $\Bbbk$-$\mathrm{Algebroid}$)}
 Let $\Bbbk$ be a commutative unital ring. A \ul{$\Bbbk$-linear category}, also called \ul{$\Bbbk$-$\mathrm{Algebroid}$},$\,\mathcal{A}$ is a
 category where every hom-set is a $\Bbbk$-module, and where for $x,y,z \in \mathcal{A}_{0}$ composition of morphisms
@@ -740,22 +730,150 @@ F : \mathrm{Hom}_{\mathcal{A}}(x,y) \rightarrow \mathrm{Hom}_{\mathcal{B}}(F(x),
 is a homomorphism of $\Bbbk$-modules.
 \end{definition}
 
-\begin{definition}{(The category $\Bbbk$-$\mathbf{Algebroid}$)}
-For a fixed commutative ring $\Bbbk$, we define the category $\Bbbk\textnormal{-}\mathbf{Algebroid}$ with objects being
-$\Bbbk$-linear categories, and morphisms $\Bbbk$-linear functors between these categories.
-\end{definition}
-
 \noindent We can associate to any category a $\Bbbk$-linear category called its $\Bbbk$-linear closure:
 
 \begin{definition}{($\Bbbk$-linear closure of a category)}
-Let $\mathcal{C}$ be a category, and $\Bbbk$ a commutative unital ring. We define the \ul{category algebra} $\Bbbk \mathcal{C}$ to be
-the free $\Bbbk$-module with the morphisms of the category $\mathcal{C}$ as a basis.
+Let $\mathcal{C}$ be a category, and $\Bbbk$ a commutative unital ring. We define $\Bbbk \mathcal{C}$ to be
+the $\Bbbk$-algebroid with the same object set as $\mathcal{C}$ and with 
+\[
+\mathrm{Hom}_{\Bbbk\mathcal{C}}(a,b) = \bigoplus_{\varphi \in \mathrm{Hom}_{\mathcal{C}}(a,b)} \Bbbk \cdot \varphi,
+\]
+the free $\Bbbk$-module on the set of free generators $\mathrm{Hom}_{\mathcal{C}}(a,b)$. We call $\Bbbk\mathcal{C}$ the
+\ul{$\Bbbk$-linear closure} of $\mathcal{C}$.
 \end{definition}
+
+\begin{definition}{(Idempotent)}\label{def:idempotent}
+Let $\mathbf{A}$ be a unital algebra over the commutative ring $\Bbbk$.
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item An element $e\in \mathbf{A}$ is an \ul{idempotent} if $e^{2} = e$.
+\item If $e_{1}, e_{2} \in \mathbf{A}$ are idempotents, then we will say that they are \ul{orthogonal} iff $e_{1}e_{2} = e_{2}e_{1} = 0$.
+\item An idempotent is called \ul{trivial} if it is either $0$ or $1$.
+\item An idempotent $e \in \mathbf{A}$ is called \ul{primitive} if $e = e_{1} + e_{2}$ with idempotents $e_{1}, e_{2}$, then
+$e_{1}$ or $e_{2}$ is trivial.
+\item A finite set $\{e_{1},\dots,e_{n}\}$ of orthogonal idempotents is called \ul{complete} if $\sum_{i=1}^{n} e_{i} = 1$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}\label{prop:idempotent}
+Let $\mathbf{A}$ be a unital algebra over the commutative ring $\Bbbk$, and 
+$M_{1},\dots,M_{n}$ $\mathbf{A}$-submodules of $\mathbf{A}$ such that
+\begin{align}
+\mathbf{A} = \bigoplus_{i=1}^{n} M_{i},
+\end{align}
+i.e.
+\begin{align}
+\mathbf{A} &= \{ m_{1} + \dots + m_{n} : m_{i} \in M_{i} \}\, \text{ and }\\
+M_{i} \cap M_{j} &= \{0\}\, \text{ if }\, i\neq j 
+\end{align}
+Write $1 = \sum_{i=1}^{n} e_{i}$ for some $e_{i} \in M_{i}$. Then the $e_{i}$ are orthogonal idempotents in $\mathbf{A}$, and
+\begin{align}
+M_{i} = \mathbf{A} e_{i},\, 1\leq i \leq n.
+\end{align}
+Furthermore, $M_{i}$ is indecomposable as a module if and only if $e_{i}$ is primitive.
+\end{proposition}
+\begin{proof}[Proof\nopunct]
+\begin{subproof}[that the $m_{i}$ are orthogonal idempotents]
+\phantom{}\\
+\begin{align}
+1 &= \sum_{i=1}^{n} e_{i}\\
+e_{j} &= e_{j}\sum_{i=1}^{n} e_{i}
+\end{align}
+
+\end{subproof}
+\begin{subproof}[Proof that $M_{i} = \mathbf{A}e_{i}$]\phantom{}\\
+We show both inclusions.
+\setlist[description]{font=\normalfont}
+\begin{description}
+\item[``$\subseteq$:''] Let $x \in M_{i}$. We are done, if we show that $x = xe_{i}$.
+\end{description}
+\end{subproof}
+\begin{subproof}[Proof of equivalence $M_{i}$ indecomposable $\Leftrightarrow$ $m_{i}$ primitive]\phantom{}\\
+\setlist[description]{font=\normalfont}
+\begin{description}
+\item[``$\Rightarrow$:''] Let $M_{i}$ be indecomposable. Let $m_{i} = n + p$ for some idempotent $n, p \in \mathbf{A}$. Then
+$M_{i} = m_{i}\mathbf{A} = (n+p)\mathbf{A} = \{nx + py : x,y \in \mathbf{A}\} = n\mathbf{A} \oplus p\mathbf{A}$. Since $M_{i}$ was
+indecomposable, it follows that $n\mathbf{A} = \{0\} \vel p\mathbf{A} = \{0\}$. Therefore $n = 0 \vel p = 0$, i.e. $m_{i}$ is primitive.
+
+\item[``$\Leftarrow$:''] Let $m_{i}$ be primitive. Let $m_{i}\mathbf{A} = M_{i} = N \oplus P$. Since
+\[
+\mathbf{A} = \bigoplus_{j=1}^{n} M_{j} = \bigoplus_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} M_{j} \oplus (N \oplus P)
+\]
+there exist orthogonal idempotent $n, p \in \mathbf{A}$ such that $N = n\mathbf{A}$ and $P = p\mathbf{A}$ and also
+$1 = \sum_{j=1}^{n} m_{j} = \sum_{j\neq i} m_{j} + n + p$. Therefore $m_{i} = n + p$. With $m_{i}$ primitive, we have
+$n = 0 \vel p = 0$, and therefore $M_{i} = \{0\} \oplus (p\mathbf{A}) \vel M_{i} = (n\mathbf{A}) \oplus \{0\}$, i.e. $M_{i}$ is indecomposable.
+\end{description}
+\end{subproof}
+\end{proof}
+
+A unital associative $\Bbbk$-algebra is a $\Bbbk$-algebroid with one object.
+Let $\Bbbk$ be a commutative unital ring and $\mathbf{A}$ a unital associative algebra over $\Bbbk$. This defines a category $\mathcal{A}$
+with a single object $\ast$ and the morphisms being the elements of the algebra, which are all endomorphisms since there is only one object.
+Composition of morphisms is defined by the multiplication in $\mathbf{A}$, which is assumed to be associative.
+The unit $e$ of the algebra acts as the identity morphism. The set $\{ e \}$ is trivially a set of orthogonal idempotents.
+The hom-set $\mathrm{Hom}_{\mathcal{A}}(\ast,\ast) = \mathrm{End}_{\mathcal{A}}(\ast)$ is the whole algebra $\mathbf{A}$, which is
+a $\Bbbk$ module with bilinear multiplication as composition, i.e. $\mathcal{A}$ is a $\kAlgebroid$.
+
+\begin{proposition}\label{prop:Alg-Alg-Correspondence}
+Each $\Bbbk$-algebra $\mathbf{A}$ with $\{e_{1},\dots,e_{n}\}$ a finite complete system of (not necessarily primitive) orthogonal
+idempotents defines a $\Bbbk$-algebroid $\mathcal{A}$ with object set $\mathcal{A}_{0} := \{1,\dots,n\}$. More precisely:
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item The set of morphisms between two objects $i,j$ is defined as
+$\mathrm{Hom}_{\mathcal{A}}(i,j) := e_{i}\mathbf{A}e_{j}$, i.e. a morphism is an element
+$e_{i}\mathbf{A}e_{j} \ni \alpha = e_{i}ae_{j}, a\in \mathbf{A}$.
+It follows that the identity morphism $1_{i} = e_{i}$ for $1\leq i \leq n$.
+
+\item $\mathbf{A} := \mathrm{Algebra}(\mathcal{A}) := \bigoplus_{i,j} \mathrm{Hom}_{\mathcal{A}}(i,j)$ is again a unital algebra with
+multiplication 
+\[
+\varphi_{i,j} \cdot \psi_{k,l} := \begin{cases}\varphi_{i,j} \psi_{k,l} & \text{ if } j = k\\
+0 \in \mathbf{A} & \text{ if } j \neq k, \end{cases}
+\]
+where the first case is the composition in the algebroid. It follows that $1 = \sum_{i} 1_{i}$ is the multiplicative identity of $\mathbf{A}$.
+
+\end{enumerate}
+These two constructions are mutually inverse.
+\end{proposition}
+\begin{proof}
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+
+
+\[
+\mathbf{A} = 1\mathbf{A}1 = \left(\sum_{i}e_{i}\right) \mathbf{A} \left(\sum_{j} e_{j}\right) = \bigoplus_{i,j} e_{i}\mathbf{A}e_{j}
+\]
+a direct sum decomposition of $\mathbf{A}$ in $\Bbbk$-submodules. The last sum is a direct sum:
+\begin{align}
+e_{i}\mathbf{A}e_{j} &\cap e_{i'}\mathbf{A}e_{j'} = \delta_{i,i'} \cdot \delta_{j,j'},\,\text{ since }\\
+x &= e_{i} \cdot a \cdot e_{j} = e_{i'} \cdot b \cdot e_{j'} \\
+x &= \underbrace{e_{i}e_{i}}_{e_{i}} \cdot a \cdot e_{j} = \underbrace{e_{i}e_{i'}}_{= 0} \cdot b \cdot e_{j'},\, &e_{i} \neq e_{i'} \\
+x &= e_{i} \cdot a \cdot \underbrace{e_{j}e_{j}}_{e_{j}} = e_{i'} \cdot b \cdot \underbrace{e_{j'}e_{j}}_{= 0},\, &e_{j} \neq e_{j'}
+\end{align}
+
+Composition of morphisms
+$i \xrightarrow{\alpha} j \xrightarrow{\beta} k$ is defined by the multiplication in $\mathbf{A}$.
+Let $\alpha = e_{i}ae_{j}, \beta = e_{j}be_{k}$ with $a, b\in \mathbf{A}$. Then
+\begin{align}
+\alpha \beta &= (e_{i}ae_{j})(e_{j}be_{k}) \\
+&= e_{i}(ae_{j}b)e_{k} \\
+&= e_{i}ce_{k}\,\text{ with }\, c := ae_{j}b \in \mathbf{A}.
+\end{align}
+Associativity of composition follows from associativity of multiplication in $\mathbf{A}$.
+
+\item 
+
+It's an easy exercise to see that the above defined $1$ is indeed a multiplicative unit of the algebra $\mathbf{A}$.
+We define $M_{i} := \bigoplus_{j=1}^{n} \mathrm{Hom}_{\mathcal{A}}(j,i)$ an $\mathbf{A}$-submodule of $\mathbf{A}$.
+Then $\mathbf{A} = \bigoplus_{i=1}^{n} M_{i}$ as in Proposition \ref{prop:idempotent} and it follows that the idempotent $e_{i} = 1_{i}$.
+\end{enumerate}
+The above constructions are mutually inverse:
+\end{proof}
 
 \begin{definition}{(Path algebra of a quiver)}\label{def:path_algebra}
 We define the \ul{path algebra} of a quiver $q$ over a commutative ring $\Bbbk$ by
 \[
-\Bbbk q := \Bbbk Fq,
+\Bbbk q := \mathrm{Algebra}( \Bbbk Fq ),
 \]
 where $Fq$ is the free category of the quiver $q$ from definition \ref{def:free_category}.
 \end{definition}
@@ -777,228 +895,6 @@ associative algebra, i.e. a unital ring that is also a vector space.\endnote{(Fr
 \begin{proof}
 Let $e := \sum_{x\in q_{0}} e_{x}$. Let $w$ be a path with $s(w) = x$ and $t(w) = y$, then $e_{x}w = w$ and $e_{z}w = 0$ for all $z \neq x$,
 thus $ew = e_{x}w + \sum_{z\neq x} e_{z}w = w + 0 = w$. Similarly, $we_{y} = w$ and $we_{z} = 0$ for $z \neq x$.
-
 \end{proof}
-
-\begin{definition}{(Idempotent)}\label{def:idempotent}
-Let $\mathbf{A}$ be a unital algebra over a field $\Bbbk$.
-\begin{enumerate}
-\renewcommand{\labelenumi}{(\theenumi)}
-\item An element $e\in \mathbf{A}$ is an \ul{idempotent} if $e^{2} = e$.
-\item If $e_{1}, e_{2} \in \mathbf{A}$ are idempotents, then we will say that they are \ul{orthogonal} iff $e_{1}e_{2} = e_{2}e_{1} = 0$.
-\item An idempotent $e \in \mathbf{A}$ is called \ul{primitive} if $e = e_{1} + e_{2} \Rightarrow e_{1} = 0 \vel e_{2} = 0$.
-\item An idempotent is called \ul{trivial} if it is either $0$ or $1$.
-\end{enumerate}
-\end{definition}
-
-\begin{proposition}
-Let $\mathbf{A}$ be an $n$-dimensional unital algebra over a commutative ring $\Bbbk$, and $\Bbbk$-submodules
-$M_{1},\dots,M_{n} \leq \mathbf{A}$ such that
-\begin{align}
-\mathbf{A} = \bigoplus_{i=1}^{n} M_{i},
-\end{align}
-i.e.
-\begin{align}
-\mathbf{A} &= \{ m_{1} + \dots + m_{n} : m_{i} \in M_{i} \}\, \text{ and }\\
-M_{i} \cap M_{j} &= \{0\}\, \text{ if }\, i\neq j 
-\end{align}
-If $1 = \sum_{i=1}^{n} m_{i}$ for some $m_{i} \in M_{i}$, then the $m_{i}$ are orthogonal idempotents in $\mathbf{A}$, and
-\begin{align}
-M_{i} = m_{i}\mathbf{A},\, 1\leq i \leq n.
-\end{align}
-Furthermore, $M_{i}$ is indecomposable as a module if and only if $m_{i}$ is primitive.
-If we can write $\mathbf{A}$ as a direct sum
-\[
-\mathbf{A} = 1\mathbf{A}1 = \sum_{i}e_{i} \mathbf{A} \sum_{j} e_{j} = \sum_{i,j} e_{i}\mathbf{A}e_{j}.
-\]
-of indecomposable modules $e_{i}\mathbf{A}e_{j}$ for $\{e_{1},\dots,e_{n}\}$ pairwise orthogonal, primitive idempotents, then the
-set $\{e_{1},\dots,e_{n}\}$ is called a \ul{complete set of primitive orthogonal idempotents} of $\mathbf{A}$. 
-\end{proposition}
-\begin{proof}[Proof\nopunct]
-\begin{subproof}[that the $m_{i}$ are orthogonal idempotents]
-\phantom{}\\
-\begin{align}
-m_{i} &= 1 - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j} \\
-\Rightarrow m_{i}^{2} - m_{i} &= (1 - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j})^{2}
- - (1 - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j}) \\
- &= 1 - 2\sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j}
- + (\sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j})^{2}
- - (1 - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j}) \\
- &= (\sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j})^{2}
- - \sum_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} m_{j}
-\end{align}
-
-Per induction over $n\in \mathbb{N}$.
-
-\setlist[description]{font=\normalfont}
-\begin{description}
-\item[\ul{Case $n = 2$:}] $\mathbf{A} = M_{1} \oplus M_{2}$, and the $M_{i}$ are closed under $\Bbbk$-linear combination of
-elements in $M_{i}$, i.e. $m,m' \in M_{i}, \lambda \in \Bbbk \Rightarrow m + \lambda m' \in M_{i}$. If we have
-$1 = m_{1} + m_{2}$, then 
-\begin{align}
-m_{2} &= 1 - m_{1} \\
-\Rightarrow m_{2}^{2} - m_{2} &= (1-m_{1})^{2} - (1 - m_{1}) = 1 - 2m_{1} + m_{1}^{2} - 1 + m_{1} = m_{1}^{2} - m_{1} \\
-\Rightarrow m_{2}^{2} - m_{2} &\in M_{1}\cap M_{2} = \{0\} \,\text{ and }\, m_{1}^{2} - m_{1} \in M_{1}\cap M_{2} = \{0\} \\
-\Rightarrow m_{1} &= m_{1}^{2} \,\text{ and }\, m_{2} = m_{2}^{2}
-\end{align}
-i.e. $m_{1}, m_{2}$ are idempotent. They are also orthogonal, since
-\begin{align}
-m_{1} &= 1m_{1} = (m_{1}+m_{2})m_{1} = m_{1}^{2} + m_{2}m_{1} \\
-m_{1} &= m_{1}1 = m_{1}(m_{1}+m_{2}) = m_{1}^{2} + m_{1}m_{2}\,\text{ and with }\, m_{1}^{2} = m_{1}\,\text{ it follows that }\\
-m_{1}m_{2} &= 0 = m_{2}m_{1}
-\end{align}
-\item[\ul{Induction hypothesis:}] Let for a fixed $n \in \mathbb{N}$, whenever $\mathbf{A} = \bigoplus_{i=1}^{n} M_{i}$ is a direct sum of
-modules $M_{i}$, and $1 = \sum_{i=1}^{n} m_{i}$ for some $m_{i} \in M_{i}$, then $\{m_{1},\dots,m_{n}\}$ is a set of orthogonal idempotents.
-\item[\ul{Case $n \rightarrow n+1$:}] 
-\end{description}
-\end{subproof}
-\begin{subproof}[Proof that $M_{i} = m_{i}\mathbf{A}$]\phantom{}\\
-We show both inclusions.
-\setlist[description]{font=\normalfont}
-\begin{description}
-\item[``$\subseteq$:''] Let $x \in M_{i} \subseteq \mathbf{A}$. Then $x = 1x = (\sum_{j=1}^{n} m_{j})x = m_{i}x + \sum_{j\neq i} (m_{j}x)$.
-With $m_{j}x \in M_{j}\cap M_{i} = \{0\}$, it follows $m_{j}x = 0$ for $j \neq i$  and therefore $x = m_{i}x \in m_{i}\mathbf{A}$, i.e.
-$M_{i} \subseteq m_{i}\mathbf{A}$
-
-\item[``$\supseteq$:''] Let $y \in \mathbf{A}$. Then $m_{i}y \in M_{i}$ iff $m_{i}y = x_{1}+\dots+x_{n}$ with $x_{j}\in M_{j}$ and
-$x_{j} = 0$ for all $j \neq i$. With the above $M_{j} \subseteq m_{j}\mathbf{A}$, we have $x_{j} = m_{j}x'_{j}$ for $1\leq j \leq n$. Therefore
-since the $m_{j}$ are orthogonal idempotent,
-\[
-m_{i}y = m_{i}(x_{1}+\dots+x_{n}) = m_{i}(m_{1}x'_{1}+\dots+m_{n}x'_{n}) = m_{i}^{2}x'_{i} +
-\sum_{j\neq i} (\underbrace{m_{i}m_{j}x'_{j}}_{=0}) = m_{i}x'_{i} \in M_{i}.
-\]
-\end{description}
-\end{subproof}
-\begin{subproof}[Proof of equivalence $M_{i}$ indecomposable $\Leftrightarrow$ $m_{i}$ primitive]\phantom{}\\
-\setlist[description]{font=\normalfont}
-\begin{description}
-\item[``$\Rightarrow$:''] Let $M_{i}$ be indecomposable. Let $m_{i} = n + p$ for some idempotent $n, p \in \mathbf{A}$. Then
-$M_{i} = m_{i}\mathbf{A} = (n+p)\mathbf{A} = \{nx + py : x,y \in \mathbf{A}\} = n\mathbf{A} \oplus p\mathbf{A}$. Since $M_{i}$ was
-indecomposable, it follows that $n\mathbf{A} = \{0\} \vel p\mathbf{A} = \{0\}$. Therefore $n = 0 \vel p = 0$, i.e. $m_{i}$ is primitive.
-
-\item[``$\Leftarrow$:''] Let $m_{i}$ be primitive. Let $m_{i}\mathbf{A} = M_{i} = N \oplus P$. Since
-\[
-\mathbf{A} = \bigoplus_{j=1}^{n} M_{j} = \bigoplus_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} M_{j} \oplus (N \oplus P)
-\]
-there exist orthogonal idempotent $n, p \in \mathbf{A}$ such that $N = n\mathbf{A}$ and $P = p\mathbf{A}$ and also
-$1 = \sum_{j=1}^{n} m_{j} = \sum_{j\neq i} m_{j} + n + p$. Therefore $m_{i} = n + p$. With $m_{i}$ primitive, we have
-$n = 0 \vel p = 0$, and therefore $M_{i} = \{0\} \oplus (p\mathbf{A}) \vel M_{i} = (n\mathbf{A}) \oplus \{0\}$, i.e. $M_{i}$ is indecomposable.
-\end{description}
-\end{subproof}
-\end{proof}
-
-where for the sets $e_{i}\mathbf{A}e_{j}$:
-\begin{align}
-e_{i}\mathbf{A}e_{j} &\cap e_{i'}\mathbf{A}e_{j'} = \delta_{i,i'} \cdot \delta_{j,j'},\,\text{ since }\\
-x &= e_{i} \cdot a \cdot e_{j} = e_{i'} \cdot b \cdot e_{j'} \\
-x &= \underbrace{e_{i}e_{i}}_{e_{i}} \cdot a \cdot e_{j} = \underbrace{e_{i}e_{i'}}_{= 0} \cdot b \cdot e_{j'},\, &e_{i} \neq e_{i'} \\
-x &= e_{i} \cdot a \cdot \underbrace{e_{j}e_{j}}_{e_{j}} = e_{i'} \cdot b \cdot \underbrace{e_{j'}e_{j}}_{= 0},\, &e_{j} \neq e_{j'}
-\end{align}
-
-To prove $M_{1} = m_{1}\mathbf{A}$, we show both inclusions.
-\begin{enumerate}
-\renewcommand{\labelenumi}{(``$\subseteq$'')}
-\item Let $x \in M_{1}$. Then $x = 1x = (m_{1}+m_{2})x = m_{1}x + m_{2}x$. With $m_{2}x \in M_{2}\cap M_{1}$ if follows $m_{2}x = 0$
-and therefore $x = m_{1}x \in m_{1}\mathbf{A}$.
-\renewcommand{\labelenumi}{(``$\supseteq$'')}
-\item Let $a \in \mathbf{A}$. Then $m_{1}a$.
-\end{enumerate}
-
-\begin{remark}
-The path algebra $\Bbbk q$ of a quiver $q$ with a finite set of vertices $q_{0} = \{1,\dots,n\}$ has a complete set of
-primitive orthogonal idempotents, namely the set $\{e_{1},\dots,e_{n}\}$ of empty paths $e_{i}$ on each vertex $i \in q_{0}$.
-\end{remark}
-\begin{proof}
-Since $q_{0}$ is finite, $\Bbbk q$ has a unit $1 = \sum_{i=1}^{n} e_{i}$ (ref. \ref{la:unit_in_path_algebra}). We can write $\Bbbk q$ as the
-direct sum of all sub-algebras $e_{i} \Bbbk q$ of paths that start at vertex $i$ or of all sub-algebras $\Bbbk q e_{j}$ of paths ending at vertex $j$,
-and even as the direct sum of all paths from vertex $i$ to vertex $j$.
-\begin{align}
-\Bbbk q = \bigoplus_{i=1}^{n} e_{i} \Bbbk q = \bigoplus_{j=1}^{n} \Bbbk q e_{j} = \bigoplus_{i, j} e_{i} \Bbbk q e_{j} 
-\end{align}
-\end{proof}
-
-\begin{proposition}
-A unital associative $\Bbbk$-algebra is a $\Bbbk$-algebroid with 1 object
-\end{proposition}
-\begin{proof}
-Let $\Bbbk$ be a commutative unital ring and $\mathbf{A}$ a unital associative algebra over $\Bbbk$. This defines a category $\mathcal{A}$
-with a single object $\ast$ and the morphisms being the elements of the algebra, which are all endomorphisms since there is only one object.
-Composition of morphisms is defined by the multiplication in $\mathbf{A}$, which is assumed to be associative.
-The unit $e$ of the algebra acts as the identity morphism. The set $\{ e \}$ is trivially a set of orthogonal idempotents.
-The hom-set $\mathrm{Hom}_{\mathcal{A}}(\ast,\ast) = \mathrm{End}_{\mathcal{A}}(\ast)$ is the whole algebra $\mathbf{A}$, which is
-a $\Bbbk$ module with bilinear multiplication as composition, i.e. $\mathcal{A}$ is a $\kAlgebroid$.
-\end{proof}
-
-\[
-\Bbbk\textnormal{-}\mathbf{Algebra} \subset \Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}} \cong \Bbbk\textnormal{-}\mathbf{Algebroid}
-\]
-
-Algebra with complete set of orthogonal idempotents = Vector space with basis??
-
-Path algebras $\Bbbk q$ are algebras with distinct set of orthogonal idempotents.
-
-\begin{proposition}
-Each $\Bbbk\textnormal{-}\mathbf{Algebra}$ with a (not necessarily complete) finite system of idempotents defines a
-$\Bbbk\textnormal{-}\mathbf{Algebroid}$ with finitely many objects.
-\end{proposition}
-\begin{proof}
-The algebroid $\mathcal{A}$ has as set of objects the set $\mathcal{A}_{0} := \{1,\dots,n\}$ with identity morphisms
-$1_{i} = e_{i}, 1\leq i \leq n$. The set of morphisms between two objects $i,j$ is defined as
-$\mathrm{Hom}_{\mathcal{A}}(i,j) := e_{i}\mathbf{A}e_{j}$, i.e. a morphism is an element
-$e_{i}\mathbf{A}e_{j} \ni \alpha = e_{i}ae_{j}, a\in \mathbf{A}$. Composition of morphisms
-$i \xrightarrow{\alpha} j \xrightarrow{\beta} k$ is defined by the multiplication in $\mathbf{A}$.
-Let $\alpha = e_{i}ae_{j}, \beta = e_{j}be_{k}$ with $a, b\in \mathbf{A}$. Then
-\begin{align}
-\alpha \beta &= (e_{i}ae_{j})(e_{j}be_{k}) \\
-&= e_{i}(ae_{j}b)e_{k} \\
-&= e_{i}ce_{k}\,\text{ with }\, c := ae_{j}b \in \mathbf{A}.
-\end{align}
-Associativity of composition follows from associativity of multiplication in $\mathbf{A}$.
-\end{proof}
-
-\begin{proposition}
-An algebra with a distinct set of orthogonal idempotents is an algebroid. The categories $\Bbbk\textnormal{-}\mathbf{Algebroid}$ and
-$\Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}}$ are equivalent.
-\end{proposition}
-\begin{proof}
-From theorem \ref{thm:equiv_fully_faithful} we know that the equivalence is characterized by a fully faithful functor that is essentially surjective.
-\[
-\begin{tikzcd}
-\Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}} \arrow[r, "F"] & \Bbbk\textnormal{-}\mathbf{Algebroid}
-\end{tikzcd}
-\]
-I will show how the functor $F$ acts on objects.
-Let $\{e_{1},\dots,e_{n}\}$ be the complete set of primitive orthogonal idempotents of $\mathbf{A}$. Then the algebroid
-$\mathcal{A} := F(\mathbf{A},\{e_{1},\dots,e_{n}\})$ has
-as set of objects the set $\mathcal{A}_{0} := \{1,\dots,n\}$ with identity morphisms $1_{i} = e_{i}, 1\leq i \leq n$. The set of morphisms between
-two objects $i,j$ is defined as $\mathrm{Hom}_{\mathcal{A}}(i,j) := e_{i}\mathbf{A}e_{j}$, i.e. a morphism is an element
-$e_{i}\mathbf{A}e_{j} \ni \alpha = e_{i}ae_{j}, a\in \mathbf{A}$.
-Composition of morphisms $i \xrightarrow{\alpha} j \xrightarrow{\beta} k$ is defined by the multiplication in $\mathbf{A}$.
-Let $\alpha = e_{i}ae_{j}, \beta = e_{j}be_{k}$ with $a, b\in \mathbf{A}$. Then
-\begin{align}
-\alpha \beta &= (e_{i}ae_{j})(e_{j}be_{k}) \\
-&= e_{i}(ae_{j}b)e_{k} \\
-&= e_{i}ce_{k}\,\text{ with }\, c := ae_{j}b \in \mathbf{A}.
-\end{align}
-Associativity of composition follows from associativity of multiplication in $\mathbf{A}$.
-To show that $F$ is fully faithful and essentially surjective, let $\mathcal{C} := \Bbbk\textnormal{-}\mathbf{Algebra}^{\text{idem}}$ and
-$\mathcal{D} := \Bbbk\textnormal{-}\mathbf{Algebroid}$, and let $A := (\mathbf{A},\{e_{1},\dots,e_{n}\}),\, B := (\mathbf{B},\{f_{1},\dots,f_{m}\}) \in \mathcal{C}_{0}$. We have to show that the map
-\[
-\mathrm{Hom}_{\mathcal{C}}(A,B) \rightarrow \mathrm{Hom}_{\mathcal{D}}(FA,FB)
-\]
-\setlist[description]{font=\normalfont}
-\begin{description}
-\item[(full)] is surjective: Let $G : FA \rightarrow FB$ be a $\Bbbk$-linear functor between algebroids. Then there is an algebra-homomorphism
-$g : A \rightarrow B \in \mathrm{Hom}_{\mathcal{C}}(A,B)$ such that $G = Fg$.
-\item[(faithful)] is injective: Let $Fg := G : FA \rightarrow FB$ and $Fh := H : FA \rightarrow FB$ be the same morphism $Fg = G = H = Fh$.
-Then it follows that $g = h$ are the same algebra-homomorphism.
-\item[(essentially surjective)] And that for every algebroid $\mathcal{A} \in \mathcal{D}$ there is some
-$A := (\mathbf{A},\{e_{1},\dots,e_{n}\}) \in \mathcal{C}$ such that $\mathcal{A}$ is isomorphic to $FA$: 
-The path algebra $\Bbbk U(\mathcal{A})$.
-\end{description}
-\end{proof}
-
-
-
 
 
