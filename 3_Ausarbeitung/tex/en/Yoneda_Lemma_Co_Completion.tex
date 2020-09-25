@@ -184,26 +184,15 @@ $M_{i} = \bigoplus_{j \in \mathcal{A}_{0}} \mathrm{Hom}_{\mathcal{A}}(j,i)$.
 \begin{lemma}
 Yoneda projectives are projective objects in $\HomAkmat$.
 \end{lemma}
-
-\begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\endnote{(ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]}; I first
-want to understand Yoneda projectives in the context of CatReps, and then follow up with the general case)}\\
-Consider the category of functors $\mathrm{Hom}( \mathcal{A}, \Bbbk\mathrm{-Mat} )$ from a $\Bbbk$-Algebroid $\mathcal{A}$ to the matrix category
-over the same field $\Bbbk$, where the objects are representations of the algebroid by matrices, i.e. functors between the two categories, and
-the morphisms are natural transformations between these functors.\\
-\noindent Given an object $o \in \mathcal{A}$, the \ul{Yoneda projective} is the submodule of the category algebra consisting of all arrows
-starting at $o$.
-\end{definition}
-
-Given that Yoneda projectives are objects, we can ask questions about their properties as objects in a category. On the other hand, they are
-functors in the functor category, so addressing them as functors we can ask our four questions \ref{four_functor_questions} 
-How does it work on objects? How does it work on morphisms? Why does it respect composition? Why does it respect identity morphisms?
-
-If we want to check the property of a projective object for a yoneda projective $Y \in \mathrm{CatReps}_{0}$, we have to consider the
-hom-sets $\mathrm{Hom}(Y,-)$, i.e. how exactly do the morphisms $\eta \in \mathrm{CatReps}_{1}$ work?
-
-
-
-
+\begin{proof}
+We have to show that $\mathrm{Hom}_{\mathcal{A}}(Y(i),-) = \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),-)$ is exact.\\
+Let $F,G \in \HomAkmat$ and $\varphi : F \twoheadrightarrow G$ an epi. For exactness of
+$\mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),-)$ we have to show that
+$\mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),\varphi) : \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),F) \rightarrow \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),G)$ defined by 
+$\rho \mapsto \rho\varphi\, \forall \rho \in \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),F)$ is also an epi.\\
+For two parallel morphisms $\mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),\psi), \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),\theta) : \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),G) \rightrightarrows \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),H)$
+with $\rho\varphi\psi = \rho\varphi\theta$ we already have $\psi = \theta$?
+\end{proof}
 
 Direct summands and direct sums of projectives are projective.
 
@@ -211,12 +200,13 @@ Yoneda projectives, projective indecomposables -> every projective object is a d
 
 projective indecomposables for a given concrete category
 
+
+\subsection{Enough Projective objects (constructively)}
+
 \begin{definition}{(Sufficiently many projectives)}\label{def:enough_projectives}\endnote{(ref. \cite{[sciencedirect_proj_objects]})}
 A category $\mathcal{C}$ is said to have \ul{sufficiently many} (or \ul{enough}) \ul{projectives} if for any object $A \in \mathcal{C}_{0}$
 there exists an epimorphism $P \twoheadrightarrow A$, where $P$ is projective.
 \end{definition}
-
-\subsection{Enough Projective objects (constructively)}
 
 We state without a proof the following fact about our functor category:
 
