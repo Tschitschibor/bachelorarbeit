@@ -942,7 +942,18 @@ Each $\Bbbk\textnormal{-}\mathbf{Algebra}$ with a (not necessarily complete) fin
 $\Bbbk\textnormal{-}\mathbf{Algebroid}$ with finitely many objects.
 \end{proposition}
 \begin{proof}
-TODO!
+The algebroid $\mathcal{A}$ has as set of objects the set $\mathcal{A}_{0} := \{1,\dots,n\}$ with identity morphisms
+$1_{i} = e_{i}, 1\leq i \leq n$. The set of morphisms between two objects $i,j$ is defined as
+$\mathrm{Hom}_{\mathcal{A}}(i,j) := e_{i}\mathbf{A}e_{j}$, i.e. a morphism is an element
+$e_{i}\mathbf{A}e_{j} \ni \alpha = e_{i}ae_{j}, a\in \mathbf{A}$. Composition of morphisms
+$i \xrightarrow{\alpha} j \xrightarrow{\beta} k$ is defined by the multiplication in $\mathbf{A}$.
+Let $\alpha = e_{i}ae_{j}, \beta = e_{j}be_{k}$ with $a, b\in \mathbf{A}$. Then
+\begin{align}
+\alpha \beta &= (e_{i}ae_{j})(e_{j}be_{k}) \\
+&= e_{i}(ae_{j}b)e_{k} \\
+&= e_{i}ce_{k}\,\text{ with }\, c := ae_{j}b \in \mathbf{A}.
+\end{align}
+Associativity of composition follows from associativity of multiplication in $\mathbf{A}$.
 \end{proof}
 
 \begin{proposition}

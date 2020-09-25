@@ -112,7 +112,9 @@ M \arrow[r, "\varphi", two heads] & N \\
 \end{itemize}
 \begin{proof}
 For an object $L\in \mathcal{C}_{0}$, $\mathrm{Hom}(L,-)$ is always a covariant left-exact functor, i.e. respects monos.\\
-\ul{''$\Leftarrow$'' :} Prove that $\mathrm{Hom}(P,-)$  is right exact, i.e. respects epis.\\
+\setlist[description]{font=\normalfont}
+\begin{description}
+\item[``$\Leftarrow$:''] Prove that $\mathrm{Hom}(P,-)$  is right exact, i.e. respects epis.\\
 For this, let $M, N \in \mathcal{C}_{0}$ and $\varphi : M \twoheadrightarrow N$ be an epi. The Hom-functor works on morphisms
 by mapping the Hom-sets of the source and target objects of the morphism, i.e.
 $\mathrm{Hom}(P,\varphi) : \mathrm{Hom}(P,M) \rightarrow \mathrm{Hom}(P,N)$, given by $\rho \mapsto \rho\varphi\, \forall \rho \in \mathrm{Hom}(P,M)$.
@@ -136,7 +138,7 @@ equation \eqref{eqn:Hom_functoriality},
 $\theta\gamma = (\rho\varphi)\gamma = \rho(\varphi\gamma) = \rho(\varphi\varepsilon) = (\rho\varphi)\varepsilon = \theta\varepsilon$
 and therefore $\mathrm{Hom}(P,\gamma) = \mathrm{Hom}(P,\varepsilon)$, i.e. $\mathrm{Hom}(P,\varphi)$ is epi.\\
 
-\noindent\ul{''$\Rightarrow$'':} Let $\mathrm{Hom}(P,-)$ be right exact. Let $M, N \in \mathcal{C}_{0}$, the morphism
+\item[``$\Rightarrow$:''] Let $\mathrm{Hom}(P,-)$ be right exact. Let $M, N \in \mathcal{C}_{0}$, the morphism
 $\varphi : M \twoheadrightarrow N$ be an epi and $\theta : P \rightarrow N$ any morphism.
 We want to show the existence of a morphism $\psi : P \dottedrightarrow\, M$ such that $\theta = \psi\varphi$.
 With $\mathrm{Hom}(P,-)$ being exact, we have that $\mathrm{Hom}(P,\varphi) : \mathrm{Hom}(P,M) \twoheadrightarrow \mathrm{Hom}(P,N)$ is
@@ -146,6 +148,7 @@ of morphisms between them. The $\mathrm{Hom}$-functor moves the morphisms from a
 in $\mathcal{C}$ into the category of sets, i.e. $\mathrm{Hom}(P,\varphi)$ is a function in the category of sets.
 And for those it's true that every epimorphism is surjective. Thus $\forall \theta \in \mathrm{Hom}(P,N)\, \exists \rho \in \mathrm{Hom}(P,M)$ such
 that $\theta = (\mathrm{Hom}(P,\varphi))(\rho) = \rho\varphi$. This $\rho$ is the projective lift $\psi := \rho$ we were looking for.
+\end{description}
 \end{proof}
 \end{lemma}
 
@@ -175,10 +178,6 @@ For an object $L \in \mathcal{C}_{0}, \mathrm{Hom}(-,L)$ is always a contravaria
 \begin{definition}{(Injective object)}\label{def:inj_object}\\
 An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of the equivalent properties in Lemma
  \ref{la:dual_Hom_exact_proj_colift} is called an \ul{injective object}.
-\end{definition}
-
-\begin{definition}{(Yoneda representation)}
-$F$
 \end{definition}
 
 \begin{definition}{(Yoneda projective, CatReps version)}\label{la:yoneda_projective}\endnote{(ref. Chapter 4 in \cite{[CategoryAlgebras_Webb]}; I first
@@ -221,29 +220,14 @@ A category $\mathcal{C}$ is said to have \ul{sufficiently many} (or \ul{enough})
 there exists an epimorphism $P \twoheadrightarrow A$, where $P$ is projective.
 \end{definition}
 
-
-
-
-
-\begin{definition}{(Projective object)}
-
-\end{definition}
-
-\begin{theorem}
-Yoneda projectives are projective objects.
-\begin{proof}
-TODO
-\end{proof}
-\end{theorem}
-
-
 \subsection{Enough Projective objects (constructively)}
 
-\begin{theorem}{($\HomAkmat$ has enough projectives)}
+We state without a proof the following fact about our functor category:
+
+\begin{theorem}{($\HomAkmat$ has enough projectives)}\\
 Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category $\HomAkmat$ has sufficiently many
-projectives (ref. \ref{def:enough_projectives}).
+projectives.
 \end{theorem}
 \begin{proof}
 (no proof)
-Let $F \in \HomAkmat_{0}$. We want to find a projective object $P \in \HomAkmat_{0}$ and an epimorphism $\eta: P \twoheadrightarrow F$.
 \end{proof}
