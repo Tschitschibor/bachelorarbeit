@@ -6,13 +6,13 @@
 
 \begin{definition}{(The category of presheaves)}\endnote{(cited from ncatlab \cite{[ncatlab_presheaves]})}\\
 For $\mathcal{C}$ a small category, its \ul{category of presheaves} is the functor category
-\[ \mathrm{PSh}(\mathcal{C}) := \mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set}) \]
-from the opposite category of $\mathcal{C}$ to $\mathrm{Set}$.
+\[ \mathrm{PSh}(\mathcal{C}) := \mathrm{Hom}(\mathcal{C}^{\text{op}}, \Set) \]
+from the opposite category of $\mathcal{C}$ to $\Set$.
 An object in this category is a \ul{presheaf}.\\
 \noindent Taking $\mathcal{C}^{\text{op}}$ instead of $\mathcal{C}$ (and with $(\mathcal{C}^{\text{op}})^{\text{op}} = \mathcal{C}$) we get the
 functor category as in \ref{def:functor_category}
 \[
-\mathrm{Hom}(\mathcal{C}, \mathrm{Set}) = \mathrm{PSh}(\mathcal{C}^{\text{op}}) \]
+\mathrm{Hom}(\mathcal{C}, \Set) = \mathrm{PSh}(\mathcal{C}^{\text{op}}) \]
 \end{definition}
 
 \begin{remark}{(General properties of presheaves)}\\
@@ -22,9 +22,9 @@ The category of presheaves $\mathrm{PSh}(\mathcal{C})$ is called the \ul{free co
 \begin{definition}{(Representable functor)}\label{def:repres_functor}\endnote{(from ncatlab \ref{[ncatlab_repres_functor]})}
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
-\item A functor from a locally small category $\mathcal{C}$ to $\mathrm{Hom}$ is \ul{representable} if there is an object $c \in \mathcal{C}$ and a
-natural isomorphism between $F$ and $\mathrm{Hom}(c,-)$ (for a covariant $F$, otherwise $\mathrm{Hom}(-,c)$ for a contravariant $F$), in which case
-one says thet the functor $F$ is \ul{represented by} the object $c$.
+\item A functor from a locally small category $\mathcal{C}$ to $\Set$ is \ul{representable} if there is an object $c \in \mathcal{C}$ and a
+natural isomorphism between $F$ and $\mathrm{Hom}(c,-)$ (for a covariant $F$, otherwise $\mathrm{Hom}(-,c)$ for a contravariant $F$),
+in which case one says thet the functor $F$ is \ul{represented by} the object $c$.
 \item A \ul{representation} for a functor $F$ is a choice of object $c \in \mathcal{C}$ together with a specified natural isomorphism
 $\mathrm{Hom}(c,-) \cong F$ (for a covariant $F$, or $\mathrm{Hom}(-,c) \cong F$ for a contravariant $F$).
 \end{enumerate}
@@ -32,7 +32,7 @@ $\mathrm{Hom}(c,-) \cong F$ (for a covariant $F$, or $\mathrm{Hom}(-,c) \cong F$
 
 \begin{lemma}{(Yoneda's Lemma)}
 For any functor $F : \mathcal{C} \rightarrow \mathrm{Set}$, whose source $\mathcal{C}$ is locally small and any
-object $c \in \mathcal{C}$, there is a bijection
+object $c \in \mathcal{C}_{0}$, there is a bijection
 \[
 \mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-), F) \cong Fc
 \]
@@ -72,7 +72,12 @@ Y : \mathcal{C}^{\text{op}} \hookrightarrow \mathrm{Hom}(\mathcal{C},\mathrm{Set
 
 \begin{remark}[Our $\Bbbk$-linear version of Yoneda's embedding]
 Let $\mathcal{A}$ be a $\Bbbk$-linear category with finite-dimensional $\Bbbk$-vector spaces as hom-sets. Then we get
-a $\Bbbk$-linear version of Yoneda's lemma:
+$\Bbbk$-linear versions of Yoneda's lemma and Yondeda's embedding:
+
+For any $\Bbbk$-linear functor $F : \mathcal{A} \rightarrow \kmat$ and any object $i \in \mathcal{A}_{0}$, there is a bijection
+\[
+\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i), F) \cong F(i)
+\]
 
 \[
 Y : \mathcal{A} \hookrightarrow \mathrm{Hom_{\Bbbk}}(\mathcal{A^{\text{op}}},\kmat)
@@ -185,13 +190,93 @@ $M_{i} = \bigoplus_{j \in \mathcal{A}_{0}} \mathrm{Hom}_{\mathcal{A}}(j,i)$.
 Yoneda projectives are projective objects in $\HomAkmat$.
 \end{lemma}
 \begin{proof}
-We have to show that $\mathrm{Hom}_{\mathcal{A}}(Y(i),-) = \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),-)$ is exact.\\
-Let $F,G \in \HomAkmat$ and $\varphi : F \twoheadrightarrow G$ an epi. For exactness of
-$\mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),-)$ we have to show that
-$\mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),\varphi) : \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),F) \rightarrow \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),G)$ defined by 
-$\rho \mapsto \rho\varphi\, \forall \rho \in \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),F)$ is also an epi.\\
-For two parallel morphisms $\mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),\psi), \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),\theta) : \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),G) \rightrightarrows \mathrm{Hom}_{\mathcal{A}}(\mathrm{Hom}_{\mathcal{A}}(-,i),H)$
-with $\rho\varphi\psi = \rho\varphi\theta$ we already have $\psi = \theta$?
+Let $\mathcal{A}$ be a $\Bbbk$-algebroid with finitely many objects and finite-dimensional hom-sets over $\Bbbk$ and let
+$i \in \mathcal{A}^{\text{op}}$.
+We want to show that $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ is exact.\\
+Let $F,G \in \HomAkmat_{0}$ and $\varphi : F \twoheadrightarrow G$ an epimorphism in $\HomAkmat_{1}$.
+We want to show that
+\begin{alignat}{2}
+&\mathrm{Hom}_{\HomAkmat}(Y(i),\varphi) &&: \begin{cases}\mathrm{Hom}_{\HomAkmat}(Y(i), F) 
+\rightarrow \mathrm{Hom}_{\HomAkmat}(Y(i), G); \\
+\rho \mapsto \rho\varphi
+\end{cases}
+\end{alignat}
+is an epimorphism.
+The composition $\rho\varphi$ of natural transformations is defined component-wise:
+\[
+(\rho\varphi)_{j} := \rho_{j}\varphi_{j} : \begin{tikzcd}
+Y(i)(j) \arrow[rd, "\rho_{j}"'] \arrow[rr, "\rho_{j}\varphi_{j}"] &                                            & G(j) \\
+                                                                  & F(j) \arrow[ru, "\varphi_{j}"', two heads] &     
+\end{tikzcd}
+\]
+where $Y(i)(j) = \mathrm{Hom}_{\mathcal{A}}(j,i)$ is the representation of the object $j$ by the functor
+$Y(i) = \mathrm{Hom}_{\mathcal{A}}(-,i)$, and since we assumed our hom-sets in $\mathcal{A}$ to be finite-dimensional over $\Bbbk$,
+$Y(i)(j) \in \kmat_{0}$ is also the $\Bbbk$-dimension of $\mathrm{Hom}_{\mathcal{A}}(j,i)$.\\
+Let two parallel morphisms 
+\begin{alignat}{2}
+&\mathrm{Hom}_{\HomAkmat}(Y(i),\psi),
+&&\,\mathrm{Hom}_{\HomAkmat}(Y(i),\theta) : \\
+&\mathrm{Hom}_{\HomAkmat}(Y(i),G)
+\rightrightarrows &&\,\mathrm{Hom}_{\HomAkmat}(Y(i),H)
+\end{alignat}
+such that
+\begin{alignat}{3}
+& &\mathrm{Hom}_{\HomAkmat}(Y(i),\varphi) &\cdot \mathrm{Hom}_{\HomAkmat}(Y(i),\psi) \\
+&= \,&\mathrm{Hom}_{\HomAkmat}(Y(i),\varphi) &\cdot \mathrm{Hom}_{\HomAkmat}(Y(i),\theta); \\
+& &\rho\varphi\psi &= \rho\varphi\theta, \\
+& &\forall \rho &\in \mathrm{Hom}_{\HomAkmat}(Y(i), F)
+\end{alignat}
+i.e. component-wise
+\[
+\begin{tikzcd}
+Y(i)(j) \arrow[rr, "\rho_{j}\varphi_{j}"] \arrow[rrrr, "\rho_{j}\varphi_{j}\theta_{j}"', bend right] \arrow[rrrr, "\rho_{j}\varphi_{j}\psi_{j}", bend left] &  & G(j) \arrow[rr, "\psi_{j}", shift left] \arrow[rr, "\theta_{j}"', shift right] &  & H(j)
+\end{tikzcd}
+\]
+$\rho_{j}\varphi_{j}\psi_{j} = \rho_{j}\varphi_{j}\theta_{j}$ for all objects $j \in \mathcal{A}_{0}$. We are finished when we have shown that
+$\psi_{j} = \theta_{j}$ for all $j \in \mathcal{A}_{0}$.
+
+By Yoneda's lemma we have 
+\begin{alignat}{2}
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F) &&\cong F(i), \\
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),G) &&\cong G(i)\, \text{ and } \\
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\varphi) &&\cong \varphi_{i}.
+\end{alignat}
+This means that the morphism
+\begin{alignat*}{2}
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\varphi) &&:\\
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F)
+	&&\rightarrow \mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),G)
+\end{alignat*}
+defined by
+\begin{alignat*}{3}
+&\rho &&\mapsto \rho\varphi &&\forall \rho \in \mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F),\,\text{ i.e. }\\
+&\rho &&: Y(i) \Rightarrow F\, &&\text{ is a natural transformation with components }\\
+&\rho_{j} &&: Y(i)(j) \rightarrow F(j)&&
+\end{alignat*}
+is equivalent to the matrix
+\begin{align}
+\varphi_{i} : F(i) &\rightarrow G(i)
+\end{align}
+For two parallel morphisms 
+\begin{alignat}{2}
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\psi),
+&&\,\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\theta) : \\
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),G)
+\rightrightarrows &&\,\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),H)
+\end{alignat}
+with
+\begin{align}
+(\rho\varphi)\psi &= (\rho\varphi)\theta
+\end{align}
+we have the equivalent matrices
+\begin{align}
+\psi_{i}, \theta_{i} : G(i) \rightrightarrows H(i)
+\end{align}
+with
+\begin{align}
+\varphi_{i}\psi_{i} &= \varphi_{i}\theta_{i}
+\end{align}
+we already have $\psi = \theta$?
 \end{proof}
 
 Direct summands and direct sums of projectives are projective.
