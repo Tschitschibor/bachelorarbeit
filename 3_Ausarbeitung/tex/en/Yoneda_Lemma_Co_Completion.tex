@@ -96,7 +96,7 @@ Let $\mathcal{C}$ be a locally small category. For an object $P \in \mathcal{C}_
 \begin{itemize}
 \item The covariant functor $\mathrm{Hom}(P,-)$ is exact.
 \item For all epimorphisms $\varphi : M \twoheadrightarrow N$ and morphisms $\theta : P \rightarrow N$, there exists a
-projective lift $\psi : P\,\dottedrightarrow\,M$ such that $\theta = \psi\varphi$.\\
+projective lift $\psi : P\dottedrightarrow M$ such that $\theta = \psi\varphi$.\\
 \begin{tikzcd}
 M \arrow[r, "\varphi", two heads] & N \\
 	& P \arrow[u, "\theta", "=\,\psi\varphi"'] \arrow[lu, "\psi", dotted]
@@ -190,6 +190,18 @@ $M_{i} = \bigoplus_{j \in \mathcal{A}_{0}} \mathrm{Hom}_{\mathcal{A}}(j,i)$.
 Yoneda projectives are projective objects in $\HomAkmat$.
 \end{lemma}
 \begin{proof}
+\[
+\begin{tikzcd}
+Y(i) \arrow[d, "\rho"'] \arrow[rd, "\eta"] \arrow[rrd, shift left=2] &                                                                   &   \\
+F \arrow[r, "\varphi", two heads]                                  & G \arrow[r, "\theta"', shift right] \arrow[r, "\psi", shift left] & H
+\end{tikzcd}
+\]
+
+We want to show that $Y(i)$ is a projective object, i.e. that for each epimorphism $\varphi : F \twoheadrightarrow G$ and each
+morphism $\eta : Y(i) \rightarrow G$, there exists a projective lift $\rho : Y(i) \dottedrightarrow F$ such that $\eta = \rho\varphi$.
+
+
+
 Let $\mathcal{A}$ be a $\Bbbk$-algebroid with finitely many objects and finite-dimensional hom-sets over $\Bbbk$ and let
 $i \in \mathcal{A}^{\text{op}}$.
 We want to show that $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ is exact.\\
