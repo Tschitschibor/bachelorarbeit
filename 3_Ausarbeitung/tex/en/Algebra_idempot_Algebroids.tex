@@ -442,27 +442,17 @@ defined as the largest order of an element of the symmetric group $S_{N}$.
 \begin{proof}[Proof\nopunct]
 \begin{subproof}[of (1)]
 
-Since $\abs{\textup{End}_{\mathcal{C}}(M)}<\infty$ there are only finitely many endomorphisms
+Since $\abs{\textup{End}_{\mathcal{C}}(M)} = \abs{M^{M}} = \abs{M}^{\abs{M}} < \infty$ there are only finitely many endomorphisms
 $f_{1},\dots, f_{N} \in \textup{End}_{\mathcal{C}}(M)$.
-Let $\{f^{k} | k \in \mathbb{N} \} \subset \textup{End}_{\mathcal{C}}(M)$, i.e. there is an inclusion function 
-$\{f^{k} | k \in \mathbb{N}\} \rightarrow \{f_{j} | j \in \{1,\dots,N\}\}; f^{k} \mapsto f_{j}$ not necessarily surjective and 
+Let $f \in \mathrm{End}_{\mathcal{C}}(M)$. Then $\{f^{k} | k \in \mathbb{N} \} \subset \textup{End}_{\mathcal{C}}(M)$, i.e. there is
+an inclusion function $\{f^{k} | k \in \mathbb{N}\} \rightarrow \{f_{j} | j \in \{1,\dots,N\}\}; f^{k} \mapsto f_{j}$ not necessarily surjective and 
 by the pigeonhole principle highly non injective, since $\abs{\mathbb{N}}>\abs{\textup{End}_{\mathcal{C}}(M)}$.
-Let $m := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k} =  f_{j} \}$
 
-The object $M$ is a finite set. Let $f \in \mathrm{End}_{\mathcal{C}}(M)$ be an endomorphism, in particular $s(f) = M$. The image of $f$ is the set 
-\[
-\mathrm{Im}(f) = \{ y \in M | \exists x \in M : y = f(x)\} \subset M
-\]
-in other words, there is a monomorphism of sets $\iota : \mathrm{Im}(f) \hookrightarrow M$ with $f(M) \subseteq \iota(\mathrm{Im}(f))$.
-From lemma \ref{la:lift_along_mono} we can find a set-theoretic lift of $f$ along $\iota$, i.e. a map $\psi : M \rightarrow \mathrm{im}(f)$ of sets
-such that the following diagram commutes:
-\[
-\begin{tikzcd}
-\mathrm{im}(f) \arrow[r, "\iota", hook] & M \\
-M \arrow[ru, "f"'] \arrow[u, "\psi"]    &  
-\end{tikzcd}
-\]
-Therefore the function $M \xrightarrow{f} \mathrm{im}(f)$ is surjective
+
+Let $n := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k} =  f_{j} \}$
+$m := \mathrm{min} \{ l \in \mathbb{N}_{0} | (f^{l})^{n} = f^{l} \}$.
+
+For these $m,n$ we have $f^{m+n} = f^{m}$.
 \end{subproof}
 \begin{subproof}[Proof of (2).]
 \begin{align*}

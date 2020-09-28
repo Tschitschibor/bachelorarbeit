@@ -1,10 +1,21 @@
 
 About the algorithm...
 
+Input: Functor $F$.\\
+Output: Tupel $(\mathrm{ImageEmbedding}( \alpha ), \mathrm{KernelEmbedding}( \alpha ) )$
 
-
-
-
+such that
+\[
+\begin{tikzcd}
+                                       & F &                                         \\
+F \arrow[ru, "\eta", bend left=49]     &   & F \arrow[lu, "\eta"', bend right=49]    \\
+I \arrow[u, "\mathrm{ImgEmb}(\alpha)"] &   & K \arrow[u, "\mathrm{KerEmb}(\alpha)"']
+\end{tikzcd}
+\]
+and
+\[
+F = I \oplus K
+\]
 
 
 \begin{tikzcd}
