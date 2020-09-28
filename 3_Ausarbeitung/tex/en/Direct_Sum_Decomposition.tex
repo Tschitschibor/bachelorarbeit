@@ -1,5 +1,35 @@
 
-About the algorithm...
+We have shown in section \ref{sect:abelian_cat} that for a family $\{F_{i}\}_{i\in I}$ of functors in $\HomAkmat$, there is the
+direct sum $F := \bigoplus_{i\in I} F_{i}$ with embeddings $\iota_{i} : F_{i} \rightarrow F$ (and projections $\pi_{i} : F \rightarrow F_{i}$).
+In this section we show constructively the other direction, i.e. that for each $F$ there is a direct sum decomposition
+$\{F_{i}\}_{i\in I}$ and $\iota_{i} : F_{i} \rightarrow F$ such that
+\[
+F = \bigoplus_{i\in I} F_{i}
+\]
+
+\subsection{The algorithm $\mathtt{WeakDirectSumDecomposition}$}
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item We are starting with a trivial decomposition $\iota : F \rightarrow F$, i.e. the embedding $\iota = 1_{F}$ is
+our only morphism in the queue.
+\item In each step we take a morphism $\eta : s(\eta) \rightarrow F$ from the queue and try to decompose $s(\eta)$
+with $\mathtt{DecomposeOnceByRandomEndomorphism}(s(\eta))$ (see next section).
+\item If it fails, i.e. the functor $s(\eta)$ was already indecomposable, then we add $\eta$ to our resulting list of $\mathtt{summands}$ and
+remove $\eta$ from the queue.
+\item Otherwise, we get a decomposition of $s(\eta)$ into an $\mathrm{ImageEmbedding}( \alpha )$ and $\mathrm{KernelEmbedding}( \alpha )$
+for some endomorphism $\alpha : s(\eta) \rightarrow s(\eta)$, i.e. embeddings $\iota : I \rightarrow s(\eta)$ and $\kappa : K \rightarrow s(\eta)$
+with $I \oplus K = s(\eta)$.
+\item We then replace $\eta$ in our queue with the two morphisms $\iota \eta : I \rightarrow F$ and $\kappa \eta : K \rightarrow F$.
+\item The morphisms in our queue are therefore always morphisms with target $F$, but the sources $I$ and $K$ get more and more
+decomposed.
+\item If $\mathtt{DecomposeOnceByRandomEndomorphism}(s(\eta))$ fails for all $\eta$ in our queue, we are finished and output the list
+$\mathtt{summands}$ of our embeddings $\iota_{i} : F_{i} \rightarrow F$, from which we can get the direct sum decomposition
+$F_{i} = s(\iota_{i}),\, i\in I$, i.e. $F = \bigoplus_{i\in I} F_{i}$.
+\end{enumerate}
+
+\subsection{The algorithm $\mathtt{DecomposeOnceByRandomEndomorphism}$}
+
+
 
 Input: Functor $F$.\\
 Output: Tupel $(\mathrm{ImageEmbedding}( \alpha ), \mathrm{KernelEmbedding}( \alpha ) )$
@@ -8,14 +38,56 @@ such that
 \[
 \begin{tikzcd}
                                        & F &                                         \\
-F \arrow[ru, "\eta", bend left=49]     &   & F \arrow[lu, "\eta"', bend right=49]    \\
-I \arrow[u, "\mathrm{ImgEmb}(\alpha)"] &   & K \arrow[u, "\mathrm{KerEmb}(\alpha)"']
+s(\eta) \arrow[ru, "\eta", bend left=49]     &   & s(\eta) \arrow[lu, "\eta"', bend right=49]    \\
+I \arrow[u, "\iota"] &   & K \arrow[u, "\kappa"']
 \end{tikzcd}
 \]
 and
 \[
 F = I \oplus K
 \]
+
+When we input I and K into DecomposeOnce, we get a further decomposition:
+\[
+\begin{tikzcd}
+                                                 &                                                &                                                  & F &                                                  &                                                 &                                                   \\
+                                                 & F \arrow[rru, "\eta_{1}", bend left]           &                                                  &   &                                                  & F \arrow[llu, "\eta_{1}"', bend right]          &                                                   \\
+                                                 & I_{1} \arrow[u, "\mathrm{ImgEmb}(\alpha_{1})"] &                                                  &   &                                                  & K_{1} \arrow[u, "\mathrm{KerEmb}(\alpha_{1})"'] &                                                   \\
+I_{1} \arrow[ru, "\eta_{11}", bend left=49]      &                                                & I_{1} \arrow[lu, "\eta_{11}", bend right=49]     &   & K_{1} \arrow[ru, "\eta_{12}", bend left=49]      &                                                 & K_{1} \arrow[lu, "\eta_{12}", bend right=49]      \\
+I_{11} \arrow[u, "\mathrm{ImgEmb}(\alpha_{11})"] &                                                & K_{11} \arrow[u, "\mathrm{KerEmb}(\alpha_{11})"] &   & I_{12} \arrow[u, "\mathrm{ImgEmb}(\alpha_{12})"] &                                                 & K_{12} \arrow[u, "\mathrm{KerEmb}(\alpha_{12})"']
+\end{tikzcd}
+\]
+
+The direct sum decomposition in each step looks like this:
+
+\[
+\begin{tikzcd}
+                                                                   &                                                                   &                                                                    & F                                                      &                                                                    &                                                                    &                                                                     \\
+                                                                   & F \arrow[rru, "\eta_{1}", bend left]                              &                                                                    &                                                        &                                                                    & F \arrow[llu, "\eta_{1}"', bend right]                             &                                                                     \\
+                                                                   & I_{1} \arrow[u, "\mathrm{ImgEmb}(\alpha_{1})"] \arrow[rr, dash] &                                                                    & \bigoplus \arrow[uu, "I_{1} \oplus K_{1}" description] &                                                                    & K_{1} \arrow[u, "\mathrm{KerEmb}(\alpha_{1})"'] \arrow[ll, dash] &                                                                     \\
+I_{1} \arrow[ru, "\eta_{11}"', bend left=49, shift right]           &                                                                   & I_{1} \arrow[lu, "\eta_{11}", bend right=49, shift left]           &                                                        & K_{1} \arrow[ru, "\eta_{12}"', bend left=49, shift right]                        &                                                                    & K_{1} \arrow[lu, "\eta_{12}", bend right=49, shift left]                        \\
+I_{11} \arrow[u, "\mathrm{ImgEmb}(\alpha_{11})"] \arrow[r, dash] & \bigoplus \arrow[uu, "I_{11}\oplus K_{11}" description]           & K_{11} \arrow[u, "\mathrm{KerEmb}(\alpha_{11})"] \arrow[l, dash] &                                                        & I_{12} \arrow[u, "\mathrm{ImgEmb}(\alpha_{12})"] \arrow[r, dash] & \bigoplus \arrow[uu, "I_{12} \oplus K_{12}" description]           & K_{12} \arrow[u, "\mathrm{KerEmb}(\alpha_{12})"'] \arrow[l, dash]
+\end{tikzcd}
+\]
+That is we have 
+\begin{alignat}{5}
+F &=  &&I_{1} &&\oplus &&K_{1} \\
+F &= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12})
+\end{alignat}
+
+The algorithm $\mathtt{DecomposeOnceByRandomEndomorphism}$ will terminate without $\mathtt{fail}$ only if
+\[
+\mathrm{ImgEmb}(\alpha) \neq 0\,\text{ and }\, \mathrm{KerEmb}(\alpha) \neq 0
+\]
+for some $\alpha$.
+
+When we have $\mathrm{ImgEmb}(\alpha) = 0$ or $\mathrm{KerEmb}(\alpha) = 0$ for all $\alpha : F \rightarrow F$, we have
+\begin{alignat}{4}
+&F &&= \{0\} &&\oplus K\quad\text{ or }\\
+&F &&= I &&\oplus \{0\},
+\end{alignat}
+i.e. F was indecomposable.
+
 
 
 \begin{tikzcd}
