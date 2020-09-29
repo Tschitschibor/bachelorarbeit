@@ -39,14 +39,16 @@ M \arrow[rr,"\varphi"] &  & N.
 \end{tikzcd} Hence $q_{1}$ is the disjoint union $\bigcup\limits^{\bigcdot}_{M,N \in q_{0}} \textup{Hom}_{q}(M,N) = q_{1}$.
 As usual we define $\textup{End}_{q}(M):= \textup{Hom}_{q}(M,M)$.
 \item If the class $\textup{Hom}_{q}(M,N)$ is a \ul{set} for all pairs $(M,N)$ then we call the quiver \ul{locally small}.
-We therefore talk about \ul{Hom-sets}.
+We therefore talk about \ul{hom-sets}.
 If additionally, $q_{0}$ is a set, then the quiver is called \ul{small}.
 \item A quiver with a finite set of objects and a finite set of morphisms is called a \ul{finite} quiver.
+\item When we don't assume the category to be locally small, but still talk about its hom-sets, we mean the class of morphisms,
+if we don't explicitly use the fact that it's a set of morphisms.
+\item If the hom-set itself is an object in our quiver, as is the case e.g. in $\mathbf{Set}$, where $\mathrm{Hom}_{\mathbf{Set}}(M,N) = N^{M}$ is again a set,
+we are talking about the \ul{internal hom}. Otherwise the hom-set exists outside of the category and we call it the \ul{external hom}.
 \end{enumerate}
 \end{definition}
 
-When we don't assume the category to be locally small, but still talk about its hom-sets, we mean the class of morphisms,
-if we don't explicitly use the fact that it's a set of morphisms.
 
 \begin{example}\label{q(2)}{(Quiver with 2 objects and 3 morphisms)}\\
 \[
