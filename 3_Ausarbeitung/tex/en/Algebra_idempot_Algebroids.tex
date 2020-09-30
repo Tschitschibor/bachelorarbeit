@@ -300,7 +300,8 @@ This is the topic of the next section.
 $M \in \mathcal{C}_{0}$ the set $\mathrm{End}_{\mathcal{C}}(M)$ is a monoid. For each endomorphism $f \in \mathrm{End}_{\mathcal{C}}(M)$
 there exist $m,n \in \mathbb{N}, n\geq 1$, such that $f^{m+n}=f^{m}$.
 \item When we restrict both the source and target of $f$ to $\mathrm{Im}(f^{m})$, then $f\restrict{\mathrm{Im}(f^{m})}$ is an isomorphism, i.e.
-$f\restrict{\mathrm{Im}(f^{m})} \in \mathrm{Aut}_{\mathcal{C}}(\mathrm{Im}(f^{m}))$. Also $f^{n} = 1_{\mathrm{Im}(f^{m})}$.
+$f\restrict{\mathrm{Im}(f^{m})} \in \mathrm{Aut}_{\mathcal{C}}(\mathrm{Im}(f^{m}))$ with
+$f\restrict{\mathrm{Im}(f^{m})}^{n} = 1_{\mathrm{Im}(f^{m})}$.
 \item If $m = 0$ and $n \geq 1$ then $f \in \mathrm{Aut}_{\mathcal{C}}(M)$ is an automorphism with $f^{-1} = f^{n-1}$ and has order $n$.
 \item An upper bound for $m$ is $\abs{M}$ and for $n$ is $g(N)$ with $N = \abs{M}$ and Landau's function\endnote{(My thanks to
 Felix Potthast and Michael Figelius who both sent me in the direction of Landau's function)} $g(N)$
@@ -441,18 +442,17 @@ defined as the largest order of an element of the symmetric group $S_{N}$.
 
 \begin{proof}[Proof\nopunct]
 \begin{subproof}[of (1)]
-
-Since $\abs{\textup{End}_{\mathcal{C}}(M)} = \abs{M^{M}} = \abs{M}^{\abs{M}} < \infty$ there are only finitely many endomorphisms
-$f_{1},\dots, f_{N} \in \textup{End}_{\mathcal{C}}(M)$.
-Let $f \in \mathrm{End}_{\mathcal{C}}(M)$. Then $\{f^{k} | k \in \mathbb{N} \} \subset \textup{End}_{\mathcal{C}}(M)$, i.e. there is
-an inclusion function $\{f^{k} | k \in \mathbb{N}\} \rightarrow \{f_{j} | j \in \{1,\dots,N\}\}; f^{k} \mapsto f_{j}$ not necessarily surjective and 
-by the pigeonhole principle highly non injective, since $\abs{\mathbb{N}}>\abs{\textup{End}_{\mathcal{C}}(M)}$.
-
-
-Let $n := \mathrm{min} \{ k \in \mathbb{N}| \exists j \in \{ 1,\dots,N\} : f^{k} =  f_{j} \}$
-$m := \mathrm{min} \{ l \in \mathbb{N}_{0} | (f^{l})^{n} = f^{l} \}$.
-
-For these $m,n$ we have $f^{m+n} = f^{m}$.
+The set of all endomorphisms $\mathrm{End}_{\mathcal{C}}(M)$ of the finite set $M$ with $\abs{M} < \infty$ is also finite:
+\begin{align}
+\abs{\textup{End}_{\mathcal{C}}(M)} = \abs{M^{M}} = \abs{M}^{\abs{M}} < \infty.
+\end{align}
+Let $f \in \mathrm{End}_{\mathcal{C}}(M)$. Then $\{f^{k} : k \in \mathbb{N}_{0} \} \subseteq \textup{End}_{\mathcal{C}}(M)$ is a finite set
+$\{f^{k} : k \in \mathbb{N}_{0} \} = \{f^{0},f^{1},\dots,f^{N}\}$. There is a minimal $l\in \mathbb{N}_{\geq 1}$ such that
+$\{f^{0},f^{1},\dots,f^{l-1}\} = \{f^{0},f^{1},\dots,f^{l}\}$, i.e. the first repetition $f^{l} = f^{j}$ for $j \in \{0,\dots,l-1\}$. Since $l$ is the first
+such number, the $j$ is also uniquely determined. With $m := j$ and $n := l-j \geq l \geq 1$ we have found $m,n$ satisfying
+\begin{align}
+f^{m+n} = f^{j + l-j} = f^{l} = f^{j} = f^{m}.
+\end{align}
 \end{subproof}
 \begin{subproof}[Proof of (2).]
 \begin{align*}
@@ -643,13 +643,16 @@ An exercise for the reader could be to formulate the exact relations between pos
 Let $\mathcal{A}$ be a $\Bbbk$-algebra over a field $\Bbbk$.
 A subset $L \subset \mathcal{A}$ is a \ul{left ideal} of $\mathcal{A}$, denoted $L \vartriangleleft \mathcal{A}$, if for every $x, y \in L$,
 $z \in \mathcal{A}$ and $c \in \Bbbk$ we have the following three statements:
-\begin{enumerate}
-\renewcommand{\labelenumi}{(\theenumi)}
-\item $x + y \in L$ ($L$ is closed under addition),
-\item $cx \in L$ ($L$ is closed under scalar multiplication),
-\item $z \cdot x \in L$ ($L$ is closed under left multiplication by arbitrary elements).
-\end{enumerate}
-\noindent If (3) were replaced with $x \cdot z \in L$, then this would define a \ul{right ideal}, $\mathcal{A} \vartriangleright L$.
+\begin{align}
+x + y &\in L\, \text{ ($L$ is closed under addition) },\label{eq:ideal_cl_add} \\
+cx &\in L\, \text{ ($L$ is closed under scalar multiplication) }, \label{eq:ideal_cl_scm} \\
+z \cdot x &\in L\, \text{ ($L$ is closed under left multiplication by arbitrary elements) }. \label{eq:ideal_cl_lm}
+\end{align}
+\noindent If \eqref{eq:ideal_cl_lm} were replaced with
+\begin{align}
+x \cdot z \in L\, \text{ ($L$ is closed under right multiplication by arbitrary elements) }, \label{eq:ideal_cl_rm}
+\end{align}
+then this would define a \ul{right ideal}.
 A \ul{two-sided ideal} is a subset that is both a left and a right ideal.
 \end{definition}
 
@@ -661,36 +664,61 @@ If in \ref{def:ideal_of_algebra} $\mathcal{A}$ is a unital associative algebra w
 For $c \in \Bbbk$ and $x\in L$, $ce \in \mathcal{A}$ and with (3) we have $L \ni (ce)\cdot x = c(e\cdot x) = cx$, i.e. (2).
 \end{proof}
 
-\begin{remark}{(Quotient algebra by a two-sided ideal)}
-Let $\mathcal{A}$ be a $\Bbbk$-algebra and $\mathcal{I} \vartriangleleft \mathcal{A}$ a two-sided ideal. Then the set of
-remainder classes 
+\begin{remark}
+Let $\mathcal{A}$ be a unital $\Bbbk$-algebra, and $\mathcal{I} \unlhd \mathcal{A}$ a two-sided ideal.
+The \ul{quotient algebra} of$\mathcal{A}$ modulo $\mathcal{I}$ is the set
 \[
-\mathcal{A}\,/\,\mathcal{I} = \mathcal{A}\,/\,\mathcal{IAI} := \{ z + \mathcal{IAI} : z\in \mathcal{A} \}
+\mathcal{A}\,/\,\mathcal{I} := \{ z + I : z \in \mathcal{A} \}
 \]
-called the \ul{quotient algebra}. With an addition and multiplication operation as well as a scalar multiplication all well-defined on remainder classes,
-the quotient algebra is again an algebra. As a vector space, $\mathcal{A}\,/\,\mathcal{I}$ is a subspace of $\mathcal{A}$,
-and may have a smaller dimension.
+of cosets $z + I$
+together with the operations of addition, scalar multiplication and multiplication defined respectively for all
+$z+I, w+I \in \mathcal{A}\,/\,\mathcal{I}$ by:
+\begin{alignat}{3}
++ &: (z+I) + (w+I) &&:= (z+w)+I \\
+\cdot &: \lambda \cdot (z+I) &&:= (\lambda z)+I \\
+\cdot &: (z+I) \cdot (w+I) &&:= (zw)+I
+\end{alignat}
+These operations are independend of the representatives.
 \end{remark}
+\begin{proof}
+Two cosets $(z+I), (z'+I)$ are equal iff $z-z' \in I$.
+Let $z, z'\in z+I$ and $w, w' \in w+I$ be two representatives for $z+I$ and $w+I$ respectively, and let $\lambda \in \Bbbk$.
+Therefore $z-z' \in I$ and $w-w' \in I$.
+\begin{align}
+(z+w) - (z'+w') = (z-z') + (w-w') \in I\, \text{ by \eqref{eq:ideal_cl_add} }\, \Rightarrow (z+w)+I = (z'+w')+I.\\
+\lambda z - \lambda z' = \lambda(z-z') \in I\, \text{ by \eqref{eq:ideal_cl_scm} }\, \Rightarrow (\lambda z)+I = (\lambda z')+I.
+\end{align}
+For well-definedness of multiplication, let $z' = z + i_{1}$ and $w' = w + i_{2}$ with $i_{1}, i_{2} \in I$. Then
+\begin{align}
+zw - z'w' &= zw - (z+i_{1})(w+i_{2}) \\
+&= zw - zw -zi_{2} -i_{1}w -i_{1}i_{2} \\
+&= -zi_{2} -i_{1}w -i_{1}i_{2} \in I, \\
+\Rightarrow zw+I &= z'w'+I
+\end{align}
+because of \eqref{eq:ideal_cl_add}, \eqref{eq:ideal_cl_scm} and the closure under left and right multiplication \eqref{eq:ideal_cl_lm} and
+\eqref{eq:ideal_cl_rm}.
+\end{proof}
 
 \begin{remark}{(Relations of Endomorphisms)}
 Let the generating quiver $q$ of our finite concrete category $\mathcal{C}$ be explicitly cyclic with one generating endomorphism
-$\alpha_{j} : M_{j} \rightarrow M_{j}$ for each finite set $M_{j} \in \mathcal{C}_{0}, j = 1,\dots,N, N := \abs{\mathcal{C}_{0}}$.
+$\alpha_{i} : M_{i} \rightarrow M_{i}$ for each finite set $M_{i} \in \mathcal{C}_{0}, i = 1,\dots,N, N := \abs{\mathcal{C}_{0}}$.
 
-The following algorithm calculates a list of relations as generators of the ideal
+The algorithm $\mathtt{RelationsOfEndomorphism}$ calculates a list of relations as generators of the ideal
 \begin{equation}
 \left< \alpha_{1}^{m_{1}+n_{1}} - \alpha_{1}^{m_{1}}, \dots, \alpha_{N}^{m_{N}+n_{N}} - \alpha_{N}^{m_{N}} \right>
-\vartriangleleft \label{eq:ideal_of_endos} \Bbbk q.
+\unlhd \Bbbk q. \label{eq:ideal_of_endos}
 \end{equation}
-From the $\sigma$-lemma \ref{la:sigma-lemma} we know that each relation is of the form $p(x) = x^{m+n} - x^{m}$ for some natural numbers
-$m, n \in \mathbb{N}$, especially with $n \neq 0$, the ideal in \eqref{eq:ideal_of_endos} is not the zero ideal.
+From the $\sigma$-lemma \ref{la:sigma-lemma} we know that each relation is of the form $\alpha_{i}^{m_{i}+n_{i}} - \alpha_{i}^{m_{i}}$
+for some natural numbers $m_{i}, n_{i} \in \mathbb{N}_{0}$, especially with $n_{i} \geq 1$, the ideal in \eqref{eq:ideal_of_endos} is not the
+zero ideal (provided that the $\alpha_{i} \neq 0$).
 
 With the list of relations of endomorphisms
 \[
-\mathtt{relEndo} := ( \alpha_{1}^{m_{1}+n_{1}} - \alpha_{1}^{m_{1}}, \dots, \alpha_{N}^{m_{N}+n_{N}} - \alpha_{N}^{m_{N}} )
+\mathtt{relsEndo} := ( \alpha_{1}^{m_{1}+n_{1}} - \alpha_{1}^{m_{1}}, \dots, \alpha_{N}^{m_{N}+n_{N}} - \alpha_{N}^{m_{N}} )
 \]
 that we got from our algorithm, we can calculate the quotient algebra by the ideal generated by $\mathtt{relEndo}$,
 \[
-\mathcal{A} := \Bbbk q \, / \, \mathtt{relEndo}.
+\mathcal{A} := \Bbbk q \, / \, \mathtt{relsEndo}.
 \]
 This is a finite-dimensional $\Bbbk$-algebra with a distinct set of idempotents.
 In the following subsection we show that this is equivalent to a $\Bbbk$-linear category (also called $\kAlgebroid$).
@@ -763,19 +791,31 @@ M_{i} = \mathbf{A} e_{i},\, 1\leq i \leq n.
 Furthermore, $M_{i}$ is indecomposable as a module if and only if $e_{i}$ is primitive.
 \end{proposition}
 \begin{proof}[Proof\nopunct]
-\begin{subproof}[that the $m_{i}$ are orthogonal idempotents]
+\begin{subproof}[that the $e_{i}$ are orthogonal idempotents]
 \phantom{}\\
 \begin{align}
 1 &= \sum_{i=1}^{n} e_{i}\\
-e_{j} &= e_{j}\sum_{i=1}^{n} e_{i}
+e_{j} &= e_{j}\sum_{i=1}^{n} e_{i} = e_{j}^{2} + \sum_{i\neq j} e_{j} e_{i}
 \end{align}
-
+Since we can write $e_{j} = m_{1} + \dots + m_{n}$ in a unique way with $m_{j} \in M_{j}$, it follows that
+\begin{align}
+e_{j} = m_{j} = e_{j}^{2}\, \text{ and }\\
+m_{i} = e_{j} e_{i} = 0\,\forall i \neq j,
+\end{align}
+i.e. the $e_{j}$ are orthogonal idempotents in $\mathbf{A}$.
 \end{subproof}
 \begin{subproof}[Proof that $M_{i} = \mathbf{A}e_{i}$]\phantom{}\\
-We show both inclusions.
+Since the $M_{i}$ are $\mathbf{A}$-submodules, they are already closed under multiplication by elements in $\mathbf{A}$.
+So with $e_{i} \in M_{i}$ we have $ze_{i} \in M_{i}\, \forall z \in \mathbf{A}$, i.e. $\mathbf{A}e_{i} \subseteq M_{i}$.
+We only have to show the other inclusion.
 \setlist[description]{font=\normalfont}
 \begin{description}
-\item[``$\subseteq$:''] Let $x \in M_{i}$. We are done, if we show that $x = xe_{i}$.
+\item[``$\subseteq$:''] Let $x \in M_{i}$. We are done, if we show that $x = xe_{i}$. With $1 = \sum_{i=1}^{n} e_{i}$ we have
+\begin{align}
+x &= x1 = x\sum_{j=1}^{n} e_{j} = xe_{i} + \sum_{j\neq i} xe_{j}
+\end{align}
+By the above, we have $xe_{j} \in M_{j}$ for $j\neq i$, and since $x \in M_{i}$, we again have the unique sum $x = m_{1} + \dots + m_{n}$
+with $m_{i} = xe_{i}$ and $m_{j} = xe_{j} = 0$ for $j \neq i$. Therefore $x = xe_{i}$, i.e. $M_{i} \subseteq \mathbf{A}e_{i}$.
 \end{description}
 \end{subproof}
 \begin{subproof}[Proof of equivalence $M_{i}$ indecomposable $\Leftrightarrow$ $m_{i}$ primitive]\phantom{}\\
@@ -828,12 +868,11 @@ These two constructions are mutually inverse.
 \begin{proof}
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
-
-
+\item We can write $\mathbf{A}$ as
 \[
-\mathbf{A} = 1\mathbf{A}1 = \left(\sum_{i}e_{i}\right) \mathbf{A} \left(\sum_{j} e_{j}\right) = \bigoplus_{i,j} e_{i}\mathbf{A}e_{j}
+\mathbf{A} = 1\mathbf{A}1 = \left(\sum_{i}e_{i}\right) \mathbf{A} \left(\sum_{j} e_{j}\right) = \bigoplus_{i,j} e_{i}\mathbf{A}e_{j},
 \]
-a direct sum decomposition of $\mathbf{A}$ in $\Bbbk$-submodules. The last sum is a direct sum:
+which is a direct sum decomposition of $\mathbf{A}$ in $\Bbbk$-submodules. The last sum is a direct sum:
 \begin{align}
 e_{i}\mathbf{A}e_{j} &\cap e_{i'}\mathbf{A}e_{j'} = \delta_{i,i'} \cdot \delta_{j,j'},\,\text{ since }\\
 x &= e_{i} \cdot a \cdot e_{j} = e_{i'} \cdot b \cdot e_{j'} \\
@@ -841,7 +880,7 @@ x &= \underbrace{e_{i}e_{i}}_{e_{i}} \cdot a \cdot e_{j} = \underbrace{e_{i}e_{i
 x &= e_{i} \cdot a \cdot \underbrace{e_{j}e_{j}}_{e_{j}} = e_{i'} \cdot b \cdot \underbrace{e_{j'}e_{j}}_{= 0},\, &e_{j} \neq e_{j'}
 \end{align}
 
-Composition of morphisms
+\item Composition of morphisms
 $i \xrightarrow{\alpha} j \xrightarrow{\beta} k$ is defined by the multiplication in $\mathbf{A}$.
 Let $\alpha = e_{i}ae_{j}, \beta = e_{j}be_{k}$ with $a, b\in \mathbf{A}$. Then
 \begin{align}
@@ -851,13 +890,10 @@ Let $\alpha = e_{i}ae_{j}, \beta = e_{j}be_{k}$ with $a, b\in \mathbf{A}$. Then
 \end{align}
 Associativity of composition follows from associativity of multiplication in $\mathbf{A}$.
 
-\item 
-
-It's an easy exercise to see that the above defined $1$ is indeed a multiplicative unit of the algebra $\mathbf{A}$.
+\item It's an easy exercise to see that the above defined $1$ is indeed a multiplicative unit of the algebra $\mathbf{A}$.
 We define $M_{i} := \bigoplus_{j=1}^{n} \mathrm{Hom}_{\mathcal{A}}(j,i)$ an $\mathbf{A}$-submodule of $\mathbf{A}$.
 Then $\mathbf{A} = \bigoplus_{i=1}^{n} M_{i}$ as in Proposition \ref{prop:idempotent} and it follows that the idempotent $e_{i} = 1_{i}$.
 \end{enumerate}
-The above constructions are mutually inverse:
 \end{proof}
 
 \begin{definition}{(Path algebra of a quiver)}\label{def:path_algebra}
