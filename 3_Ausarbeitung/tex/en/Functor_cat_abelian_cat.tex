@@ -5,6 +5,78 @@ The functor category with values in $\kmat$ is an Abelian category with enough p
 
 \subsection{Abelian category}
 
+\begin{definition}[The functor category $\HomAkmat$]
+Let $\Bbbk$ be a commutative ring, and let $\mathcal{A}$ be a finite-dimensional algebroid over $\Bbbk$.\\
+The \ul{functor category} $\HomAkmat$ has as objects $\Bbbk$-linear functors $F : \mathcal{A} \rightarrow \kmat \in \HomAkmat_{0}$, where each
+object $i \in \mathcal{A}$ gets mapped to a natural number $F(i) \in \kmat_{0} = \mathbb{N}_{0}$, and each
+morphism $b : i \rightarrow j \in \mathcal{A}_{1}$ gets mapped to an $F(i) \times F(j)$ matrix $F(b) : F(i) \rightarrow F(j) \in \kmat_{1}$.
+A morphism $\alpha : F \rightarrow G \in \HomAkmat_{1}$ is a natural transformation $\alpha : F \Rightarrow G$ with each component
+$\alpha_{i} : F(i) \rightarrow G(i) \in \kmat_{1}$ for an object $i \in \mathcal{A}$ being a $F(i) \times G(i)$ matrix satisfying the
+naturality conditions in \eqref{eq:naturality_condition}.
+\end{definition}
+
+\begin{example}[Limits and colimits in $\kmat$]
+In our target category $\kmat$ which is an abelian category, we have the following limits and colimits:
+\begin{itemize}
+\item A zero object $0 \in \kmat_{0}$
+\item For every finite set $I$ and family $\{S_{i}\}_{i \in I}$ we have the direct sum
+\[
+(S = \bigoplus_{i\in I} S_{i}, \{\pi_{i} : S \rightarrow S_{i}\}, \{\iota_{i} : S_{i} \rightarrow S\}, u_{\text{in}}(\tau), u_{\text{out}}(\tau))
+\]
+\item An equalizer of the diagram 
+\[
+\begin{tikzcd}
+A \arrow[rr, "{0_{A,B}}"', shift right] \arrow[rd] \arrow[rr, "\alpha", shift left] &              & B \\
+                                                                               & 0 \arrow[ru] &  
+\end{tikzcd}
+\]
+called kernel, i.e. for the matrix $\alpha : A \rightarrow B$ we have
+\[
+(K = \mathrm{ker}(\alpha), \mathrm{KernelEmbedding}(\alpha), \mathrm{KernelLift}(\alpha,\tau))
+\]
+\[
+\begin{tikzcd}
+K \arrow[rrr, "{\mathrm{KernelEmbedding}(\alpha)}", hook]                              &  &  & A \arrow[r, "\alpha"] & B \\
+T \arrow[rrru, "\tau"', bend right] \arrow[u, "{\mathrm{KernelLift}(\alpha,\tau)}", dashed] &  &  &                       &  
+\end{tikzcd}
+\]
+\item A co-equalizer of the same diagram called cokernel, i.e. for the matrix $A \in \Bbbk^{m\times n}$ we have
+\[
+(C = \mathrm{coker}(\alpha), \mathrm{CokernelProjection}(\alpha), \mathrm{CokernelColift}(\alpha,\tau))
+\]
+\[
+\begin{tikzcd}
+C \arrow[d, "{\mathrm{CokernelColift}(\alpha,\tau)}"', dashed] &  &  & B \arrow[lll, "\mathrm{CokernelProjection}(\alpha)"', two heads] \arrow[llld, "\tau", bend left] & A \arrow[l, "\alpha"'] \\
+T                                                              &  &  &                                                                                       &                       
+\end{tikzcd}
+\]
+\item For objects $A, K, T \in \kmat_{0}$ and morphisms $\iota : K \rightarrow A, \tau : T \rightarrow A$ we have a lift of $\tau$ along $\iota$
+given by a morphism $u : T \rightarrow K$ such that $u \iota = \tau$.
+\[
+\begin{tikzcd}
+                                              & K \arrow[rd, "\iota"] &   \\
+T \arrow[rr, "\tau"'] \arrow[ru, "u", dashed] &                       & A
+\end{tikzcd}
+\]
+\item For objects $A,C,T \in \kmat_{0}$ and morphisms $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ we have a colift of $\tau$ along
+$\varepsilon$ given by a morphism $u : C \rightarrow T$ such that $\varepsilon u = \tau$.
+\[
+\begin{tikzcd}
+A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T \\
+                                                & C \arrow[ru, "u"', dashed] &  
+\end{tikzcd}
+\]
+\item A dependent function $( - / - )$ mapping a pair $\iota : K \rightarrow A, \tau : T \rightarrow A$ to a lift $(\tau / \iota )$ of
+$\tau$ along $\iota$, where $A, K, T \in \kmat_{0}$, $\iota$ is a monomorphism and $\tau\,\mathrm{CokernelProjection}(\iota) = 0$.
+\item A dependent function $( - \backslash - )$ mapping a pair $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ to a colift
+$(\varepsilon \backslash \tau )$ of
+$\tau$ along $\varepsilon$, where $A, C, T \in \kmat_{0}$, $\varepsilon$ is an epimorphism and $\mathrm{KernelEmbedding}(\varepsilon)\tau = 0$.
+\end{itemize}
+\end{example}
+
+Our category $\HomAkmat$ has all of these limits.
+
+
 \begin{theorem}\label{thm:functor_category_abelian}
 Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category $\HomAkmat$
 is an abelian category.
@@ -79,7 +151,7 @@ This concludes the first part of the proof, i.e. $\HomAkmat$ is an Ab-category.
 to a corresponding direct sum $( \oplus_{i\in I} F_{i}, (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I}, u_{\mathrm{in}}, u_{\mathrm{out}} )$.
 \end{enumerate}
 \begin{subproof}[Proof of (ii)]
-Let $I = \{1,\dots,n\}$ be a finite set, and $F_{i} \in \HomAkmat, 1\leq i\leq n$. The object $F := \oplus_{i=1}^{n} F_{i}$ is a functor, mapping
+Let $I = \{1,\dots,n\}$ be a finite set, and $F_{i} \in \HomAkmat_{0}, 1\leq i\leq n$. The object $F := \oplus_{i=1}^{n} F_{i}$ is a functor, mapping
 each object $c \in \mathcal{A}_{0}$ to the natural number $Fc = \oplus_{i=1}^{n} F_{i}c := \sum_{i=1}^{n} F_{i}c \in \kmat_{0}$.\\
 A morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ with $F_{i} a : F_{i} c \rightarrow F_{i} c', \, 1\leq i\leq n$ gets mapped to the matrix 
 $F a : Fc \rightarrow Fc'$ that is the block-diagonal matrix of the $F_{i}a$'s.
@@ -134,8 +206,8 @@ u_{\mathrm{in}}(\tau_{c}) p_{i} &= (\tau_{i})_{c} \\
 j_{i} u_{\mathrm{out}}(\rho_{c}) &= (\rho_{i})_{c}
 \end{align*}
 
-with $\{ p_{i} : Fc \rightarrow F_{i}c \}_{i\in I}$ and $\{ j_{i} : F_{i}c \rightarrow Fc \}_{i \in I}$ the projection and injection morphisms
-of the direct sum of matrices.
+with $\{ p_{i} : Fc \rightarrow F_{i}c \}_{i\in I}$ and $\{ j_{i} : F_{i}c \rightarrow Fc \}_{i \in I}$ the projection and coprojection morphisms
+of the direct sum $Fc := \oplus_{i\in I} (F_{i} c)$ of natural numbers $\{F_{i} c \}_{i\in I}$.
 
 Prove that $p_{i} = (\pi_{i})_{c}$ and $j_{i} = (\iota_{i})_{c}$.
 
@@ -191,25 +263,3 @@ has all finite limits and colimits of the target category.
 
 \end{enumerate}
 \end{proof}
-
-We have seen that there is a $\Bbbk$-vector space of natural transformations between two functors $F$ and $G$ in $\HomAkmat$.
-Numbering the finitely many objects in $\mathcal{A}_{0}$ by $1,2,\dots,o$ with $o \in \mathbb{N}$
-With $Fc$ and $Gc$ being natural numbers, the components $\alpha_{c}$ of a natural transformation $\alpha$ are matrices.
-The $\Bbbk$-vector space $\Bbbk^{Fc\times Gc}$ is $Fc\times Gc$-dimensional, so for all of $\mathcal{A}_{0}$ we have an
-upper bound for the vector space dimension:
-\begin{align}
-\mathrm{dim}_{\Bbbk} \mathrm{Hom}_{\HomAkmat}(F,G) &\leq \sum_{c\in \mathcal{A}_{0}} \mathrm{dim}_{\Bbbk} \Bbbk^{Fc\times Gc} \\
-    &= \sum_{c\in \mathcal{A}_{0}} Fc\times Gc
-\end{align}
-But in this calculation, we didn't include the naturality constraints, i.e. for each morphism $a : c -> c' \in \mathcal{A}_{1}$
-\begin{align}
-Fa \alpha_{c'} &= \alpha{c} Ga
-\end{align}
-
-The naive approach to build a basis for each object, and then take the cartesian product over all objects, and only then
-checking the naturality constraints, is terribly slow.
-
-Use Yoneda's Lemma!
-
-
-
