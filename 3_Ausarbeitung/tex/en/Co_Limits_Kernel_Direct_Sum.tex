@@ -173,8 +173,8 @@ important to note that for each $m \in \kmat_{0}$ there is exactly one such matr
 For two natural numbers $m,n \in {\kmat}_{0} = \mathbb{N} = \mathbb{N}_{0}$, the set of morphisms with source $m$ and target $n$ is
 $\Bbbk^{m\times n}$, the set of $m \times n$-matrices. This is an abelian group:
 \begin{itemize}
-\item The neutral element of the addition is the $m \times n$ zero matrix $\mathbf{0}$.
-\item Addition of matrices is associative and commutative, so it is an abelian group.
+\item The neutral element of the addition is the $m \times n$ zero matrix $0_{m,n}$.
+\item Addition of matrices is associative and commutative.
 \end{itemize}
 Composition of matrices is defined as matrix multiplication, which is bilinear, i.e. satisfies the distributive laws \eqref{eq:dist1} and \eqref{eq:dist2}.
 \end{example}
@@ -205,20 +205,60 @@ A \ul{direct sum} is a biproduct of objects in an Ab-category such that
 where $\delta_{i, j} \in \mathrm{Hom}(S_{i}, S_{j})$ is the identity if $i = j$, and the zero morphism $0_{ij} := 0_{S_{i}, S_{j}}$ otherwise.
 \end{definition}
 
-\begin{example}{($\kmat$ is an additive category)}\label{ex:kmat_has_direct_sums}
-The matrix category $\kmat$ is an Ab-category. The direct sum of two ($I = \{1,2\}$) natural numbers $S_{1} = m, S_{2} = n \in \kmat_{0}$ is
+\begin{example}[$\kmat$ is an additive category]\label{ex:kmat_additive}
+Let for $I = \{1,\dots,N\},$ the set $\{n_{1},\dots,n_{N}\}$ be a family of objects in $\kmat_{0}$. Their direct sum is
 \begin{itemize}
-\item the object $S = m+n$,
-\item the two morphisms $\pi_{1} : m+n \rightarrow m$, $\pi_{2} : m+n \rightarrow n$ which are $(m+n) \times m$- and $(m+n) \times n$-matrices.
-\item the two morphisms $\iota_{1} : m \rightarrow m+n$, $\iota_{2} : n \rightarrow m+n$ which are $m \times (m+n)$- and $n \times (m+n)$-matrices.
-\item a family of two morphisms $\tau = \{ \tau_{1} : t \rightarrow m, \tau_{2} : t \rightarrow n\}$ gets mapped to a $t \times (m+n)$-matrix
-$u_{\text{in}}(\tau) : t \rightarrow m+n$ with $u_{\text{in}}(\tau) \pi_{1} = \tau_{1}$ and $u_{\text{in}}(\tau) \pi_{2} = \tau_{2}$.
-\item a family of two morphisms $\rho = \{ \rho_{1} : m \rightarrow r, \rho_{2} : n \rightarrow r \}$ gets mapped to a $(m+n) \times r$-matrix
-$u_{\text{out}}(\rho) : m+n \rightarrow r$ with $\iota_{1} u_{\text{out}} = \rho_{1}$ and $\iota_{2} u_{\text{out}} = \rho_{2}$.
+\item the object $n = \sum_{i=1}^{N} n_{i}$
+\item For $i \in I$ we have as identity morphism $1_{n_{i}}$ of the object $n_{i}$ the $n_{i} \times n_{i}$ identity matrix.\\
+The projection $\pi_{i} : n \rightarrow n_{i}$ is an $n \times n_{i}$ matrix that is a block matrix of $0_{n_{-i},n_{i}}$ and $1_{n_{i}}$.
+\[
+\pi_{i} = 
+\begin{pmatrix}
+0_{n_{1},\,n_{i}} \\
+0_{n_{2},\,n_{i}} \\
+\vdots \\
+0_{n_{i-1},\,n_{i}} \\
+1_{n_{i}} \\
+0_{n_{i+1},\,n_{i}} \\
+\vdots \\
+0_{n_{N},\,n_{i}}
+\end{pmatrix}
+=
+\begin{pmatrix}
+0_{\sum\limits_{j=1}^{i-1} n_{j},\,n_{i}} \\
+1_{n_{i}} \\
+0_{\sum\limits_{j=i+1}^{N} n_{j},\,n_{i}}
+\end{pmatrix}
+\]
+\item The coprojection $\iota_{i} : n_{i} \rightarrow n$ is the transposed matrix $\iota_{i} = \pi_{i}^{T}$, i.e. an $n_{i} \times n$ block matrix
+\[
+\begin{pmatrix}
+0_{n_{i},\,\sum\limits_{j=1}^{i-1} n_{j}} & 1_{n_{i}} & 0_{n_{i},\,\sum\limits_{j=i+1}^{N} n_{j}}
+\end{pmatrix}
+\]
+\item For a family $\tau = (\tau_{i} : t \rightarrow n_{i})_{i\in I}$ we have the morphism $u_{\text{in}}(\tau)$ which is a $t \times n$ block matrix of
+the $\tau_{i}$.
+\[
+u_{\text{in}}(\tau) =
+\begin{pmatrix}
+\tau_{1} & \cdots & \tau_{N}
+\end{pmatrix}
+\]
+\item For a family $\tau = (\tau_{i} : n_{i} \rightarrow t)_{i \in I}$ we have the morphism $u_{\text{out}}(\tau)$ which is an $n \times t$ block matrix
+of the $\tau_{i}$.
+\[
+u_{\text{out}}(\tau) = 
+\begin{pmatrix}
+\tau_{1} \\
+\vdots \\
+\tau_{N}
+\end{pmatrix}
+\]
 \end{itemize}
+One can easily verify the conditions for $\pi$, $\iota$, $u_{\text{in}}$ and $u_{\text{out}}$ in Definitions \ref{def:biproduct} and \ref{def:direct_sum}.
 \end{example}
 
-\begin{example}{(number example)}
+\begin{example}[A number example for the direct sum in $\kmat$]
 The direct sum of $m = 3, n = 5 \in \kmat_{0}$ is the object $m+n = 8 \in \kmat_{0}$ together with the following morphisms:
 \begin{align*}
 \pi_{1} = \begin{pmatrix}
@@ -336,7 +376,7 @@ a finite set $I$ and a family $(A_{i})_{i\in I}$ of objects in $\mathcal{C}$ to 
 (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I})$.
 \end{definition}
 
-\begin{lemma}{(Additive functor)}\endnote{(Ref. Lemma 2.10 in \cite{[Posur]})}
+\begin{lemma}[Additive functor]\endnote{(Ref. Lemma 2.10 in \cite{[Posur]})}
 Any additive functor $F$ commutes with direct sums.
 Let $( \mathcal{A},\oplus^{\mathcal{A}} )$ and $( \mathcal{B}, \oplus^{\mathcal{B}} )$ be additive categories whose projections and injections
 we denote by $\pi_{i}, \iota_{i}$ and $p_{i}, q_{i}$, respectively. An Ab-functor $F : \mathcal{A} \rightarrow \mathcal{B}$ between their underlying
