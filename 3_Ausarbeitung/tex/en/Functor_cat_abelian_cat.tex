@@ -151,12 +151,17 @@ This concludes the first part of the proof, i.e. $\HomAkmat$ is an Ab-category.
 to a corresponding direct sum $( \oplus_{i\in I} F_{i}, (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I}, u_{\mathrm{in}}, u_{\mathrm{out}} )$.
 \end{enumerate}
 \begin{subproof}[Proof of (ii)]
-We will make extensive use of the direct sum in $\kmat$ to define the direct sum in $\HomAkmat$.
-Let $I = \{1,\dots,n\}$ be a finite set, and $F_{i} \in \HomAkmat_{0}, 1\leq i\leq n$. The object $F := \oplus_{i=1}^{n} F_{i}$ is a functor, mapping
-each object $c \in \mathcal{A}_{0}$ to the object $Fc = \oplus_{i=1}^{n} F_{i}c = \sum_{i=1}^{n} F_{i}c \in \kmat_{0}$ by the direct sum in $\kmat$.\\
+We will make extensive use of the direct sum in $\kmat$ as described in \ref{ex:kmat_additive} and \ref{ex:block_diagonal_matrix} to
+define the direct sum in $\HomAkmat$.
+Let $I = \{1,\dots,n\}$ be a finite set, and $F_{i} \in \HomAkmat_{0}, 1\leq i\leq n$.
+\begin{itemize}
+\item The object $F := \oplus_{i=1}^{n} F_{i}$ is a functor, mapping
+each object $c \in \mathcal{A}_{0}$ to the object $Fc = \oplus_{i=1}^{n} F_{i}c = \sum_{i=1}^{n} F_{i}c \in \kmat_{0}$ by the direct sum in
+$\kmat$.\\
+Each $F_{i}$ also defines a family of matrices $\{F_{i} a : F_{i} c \rightarrow F_{i} c' \}_{a : c \rightarrow c' \in \mathcal{A}_{1}}$.
+$F_{i} a : F_{i} c \rightarrow F_{i} c'$
 
-
-
+\end{itemize}
 
 A morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ with $F_{i} a : F_{i} c \rightarrow F_{i} c', \, 1\leq i\leq n$ gets mapped to the matrix 
 $F a : Fc \rightarrow Fc'$ that is the block-diagonal matrix of the $F_{i}a$'s.
@@ -167,6 +172,16 @@ In other words, we can identify each $F_{j}a$ as a $F_{j} c \times F_{j} c'$ sub
 \]
 
 define $\pi_{i}, \iota_{i}$, for $\tau, \rho, u_{\mathrm{in}}(\tau), u_{\mathrm{out}}(\rho)$,
+
+Let $i \in I$. The morphism $\pi_{i} : F \rightarrow F_{i};$ is a natural transformation that is defined by its components
+$\forall c \in \mathcal{A}_{0}, (\pi_{i})_{c} : F(c) \rightarrow F_{i}(c)$ is a matrix defined as in \ref{ex:kmat_additive}:
+\begin{align}
+(\pi_{i})_{c} := \begin{pmatrix}
+0_{\sum_{j=1}^{i-1} F_{j}(c), F_{i}(c)} \\
+1_{F_{i}(c)} \\
+0_{\sum_{j=i+1}^{N} F_{j}(c), F_{i}(c)}
+\end{pmatrix}
+\end{align}
 
 prove:
 properties are fulfilled.
