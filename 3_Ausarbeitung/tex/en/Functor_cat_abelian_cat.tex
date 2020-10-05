@@ -3,7 +3,7 @@ Goal is to show that
 
 The functor category with values in $\kmat$ is an Abelian category with enough projectives (constructively) and direct sum decomposition (constructively).
 
-\subsection{Abelian category}
+\subsection{$\kmat$ is an abelian category}
 
 \begin{definition}[The functor category $\HomAkmat$]
 Let $\Bbbk$ be a commutative ring, and let $\mathcal{A}$ be a finite-dimensional algebroid over $\Bbbk$.\\
@@ -50,29 +50,37 @@ C \arrow[d, "{\mathrm{CokernelColift}(\alpha,\tau)}"', dashed] &  &  & B \arrow[
 T                                                              &  &  &                                                                                       &                       
 \end{tikzcd}
 \]
-\item For objects $A, K, T \in \kmat_{0}$ and morphisms $\iota : K \rightarrow A, \tau : T \rightarrow A$ we have a lift of $\tau$ along $\iota$
-given by a morphism $u : T \rightarrow K$ such that $u \iota = \tau$.
-\[
-\begin{tikzcd}
-                                              & K \arrow[rd, "\iota"] &   \\
-T \arrow[rr, "\tau"'] \arrow[ru, "u", dashed] &                       & A
-\end{tikzcd}
-\]
-\item For objects $A,C,T \in \kmat_{0}$ and morphisms $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ we have a colift of $\tau$ along
-$\varepsilon$ given by a morphism $u : C \rightarrow T$ such that $\varepsilon u = \tau$.
-\[
-\begin{tikzcd}
-A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T \\
-                                                & C \arrow[ru, "u"', dashed] &  
-\end{tikzcd}
-\]
+
+
+\end{itemize}
+\end{example}
+
+\begin{example}[Lift along mono and colift along epi]
+In an abelian category there exist lifts along monos and colifts along epis, more precisely there exist two dependent functions:
+\begin{itemize}
 \item A dependent function $( - / - )$ mapping a pair $\iota : K \rightarrow A, \tau : T \rightarrow A$ to a lift $(\tau / \iota )$ of
-$\tau$ along $\iota$, where $A, K, T \in \kmat_{0}$, $\iota$ is a monomorphism and $\tau\,\mathrm{CokernelProjection}(\iota) = 0$.
+$\tau$ along $\iota$, where $A, K, T \in \kmat_{0}$, 
+
+$\iota$ is a monomorphism and 
+
+$\tau\,\mathrm{CokernelProjection}(\iota) = 0$.
+
 \item A dependent function $( - \backslash - )$ mapping a pair $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ to a colift
 $(\varepsilon \backslash \tau )$ of
 $\tau$ along $\varepsilon$, where $A, C, T \in \kmat_{0}$, $\varepsilon$ is an epimorphism and $\mathrm{KernelEmbedding}(\varepsilon)\tau = 0$.
+
 \end{itemize}
+Lifts along monos and colifts along epis are unique.
 \end{example}
+
+\begin{remark}
+The existence of lifts along monos and colifts along epis is equivalent to \ref{def:abelian_category}.
+\end{remark}
+\begin{proof}
+
+Each mono is a kernel embedding, each epi is cokernel projection.
+\end{proof}
+
 
 Our category $\HomAkmat$ has all of these limits.
 
@@ -153,23 +161,73 @@ to a corresponding direct sum $( \oplus_{i\in I} F_{i}, (\pi_{i})_{i\in I}, (\io
 \begin{subproof}[Proof of (ii)]
 We will make extensive use of the direct sum in $\kmat$ as described in \ref{ex:kmat_additive} and \ref{ex:block_diagonal_matrix} to
 define the direct sum in $\HomAkmat$.
-Let $I = \{1,\dots,n\}$ be a finite set, and $F_{i} \in \HomAkmat_{0}, 1\leq i\leq n$.
+Let $I = \{1,\dots,N\}$ be a finite set, and $\{F_{i} \}_{i \in I}$ a family of objects in $\HomAkmat_{0}$.
 \begin{itemize}
-\item The object $F := \oplus_{i=1}^{n} F_{i}$ is a functor, mapping
+\item The object $F := \oplus_{i=1}^{N} F_{i}$ is a functor defined by its image on objects $c \in \mathcal{A}_{0}$ and its
+image on morphisms $a : c \rightarrow c' \in \mathcal{A}_{1}$ in the following way:
+\begin{itemize}
+\item For an object $c \in \mathcal{A}_{0}$ we have a family $\{F_{i} c \}_{i \in I}$ of objects in $\kmat_{0}$ for which we can define
+their direct sum $\oplus_{i \in I} F_{i} c = \sum_{i=1}^{n} F_{i} c =: F c$.
+\item The projections $\pi_{i} : F \rightarrow F_{i}$ and coprojections $\iota_{i} : F_{i} \rightarrow F$ are defined component-wise
+exactly as in \eqref{eq:projection_direct_sum_matrix} and \eqref{eq:coprojection_direct_sum_matrix}, i.e.
+\begin{align}
+(\pi_{i})_{c} =
+\begin{pmatrix}
+0_{\sum_{j=1}^{i-1} F_{j}(c), F_{i}(c)} \\
+1_{F_{i}(c)} \\
+0_{\sum_{j=i+1}^{N} F_{j}(c), F_{i}(c)}
+\end{pmatrix} \\
+(\iota_{i})_{c} = 
+\begin{pmatrix}
+0_{F_{i}(c),\,\sum\limits_{j=1}^{i-1} F_{j}(c)} & 1_{F_{i}(c)} & 0_{F_{i}(c),\,\sum\limits_{j=i+1}^{N} F_{j}(c)}
+\end{pmatrix}
+\end{align}
+
+\item For a morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ we have a family of morphisms 
+$\{F_{i} a : F_{i} c \rightarrow F_{i} c'\}_{i \in I}$. Analogous to \eqref{eq:u_in_u_out_block_diagonal} we define
+
+\begin{align}
+F a := \sum_{i \in I} (\pi_{i})_{c} F_{i} a (\iota_{i})_{c'} : Fc \rightarrow Fc'
+\end{align}
+which satisfies
+\begin{align}
+(\iota_{i})_{c} Fa (\pi_{i})_{c'} &= (\iota_{i})_{c} \sum_{j \in I} (\pi_{j})_{c} F_{j} a (\iota_{j})_{c'} (\pi_{i})_{c'} \\
+&= \sum_{j \in I} (\iota_{i})_{c} (\pi_{j})_{c} F_{j} a (\iota_{j})_{c'}(\pi_{i})_{c'} \\
+&= \sum_{j \in I} (\delta_{i,j})_{c} F_{j} a (\delta_{j,i})_{c'} \\
+&= 1_{F_{i} c} F_{i} a 1_{F_{i} c'} \\
+&= F_{i} a
+\end{align}
+
+
+\item For a family $\tau = \{ \tau_{i} : G \rightarrow F_{i} \}_{i \in I}$ of natural transformations with the same source
+$G \in \HomAkmat_{0}$ we can define for each object $c \in \mathcal{A}_{0}$ a family
+$\tau_{c} = \{ (\tau_{i})_{c} : Gc \rightarrow F_{i}c \}_{i \in I}$ of morphisms in $\kmat_{1}$ with same source $Gc \in \kmat_{0}$.
+For these we have by \eqref{eq:u_in_direct_sum_matrix} the morphism $u_{\text{in}}(\tau_{c}) : Gc \rightarrow Fc$ such that
+\begin{align}
+u_{\text{in}}(\tau_{c}) (\pi_{i})_{c} =
+(\tau_{i})_{c}
+\end{align}
+We can thus define the natural transformation $u_{\text{in}}(\tau) : G \rightarrow F \in \HomAkmat_{1}$ by the components
+\begin{align}
+(u_{\text{in}}(\tau))_{c} := u_{\text{in}}(\tau_{c})
+\end{align}
+\item Analogous for a family $\rho = \{ \rho_{i} : F_{i} \rightarrow H \}$ of natural transformations with the same target
+$H \in \HomAkmat_{0}$ we can define $\rho_{c} = \{ (\rho_{i})_{c} : F_{i} c \rightarrow Hc \}_{i \in I}$ and get the
+natural transformation $u_{\text{out}}(\rho) : F \rightarrow H \in \HomAkmat_{1}$ with components
+\begin{align}
+(u_{\text{out}}(\rho))_{c} := u_{\text{out}}(\rho_{c})
+\end{align}
+
+\end{itemize}
+
+define $\pi_{i}, \iota_{i}$ (check), for $\tau, \rho, u_{\mathrm{in}}(\tau), u_{\mathrm{out}}(\rho)$ (check),
+
+, mapping
 each object $c \in \mathcal{A}_{0}$ to the object $Fc = \oplus_{i=1}^{n} F_{i}c = \sum_{i=1}^{n} F_{i}c \in \kmat_{0}$ by the direct sum in
 $\kmat$.\\
 Each $F_{i}$ also defines a family of matrices $\{F_{i} a : F_{i} c \rightarrow F_{i} c' \}_{a : c \rightarrow c' \in \mathcal{A}_{1}}$.
 $F_{i} a : F_{i} c \rightarrow F_{i} c'$
-\item For a morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ we have a family of morphisms 
-$\{F_{i} a : F_{i} c \rightarrow F_{i} c'\}_{1 \leq i \leq n}$.
-$F a : Fc \rightarrow Fc'$ that is the block-diagonal matrix of the $F_{i}a$'s.
-In other words, we can identify each $F_{j}a$ as a $F_{j} c \times F_{j} c'$ submatrix:
-\[
-\left(F_{j}a\right)_{k,l} = \left(F a\right)_{\sum_{i=1}^{j-1} F_{i}c + k,\,\sum_{i=1}^{j-1} F_{i}c' + l},
-1 \leq k \leq F_{j}c, 1 \leq l \leq F_{j}c'
-\]
 
-define $\pi_{i}, \iota_{i}$, for $\tau, \rho, u_{\mathrm{in}}(\tau), u_{\mathrm{out}}(\rho)$,
 
 Let $i \in I$. The morphism $\pi_{i} : F \rightarrow F_{i};$ is a natural transformation that is defined by its components
 $\forall c \in \mathcal{A}_{0}, (\pi_{i})_{c} : F(c) \rightarrow F_{i}(c)$ is a matrix defined as in \ref{ex:kmat_additive}:

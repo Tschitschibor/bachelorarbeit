@@ -211,8 +211,8 @@ Let for $I = \{1,\dots,N\},$ the set $\{n_{1},\dots,n_{N}\}$ be a family of obje
 \item the object $n = \sum_{i=1}^{N} n_{i}$
 \item For $i \in I$ we have as identity morphism $1_{n_{i}}$ of the object $n_{i}$ the $n_{i} \times n_{i}$ identity matrix.\\
 The projection $\pi_{i} : n \rightarrow n_{i}$ is an $n \times n_{i}$ matrix that is a block matrix of $0_{n_{-i},n_{i}}$ and $1_{n_{i}}$.
-\[
-\pi_{i} = 
+\begin{align}
+\pi_{i} = \label{eq:projection_direct_sum_matrix}
 \begin{pmatrix}
 0_{n_{1},\,n_{i}} \\
 0_{n_{2},\,n_{i}} \\
@@ -229,70 +229,109 @@ The projection $\pi_{i} : n \rightarrow n_{i}$ is an $n \times n_{i}$ matrix tha
 1_{n_{i}} \\
 0_{\sum\limits_{j=i+1}^{N} n_{j},\,n_{i}}
 \end{pmatrix}
-\]
+\end{align}
 \item The coprojection $\iota_{i} : n_{i} \rightarrow n$ is the transposed matrix $\iota_{i} = \pi_{i}^{T}$, i.e. an $n_{i} \times n$ block matrix
-\[
+\begin{align}
+\iota_{i} = \label{eq:coprojection_direct_sum_matrix}
 \begin{pmatrix}
 0_{n_{i},\,\sum\limits_{j=1}^{i-1} n_{j}} & 1_{n_{i}} & 0_{n_{i},\,\sum\limits_{j=i+1}^{N} n_{j}}
 \end{pmatrix}
-\]
+\end{align}
 \item For a family $\tau = (\tau_{i} : t \rightarrow n_{i})_{i\in I}$ we have the morphism $u_{\text{in}}(\tau)$ which is a $t \times n$ block matrix of
-the $\tau_{i}$.
-\[
-u_{\text{in}}(\tau) =
+the $\tau_{i}$:
+\begin{align}
+u_{\text{in}}(\tau) = \label{eq:u_in_direct_sum_matrix}
 \begin{pmatrix}
 \tau_{1} & \cdots & \tau_{N}
 \end{pmatrix}
-\]
+\end{align}
+with $u_{\text{in}}(\tau) \pi_{i} = \tau_{i}$.
 \item For a family $\tau = (\tau_{i} : n_{i} \rightarrow t)_{i \in I}$ we have the morphism $u_{\text{out}}(\tau)$ which is an $n \times t$ block matrix
-of the $\tau_{i}$.
-\[
-u_{\text{out}}(\tau) = 
+of the $\tau_{i}$:
+\begin{align}
+u_{\text{out}}(\tau) = \label{eq:u_out_direct_sum_matrix}
 \begin{pmatrix}
 \tau_{1} \\
 \vdots \\
 \tau_{N}
 \end{pmatrix}
-\]
+\end{align}
+with $\iota_{i} u_{\text{out}}(\tau) = \tau_{i}$.
 \end{itemize}
 One can easily verify the conditions for $\pi$, $\iota$, $u_{\text{in}}$ and $u_{\text{out}}$ in Definitions \ref{def:biproduct} and \ref{def:direct_sum}.
 \end{example}
+
+\begin{example}[Block-Diagonal matrices]
+In a situation with an index set $I = \{1,\dots,N\}$, two families of objects $\{m_{i}\}_{i\in I}, \{n_{i}\}_{i\in I}$ and a family of
+morphisms $\{a_{i} : m_{i} \rightarrow n_{i}\}$ we have the two direct sums
+\begin{align}
+m &:= \bigoplus_{i\in I} m_{i}, &&(\pi_{i})_{m} : m \rightarrow m_{i}, &&(\iota_{i})_{m} : m_{i} \rightarrow m, \\
+n &:= \bigoplus_{i\in I} n_{i}, &&(\pi_{i})_{n} : n \rightarrow n_{i}, &&(\iota_{i})_{n} : n_{i} \rightarrow n.
+\end{align}
+This situation is displayed in the following diagram
+\[
+\begin{tikzcd}
+m \arrow[dd, "(\pi_{i})_{m}", shift left=2]                           &  & n \arrow[dd, "(\pi_{i})_{n}", shift left=2]       \\
+                                                                      &  &                                                   \\
+m_{i} \arrow[uu, "(\iota_{i})_{m}", shift left=2] \arrow[rr, "a_{i}"] &  & n_{i} \arrow[uu, "(\iota_{i})_{n}", shift left=2]
+\end{tikzcd}
+\]
+The morphism $a : m \rightarrow n$ defined as
+\begin{align}
+a = \sum_{i \in I} (\pi_{i})_{m} a_{i} (\iota_{i})_{n}
+\end{align}
+satisfies both equations
+\begin{align}
+((\iota_{i})_{m} a )(\pi_{i})_{n} &= a_{i} \\
+(\iota_{i})_{m} (a (\pi_{i})_{n}) &= a_{i}
+\end{align}
+\end{example}
+
 
 \begin{example}[Block-Diagonal matrices]\phantom{}\label{ex:block_diagonal_matrix}\\
 We can even express a block-diagonal matrix of the $m_{i}\times n_{i}$-matrices $\{a_{i} : m_{i} \rightarrow n_{i} \}_{i\in I}$ using only
 the morphisms from \ref{ex:kmat_additive}:
 \begin{itemize}
 \item Let $n := \oplus_{i \in I} n_{i} = \sum_{i \in I} n_{i}$ and $m := \oplus_{i \in I} m_{i} = \sum_{i \in I} m_{i}$.
-\item We can view each matrix $a_{i}$ as part of a family $a_{i} := \{ a_{j,i} : m_{j} \rightarrow n_{i} \}_{j\in I}$ of matrices with same
-target $n_{i}$.
+\item For $i,j \in I$ we have $\iota_{j} \pi_{i} = \delta_{j,i}$. Thus we can view the matrix $a_{i} : m_{i} \rightarrow n_{i}$ as part of a family 
+\begin{align}
+&\{ \iota_{j} \pi_{i} a_{i} : m_{j} \rightarrow n_{i} \}_{j \in I} \\
+= &\{ \delta_{j,i} a_{i} : m_{j} \rightarrow n_{i} \}_{j\in I}
+\end{align}
+of matrices with same
+target $n_{i}$, where
 \[
-a_{j,i} := \begin{cases}
+\delta_{j,i} a_{i} := \begin{cases}
 a_{i} : m_{i} \rightarrow n_{i} & \text{ if } i = j \\
 0_{m_{j},n_{i}} & \text{ if } i \neq j
 \end{cases}
 \]
-And for those we can write them in the $m \times n_{i}$ matrix 
+And by \eqref{eq:u_out_direct_sum_matrix} we can write them in the $m \times n_{i}$ matrix 
 \[
-u_{\text{out}}(a_{i}) = \begin{pmatrix}
-a_{1,i} \\
+u_{\text{out}}((\delta_{j,i}a_{i})_{j \in I}) = \begin{pmatrix}
+\delta_{1,i} a_{i} \\
 \vdots \\
-a_{i,i} \\
+\delta_{i,i} a_{i} \\
 \vdots \\
-a_{N,i}
+\delta_{N,i} a_{i}
 \end{pmatrix} = \begin{pmatrix}
 0_{m_{1},n_{i}} \\
 \vdots \\
 0_{m_{i-1},n_{i}} \\
-a_{i,i} \\
+a_{i} \\
 0_{m_{i+1},n_{i}} \\
 \vdots \\
 0_{m_{N},n_{i}}
 \end{pmatrix}
 \]
-\item Next we can view the $u_{\text{out}}(a_{i})$ as family $\{u_{\text{out}}(a_{i}) : m \rightarrow n_{i}\}_{i\in I}$ of matrices
-with the same source $m$ and thus we can write them in the $m \times n$ matrix
+\item Next we can view the $u_{\text{out}}((\delta_{j,i}a_{i})_{j \in I})$ as family
+$\{u_{\text{out}}((\delta_{j,i}a_{i})_{j \in I}) : m \rightarrow n_{i}\}_{i\in I}$ of matrices
+with the same source $m$ and thus by \eqref{eq:u_in_direct_sum_matrix} we can write them in the $m \times n$ matrix
 \[
-u_{\text{in}}(u_{\text{out}}(a_{1}),\dots,u_{\text{out}}(a_{N})) = \begin{pmatrix}
+u_{\text{in}}(
+u_{\text{out}}((\delta_{j,1}a_{1})_{j \in I}), \dots, u_{\text{out}}((\delta_{j,N}a_{N})_{j \in I})
+) = \label{eq:u_in_u_out_block_diagonal}
+\begin{pmatrix}
 a_{1} & 0_{m_{1},n_{2}} & \dots & \dots & 0_{m_{1},n_{N}} \\
 0_{m_{2},n_{1}} & a_{2} & 0_{m_{2},n_{3}} & \dots & 0_{m_{2},n_{N}} \\
 \vdots & \vdots & \ddots & & \vdots \\
@@ -300,7 +339,7 @@ a_{1} & 0_{m_{1},n_{2}} & \dots & \dots & 0_{m_{1},n_{N}} \\
 0_{m_{N},n_{1}} & \cdots & & 0_{m_{N},n_{N-1}} & a_{N}
 \end{pmatrix}
 \]
-which we call $\mathrm{Diag}(a_{1},\dots,a_{N})$.
+which we call the \ul{block diagonal matrix} $\mathrm{Diag}(a_{1},\dots,a_{N})$.
 \item And we can retrieve each $u_{\text{out}}(a_{i})$ as
 \[
 u_{\text{out}}(a_{i}) = \mathrm{Diag}(a_{1},\dots,a_{N}) \pi_{i}
@@ -540,7 +579,14 @@ from which we can build kernels and cokernels in the matrix category:
 With these constructions, $\kmat$ becomes a pre-abelian category.
 \end{example}
 
-%%% exact functor
+\begin{definition}[Abelian category]\label{def:abelian_category}
+An \ul{abelian category} is
+\begin{itemize}
+\item a pre-abelian category $\mathcal{A}$ where
+\item every monomorphism $\iota$ is a kernel-embedding of some kernel object $K$ and
+\item every epimorphism $\varepsilon$ is a cokernel-projection of some cokernel object $C$.
+\end{itemize}
+\end{definition}
 
 \begin{definition}{(Abelian category)}\endnote{(From \cite{[context]}, appendix E.5, Def. E.5.1)}
 A category $\mathcal{C}$ is \ul{abelian} if
@@ -550,6 +596,28 @@ A category $\mathcal{C}$ is \ul{abelian} if
 \item it has all \ul{kernels} and \ul{cokernels}, defined repsectively to be the \ul{equalizer} and
 \ul{coequalizer} of a map $f : A \rightarrow B$ with the zero map $A \rightarrow 0 \rightarrow B$, and
 \item all monomorphisms and epimorphisms arise as kernels or cokernels, respectively.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Lift and colift]
+(if they exist...)
+\begin{itemize}
+\item For objects $A, K, T \in \kmat_{0}$ and morphisms $\iota : K \rightarrow A, \tau : T \rightarrow A$ we have a lift of $\tau$ along $\iota$
+given by a morphism $u : T \rightarrow K$ such that $u \iota = \tau$.
+\[
+\begin{tikzcd}
+                                              & K \arrow[rd, "\iota"] &   \\
+T \arrow[rr, "\tau"'] \arrow[ru, "u", dashed] &                       & A
+\end{tikzcd}
+\]
+\item For objects $A,C,T \in \kmat_{0}$ and morphisms $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ we have a colift of $\tau$ along
+$\varepsilon$ given by a morphism $u : C \rightarrow T$ such that $\varepsilon u = \tau$.
+\[
+\begin{tikzcd}
+A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T \\
+                                                & C \arrow[ru, "u"', dashed] &  
+\end{tikzcd}
+\]
 \end{itemize}
 \end{definition}
 
