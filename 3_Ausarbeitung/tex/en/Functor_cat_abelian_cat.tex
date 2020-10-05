@@ -16,7 +16,7 @@ naturality conditions in \eqref{eq:naturality_condition}.
 \end{definition}
 
 \begin{example}[Limits and colimits in $\kmat$]
-In our target category $\kmat$ which is an abelian category, we have the following limits and colimits:
+In our target category $\kmat$ which is an abelian category, we have the following limits, colimits and special bilimts:
 \begin{itemize}
 \item A zero object $0 \in \kmat_{0}$
 \item For every finite set $I$ and family $\{S_{i}\}_{i \in I}$ we have the direct sum
@@ -160,10 +160,8 @@ each object $c \in \mathcal{A}_{0}$ to the object $Fc = \oplus_{i=1}^{n} F_{i}c 
 $\kmat$.\\
 Each $F_{i}$ also defines a family of matrices $\{F_{i} a : F_{i} c \rightarrow F_{i} c' \}_{a : c \rightarrow c' \in \mathcal{A}_{1}}$.
 $F_{i} a : F_{i} c \rightarrow F_{i} c'$
-
-\end{itemize}
-
-A morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ with $F_{i} a : F_{i} c \rightarrow F_{i} c', \, 1\leq i\leq n$ gets mapped to the matrix 
+\item For a morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ we have a family of morphisms 
+$\{F_{i} a : F_{i} c \rightarrow F_{i} c'\}_{1 \leq i \leq n}$.
 $F a : Fc \rightarrow Fc'$ that is the block-diagonal matrix of the $F_{i}a$'s.
 In other words, we can identify each $F_{j}a$ as a $F_{j} c \times F_{j} c'$ submatrix:
 \[
@@ -182,6 +180,8 @@ $\forall c \in \mathcal{A}_{0}, (\pi_{i})_{c} : F(c) \rightarrow F_{i}(c)$ is a 
 0_{\sum_{j=i+1}^{N} F_{j}(c), F_{i}(c)}
 \end{pmatrix}
 \end{align}
+
+\end{itemize}
 
 prove:
 properties are fulfilled.
