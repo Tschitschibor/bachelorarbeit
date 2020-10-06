@@ -50,7 +50,7 @@ we are talking about the \ul{internal hom}. Otherwise the hom-set exists outside
 \end{definition}
 
 
-\begin{example}\label{q(2)}{(Quiver with 2 objects and 3 morphisms)}\\
+\begin{example}[Quiver with 2 objects and 3 morphisms]\label{ex:quiver_q(2)[a:1->1,b:1->2,c:2->2]}\phantom{}\\
 \[
 \begin{tikzcd}
 1 \arrow["a"', loop, distance=2em, in=305, out=235] \arrow[rr, "b"] &  & 2 \arrow["c"', loop, distance=2em, in=305, out=235]
@@ -63,6 +63,32 @@ $\textup{Hom}_{q}(2,1)=\emptyset$.\\
 
 \noindent In \texttt{QPA} this quiver is encoded as \texttt{q(2)[a:1->1,b:1->2,c:2->2]} where the first \texttt{(2)} in parentheses stands for the total
 number of objects.
+\end{example}
+
+\begin{definition}[Opposite quiver]
+For a quiver $q$ we can define the \ul{opposite quiver} $q^{\text{op}}$ which has all objects of the original quiver $q$, i.e.
+\[
+q^{\text{op}}_{0} = q_{0}
+\]
+But all arrows in $q^{\text{op}}$ are facing in the other direction, i.e. have their source and target swapped:
+\[
+\forall (a : s(a) \rightarrow t(a)) \in q_{1}\,\exists (a' : t(a) \rightarrow s(a)) \in q^{\text{op}}_{1},
+\]
+i.e. $s(a') = t(a)$ and $t(a') = s(a)$.
+\end{definition}
+
+The opposite quiver (and especially later the opposite category) is a very helpful concept in that we can prove one statement for a quiver $q$
+and argument by \ul{duality} that there exists a \ul{dual} or \ul{co} statement in the opposite quiver, without needing to prove the same thing
+twice. Especially in section 5 the opposite category becomes important.\\
+
+The opposite quiver of \ref{ex:quiver_q(2)[a:1->1,b:1->2,c:2->2]} is
+
+\begin{example}[Opposite quiver]\label{ex:quiver_q(2)[a:1->1,b:2->1,c:2->2]}\phantom{}\\
+\[
+\begin{tikzcd}
+1 \arrow["a"', loop, distance=2em, in=305, out=235] &  & 2 \arrow["c"', loop, distance=2em, in=305, out=235] \arrow[ll, "b"]
+\end{tikzcd}
+\]
 \end{example}
 
 \begin{definition}{(Composable arrows; path in a quiver)}\label{def:path}\endnote{(ref. \ref{[leit4]} 4.1)}
@@ -187,7 +213,6 @@ of mutual dominance.
 A \ul{concrete category} is a category $\mathcal{C}$ together with a faithful functor $U : \mathcal{C} \rightarrow \Set$.\\
 This functor $U$ typically carries an object of $\mathcal{C}$ to its \textit{underlying set} and is called \textit{forgetful functor}.
 For more on functors see the next subsection, for more on the forgetful functor see \ref{sec:fin_concrete_cat_free_forgetful}.
-
 \end{definition}
 
 \begin{example}
