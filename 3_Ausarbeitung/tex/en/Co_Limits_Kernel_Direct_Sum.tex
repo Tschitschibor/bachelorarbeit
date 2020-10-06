@@ -53,9 +53,9 @@ In the following section, we give explicit definitions for the limits in \ref{ex
 
 \begin{definition}{(Product, coproduct)}\label{def:prod_coprod}
 Let $I$ be an index set and $\{A_{i}\}_{i\in I}$ a family of objects in a category $\mathcal{C}$.
-\begin{enumerate}
-\renewcommand{\labelenumi}{(prod)}
-\item The \ul{product} of the family $\{A_{i}\}_{i\in I}$ is an object $\invamalg A_{i}$ together with a family of morphisms
+\setlist[description]{font=\normalfont}
+\begin{description}
+\item[(prod)] The \ul{product} of the family $\{A_{i}\}_{i\in I}$ is an object $\invamalg A_{i}$ together with a family of morphisms
 \[
 \{ \pi_{i} : \invamalg A_{i} \rightarrow A_{i} \}
 \]
@@ -70,8 +70,7 @@ a unique morphism $\varphi : M \rightarrow \invamalg A_{i}$ called the \ul{produ
 M \arrow[rrru, "\varphi_{1}", bend left] \arrow[rrrd, "\varphi_{2}"', bend right] \arrow[rr, "\exists^{1} \varphi", dashed] &  & A_{1}\invamalg A_{2} \arrow[ru, "\pi_{1}"] \arrow[rd, "\pi_2"] &       \\
                                                                                                                             &  &                                                          & A_{2}
 \end{tikzcd}
-\renewcommand{\labelenumi}{(coprod)}
-\item The dual notion to product is the \ul{coproduct} of the family $\{A_{i}\}_{i\in I}$, that is an object $\amalg A_{i}$ together with
+\item[(coprod)] The dual notion to product is the \ul{coproduct} of the family $\{A_{i}\}_{i\in I}$, that is an object $\amalg A_{i}$ together with
 a family of morphisms
 \[
 \{ \iota_{i} : A_{i} \rightarrow \amalg A_{i} \}
@@ -87,7 +86,7 @@ morphism $\psi : \amalg A_{i} : M$ called the \ul{coproduct morphism} such that
 M &  & A_{1}\amalg A_{2} \arrow[ll, "\exists^{1} \psi"', dashed] &                                                                      \\
   &  &                                                           & A_{2} \arrow[lllu, "\psi_{2}", bend left] \arrow[lu, "\iota_2"]     
 \end{tikzcd}
-\end{enumerate}
+\end{description}
 \end{definition}
 
 \begin{remark}{(Terminal object, initial object, zero object)}\label{def:init_term_zero_object}
@@ -261,7 +260,7 @@ with $\iota_{i} u_{\text{out}}(\tau) = \tau_{i}$.
 One can easily verify the conditions for $\pi$, $\iota$, $u_{\text{in}}$ and $u_{\text{out}}$ in Definitions \ref{def:biproduct} and \ref{def:direct_sum}.
 \end{example}
 
-\begin{example}[Block-Diagonal matrices]
+\begin{example}[Block-Diagonal matrices]\phantom{}\label{ex:block_diagonal_matrix}\\
 In a situation with an index set $I = \{1,\dots,N\}$, two families of objects $\{m_{i}\}_{i\in I}, \{n_{i}\}_{i\in I}$ and a family of
 morphisms $\{a_{i} : m_{i} \rightarrow n_{i}\}$ we have the two direct sums
 \begin{align}
@@ -280,80 +279,24 @@ The morphism $a : m \rightarrow n$ defined as
 \begin{align}
 a = \sum_{i \in I} (\pi_{i})_{m} a_{i} (\iota_{i})_{n}
 \end{align}
-satisfies both equations
+satisfies
 \begin{align}
-((\iota_{i})_{m} a )(\pi_{i})_{n} &= a_{i} \\
-(\iota_{i})_{m} (a (\pi_{i})_{n}) &= a_{i}
+(\iota_{i})_{m} a (\pi_{i})_{n} &= a_{i}
+\end{align}
+This an be interpreted in two ways:
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item For the family $\iota_{m} a := \{ (\iota_{i})_{m} a : m_{i} \rightarrow n \}$ of morphisms with same target $n$, we have the morphism
+$u_{\text{out}}(\iota_{m} a) : m \rightarrow n$ such that $(\iota_{i})_{m} u_{\text{out}}(\iota_{m} a) = (\iota_{i})_{m} a$, and
+\item For the family $a \pi_{n} := \{ a (\pi_{i})_{n} : m \rightarrow n_{i} \}$ of morphisms with same source $m$, we have the morphism
+$u_{\text{in}}(a \pi_{n}) : m \rightarrow n$ such that $u_{\text{in}}(a \pi_{n}) (\pi_{i})_{n} = a (\pi_{i})_{n}$.
+\end{enumerate}
+So we have
+\begin{align}
+(\iota_{i})_{m} u_{\text{out}}(\iota_{m} a) (\pi_{i})_{n} = a_{i} = (\iota_{i})_{m} u_{\text{in}}(a \pi_{n}) (\pi_{i})_{n}
 \end{align}
 \end{example}
 
-
-\begin{example}[Block-Diagonal matrices]\phantom{}\label{ex:block_diagonal_matrix}\\
-We can even express a block-diagonal matrix of the $m_{i}\times n_{i}$-matrices $\{a_{i} : m_{i} \rightarrow n_{i} \}_{i\in I}$ using only
-the morphisms from \ref{ex:kmat_additive}:
-\begin{itemize}
-\item Let $n := \oplus_{i \in I} n_{i} = \sum_{i \in I} n_{i}$ and $m := \oplus_{i \in I} m_{i} = \sum_{i \in I} m_{i}$.
-\item For $i,j \in I$ we have $\iota_{j} \pi_{i} = \delta_{j,i}$. Thus we can view the matrix $a_{i} : m_{i} \rightarrow n_{i}$ as part of a family 
-\begin{align}
-&\{ \iota_{j} \pi_{i} a_{i} : m_{j} \rightarrow n_{i} \}_{j \in I} \\
-= &\{ \delta_{j,i} a_{i} : m_{j} \rightarrow n_{i} \}_{j\in I}
-\end{align}
-of matrices with same
-target $n_{i}$, where
-\[
-\delta_{j,i} a_{i} := \begin{cases}
-a_{i} : m_{i} \rightarrow n_{i} & \text{ if } i = j \\
-0_{m_{j},n_{i}} & \text{ if } i \neq j
-\end{cases}
-\]
-And by \eqref{eq:u_out_direct_sum_matrix} we can write them in the $m \times n_{i}$ matrix 
-\[
-u_{\text{out}}((\delta_{j,i}a_{i})_{j \in I}) = \begin{pmatrix}
-\delta_{1,i} a_{i} \\
-\vdots \\
-\delta_{i,i} a_{i} \\
-\vdots \\
-\delta_{N,i} a_{i}
-\end{pmatrix} = \begin{pmatrix}
-0_{m_{1},n_{i}} \\
-\vdots \\
-0_{m_{i-1},n_{i}} \\
-a_{i} \\
-0_{m_{i+1},n_{i}} \\
-\vdots \\
-0_{m_{N},n_{i}}
-\end{pmatrix}
-\]
-\item Next we can view the $u_{\text{out}}((\delta_{j,i}a_{i})_{j \in I})$ as family
-$\{u_{\text{out}}((\delta_{j,i}a_{i})_{j \in I}) : m \rightarrow n_{i}\}_{i\in I}$ of matrices
-with the same source $m$ and thus by \eqref{eq:u_in_direct_sum_matrix} we can write them in the $m \times n$ matrix
-\[
-u_{\text{in}}(
-u_{\text{out}}((\delta_{j,1}a_{1})_{j \in I}), \dots, u_{\text{out}}((\delta_{j,N}a_{N})_{j \in I})
-) = \label{eq:u_in_u_out_block_diagonal}
-\begin{pmatrix}
-a_{1} & 0_{m_{1},n_{2}} & \dots & \dots & 0_{m_{1},n_{N}} \\
-0_{m_{2},n_{1}} & a_{2} & 0_{m_{2},n_{3}} & \dots & 0_{m_{2},n_{N}} \\
-\vdots & \vdots & \ddots & & \vdots \\
-0_{m_{N-1},n_{1}} & \cdots &  & a_{N-1} & 0_{m_{N-1},n_{N}} \\
-0_{m_{N},n_{1}} & \cdots & & 0_{m_{N},n_{N-1}} & a_{N}
-\end{pmatrix}
-\]
-which we call the \ul{block diagonal matrix} $\mathrm{Diag}(a_{1},\dots,a_{N})$.
-\item And we can retrieve each $u_{\text{out}}(a_{i})$ as
-\[
-u_{\text{out}}(a_{i}) = \mathrm{Diag}(a_{1},\dots,a_{N}) \pi_{i}
-\]
-\item And from each $u_{\text{out}}(a_{i})$ we get back our matrix $a_{i}$ as
-\[
-a_{i} = \iota_{i} u_{\text{out}}(a_{i})
-\]
-\item Together we get
-\[
-a_{i} = \iota_{i} \mathrm{Diag}(a_{1},\dots,a_{N}) \pi_{i}
-\]
-\end{itemize}
-\end{example}
 
 \begin{example}[A number example for the direct sum in $\kmat$]
 The direct sum of $m = 3, n = 5 \in \kmat_{0}$ is the object $m+n = 8 \in \kmat_{0}$ together with the following morphisms:
@@ -472,25 +415,6 @@ An \ul{additive category} is an Ab-category $\mathcal{C}$ together with a depend
 a finite set $I$ and a family $(A_{i})_{i\in I}$ of objects in $\mathcal{C}$ to a corresponding direct sum $(\oplus_{i\in I}^{\mathcal{C}} A_{i},
 (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I})$.
 \end{definition}
-
-\begin{lemma}[Additive functor]\endnote{(Ref. Lemma 2.10 in \cite{[Posur]})}
-Any additive functor $F$ commutes with direct sums.
-Let $( \mathcal{A},\oplus^{\mathcal{A}} )$ and $( \mathcal{B}, \oplus^{\mathcal{B}} )$ be additive categories whose projections and injections
-we denote by $\pi_{i}, \iota_{i}$ and $p_{i}, q_{i}$, respectively. An Ab-functor $F : \mathcal{A} \rightarrow \mathcal{B}$ between their underlying
-Ab-categories preserves the additive structure. More precisely, $F$ can be equipped with the following data in a unique way:
-\begin{enumerate}
-\item A dependent function mapping a finite set $I$ and a collection $(A_{i})_{i\in I}$ of objects in $\mathcal{A}$ to an isomorphism
-\[
-\sigma_{F}( (A_{i})_{i\in I}) : F( \oplus_{i\in I}^{\mathcal{A}} A_{i} ) \xrightarrow{\sim} \oplus_{i\in I}^{\mathcal{B}} F( A_{i} ),
-\]
-which we simply denote by $\sigma_{F}$ or $\sigma$ if no confusion may occur.
-\item The equalities $\sigma p_{i} = F(\pi_{i})$ and $F(\iota_{i}) \sigma = q_{i}$ hold.
-\end{enumerate}
-In particular, we get an isomorphism $z : F( 0^{\mathcal{A}} ) \xrightarrow{\sim} 0^{\mathcal{B}}$.
-\end{lemma}
-\begin{proof}
-
-\end{proof}
 
 \subsection{Kernel and cokernel; image and coimage}
 
