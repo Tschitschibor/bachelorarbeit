@@ -39,7 +39,7 @@ F = \bigoplus_{i\in I} F_{i}
 \begin{proof} We assert certain truths about the algorithm by formulating invariants, and how they stay constant in each line of the algorithm.\\
 
 \noindent In line 1, the morphism $1_{F} : F \rightarrow F$, which is initially the only morphism in $\mathtt{queue}$, satisfies $t(1_{F}) = F$.\\
-In line 10, provided $\iota : I \rightarrow s(\eta)$ and $\kappa : K \rightarrow s(\eta)$ are each composable with $\eta$, then we are
+In line 10, since $\iota : I \rightarrow s(\eta)$ and $\kappa : K \rightarrow s(\eta)$ are each composable with $\eta$, then we are
 appending the list $[\iota\eta, \kappa\eta]$ of morphisms with target $t(\iota\eta) = t(\kappa\eta) = F$ to the $\mathtt{queue}$.\\
 Thus in each step of the algorithm the $\mathtt{queue}$ only contains morphisms $\eta$ with target $t(\eta) = F$.\\
 
@@ -55,7 +55,7 @@ F = \label{eq:direct_sum_decomposition}
 \end{align}
 For the first run of the while loop we take $\eta_{1} := 1_{F}$ from the $\mathtt{queue}$. Then there are two possibilities:\\
 If $F$ was indecomposable, we now add $\eta_{1}$ to $\mathtt{summands}$, and have $\mathtt{queue} = \emptyset$ and
-$\mathtt{summands} = [1_{F}]$ which also satisfy \eqref{eq:direct_sum_decomposition}.\\
+$\mathtt{summands} = [1_{F}]$ which also satisfies \eqref{eq:direct_sum_decomposition}.\\
 Otherwise we get a decomposition of $F$ with $\iota_{1} : I_{1} \rightarrow F$ and $\kappa_{1} : K_{1} \rightarrow F$. In this case
 $\mathtt{summands}$ stays empty, and instead we have $\mathtt{queue} = [\iota_{1}\eta_{1}, \kappa_{1}\eta_{1}]$. Since
 $\eta_{1} = 1_{F}$, that's the same as $\mathtt{queue} = [\iota_{1},\kappa_{1}]$. (In the following steps we can't assume the
@@ -63,19 +63,14 @@ $\eta \in \mathtt{queue}$ to be the identity). For \eqref{eq:direct_sum_decompos
 \[
 I_{1} \oplus K_{1} = F
 \]
-which is exactly what we show for the output of $\mathtt{DecomposeOnceByRandomEndomorphism}$.
+which is exactly what we assert for the output of $\mathtt{DecomposeOnceByRandomEndomorphism}$.\\
+Thus after the first while loop, equation \eqref{eq:direct_sum_decomposition} holds.\\
 
 
-If in the first run of the while loop, $s(\eta) = s(1_{F}) = F$ was decomposable with $[\iota,\kappa]$ in line 9, then
-
-In line 9, the output $[\iota, \kappa]$ of $\mathtt{DecomposeOnceByRandomEndomorphism}(s(\eta))$ satisfies
-$s(\iota) \oplus s(\kappa) = t(\eta)$ which we still have to show.\\
-
-Thus in each step, equation \eqref{eq:direct_sum_decomposition} holds.\\
+In each step, the $\mathtt{queue}$ contains morphisms with common target $F$. 
+Thus $\mathtt{queue}$ will eventually become empty.
 
 \end{proof}
-
-$\kappa = \mathrm{KernelEmbedding}(\alpha)$ with $\alpha^{2} = \alpha$ and $\alpha : F \rightarrow F$ an endomorphism.
 
 
 \[
@@ -132,25 +127,6 @@ For all objects $i\in \mathcal{A}_{0}$ $I(i) \leq s(\eta)(i)$ and $K(i) \leq s(\
 $\mathtt{queue} := \{1_{F}\} \mapsto \{\iota 1_{F}, \kappa 1_{F}\} = \{\iota, \kappa \}
 \mapsto \{ \iota_{1}\iota, \kappa_{1}\iota, \iota_{2}\kappa, \kappa_{2}\kappa \}$
 
-\begin{enumerate}
-\renewcommand{\labelenumi}{(\theenumi)}
-\item We are starting with a trivial decomposition $\iota : F \rightarrow F$, i.e. the embedding $\iota = 1_{F}$ is
-our only morphism in the queue.
-\item In each step we take a morphism $\eta : s(\eta) \rightarrow F$ from the queue and try to decompose $s(\eta)$
-with $\mathtt{DecomposeOnceByRandomEndomorphism}(s(\eta))$ (see next section).
-\item If it fails, i.e. the functor $s(\eta)$ was already indecomposable, then we add $\eta$ to our resulting list of $\mathtt{summands}$ and
-remove $\eta$ from the queue.
-\item Otherwise, we get a decomposition of $s(\eta)$ into an $\mathrm{ImageEmbedding}( \alpha )$ and $\mathrm{KernelEmbedding}( \alpha )$
-for some endomorphism $\alpha : s(\eta) \rightarrow s(\eta)$, i.e. embeddings $\iota : I \rightarrow s(\eta)$ and $\kappa : K \rightarrow s(\eta)$
-with $I \oplus K = s(\eta)$.
-\item We then replace $\eta$ in our queue with the two morphisms $\iota \eta : I \rightarrow F$ and $\kappa \eta : K \rightarrow F$.
-\item The morphisms in our queue are therefore always morphisms with target $F$, but the sources $I$ and $K$ get more and more
-decomposed.
-\item If $\mathtt{DecomposeOnceByRandomEndomorphism}(s(\eta))$ fails for all $\eta$ in our queue, we are finished and output the list
-$\mathtt{summands}$ of our embeddings $\iota_{i} : F_{i} \rightarrow F$, from which we can get the direct sum decomposition
-$F_{i} = s(\iota_{i}),\, i\in I$, i.e. $F = \bigoplus_{i\in I} F_{i}$.
-\end{enumerate}
-
 
 Input: Functor $F$.\\
 Output: Tupel $(\mathrm{ImageEmbedding}( \alpha ), \mathrm{KernelEmbedding}( \alpha ) )$
@@ -204,10 +180,13 @@ F &= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12})
 	\SetKwInput{Input}{Input~}
 	\SetKwInput{Output}{Output~}
 	\Input{~a functor $F$ in a functor category}
-	\Output{~a pair $[\iota : I \rightarrow F, \kappa : K \rightarrow F]$ of morphisms such that $I \oplus K = F$ or
+	\Output{~a pair $[\iota : I \rightarrow F, \kappa : K \rightarrow F]$ of morphisms such that $I \oplus K = F$ with $I \neq 0$ and $K \neq 0$ or
 	$\mathtt{fail}$ if $F$ was indecomposable}
 	\BlankLine
-	let $d := \max \{ \mathrm{dim}_{\Bbbk}Fc \}_{c \in \mathcal{A}}$\;
+	let $d := \max \{ \mathrm{dim}_{\Bbbk}Fc \}_{c \in \mathcal{A}_{0}}$\;
+	\If{$d = 0$}{
+	    \Return $\mathtt{fail}$\;
+	}
 	let $\mathcal{B} = [\beta_{1},\dots,\beta_{\mathrm{Length}(\mathcal{B})}]$ be a $\Bbbk$-basis of $\mathrm{Hom}_{\HomAkmat}(F,F)$\;
 	add $0_{F,F}$ to $\mathcal{B}$\;
 	let $n := \log_{2}(d) + 1$\;
@@ -240,6 +219,21 @@ F &= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12})
 	\Return $\mathtt{fail}$\;
 \end{algorithm}
 
+\begin{lemma}
+\algoref{DecomposeOnceByRandomEndomorphism} terminates with the correct output.
+\end{lemma}
+\begin{proof} We assert certain truths about the algorithm by formulating invariants, and how they stay constant in each line of the algorithm.\\
+
+\noindent For the input $F = 0$ we have $Fc = 0\,\forall c \in \mathcal{A}$ and thus $d = 0$ which returns $\mathtt{fail}$, i.e. there is no
+decomposition $0 = I \oplus K$ with $I \neq 0$ and $K \neq 0$.\\
+
+\noindent For any other input $F \neq 0$ there is a $c \in \mathcal{A}_{0}$ with $Fc > 0$, thus in line 1 we have $d > 0$.\\
+Since $F \neq 0$ we also have $1_{F} \neq 0_{F,F}$, thus after line 6 we can assume $\mathrm{Length}(\mathcal{B}) \geq 2$ and
+the list $[\mathrm{Length}(\mathcal{B}),\mathrm{Length}(\mathcal{B}) - 1,\dots,2]$ in line 8 to be nonempty, thus we will enter the for loop
+at least once.\\
+In line 9, the endomorphism $\alpha$ is a linear combination of $\beta_{b}$ and $\beta_{b-1}$. Note that for the initial
+$b = \mathrm{Length}(\mathcal{B})$, we have $\beta_{b} = 0_{F,F}$, as we added the zero morphism last.
+\end{proof}
 
 
 
