@@ -1,0 +1,104 @@
+
+
+\begin{proof}
+\[
+\begin{tikzcd}
+Y(i) \arrow[d, "\rho"'] \arrow[rd, "\eta"] \arrow[rrd, shift left=2] &                                                                   &   \\
+F \arrow[r, "\varphi", two heads]                                  & G \arrow[r, "\theta"', shift right] \arrow[r, "\psi", shift left] & H
+\end{tikzcd}
+\]
+
+We want to show that $Y(i)$ is a projective object, i.e. that for each epimorphism $\varphi : F \twoheadrightarrow G$ and each
+morphism $\eta : Y(i) \rightarrow G$, there exists a projective lift $\rho : Y(i) \dottedrightarrow F$ such that $\eta = \rho\varphi$.
+
+$\varphi_{j}$ epimorphism in $\kmat$ we have a $\rho = \mathrm{LeftDivide}( \eta, \varphi )$. Or in category theory terms,
+CokernelCoLift or KernelLift... see Diss. Posur. p. 38.
+
+Let $\mathcal{A}$ be a $\Bbbk$-algebroid with finitely many objects and finite-dimensional hom-sets over $\Bbbk$ and let
+$i \in \mathcal{A}^{\text{op}}$.
+We want to show that $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ is exact.\\
+Let $F,G \in \HomAkmat_{0}$ and $\varphi : F \twoheadrightarrow G$ an epimorphism in $\HomAkmat_{1}$.
+We want to show that
+\begin{alignat}{2}
+&\mathrm{Hom}_{\HomAkmat}(Y(i),\varphi) &&: \begin{cases}\mathrm{Hom}_{\HomAkmat}(Y(i), F) 
+\rightarrow \mathrm{Hom}_{\HomAkmat}(Y(i), G); \\
+\rho \mapsto \rho\varphi
+\end{cases}
+\end{alignat}
+is an epimorphism.
+The composition $\rho\varphi$ of natural transformations is defined component-wise:
+\[
+(\rho\varphi)_{j} := \rho_{j}\varphi_{j} : \begin{tikzcd}
+Y(i)(j) \arrow[rd, "\rho_{j}"'] \arrow[rr, "\rho_{j}\varphi_{j}"] &                                            & G(j) \\
+                                                                  & F(j) \arrow[ru, "\varphi_{j}"', two heads] &     
+\end{tikzcd}
+\]
+where $Y(i)(j) = \mathrm{Hom}_{\mathcal{A}}(j,i)$ is the representation of the object $j$ by the functor
+$Y(i) = \mathrm{Hom}_{\mathcal{A}}(-,i)$, and since we assumed our hom-sets in $\mathcal{A}$ to be finite-dimensional over $\Bbbk$,
+$Y(i)(j) \in \kmat_{0}$ is also the $\Bbbk$-dimension of $\mathrm{Hom}_{\mathcal{A}}(j,i)$.\\
+Let two parallel morphisms 
+\begin{alignat}{2}
+&\mathrm{Hom}_{\HomAkmat}(Y(i),\psi),
+&&\,\mathrm{Hom}_{\HomAkmat}(Y(i),\theta) : \\
+&\mathrm{Hom}_{\HomAkmat}(Y(i),G)
+\rightrightarrows &&\,\mathrm{Hom}_{\HomAkmat}(Y(i),H)
+\end{alignat}
+such that
+\begin{alignat}{3}
+& &\mathrm{Hom}_{\HomAkmat}(Y(i),\varphi) &\cdot \mathrm{Hom}_{\HomAkmat}(Y(i),\psi) \\
+&= \,&\mathrm{Hom}_{\HomAkmat}(Y(i),\varphi) &\cdot \mathrm{Hom}_{\HomAkmat}(Y(i),\theta); \\
+& &\rho\varphi\psi &= \rho\varphi\theta, \\
+& &\forall \rho &\in \mathrm{Hom}_{\HomAkmat}(Y(i), F)
+\end{alignat}
+i.e. component-wise
+\[
+\begin{tikzcd}
+Y(i)(j) \arrow[rr, "\rho_{j}\varphi_{j}"] \arrow[rrrr, "\rho_{j}\varphi_{j}\theta_{j}"', bend right] \arrow[rrrr, "\rho_{j}\varphi_{j}\psi_{j}", bend left] &  & G(j) \arrow[rr, "\psi_{j}", shift left] \arrow[rr, "\theta_{j}"', shift right] &  & H(j)
+\end{tikzcd}
+\]
+$\rho_{j}\varphi_{j}\psi_{j} = \rho_{j}\varphi_{j}\theta_{j}$ for all objects $j \in \mathcal{A}_{0}$. We are finished when we have shown that
+$\psi_{j} = \theta_{j}$ for all $j \in \mathcal{A}_{0}$.
+
+By Yoneda's lemma we have 
+\begin{alignat}{2}
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F) &&\cong F(i), \\
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),G) &&\cong G(i)\, \text{ and } \\
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\varphi) &&\cong \varphi_{i}.
+\end{alignat}
+This means that the morphism
+\begin{alignat*}{2}
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\varphi) &&:\\
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F)
+	&&\rightarrow \mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),G)
+\end{alignat*}
+defined by
+\begin{alignat*}{3}
+&\rho &&\mapsto \rho\varphi &&\forall \rho \in \mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F),\,\text{ i.e. }\\
+&\rho &&: Y(i) \Rightarrow F\, &&\text{ is a natural transformation with components }\\
+&\rho_{j} &&: Y(i)(j) \rightarrow F(j)&&
+\end{alignat*}
+is equivalent to the matrix
+\begin{align}
+\varphi_{i} : F(i) &\rightarrow G(i)
+\end{align}
+For two parallel morphisms 
+\begin{alignat}{2}
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\psi),
+&&\,\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\theta) : \\
+&\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),G)
+\rightrightarrows &&\,\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),H)
+\end{alignat}
+with
+\begin{align}
+(\rho\varphi)\psi &= (\rho\varphi)\theta
+\end{align}
+we have the equivalent matrices
+\begin{align}
+\psi_{i}, \theta_{i} : G(i) \rightrightarrows H(i)
+\end{align}
+with
+\begin{align}
+\varphi_{i}\psi_{i} &= \varphi_{i}\theta_{i}
+\end{align}
+we already have $\psi = \theta$?
+\end{proof}

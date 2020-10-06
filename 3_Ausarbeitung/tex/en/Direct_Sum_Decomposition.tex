@@ -9,6 +9,87 @@ F = \bigoplus_{i\in I} F_{i}
 
 \subsection{The algorithm $\mathtt{WeakDirectSumDecomposition}$}
 
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{WeakDirectSumDecomposition}}\label{algo:WeakDirectSumDecomposition}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~a functor $F$ in a functor category}
+	\Output{~a list $[\iota_i : F_{i} \rightarrow F]$ of coprojections such that $\oplus_{i \in I} F_{i} = F$ and each $F_{i}$ is indecomposable.}
+	\BlankLine
+	let $\mathtt{queue} := [ 1_{F} ]$\;
+	let $\mathtt{summands} := [ \quad ]$\;
+	
+	\While{ $\mathtt{queue} \neq \emptyset$ }{
+	    let $\eta$ be the latest element in $\mathtt{queue}$\;
+	    delete $\eta$ from $\mathtt{queue}$\;
+	    \eIf{$s(\eta)$ is indecomposable by $\mathtt{DecomposeOnceByRandomEndomorphism}$}{
+	        add $\eta$ to $\mathtt{summands}$\;
+	    }{
+	        $[\iota,\kappa] = \mathtt{DecomposeOnceByRandomEndomorphism}(s(\eta))$\;
+	        append $[\iota\eta, \kappa\eta]$ to $\mathtt{queue}$\;
+	    }
+	}
+	\BlankLine
+	\Return $\mathtt{summands}$\;
+\end{algorithm}
+
+\begin{lemma}
+\algoref{WeakDirectSumDecomposition} terminates with the correct output.
+\end{lemma}
+\begin{proof} We assert certain truths about the algorithm by formulating invariants, and how they stay constant in each line of the algorithm.\\
+
+\noindent In line 1, the morphism $1_{F} : F \rightarrow F$, which is initially the only morphism in $\mathtt{queue}$, satisfies $t(1_{F}) = F$.\\
+In line 10, provided $\iota : I \rightarrow s(\eta)$ and $\kappa : K \rightarrow s(\eta)$ are each composable with $\eta$, then we are
+appending the list $[\iota\eta, \kappa\eta]$ of morphisms with target $t(\iota\eta) = t(\kappa\eta) = F$ to the $\mathtt{queue}$.\\
+Thus in each step of the algorithm the $\mathtt{queue}$ only contains morphisms $\eta$ with target $t(\eta) = F$.\\
+
+\noindent In line 2, the list $\mathtt{summands}$ is initially empty.\\
+In line 7, we add a morphism $\eta$ from the $\mathtt{queue}$ to the list $\mathtt{summands}$ only if
+in line 6 we checked that $s(\eta)$ is indecomposable.\\
+Thus in each step of the algorithm the list $\mathtt{summands}$ only contains indecomposable morphisms with target $F$.\\
+
+\noindent Initially with $\mathtt{queue} = [1_{F}]$ and $\mathtt{summands} = \emptyset$ we have
+\begin{align}
+F = \label{eq:direct_sum_decomposition}
+\bigoplus_{\eta \in \mathtt{queue}} s(\eta) \oplus \bigoplus_{\varphi \in \mathtt{summands}} s(\varphi)
+\end{align}
+For the first run of the while loop we take $\eta_{1} := 1_{F}$ from the $\mathtt{queue}$. Then there are two possibilities:\\
+If $F$ was indecomposable, we now add $\eta_{1}$ to $\mathtt{summands}$, and have $\mathtt{queue} = \emptyset$ and
+$\mathtt{summands} = [1_{F}]$ which also satisfy \eqref{eq:direct_sum_decomposition}.\\
+Otherwise we get a decomposition of $F$ with $\iota_{1} : I_{1} \rightarrow F$ and $\kappa_{1} : K_{1} \rightarrow F$. In this case
+$\mathtt{summands}$ stays empty, and instead we have $\mathtt{queue} = [\iota_{1}\eta_{1}, \kappa_{1}\eta_{1}]$. Since
+$\eta_{1} = 1_{F}$, that's the same as $\mathtt{queue} = [\iota_{1},\kappa_{1}]$. (In the following steps we can't assume the
+$\eta \in \mathtt{queue}$ to be the identity). For \eqref{eq:direct_sum_decomposition} to hold, we need to prove that
+\[
+I_{1} \oplus K_{1} = F
+\]
+which is exactly what we show for the output of $\mathtt{DecomposeOnceByRandomEndomorphism}$.
+
+
+If in the first run of the while loop, $s(\eta) = s(1_{F}) = F$ was decomposable with $[\iota,\kappa]$ in line 9, then
+
+In line 9, the output $[\iota, \kappa]$ of $\mathtt{DecomposeOnceByRandomEndomorphism}(s(\eta))$ satisfies
+$s(\iota) \oplus s(\kappa) = t(\eta)$ which we still have to show.\\
+
+Thus in each step, equation \eqref{eq:direct_sum_decomposition} holds.\\
+
+\end{proof}
+
+$\kappa = \mathrm{KernelEmbedding}(\alpha)$ with $\alpha^{2} = \alpha$ and $\alpha : F \rightarrow F$ an endomorphism.
+
+
+\[
+\begin{tikzcd}
+                                                          &                                                                                   &                                                          & F                                                      &                                                           &                                                                                       &                                                          \\
+                                                          & F \arrow[rru, "\eta_{1}", bend left]                                              &                                                          &                                                        &                                                           & F \arrow[llu, "\eta_{1}"', bend right]                                                &                                                          \\
+                                                          & I_{1} \arrow[u, "\iota_{1}"] \arrow[rr, dash] \arrow[rruu, "\iota_{1}\eta_{1}"] &                                                          & \bigoplus \arrow[uu, "I_{1} \oplus K_{1}" description] &                                                           & K_{1} \arrow[u, "\kappa_{1}"'] \arrow[ll, dash] \arrow[lluu, "\kappa_{1}\eta_{1}"'] &                                                          \\
+I_{1} \arrow[ru, "\eta_{11}"', bend left=49, shift right] &                                                                                   & I_{1} \arrow[lu, "\eta_{11}", bend right=49, shift left] &                                                        & K_{1} \arrow[ru, "\eta_{12}"', bend left=49, shift right] &                                                                                       & K_{1} \arrow[lu, "\eta_{12}", bend right=49, shift left] \\
+I_{11} \arrow[u, "\iota_{11}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{11}\oplus K_{11}" description]                           & K_{11} \arrow[u, "\kappa_{11}"] \arrow[l, dash]        &                                                        & I_{12} \arrow[u, "\iota_{12}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{12} \oplus K_{12}" description]                              & K_{12} \arrow[u, "\kappa_{12}"'] \arrow[l, dash]      
+\end{tikzcd}
+\]
+
+
+
 Invariant:
 
 In each step:
@@ -23,6 +104,8 @@ F = \bigoplus_{\varphi \in \mathtt{summands}} s(\varphi).
 \]
 
 Why is $\mathtt{queue}$ going to be $\emptyset$?
+
+$5 = 4+1 = 2+2+1 = 2+2+1$.
 
 In each step we remove the last $\eta$ from the $\mathtt{queue}$. If $s(\eta)$ was indecomposable, it doesn't get replaced, i.e.
 $\mathtt{queue}$ becomes smaller by 1. If $s(\eta)$ was decomposable, we replace $\eta$ by $\iota\eta$ and $\kappa\eta$ with
@@ -115,6 +198,50 @@ F &= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12})
 
 
 \subsection{The algorithm $\mathtt{DecomposeOnceByRandomEndomorphism}$}
+
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{DecomposeOnceByRandomEndomorphism}}\label{algo:DecomposeOnceByRandomEndomorphism}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~a functor $F$ in a functor category}
+	\Output{~a pair $[\iota : I \rightarrow F, \kappa : K \rightarrow F]$ of morphisms such that $I \oplus K = F$ or
+	$\mathtt{fail}$ if $F$ was indecomposable}
+	\BlankLine
+	let $d := \max \{ \mathrm{dim}_{\Bbbk}Fc \}_{c \in \mathcal{A}}$\;
+	let $\mathcal{B} = [\beta_{1},\dots,\beta_{\mathrm{Length}(\mathcal{B})}]$ be a $\Bbbk$-basis of $\mathrm{Hom}_{\HomAkmat}(F,F)$\;
+	add $0_{F,F}$ to $\mathcal{B}$\;
+	let $n := \log_{2}(d) + 1$\;
+	\BlankLine
+	\For{$b \in [\mathrm{Length}(\mathcal{B}),\mathrm{Length}(\mathcal{B}) - 1,\dots,2]$}{
+	    let $\alpha := \beta_{b} + \mathrm{random}(\Bbbk) \beta_{b-1}$\;
+	    \For{$i \in [ 1, \dots, n ]$}{
+	        $\alpha_{2} := \alpha^{2}$\;
+	        \If{$\alpha = \alpha_{2}$}{
+	            \Break\;
+	        }
+	        $\alpha := \alpha_{2}$\;
+	    }
+	    \BlankLine
+	    
+	    \If{$\alpha = 0$}{
+	        \Continue\;
+	    }
+	    
+	    $\kappa := \mathrm{KernelEmbedding}(\alpha)$\;
+	    
+	    \If{$\kappa = 0$}{
+	        \Continue\;
+	    }
+	    \BlankLine
+	    $\iota := \mathrm{ImageEmbedding}(\alpha)$\;
+	    \Return $[ \iota, \kappa ]$\;
+	}
+	\BlankLine
+	\Return $\mathtt{fail}$\;
+\end{algorithm}
+
+
+
 
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
