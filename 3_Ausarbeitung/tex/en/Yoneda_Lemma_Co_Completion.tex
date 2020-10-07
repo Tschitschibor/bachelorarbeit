@@ -189,10 +189,10 @@ $M_{i} = \bigoplus_{j \in \mathcal{A}_{0}} \mathrm{Hom}_{\mathcal{A}}(j,i)$.
 \begin{lemma}
 Yoneda projectives are projective objects in $\HomAkmat$.
 \end{lemma}
-\begin{proof}
+\begin{proof}\phantom{}\\
 We want to show that $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ is right exact, i.e. finitely cocontinuous.
 
-For this, let
+\noindent For this, let
 \[
 \begin{tikzcd}
 0 \arrow[r] & F_{1} \arrow[r, "\eta"] & F_{2} \arrow[r,"\rho"] & F_{3} \arrow[r] & 0
@@ -205,12 +205,12 @@ be a short exact sequence in $\HomAkmat$, i.e.
 \item the image of $\eta$ equals the kernel of $\rho$.
 \end{enumerate}
 
-Then applying the functor $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ on the sequence and simplifying with Yoneda's lemma
+\noindent Then applying the functor $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ on the sequence and simplifying with Yoneda's lemma
 
-\[
-\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F) \simeq F(i)
-\]
-
+\begin{align*}
+\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F) &\simeq F(i) \\
+\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\rho) &\simeq \rho_{i}
+\end{align*}
 gives us
 
 \[
@@ -220,8 +220,9 @@ F_{2}(i) \arrow[r,"\rho_{i}"] & F_{3}(i) \arrow[r] & 0
 \end{tikzcd}
 \]
 
-Especially, the epimorphism $\rho$ gets mapped to $\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\rho)$
-with each component $\rho_{i}$ being an epimorphism, i.e. $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ is an exact functor, which
+\noindent Especially, the epimorphism $\rho$ gets mapped to $\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\rho)$
+with each component $\rho_{i}$ being an epimorphism, which makes $\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\rho)$
+itself an epimorphism, i.e. $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ is an exact functor, which
 proves that $Y(i) = \mathrm{Hom}_{\mathcal{A}}(-,i)$ is a projectvie object.
 \end{proof}
 

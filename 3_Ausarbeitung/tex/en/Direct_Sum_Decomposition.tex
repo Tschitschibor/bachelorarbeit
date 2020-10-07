@@ -14,7 +14,7 @@ F = \bigoplus_{i\in I} F_{i}
 	\SetKwInput{Input}{Input~}
 	\SetKwInput{Output}{Output~}
 	\Input{~a functor $F$ in a functor category}
-	\Output{~a list $[\iota_i : F_{i} \rightarrow F]$ of coprojections such that $\oplus_{i \in I} F_{i} = F$ and each $F_{i}$ is indecomposable.}
+	\Output{~a list $[\eta_i : F_{i} \rightarrow F]$ of coprojections such that $\oplus_{i} F_{i} = F$ and each $F_{i}$ is indecomposable.}
 	\BlankLine
 	let $\mathtt{queue} := [ 1_{F} ]$\;
 	let $\mathtt{summands} := [ \quad ]$\;
@@ -38,6 +38,7 @@ F = \bigoplus_{i\in I} F_{i}
 \end{lemma}
 \begin{proof} We assert certain truths about the algorithm by formulating invariants, and how they stay constant in each line of the algorithm.\\
 
+\begin{subproof}[Proof that the output is correct]\phantom{}\\
 \noindent In line 1, the morphism $1_{F} : F \rightarrow F$, which is initially the only morphism in $\mathtt{queue}$, satisfies $t(1_{F}) = F$.\\
 In line 10, since $\iota : I \rightarrow s(\eta)$ and $\kappa : K \rightarrow s(\eta)$ are each composable with $\eta$, then we are
 appending the list $[\iota\eta, \kappa\eta]$ of morphisms with target $t(\iota\eta) = t(\kappa\eta) = F$ to the $\mathtt{queue}$.\\
@@ -51,7 +52,7 @@ Thus in each step of the algorithm the list $\mathtt{summands}$ only contains in
 \noindent Initially with $\mathtt{queue} = [1_{F}]$ and $\mathtt{summands} = \emptyset$ we have
 \begin{align}
 F = \label{eq:direct_sum_decomposition}
-\bigoplus_{\eta \in \mathtt{queue}} s(\eta) \oplus \bigoplus_{\varphi \in \mathtt{summands}} s(\varphi)
+\bigoplus_{\eta \in \mathtt{queue}} s(\eta) \oplus \bigoplus_{\eta \in \mathtt{summands}} s(\eta)
 \end{align}
 For the first run of the while loop we take $\eta_{1} := 1_{F}$ from the $\mathtt{queue}$. Then there are two possibilities:\\
 If $F$ was indecomposable, we now add $\eta_{1}$ to $\mathtt{summands}$, and have $\mathtt{queue} = \emptyset$ and
@@ -65,11 +66,45 @@ I_{1} \oplus K_{1} = F
 \]
 which is exactly what we assert for the output of $\mathtt{DecomposeOnceByRandomEndomorphism}$.\\
 Thus after the first while loop, equation \eqref{eq:direct_sum_decomposition} holds.\\
+In each run of the while loop, we are replacing $I_{j}$ with $I_{j,1}$ and $K_{j,1}$ with $I_{j} = I_{j,1} \oplus K_{j,1}$ and
+$K_{j}$ with $I_{j,2} \oplus K_{j,2}$. That is we have 
+\begin{alignat}{5}
+F &=  &&I_{1} &&\oplus &&K_{1} \\
+&= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12})
+\end{alignat}
 
+With the $\mathtt{queue} = \emptyset$ and $\mathtt{summands}$ containing only $\eta$ with indecomposable $s(\eta)$,
+equation \eqref{eq:direct_sum_decomposition} becomes
+\begin{align}
+F = \bigoplus_{\eta \in \mathtt{summands}} s(\eta)
+\end{align}
+\end{subproof}
 
-In each step, the $\mathtt{queue}$ contains morphisms with common target $F$. 
-Thus $\mathtt{queue}$ will eventually become empty.
+\begin{subproof}[Proof that the algorithm terminates]\phantom{}\\
+\noindent In each run of the while loop, a morphism $\eta$ from the $\mathtt{queue}$ gets either deleted and not replaced,
+since $s(\eta)$ was indecomposable, or it gets deleted and replaced by two morphisms $[\iota\eta, \kappa\eta]$.\\
+If at some point, $s(\eta)$ is indecomposable for every $\eta \in \mathtt{queue}$, then the $\eta$ will be deleted from the
+$\mathtt{queue}$ (and added to $\mathtt{summands}$) until the $\mathtt{queue}$ is empty. Then the while loop will end.\\
 
+\noindent The case that each $\eta$ gets replaced by $[\iota\eta, \kappa\eta]$ where again the $s(\iota\eta)$ and $s(\kappa\eta)$ are
+decomposable must come to an end after a finite number of steps:\\
+
+\noindent Whenever $G := s(\eta)$ is decomposable with $I \oplus K = G$, we have
+\begin{align}
+Gc = (I \oplus K)c = Ic \oplus Kc = Ic + Kc \,\forall c \in \mathcal{A}_{0} \\
+d_{G} :=\max_{c \in \mathcal{A}_{0}} Gc = \max_{c \in \mathcal{A}_{0}} Ic + Kc \\
+d_{I} := \max_{c \in \mathcal{A}_{0}} Ic > 0 \\
+d_{K} := \max_{c \in \mathcal{A}_{0}} Kc > 0 \\
+0 < d_{I} \leq d_{G} \leq d_{I} + d_{K} \\
+0 < d_{K} \leq d_{G} \leq d_{I} + d_{K} \\
+0 < d_{I} < d_{G} \\
+0 < d_{K} < d_{G}
+\end{align}
+Thus with each step where $\eta : G \rightarrow F$ gets replaced with $\iota\eta : I \rightarrow F$ and $\kappa\eta : K \rightarrow F$,
+both $d_{I} < d_{G}$ and $d_{K} < d_{G}$,
+and both have the lower bound of $0$. Thus after a finite number of steps there are only $\eta$ with indecomposable $s(\eta)$ in the $\mathtt{queue}$
+so that by the above result, $\mathtt{queue}$ will eventually become empty.
+\end{subproof}
 \end{proof}
 
 
@@ -231,8 +266,10 @@ decomposition $0 = I \oplus K$ with $I \neq 0$ and $K \neq 0$.\\
 Since $F \neq 0$ we also have $1_{F} \neq 0_{F,F}$, thus after line 6 we can assume $\mathrm{Length}(\mathcal{B}) \geq 2$ and
 the list $[\mathrm{Length}(\mathcal{B}),\mathrm{Length}(\mathcal{B}) - 1,\dots,2]$ in line 8 to be nonempty, thus we will enter the for loop
 at least once.\\
-In line 9, the endomorphism $\alpha$ is a linear combination of $\beta_{b}$ and $\beta_{b-1}$. Note that for the initial
-$b = \mathrm{Length}(\mathcal{B})$, we have $\beta_{b} = 0_{F,F}$, as we added the zero morphism last.
+
+\noindent In line 9, the endomorphism $\alpha$ is a linear combination of $\beta_{b}$ and $\beta_{b-1}$. Note that for the initial
+$b = \mathrm{Length}(\mathcal{B})$, we have $\beta_{b} = 0_{F,F}$ and, as we added the zero morphism last.\\
+Without loss of generality, we can assume that $\alpha_{c}$ is in Jordan normal form for each $c \in \mathcal{A}$.
 \end{proof}
 
 
