@@ -69,19 +69,23 @@ This is a corollary of the Jordan normal form.
 \end{proposition}
 \begin{proof} We assert certain truths about the algorithm by formulating invariants, and how they stay constant in each line of the algorithm.\\
 
-$\alpha^{2^{k}+2^{k}} = \alpha^{2^{k}}$.
-
 \noindent For the input $F = 0$ we have $Fc = 0\,\forall c \in \mathcal{A}$ and thus $d = 0$ which returns $\mathtt{fail}$, i.e. there is no
 decomposition $0 = I \oplus K$ with $I \neq 0$ and $K \neq 0$.\\
 
 \noindent For any other input $F \neq 0$ there is a $c \in \mathcal{A}_{0}$ with $Fc > 0$, thus in line 1 we have $d > 0$.\\
-Since $F \neq 0$ we also have $1_{F} \neq 0_{F,F}$, thus after line 6 we can assume $\mathrm{Length}(\mathcal{B}) \geq 2$ and
-the list $[\mathrm{Length}(\mathcal{B}),\mathrm{Length}(\mathcal{B}) - 1,\dots,2]$ in line 8 to be nonempty, thus we will enter the for loop
-at least once.\\
+Since $F \neq 0$ the vector space $\mathrm{Hom}_{\HomAkmat}(F,F)$ is at least $1$-dimensional, so our basis $\mathcal{B}$ has
+length $h \geq 1$ and doesn't contain $0_{F,F}$. Thus after line 6 we can assume $\mathrm{Length}(\mathcal{B}) = h+1 \geq 2$ and
+the list $[h+1,h,\dots,2]$ in line 8 to be nonempty, thus we will enter the for loop at least once.\\
 
-\noindent In line 9, the endomorphism $\alpha$ is a linear combination of $\beta_{b}$ and $\beta_{b-1}$. Note that for the initial
-$b = \mathrm{Length}(\mathcal{B})$, we have $\beta_{b} = 0_{F,F}$ and, as we added the zero morphism last.\\
-Without loss of generality, we can assume that $\alpha_{c}$ is in Jordan normal form for each $c \in \mathcal{A}$.
+\noindent In line 9, the morphism $\alpha$ is a random linear combination of two basis morphisms. In the for-loop in lines 10-17, we are
+exponentiating $\alpha$ at most $n$ times, i.e. we are calculating
+\[\alpha^{2^{n}} = \alpha^{2^{(\log_{2}(d)+1)}} = \alpha^{2d}.
+\]
+Each component $\alpha_{c}^{2d}$ is an automorphism on $\mathrm{Im}(\alpha_{c}^{2d})$ by the above lemma and with the definition of $d$.
+With this automorphism $\alpha$ 
+$\iota : I \rightarrow F$ and $\kappa : K \rightarrow F$.
+
+$F = I \oplus K$ if and only if 
 \end{proof}
 
 \endnote{Die Menge der Endomorphismen, die nicht in der Lage wären, einen zerlegbaren Modul zu zerlegen, liegt auf einer Hyperfläche.
@@ -147,11 +151,43 @@ I_{1} \oplus K_{1} = F
 which is exactly what we assert for the output of $\mathtt{DecomposeOnceByRandomEndomorphism}$.\\
 Thus after the first while loop, equation \eqref{eq:direct_sum_decomposition} holds.\\
 In each run of the while loop, we are replacing $I_{j}$ with $I_{j,1}$ and $K_{j,1}$ with $I_{j} = I_{j,1} \oplus K_{j,1}$ and
-$K_{j}$ with $I_{j,2} \oplus K_{j,2}$. That is we have 
-\begin{alignat}{5}
+$K_{j}$ with $I_{j,2} \oplus K_{j,2}$ if possible. That is we have 
+\begin{alignat*}{5}
 F &=  &&I_{1} &&\oplus &&K_{1} \\
-&= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12})
-\end{alignat}
+&= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12}) \\
+&= \dots
+\end{alignat*}
+
+\[
+\begin{tikzcd}
+                                                   &                                                           &                                                                                   &                                                    & F                                                          &                                                           &                                                                                       &                                                           &                                                     \\
+                                                   &                                                           & F \arrow[rru, "\eta_{1}", bend left]                                              &                                                    &                                                            &                                                           & F \arrow[llu, "\eta_{1}"', bend right]                                                &                                                           &                                                     \\
+                                                   &                                                           & I_{1} \arrow[u, "\iota_{1}"] \arrow[rr, dash] \arrow[rruu, "\iota_{1}\eta_{1}"] &                                                    & \bigoplus \arrow[uu, "I_{1} \oplus K_{1}" description]     &                                                           & K_{1} \arrow[u, "\kappa_{1}"'] \arrow[ll, dash] \arrow[lluu, "\kappa_{1}\eta_{1}"'] &                                                           &                                                     \\
+                                                   & I_{1} \arrow[ru, "\eta_{11}"', bend left=49, shift right] &                                                                                   &                                                    & I_{1} \arrow[llu, "\eta_{11}", bend right]                  & K_{1} \arrow[ru, "\eta_{12}"', bend left=49, shift right] &                                                                                       & K_{1} \arrow[lu, "\eta_{12}", bend right=49, shift left]  &                                                     \\
+                                                   & I_{11} \arrow[u, "\iota_{11}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{11}\oplus K_{11}" description]                           &                                                    & K_{11} \arrow[ll, dash] \arrow[u, "\kappa_{11}"]         & I_{12} \arrow[u, "\iota_{12}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{12} \oplus K_{12}" description]                              & K_{12} \arrow[u, "\kappa_{12}"'] \arrow[l, dash]        &                                                     \\
+I_{11} \arrow[ru, "\eta_{111}"', bend left=49]     &                                                           & I_{11} \arrow[lu, "\eta_{111}", bend right=49]                                    & K_{11} \arrow[ru, "\eta_{112}"', bend left=49]     &                                                            & K_{11} \arrow[lu, "\eta_{112}", bend right=49]            & K_{12} \arrow[ru, "\eta_{122}"', bend left=49]                                        &                                                           & K_{12} \arrow[lu, "\eta_{122}", bend right=49]      \\
+I_{111} \arrow[r, dash] \arrow[u, "\iota_{111}"] & \bigoplus \arrow[uu, "I_{111}\oplus K_{111}" description] & K_{111} \arrow[l, dash] \arrow[u, "\kappa_{111}"]                               & I_{112} \arrow[u, "\iota_{112}"] \arrow[r, dash] & \bigoplus \arrow[uu, "I_{112} \oplus K_{112}" description] & K_{112} \arrow[u, "\kappa_{112}"] \arrow[l, dash]       & I_{122} \arrow[r, dash] \arrow[u, "\iota_{122}"]                                    & \bigoplus \arrow[uu, "I_{122}\oplus K_{122}" description] & K_{122} \arrow[l, dash] \arrow[u, "\kappa_{122}"]
+\end{tikzcd}
+\]
+
+In this example we have
+
+\begin{align*}
+F &= I_{1} \oplus K_{1} \\
+&= (I_{11} \oplus K_{11}) \oplus (I_{12} \oplus K_{12}) \\
+&= I_{111} \oplus K_{111} \oplus I_{112} \oplus K_{112} \oplus I_{12} \oplus I_{122} \oplus K_{122}
+\end{align*}
+and with $I_{111}, K_{111}, I_{112}, K_{112}, I_{12}, I_{122}, K_{122}$ indecomposable, we are finished. Tracing the morphisms from
+the bottom to the top gives us the list of embeddings
+\begin{align*}
+[ &\iota_{111}\eta_{111}\iota_{11}\eta_{11}\iota_{1}\eta_{1}, \\
+&\kappa_{111}\eta_{111}\iota_{11}\eta_{11}\iota_{1}\eta_{1}, \\
+&\iota_{112}\eta_{112}\kappa_{11}\eta_{11}\iota_{1}\eta_{1}, \\
+&\kappa_{112}\eta_{112}\kappa_{11}\eta_{11}\iota_{1}\eta_{1}, \\
+&\iota_{12}\eta_{12}\kappa_{1}\eta_{1}, \\
+&\iota_{122}\eta_{122}\kappa_{12}\eta_{12}\kappa_{1}\eta_{1}, \\
+&\kappa_{122}\eta_{122}\kappa_{12}\eta_{12}\kappa_{1}\eta_{1} ]\\
+\end{align*}
 
 \begin{subproof}[Proof that the $\mathtt{queue}$ will be empty]\phantom{}\\
 \noindent In each run of the while loop, a morphism $\eta$ from the $\mathtt{queue}$ gets either deleted and not replaced,
@@ -162,22 +198,15 @@ $\mathtt{queue}$ (and added to $\mathtt{summands}$) until the $\mathtt{queue}$ i
 \noindent The case that each $\eta$ gets replaced by $[\iota\eta, \kappa\eta]$ where again the $s(\iota\eta)$ and $s(\kappa\eta)$ are
 decomposable must come to an end after a finite number of steps:\\
 
-\noindent Whenever $G := s(\eta)$ is decomposable with $I \oplus K = G$ and $I, K \neq 0$, we have
-%informeller: Invariante d_G fällt bei echter Zerlegung: 0 < d_I < d_G, 0 < d_K < d_G
+\noindent Whenever $G := s(\eta)$ is decomposable with $I \oplus K = G$ and $I, K \neq 0$, the variable
+$d_{G} :=\max_{c \in \mathcal{A}_{0}} Gc$ also gets decomposed into $d_{I} := \max_{c \in \mathcal{A}_{0}} Ic$ and
+$d_{K} := \max_{c \in \mathcal{A}_{0}} Kc$ with
 \begin{align*}
-Gc = (I \oplus K)c = Ic \oplus Kc = Ic + Kc \,\forall c \in \mathcal{A}_{0} \\
-d_{G} :=\max_{c \in \mathcal{A}_{0}} Gc = \max_{c \in \mathcal{A}_{0}} Ic + Kc \\
-d_{I} := \max_{c \in \mathcal{A}_{0}} Ic > 0 \\
-d_{K} := \max_{c \in \mathcal{A}_{0}} Kc > 0 \\
-0 < d_{I} \leq d_{G} \leq d_{I} + d_{K} \\
-0 < d_{K} \leq d_{G} \leq d_{I} + d_{K} \\
-\Rightarrow 0 < d_{I} < d_{G} \\
-\Rightarrow 0 < d_{K} < d_{G}
+0 < d_{I} < d_{G} \\
+0 < d_{K} < d_{G}
 \end{align*}
-Thus with each step where $\eta : G \rightarrow F$ gets replaced with $\iota\eta : I \rightarrow F$ and $\kappa\eta : K \rightarrow F$,
-both $d_{I} < d_{G}$ and $d_{K} < d_{G}$,
 and both have the lower bound of $0$. Thus after a finite number of steps there are only $\eta$ with indecomposable $s(\eta)$ in the $\mathtt{queue}$
-so that by the above result, $\mathtt{queue}$ will eventually become empty.
+so that by the above result, $\mathtt{queue}$ will eventually become empty and the loop will end.
 \end{subproof}
 
 \noindent With the $\mathtt{queue} = \emptyset$ and $\mathtt{summands}$ containing only $\eta$ with indecomposable $s(\eta)$,

@@ -67,7 +67,11 @@ $\tau\,\mathrm{CokernelProjection}(\iota) = 0$.
 
 \item A dependent function $( - \backslash - )$ mapping a pair $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ to a colift
 $(\varepsilon \backslash \tau )$ of
-$\tau$ along $\varepsilon$, where $A, C, T \in \kmat_{0}$, $\varepsilon$ is an epimorphism and $\mathrm{KernelEmbedding}(\varepsilon)\tau = 0$.
+$\tau$ along $\varepsilon$, where $A, C, T \in \kmat_{0}$,
+
+$\varepsilon$ is an epimorphism and
+
+$\mathrm{KernelEmbedding}(\varepsilon)\tau = 0$.
 
 \end{itemize}
 Lifts along monos and colifts along epis are unique.
@@ -203,7 +207,7 @@ which again can be checked component-wise
 \end{align}
 
 \item For a morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ we have a family of morphisms 
-$\{F_{i} a : F_{i} c \rightarrow F_{i} c'\}_{i \in I}$. Analogous to \eqref{eq:u_in_u_out_block_diagonal} we define
+$\{F_{i} a : F_{i} c \rightarrow F_{i} c'\}_{i \in I}$. Analogous to \ref{ex:block_diagonal_matrix} we define
 
 \begin{align}
 F a := \sum_{i \in I} (\pi_{i})_{c} F_{i} a (\iota_{i})_{c'} : Fc \rightarrow Fc'
@@ -271,8 +275,31 @@ where $\tau_{c} = \{ (\tau_{i})_{c} : Gc \rightarrow F_{i}c \}_{i \in I}$ and $\
 \item a dependent function mapping a morphism $\eta : F \rightarrow G \in \HomAkmat_{1}$ to a kernel of $\eta$ and
 \item a dependent function mapping a morphism $\eta : F \rightarrow G \in \HomAkmat_{1}$ to a cokernel of $\eta$.
 \end{enumerate}
-The proof of the existence of kernels and cokernels goes the same way as for the direct sum. In general we proved that the functor category
-has all finite limits and colimits of the target category.
+\begin{subproof}
+In $\kmat$ the morphism $\eta_{c} : Fc \rightarrow Gc$ has a kernel and a cokernel given by
+\begin{itemize}
+\item $\mathrm{KernelObject}(\eta_{c})$
+\item $\mathrm{KernelEmbedding}(\eta_{c})$
+\item $\mathrm{KernelLift}(\eta_{c},\tau_{c})$
+\item $\mathrm{CokernelObject}(\eta_{c})$
+\item $\mathrm{CokernelProjection}(\eta_{c})$
+\item $\mathrm{CokernelColift}(\eta_{c},\tau_{c})$
+\end{itemize}
+\end{subproof}
 
+\item Finally to show that $\HomAkmat$ is an abelian category, we need to show that it is
+\begin{enumerate}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+\item a pre-abelian category with
+\item a dependent function $(-/-)$
+\item a dependent function $(-\backslash -)$
+\end{enumerate}
+\begin{subproof}
+In $\kmat$ we have
+\begin{itemize}
+\item $\mathrm{LiftAlongMonomorphism}(\kappa,\tau)$
+\item $\mathrm{ColiftAlongEpimorphism}(\epsilon,\tau)$
+\end{itemize}
+\end{subproof}
 \end{enumerate}
 \end{proof}
