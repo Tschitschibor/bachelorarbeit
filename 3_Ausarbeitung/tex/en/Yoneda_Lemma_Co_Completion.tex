@@ -1,7 +1,5 @@
-% mainfile: ../main.tex
 
-%% What does completion and cocompletion mean?
-%% What does embedding mean?
+\section{Yoneda's Lemma}
 \subsection{The category of presheaves}
 
 \begin{definition}{(The category of presheaves)}\endnote{(cited from ncatlab \cite{[ncatlab_presheaves]})}\\
@@ -9,10 +7,11 @@ For $\mathcal{C}$ a small category, its \ul{category of presheaves} is the funct
 \[ \mathrm{PSh}(\mathcal{C}) := \mathrm{Hom}(\mathcal{C}^{\text{op}}, \Set) \]
 from the opposite category of $\mathcal{C}$ to $\Set$.
 An object in this category is a \ul{presheaf}.\\
-\noindent Taking $\mathcal{C}^{\text{op}}$ instead of $\mathcal{C}$ (and with $(\mathcal{C}^{\text{op}})^{\text{op}} = \mathcal{C}$) we get the
-functor category as in \ref{def:functor_category}
+\noindent Taking $\mathcal{C}^{\text{op}}$ instead of $\mathcal{C}$ (and with $(\mathcal{C}^{\text{op}})^{\text{op}} = \mathcal{C}$)
+we get the functor category as in \ref{def:functor_category}
 \[
-\mathrm{Hom}(\mathcal{C}, \Set) = \mathrm{PSh}(\mathcal{C}^{\text{op}}) \]
+\mathrm{Hom}(\mathcal{C}, \Set) = \mathrm{PSh}(\mathcal{C}^{\text{op}})
+\]
 \end{definition}
 
 \begin{remark}{(General properties of presheaves)}\\
@@ -66,7 +65,7 @@ under the $\mathrm{Hom}$ adjunction
 in the closed symmetric monoidal category $\mathrm{Cat}$.
 If instead we have the opposite category $\mathcal{C}^{\text{op}}$, then we get the embedding into the functor category:
 \[
-Y : \mathcal{C}^{\text{op}} \hookrightarrow \mathrm{Hom}(\mathcal{C},\mathrm{Set})
+Y^{\text{op}} : \mathcal{C}^{\text{op}} \hookrightarrow \mathrm{Hom}(\mathcal{C},\mathrm{Set})
 \]
 \end{definition}
 
@@ -84,10 +83,12 @@ Y : \mathcal{A} \hookrightarrow \mathrm{Hom_{\Bbbk}}(\mathcal{A^{\text{op}}},\km
 \]
 
 \[
-Y : \mathcal{A}^{\text{op}} \hookrightarrow \HomAkmat
+Y^{\text{op}} : \mathcal{A}^{\text{op}} \hookrightarrow \HomAkmat
 \]
 
 \end{remark}
+
+$\HomAkmat$ is Abelian and therefore finitely complete and finitely cocomplete.
 
 \subsection{Projective objects and the Yoneda projective}
 
@@ -172,25 +173,25 @@ An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of 
 Let $\mathcal{A}$ be a $\Bbbk$-algebroid with finitely many objects and finite-dimensional hom-sets over $\Bbbk$.
 With the Yoneda embedding 
 \[
-Y : \begin{cases}\mathcal{A}^{\text{op}} \hookrightarrow \HomAkmat \\
+Y^{\text{op}} : \begin{cases}\mathcal{A}^{\text{op}} \hookrightarrow \HomAkmat \\
 i \mapsto \mathrm{Hom}_{\mathcal{A}}(-,i)
 \end{cases}
 \]
 we see that the image
-$Y(i)$ of the object $i \in \mathcal{A}^{\text{op}}$ is the representable functor $\mathrm{Hom}_{\mathcal{A}}(-,i)$ in $\HomAkmat$. 
+$Y^{\text{op}}(i)$ of the object $i \in \mathcal{A}^{\text{op}}$ is the representable functor $\mathrm{Hom}_{\mathcal{A}}(-,i)$ in $\HomAkmat$. 
 It is called the \ul{$i$-th Yoneda projective}.
 \end{definition}
 
 Analogous to Prop. \ref{prop:Alg-Alg-Correspondence} one can easily prove that a $\Bbbk$-representation $F$ of $\mathcal{A}$ corresponds to a 
 module $\bigoplus_{i \in \mathcal{A}_{0}} F(i)$ over the algebra $\mathbf{A} = \mathrm{Algebra}(\mathcal{A})$.
-In particular the Yoneda projective $Y(i) = \mathrm{Hom}_{\mathcal{A}}(-,i)$ corresponds to the $\mathbf{A}$-module
+In particular the Yoneda projective $Y^{\text{op}}(i) = \mathrm{Hom}_{\mathcal{A}}(-,i)$ corresponds to the $\mathbf{A}$-module
 $M_{i} = \bigoplus_{j \in \mathcal{A}_{0}} \mathrm{Hom}_{\mathcal{A}}(j,i)$.
 
 \begin{lemma}
 Yoneda projectives are projective objects in $\HomAkmat$.
 \end{lemma}
 \begin{proof}\phantom{}\\
-We want to show that $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ is right exact, i.e. finitely cocontinuous.
+We want to show that $\mathrm{Hom}_{\HomAkmat}(Y^{\text{op}}(i),-)$ is right exact, i.e. finitely cocontinuous.
 
 \noindent For this, let
 \[
@@ -205,37 +206,27 @@ be a short exact sequence in $\HomAkmat$, i.e.
 \item the image of $\eta$ equals the kernel of $\rho$.
 \end{enumerate}
 
-\noindent Then applying the functor $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ on the sequence and simplifying with Yoneda's lemma
+\noindent Then applying the functor $\mathrm{Hom}_{\HomAkmat}(Y^{\text{op}}(i),-)$ on the sequence and simplifying with Yoneda's lemma
 
 \begin{align*}
 \mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F) &\simeq F(i) \\
 \mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\rho) &\simeq \rho_{i}
 \end{align*}
-gives us
 
+We only have to measure exactness on the components
 \[
 \begin{tikzcd}
 0 \arrow[r] & F_{1}(i) \arrow[r, "\eta_{i}"] &
-F_{2}(i) \arrow[r,"\rho_{i}"] & F_{3}(i) \arrow[r] & 0
+F_{2}(i) \arrow[r,"\rho_{i}"] & F_{3}(i) \arrow[r] & 0\mbox{,}
 \end{tikzcd}
 \]
-
-\noindent Especially, the epimorphism $\rho$ gets mapped to $\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\rho)$
-with each component $\rho_{i}$ being an epimorphism, which makes $\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\rho)$
-itself an epimorphism, i.e. $\mathrm{Hom}_{\HomAkmat}(Y(i),-)$ is an exact functor, which
-proves that $Y(i) = \mathrm{Hom}_{\mathcal{A}}(-,i)$ is a projectvie object.
+but this coincides with the definition of the exactness of functors. So the proof is a tautology by Yoneda's lemma.
 \end{proof}
-
-Direct summands and direct sums of projectives are projective.
-
-Yoneda projectives, projective indecomposables -> every projective object is a direct sum of projective indecomposables
-
-projective indecomposables for a given concrete category
 
 
 \subsection{Enough Projective objects (constructively)}
 
-\begin{definition}{(Sufficiently many projectives)}\label{def:enough_projectives}\endnote{(ref. \cite{[sciencedirect_proj_objects]})}
+\begin{definition}{(Sufficiently many projectives)}\label{def:enough_projectives}
 A category $\mathcal{C}$ is said to have \ul{sufficiently many} (or \ul{enough}) \ul{projectives} if for any object $A \in \mathcal{C}_{0}$
 there exists an epimorphism $P \twoheadrightarrow A$, where $P$ is projective.
 \end{definition}
