@@ -23,10 +23,10 @@ F = \bigoplus_{i\in I} F_{i}
 	}
 	$\mathcal{B} = [\beta_{1},\dots,\beta_{h}]$ be a $\Bbbk$-basis of $\mathrm{Hom}_{\HomAkmat}(F,F)$\;
 	add $0_{F,F}$ to $\mathcal{B}$\;
-	$n := \log_{2}(d) + 1$\;
+	$n := \lfloor\log_{2}(d)\rfloor + 1$\;
 	\BlankLine
 	\For{$b \in [h+1, h, \dots,2]$}{
-	    $\alpha := \beta_{b} + \mathrm{random}(\Bbbk) \cdot \beta_{b-1}$\;
+	    $\alpha := \beta_{b} + \mathrm{random}(\Bbbk) \cdot \beta_{b-1}$\tcp*{a heuristic ansatz for a random endomorphism}
 	    \For{$i \in [ 1, \dots, n ]$}{
 	        $\alpha_{2} := \alpha^{2}$\;
 	        \nl\tcc{We do not expect the exponentiation to produce an idempotent, still this is a very cheap test:}
@@ -58,38 +58,45 @@ To justify proposition \ref{prop:Decompose_terminates_correct} below we need the
 \ref{la:sigma-lemma}.
 
 \begin{lemma}
-If $\alpha$ is an endomorphism of a $d$-dimensional vector space, then $\alpha^{d}\restrict{\mathrm{Im}(\alpha^{d})}$ is an automorphism.
+If $\alpha$ is an endomorphism of a $d$-dimensional vector space, then $\alpha^{e}\restrict{\mathrm{Im}(\alpha^{d})}$ is an automorphism for
+all $e \geq d$.
 \end{lemma}
 \begin{proof}
-This is a corollary of the Jordan normal form.
+This follows from the inclusion $\mathrm{Im}(\alpha^{2}) \subseteq \mathrm{Im}(\alpha)$ and that the dimension of the vector space is equal to
+$d$.
 \end{proof}
 
 \begin{proposition}\label{prop:Decompose_terminates_correct}
 \algoref{DecomposeOnceByRandomEndomorphism} terminates with the correct output.
 \end{proposition}
-\begin{proof} We assert certain truths about the algorithm by formulating invariants, and how they stay constant in each line of the algorithm.\\
-
-\noindent For the input $F = 0$ we have $Fc = 0\,\forall c \in \mathcal{A}$ and thus $d = 0$ which returns $\mathtt{fail}$, i.e. there is no
+\begin{proof}
+For the input $F = 0$ we have $Fc = 0\,\forall c \in \mathcal{A}$ and thus $d = 0$ which returns $\mathtt{fail}$, i.e. there is no
 decomposition $0 = I \oplus K$ with $I \neq 0$ and $K \neq 0$.\\
 
 \noindent For any other input $F \neq 0$ there is a $c \in \mathcal{A}_{0}$ with $Fc > 0$, thus in line 1 we have $d > 0$.\\
-Since $F \neq 0$ the vector space $\mathrm{Hom}_{\HomAkmat}(F,F)$ is at least $1$-dimensional, so our basis $\mathcal{B}$ has
+Since $F \neq 0$ the vector space $\mathrm{End}_{\HomAkmat}(F)$ is at least $1$-dimensional, so our basis $\mathcal{B}$ has
 length $h \geq 1$ and doesn't contain $0_{F,F}$. Thus after line 6 we can assume $\mathrm{Length}(\mathcal{B}) = h+1 \geq 2$ and
 the list $[h+1,h,\dots,2]$ in line 8 to be nonempty, thus we will enter the for loop at least once.\\
 
-\noindent In line 9, the morphism $\alpha$ is a random linear combination of two basis morphisms. In the for-loop in lines 10-17, we are
-exponentiating $\alpha$ at most $n$ times, i.e. we are calculating
-\[\alpha^{2^{n}} = \alpha^{2^{(\log_{2}(d)+1)}} = \alpha^{2d}.
+\noindent In the for-loop in lines 10-17, we are squaring $\alpha$ at most $n$ times with
+\[
+2^{n} = 2^{\lfloor\log_{2}(d)\rfloor+1} \geq d.
 \]
-Each component $\alpha_{c}^{2d}$ is an automorphism on $\mathrm{Im}(\alpha_{c}^{2d})$ by the above lemma and with the definition of $d$.
-With this automorphism $\alpha$ 
-$\iota : I \rightarrow F$ and $\kappa : K \rightarrow F$.
-
-$F = I \oplus K$ if and only if 
+Hence $\alpha_{c}^{2^{n}}$ is an automorphism on its image $\mathrm{Im}(\alpha_{c}^{2^{n}}) = \mathrm{Im}(\alpha_{c}^{d})$
+by the above lemma and with the definition of $d$. Let $I = \mathrm{Im}(\alpha^{2^{n}})$ and $K = \mathrm{Ker}(\alpha^{2^{n}})$
+with image embedding $\iota : I \rightarrow F$ and kernel embedding $\kappa : K \rightarrow F$. Then 
+\begin{align}
+F = I \oplus K.
+\end{align}
 \end{proof}
 
-\endnote{Die Menge der Endomorphismen, die nicht in der Lage wären, einen zerlegbaren Modul zu zerlegen, liegt auf einer Hyperfläche.
-Somit ist das Komplement Zariski-dicht.}
+\begin{remark}
+The set of endomorphisms which yield a nontrivial decomposition of a decomposable functor is Zariski-open and hence Zariski-dense in
+the vector space $\mathrm{End}_{\HomAkmat}(F)$.
+\end{remark}
+
+%gap example DecomposeOnce (fortyone)
+% julia worksheet
 
 \subsection{The algorithm $\mathtt{WeakDirectSumDecomposition}$}
 

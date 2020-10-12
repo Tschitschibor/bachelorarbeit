@@ -12,7 +12,7 @@ $s(i) : S \rightarrow D(i)$ such that for all $i, j \in \mathbf{I}, \iota : i \r
 \end{enumerate}
 \end{definition}
 
-\begin{definition}{(Limit and colimit of a functor)}
+\begin{definition}{(Limit and colimit of a functor)}\label{def:limit}
 Let $D : \mathbf{I} \rightarrow \mathcal{C}$ be a functor. A \ul{limit} of $D$ consists of the
 following data:
 \begin{enumerate}
@@ -47,11 +47,66 @@ $ \cdot \rightrightarrows \cdot$ & binary equalizer & binary coequalizer
 \end{center}
 \end{example}
 
-In the following section, we give explicit definitions for the limits in \ref{ex:limits} and examples for categories with such limits.
+In the following subsections, we give explicit definitions for the limits in \ref{ex:limits} and define the
+doctrines for our categories with such limits. The doctrine we are interested is that of an abelian category with
+enough projectives and enough injectives.
+We are starting simple with pre-additive categories. All we need is a zero object:
 
-\subsection{Examples for limits and colimits}
+\subsection{Pre-additive categories}
 
-\begin{definition}{(Product, coproduct)}\label{def:prod_coprod}
+\begin{remark}[Terminal object, initial object, zero object]\label{def:init_term_zero_object}
+The limit / colimit of $\emptyset$.\\
+\renewcommand{\labelenumi}{(\theenumi)}
+\begin{enumerate}
+\item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
+\item An \ul{initial object} $I$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(I,-)$ is a singleton.
+\item An object $Z$ or $0$ is a \ul{zero object} if it is both initial and terminal.
+\end{enumerate}
+\end{remark}
+
+\begin{definition}[Zero morphism]\label{def:zero_morphism}\phantom{}\\
+A \ul{zero morphism} in a category with a zero object $0$ is a morphism factoring over $0$, i.e. $\varphi : M \rightarrow N$ is called a zero
+morphism, if\\
+\begin{minipage}{.35\textwidth}
+\begin{tikzcd}
+M \arrow[rr, "\varphi"] \arrow[rd, "\varphi_{1}"] &                              & N \\
+                                                  & 0 \arrow[ru, "\varphi_{2}"'] &  
+\end{tikzcd}
+\end{minipage}
+\begin{minipage}{.65\textwidth}
+$\exists \varphi_{1} : M \rightarrow 0, \varphi_{2} : 0 \rightarrow N$\\
+such that $\varphi = \varphi_{1}\varphi_{2}$.
+\end{minipage}
+Since the zero object $0$ is both initial and terminal, a zero morphism is uniquely defined by its source and target, thus we can
+talk about \textit{the} zero morphism from $M$ to $N$, which we denote by $0_{M,N}$.
+\end{definition}
+
+\begin{definition}[Pre-additive category]
+A \ul{pre-additive category} (also called  \ul{Ab-category}) is a category in which all homomorphism sets are abelian groups,
+and composition distributes over addition.\\
+In other words, a category $\mathcal{C}$ is an Ab-category if for every pair of objects $M,N \in \mathcal{C}_{0}$,
+$( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the zero morphism $0_{M,N}$ as the neutral element),
+and for all morphisms $\gamma, \delta \in \textup{Hom}_{\mathcal{C}}(M,N),
+\alpha, \beta \in \textup{Hom}_{\mathcal{C}}(N,L)$
+\begin{align}
+(\gamma + \delta)\alpha &=\label{eq:dist1} \gamma\alpha + \delta\alpha \textup{ and }\\
+\gamma(\alpha+\beta) &=\label{eq:dist2} \gamma\alpha + \gamma\beta.
+\end{align}
+Note that every hom-set has its own unique zero morphism. E.g. in $\kmat$ the $2 \times 3$ zero-matrix
+$0_{2,3} \in \textup{Hom}_{\kmat}(2,3)$ is different from the $4 \times 4$ zero-matrix $0_{4,4} \in \textup{Hom}_{\kmat}(4,4)$.
+\end{definition}
+
+\begin{definition}{(Ab-functor)}
+A functor between Ab-categories is called an \ul{Ab-functor} if in the functor definition \ref{def:functor} the function $Ff$ for each
+morphism $f$ is a homomorphism of abelian groups, i.e. $F(f+g) = Ff + Fg$.
+\end{definition}
+
+\subsection{Additive categories}
+The definition of the binary operation $+$ in a pre-additive category came as arbitrary outside data and could be defined
+in multiple ways. A category with the following limits is additive in at most one way, warrenting the name additive category.
+
+\begin{definition}[Product, coproduct]\label{def:prod_coprod}
+The limit / colimit of a set $\cdot \text{\phantom{$\rightarrow$}} \cdot$ of objects.\\
 Let $I$ be an index set and $\{A_{i}\}_{i\in I}$ a family of objects in a category $\mathcal{C}$.
 \setlist[description]{font=\normalfont}
 \begin{description}
@@ -77,7 +132,7 @@ a family of morphisms
 \]
 called \ul{coprojections} or sometimes \ul{injections} or \ul{inclusions}, such that the following universal property is satisfied:\\
 For any object $M \in \mathcal{C}$ and any family $\{ \psi_{i} : A_{i} \rightarrow M \}$ of morphisms, there exists a unique
-morphism $\psi : \amalg A_{i} : M$ called the \ul{coproduct morphism} such that
+morphism $\psi : \amalg A_{i} \rightarrow M$ called the \ul{coproduct morphism} such that
 \[
 \iota_{i} \psi = \psi_{i} \, \forall i \in I.
 \]
@@ -89,53 +144,217 @@ M &  & A_{1}\amalg A_{2} \arrow[ll, "\exists^{1} \psi"', dashed] &              
 \end{description}
 \end{definition}
 
-\begin{remark}{(Terminal object, initial object, zero object)}\label{def:init_term_zero_object}
-\renewcommand{\labelenumi}{(\theenumi)}
-\begin{enumerate}
-\item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
-\item An \ul{initial object} $I$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(I,-)$ is a singleton.
-\item An object $Z$ or $0$ is a \ul{zero object} if it is both initial and terminal.
-\end{enumerate}
+\begin{definition}[Biproduct]\label{def:biproduct}
+Let $I$ be an index set and $\{S_{i}\}_{i\in I}$ a family of objects in a category $\mathcal{C}$.
+A \ul{biproduct} is a product and a coproduct simultaneously, i.e. consists of the following data:
+\begin{itemize}
+\item an object $S \in \mathcal{C}_{0}$,
+\item a family of morphisms $\pi = \{ \pi_{i} : S \rightarrow S_{i} \}_{i\in I}$,
+\item a family of morphisms $\iota = \{ \iota_{i} : S_{i} \rightarrow S \}_{i\in I}$,
+\item a dependent function $u_{\text{in}}$ mapping every family $\tau = \{ \tau_{i} : T \rightarrow S_{i} \}_{i\in I}$ to a morphism
+$u_{\text{in}}(\tau) : T \rightarrow S$ such that $u_{\text{in}}(\tau) \pi_{i} \sim \tau_{i}$ for all $i \in I$,
+\item a dependent function $u_{\text{out}}$ mapping every family $\rho = \{ \rho_{i} : S_{i} \rightarrow R \}_{i\in I}$ to a morphism
+$u_{\text{out}}(\rho) : S \rightarrow R$ such that $\iota_{i} u_{\text{out}}(\rho) \sim \rho_{i}$ for all $i \in I$,
+\end{itemize}
+\end{definition}
+
+\begin{definition}{(Direct sum)}\label{def:direct_sum}
+A \ul{direct sum} is a biproduct of objects in an Ab-category such that
+\begin{itemize}
+\item $\sum_{i\in I}  \pi_{i} \iota_{i} \sim 1_{S}$,
+\item $ \iota_{i} \pi_{j} \sim \delta_{i, j} =  \begin{cases}
+            1_{S_{i}} & \text{ if } i = j  \\
+            0_{ij} & \text{ if } i \neq j
+        \end{cases}$,
+\end{itemize}
+where $\delta_{i, j} \in \mathrm{Hom}(S_{i}, S_{j})$ is the identity if $i = j$, and the zero morphism $0_{ij} := 0_{S_{i}, S_{j}}$ otherwise.
+\end{definition}
+
+\begin{definition}\label{def:additive_category}
+An \ul{additive category} is a pre-additive category $\mathcal{C}$ together with a dependent function $\oplus^{\mathcal{C}}$ mapping
+a finite set $I$ and a family $(A_{i})_{i\in I}$ of objects in $\mathcal{C}$ to a corresponding direct sum $(\oplus_{i\in I}^{\mathcal{C}} A_{i},
+(\pi_{i})_{i\in I}, (\iota_{i})_{i\in I})$.
+\end{definition}
+
+\begin{remark}[Addition of morphisms]
+In an additive category the abelian group structure on $\mathrm{Hom}_{\mathcal{C}}(M,N)$ can be derived from the direct sum:
+For $\rho_{1}, \rho_{2} \in \mathrm{Hom}_{\mathcal{C}}(M,N)$
+\[
+\rho_{1} + \rho_{2} = u_{\mathrm{in}}(1_{M},1_{M}) u_{\mathrm{out}}(\rho_{1},\rho_{2}) 
+= u_{\mathrm{in}}(\rho_{1},\rho_{2}) u_{\mathrm{out}}(1_{N},1_{N})
+\]
+This makes $\kmat$ an example of an additive category. The above equation illustrates that an additive category is
+pre-additive in at most one way, i.e. we don't have a choice how we define the abelian group structure on the hom-sets.
+\endnote{This result is already implemented in \textsc{Cap} as a derivation of \texttt{AdditionForMorphisms} from the four morphisms
+\texttt{UniversalMorphismIntoDirectSum}, \texttt{IdentityMorphism}, \texttt{UniversalMorphismFromDirectSum} and \texttt{PreCompose}.
+See 
+\url{https://github.com/homalg-project/CAP_project/blob/v2019.06.06/CAP/gap/DerivedMethods.gi\#L1024})}
 \end{remark}
 
-\begin{definition}{(Zero morphism)}\label{def:zero_morphism}\\
-A \ul{zero morphism} in a category with a zero object $0$ is a morphism factoring over $0$, i.e. $\varphi : M \rightarrow N$ is called a zero
-morphism, if\\
-\begin{minipage}{.35\textwidth}
+\subsection{Pre-abelian categories}
+
+The dashed arrow in the diagrams of last subsection carried the meaning of uniqueness in the sense of \ref{def:limit}(3).
+Throughout the thesis we will be using two other kinds of arrows $\hookrightarrow$ and $\twoheadrightarrow$ carrying the
+following meaning:
+
+\begin{definition}[Monomorphism and epimorphism]
+A morphism $f : A \rightarrow B$ in a category is
+\begin{itemize}
+\item a \ul{monomorphism} if for any parallel morphisms $h, k : Z \rightrightarrows A, hf = kf$ implies that
+$h = k$; or
+\item an \ul{epimorphism} if for any parallel morphisms $h, k : B \rightrightarrows C, fh = fk$ implies that
+$h = k$.
+\end{itemize}
+We write $f : A \hookrightarrow B$ for a monomorphism and $f : A \twoheadrightarrow B$ for an epimorphism.
+\endnote{We can define monomorphisms and epimorphisms in a different way which gives us an opportunity to use the limit of
+$\cdot \rightarrow \cdot \leftarrow \cdot$ called \ul{pullback} and the colimit of $\cdot \leftarrow \cdot \rightarrow \cdot$ called \ul{pushout}. 
+A morphism $f : A \rightarrow B$ is a monomorphism if and only if the pullback of $f$ and $f$ exists and is equal to $A$
+(together with the identity maps $1_{A}$). Dually, a morphism $f : A \rightarrow B$ is an epimorphism if and only if the pushout of
+$f$ and $f$ exists and is equal to $B$ (together with the identity maps $1_{B}$). Since we will not be using pullbacks and pushouts any further,
+this definition was moved to the endnotes, and proving the equivalences is left as an exercise for the reader. For further reading
+\url{https://qchu.wordpress.com/2012/09/29/monomorphisms-and-epimorphisms/}}
+\end{definition}
+
+\begin{definition}[binary equalizer]
+The limit of two parallel morphisms $\cdot \rightrightarrows \cdot$\\
+If it exists in a category $\mathcal{C}$, the \ul{equalizer} of two morphisms $f, g : A \rightrightarrows B \in \mathcal{C}_{1}$
+consists of the data
+\begin{itemize}
+\item an object $E := \mathrm{eq}(f,g) \in \mathcal{C}_{0}$
+\item a morphism $\iota := \mathrm{eq}(f,g) \rightarrow A$ such that pulled back to
+$\mathrm{eq}(f,g)$ both morphisms are equal
+\[
+\iota f = \iota g
+\]
+\item a dependent function $u$ such that for any other morphism $\tau : T \rightarrow A$ with $\tau f = \tau g$
+we have a morphism $u( \tau ) : T \rightarrow E$ such that $u( \tau ) \iota = \tau$.
+\end{itemize}
+The dual concept is that of a \ul{coequalizer}.
+\end{definition}
+
+The following definition is a special case of an equalizer where $g = 0_{A,B}$. We will write it all out explicitly with their
+own names for objects and morphisms.
+
+\begin{definition}[Kernel]
+In an additive category $\mathcal{C}$, the \ul{kernel} of a morphism $f : A \rightarrow B \in \mathcal{C}_{1}$ is the equalizer
+of $f$ and $0_{A,B}$, i.e. consists of the data
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item An object $K = \mathrm{Ker}(f)$
+\item A morphism $\mathrm{KernelEmbedding}(f) := \kappa : K \rightarrow A$ such that
+\[
+\kappa \cdot f = 0_{K,B}
+\]
+\item A dependent function $\mathrm{KernelLift}(f,-) := ( - /\kappa)$ mapping a morphism $\tau : T \rightarrow A$ with $\tau f = 0_{T,B}$ to a
+morphism $\mathrm{KernelLift}(f,\tau) (\tau / \kappa) : T \rightarrow K$ such that
+\[
+\tau =\label{eq:kernel_lift} (\tau / \kappa) \cdot \kappa.
+\]
+\item For any other dependent function $v$ satisfying \eqref{eq:kernel_lift}, $v = ( - / \kappa)$.
+\end{enumerate}
+\[
 \begin{tikzcd}
-M \arrow[rr, "\varphi"] \arrow[rd, "\varphi_{1}"] &                              & N \\
-                                                  & 0 \arrow[ru, "\varphi_{2}"'] &  
+K \arrow[rrr, "\mathrm{KernelEmbedding}(\alpha)", hook]                                     &  &  & A \arrow[r, "\alpha"] & B \\
+T \arrow[rrru, "\tau"', bend right] \arrow[u, "{\mathrm{KernelLift}(\alpha,\tau)}", dashed] &  &  &                       &  
 \end{tikzcd}
-\end{minipage}
-\begin{minipage}{.65\textwidth}
-$\exists \varphi_{1} : M \rightarrow 0, \varphi_{2} : 0 \rightarrow N$\\
-such that $\varphi = \varphi_{1}\varphi_{2}$.
-\end{minipage}
-Since the zero object $0$ is both initial and terminal, a zero morphism is uniquely defined by its source and target, thus we can
-talk about \textit{the} zero morphism from $M$ to $N$, which we denote by $0_{M,N}$.
+\]
 \end{definition}
 
-\begin{definition}{(Ab-category)}
-An \ul{Ab-category} (also called \ul{pre-additive category}) is a category in which all homomorphism sets are abelian groups,
-and composition distributes over addition.\\
-In other words, a category $\mathcal{C}$ is an \ul{Ab-category} if for every pair of objects $M,N \in \mathcal{C}_{0}$,
-$( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the zero morphism $0_{M,N}$ as the neutral element),
-and for all morphisms $\gamma, \delta \in \textup{Hom}_{\mathcal{C}}(M,N),
-\alpha, \beta \in \textup{Hom}_{\mathcal{C}}(N,L)$
-\begin{align}
-(\gamma + \delta)\alpha &=\label{eq:dist1} \gamma\alpha + \delta\alpha \textup{ and }\\
-\gamma(\alpha+\beta) &=\label{eq:dist2} \gamma\alpha + \gamma\beta.
-\end{align}
-Note that every hom-set has its own unique zero morphism. E.g. in $\kmat$ the $2 \times 3$ zero-matrix
-$\mathbf{0} \in \textup{Hom}_{\kmat}(2,3)$ is different from the $4 \times 4$ zero-matrix $\mathbf{0} \in \textup{Hom}_{\kmat}(4,4)$.
+\begin{definition}[Cokernel]
+In an additive category $\mathcal{C}$, the \ul{cokernel} of a morphism $f : A \rightarrow B \in \mathcal{C}_{1}$ is the coequalizer of
+$f$ and $0_{A,B}$, i.e. consists of the data
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item An object $C = \mathrm{Coker}(f)$
+\item A morphism $\mathrm{CokernelProjection}(f) := \varepsilon : B \rightarrow C$ such that
+\[
+f \cdot \varepsilon = 0_{A,C}
+\]
+\item A dependent function $\mathrm{CokernelColift}(f,-) := ( \varepsilon \backslash -)$ mapping a morphism $\tau : B \rightarrow T$ with
+$f \tau  = 0_{A,T}$ to a morphism $\mathrm{CokernelColift}(f,\tau) := ( \varepsilon \backslash \tau) : C \rightarrow T$ such that
+\[
+\tau =\label{eq:cokernel_colift} \varepsilon \cdot (\varepsilon \backslash \tau).
+\]
+\item For any other dependent function $v$ satisfying \eqref{eq:cokernel_colift}, $v = ( \varepsilon \backslash - )$.
+\end{enumerate}
+\[
+\begin{tikzcd}
+A \arrow[r, "\alpha"] & B \arrow[rrr, "\mathrm{CokernelProjection}(\alpha)", two heads] \arrow[rrrd, "\tau"', bend right] &  &  & C \arrow[d, "{\mathrm{CokernelColift}(\alpha,\tau)}", dashed] \\
+                      &                                                                                                   &  &  & T                                                            
+\end{tikzcd}
+\]
 \end{definition}
 
-\begin{definition}{(Ab-functor)}
-A functor between Ab-categories is called an \ul{Ab-functor} if in the functor definition \ref{def:functor} the function $Ff$ for each
-morphism $f$ is a homomorphism of abelian groups, i.e. $F(f+g) = Ff + Fg$.
+\begin{definition}[Lift and colift]
+\begin{itemize}
+\item For objects $A, K, T \in \kmat_{0}$ and morphisms $\iota : K \rightarrow A, \tau : T \rightarrow A$ we have a lift of $\tau$ along $\iota$
+given by a morphism $u : T \rightarrow K$ such that $u \iota = \tau$.
+\[
+\begin{tikzcd}
+                                              & K \arrow[rd, "\iota"] &   \\
+T \arrow[rr, "\tau"'] \arrow[ru, "u", dashed] &                       & A
+\end{tikzcd}
+\]
+\item For objects $A,C,T \in \kmat_{0}$ and morphisms $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ we have a colift of $\tau$ along
+$\varepsilon$ given by a morphism $u : C \rightarrow T$ such that $\varepsilon u = \tau$.
+\[
+\begin{tikzcd}
+A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T \\
+                                                & C \arrow[ru, "u"', dashed] &  
+\end{tikzcd}
+\]
+\end{itemize}
 \end{definition}
 
-\begin{example}{(The matrix category $\kmat$ over a commutative ring $\Bbbk$)}\label{ex:matrix_category}
+With these limits we get our next categorical doctrine:
+
+\begin{definition}{(Pre-Abelian category)}
+A \ul{pre-abelian category} consists of the following data:
+\begin{enumerate}
+\item An additive category $\mathcal{C}$.
+\item A dependent function mapping every morphism $f : A \rightarrow B$ for $A, B \in \mathcal{C}_{0}$ to a
+kernel of $f$.
+\item A dependent function mapping every morphism $f : A \rightarrow B$ for $A, B \in \mathcal{C}_{0}$ to a
+cokernel of $f$.
+\end{enumerate}
+\end{definition}
+
+\subsection{Abelian categories}
+
+
+
+\subsection{Categorical doctrines}
+
+
+
+
+
+\begin{definition}[Abelian category]\label{def:abelian_category}
+An \ul{abelian category} is
+\begin{itemize}
+\item a pre-abelian category $\mathcal{A}$ where
+\item every monomorphism $\iota$ is a kernel-embedding of some kernel object $K$ and
+\item every epimorphism $\varepsilon$ is a cokernel-projection of some cokernel object $C$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}{(Abelian category)}\endnote{(From \cite{[context]}, appendix E.5, Def. E.5.1)}
+A category $\mathcal{C}$ is \ul{abelian} if
+\begin{itemize}
+\item it has a zero object $0$,
+\item it has all \ul{binary products} and \ul{binary coproducts},
+\item it has all \ul{kernels} and \ul{cokernels}, defined repsectively to be the \ul{equalizer} and
+\ul{coequalizer} of a map $f : A \rightarrow B$ with the zero map $A \rightarrow 0 \rightarrow B$, and
+\item all monomorphisms and epimorphisms arise as kernels or cokernels, respectively.
+\end{itemize}
+\end{definition}
+
+
+
+
+
+
+\begin{example}{(The matrix category $\kmat$ over a commutative ring $\Bbbk$)}\label{ex:kmat1}
 \begin{itemize}
 \item Objects are natural numbers $\kmat_{0} = \mathbb{N} = \mathbb{N}_{0} = \{0,1,2,\dots\}$
 \item Morphisms $\kmat_{1} \ni (m \rightarrow n)$ are $m \times n$ matrices over $\Bbbk$.
@@ -177,32 +396,6 @@ $\Bbbk^{m\times n}$, the set of $m \times n$-matrices. This is an abelian group:
 \end{itemize}
 Composition of matrices is defined as matrix multiplication, which is bilinear, i.e. satisfies the distributive laws \eqref{eq:dist1} and \eqref{eq:dist2}.
 \end{example}
-
-\begin{definition}{(Biproduct)}\label{def:biproduct}
-Let $I$ be an index set and $\{S_{i}\}_{i\in I}$ a family of objects in a category $\mathcal{C}$.
-A \ul{biproduct} is a product and a coproduct simultaneously, i.e. consists of the following data:
-\begin{itemize}
-\item an object $S \in \mathcal{C}_{0}$,
-\item a family of morphisms $\pi = \{ \pi_{i} : S \rightarrow S_{i} \}_{i\in I}$,
-\item a family of morphisms $\iota = \{ \iota_{i} : S_{i} \rightarrow S \}_{i\in I}$,
-\item a dependent function $u_{\text{in}}$ mapping every family $\tau = \{ \tau_{i} : T \rightarrow S_{i} \}_{i\in I}$ to a morphism
-$u_{\text{in}}(\tau) : T \rightarrow S$ such that $u_{\text{in}}(\tau) \pi_{i} \sim \tau_{i}$ for all $i \in I$,
-\item a dependent function $u_{\text{out}}$ mapping every family $\rho = \{ \rho_{i} : S_{i} \rightarrow R \}_{i\in I}$ to a morphism
-$u_{\text{out}}(\rho) : S \rightarrow R$ such that $\iota_{i} u_{\text{out}}(\rho) \sim \rho_{i}$ for all $i \in I$,
-\end{itemize}
-\end{definition}
-
-\begin{definition}{(Direct sum)}\label{def:direct_sum}
-A \ul{direct sum} is a biproduct of objects in an Ab-category such that
-\begin{itemize}
-\item $\sum_{i\in I}  \pi_{i} \iota_{i} \sim 1_{S}$,
-\item $ \iota_{i} \pi_{j} \sim \delta_{i, j} =  \begin{cases}
-            1_{S_{i}} & \text{ if } i = j  \\
-            0_{ij} & \text{ if } i \neq j
-        \end{cases}$,
-\end{itemize}
-where $\delta_{i, j} \in \mathrm{Hom}(S_{i}, S_{j})$ is the identity if $i = j$, and the zero morphism $0_{ij} := 0_{S_{i}, S_{j}}$ otherwise.
-\end{definition}
 
 \begin{example}[$\kmat$ is an additive category]\label{ex:kmat_additive}
 Let for $I = \{1,\dots,N\},$ the set $\{n_{1},\dots,n_{N}\}$ be a family of objects in $\kmat_{0}$. Their direct sum is
@@ -399,73 +592,7 @@ u_{\text{out}}(\rho) = \begin{pmatrix}
 \noindent One can easily verify that e.g. $\tau_{1} = u_{\mathrm{in}}(\tau) \pi_{1}$ and $\rho_{2} = \iota_{2} u_{\mathrm{out}}(\rho)$.
 \end{example}
 
-\begin{remark}{(Addition of matrices)}
-The abelian group structure on $\mathrm{Hom}_{\kmat}(m,n)$ can be derived from the direct sum:
-For $\rho_{1}, \rho_{2} \in \mathrm{Hom}_{\kmat}(m,n)$
-\[
-\rho_{1} + \rho_{2} = u_{\mathrm{in}}(1_{m},1_{m}) u_{\mathrm{out}}(\rho_{1},\rho_{2}) 
-= u_{\mathrm{in}}(\rho_{1},\rho_{2})u_{\mathrm{out}}(1_{n},1_{n})
-\]
-This makes $\kmat$ an example of an additive category. The above equation illustrates that an additive category is
-pre-additive in at most one way, i.e. we don't have a choice how we define the abelian group structure on the hom-sets.
-\end{remark}
 
-\begin{definition}\label{def:additive_category}\endnote{ ref. \cite{[Posur]}, Def. 2.8}
-An \ul{additive category} is an Ab-category $\mathcal{C}$ together with a dependent function $\oplus^{\mathcal{C}}$ mapping
-a finite set $I$ and a family $(A_{i})_{i\in I}$ of objects in $\mathcal{C}$ to a corresponding direct sum $(\oplus_{i\in I}^{\mathcal{C}} A_{i},
-(\pi_{i})_{i\in I}, (\iota_{i})_{i\in I})$.
-\end{definition}
-
-\subsection{Kernel and cokernel; image and coimage}
-
-\begin{definition}{(Kernel)}
-In an additive category $\mathcal{C}$, the \ul{kernel} of a morphism $f : A \rightarrow B \in \mathcal{C}_{1}$ is the equalizer of $f$ and $0_{A,B}$,
-i.e. consists of the data
-\begin{enumerate}
-\renewcommand{\labelenumi}{(\theenumi)}
-\item An object $K = \mathrm{ker}(f)$
-\item A morphism $\mathrm{KernelEmbedding}(f) := \kappa : K \rightarrow A$ such that
-\[
-\kappa \cdot f = 0_{K,B}
-\]
-\item A dependent function $\mathrm{KernelLift}(f,-) := ( - /\kappa)$ mapping a morphism $\tau : T \rightarrow A$ with $\tau f = 0_{T,B}$ to a
-morphism $\mathrm{KernelLift}(f,\tau) (\tau / \kappa) : T \rightarrow K$ such that
-\[
-\tau =\label{eq:kernel_lift} (\tau / \kappa) \cdot \kappa.
-\]
-\item For any other dependent function $v$ satisfying \eqref{eq:kernel_lift}, $v = ( - / \kappa)$.
-\end{enumerate}
-\end{definition}
-
-\begin{definition}{(Cokernel)}
-In an additive category $\mathcal{C}$, the \ul{cokernel} of a morphism $f : A \rightarrow B \in \mathcal{C}_{1}$ is the coequalizer of
-$f$ and $0_{A,B}$, i.e. consists of the data
-\begin{enumerate}
-\renewcommand{\labelenumi}{(\theenumi)}
-\item An object $C = \mathrm{coker}(f)$
-\item A morphism $\mathrm{CokernelProjection}(f) := \varepsilon : B \rightarrow C$ such that
-\[
-f \cdot \varepsilon = 0_{A,C}
-\]
-\item A dependent function $\mathrm{CokernelCoLift}(f,-) := ( \varepsilon \backslash -)$ mapping a morphism $\tau : B \rightarrow T$ with
-$f \tau  = 0_{A,T}$ to a morphism $\mathrm{CokernelCoLift}(f,\tau) := ( \varepsilon \backslash \tau) : C \rightarrow T$ such that
-\[
-\tau =\label{eq:cokernel_colift} \varepsilon \cdot (\varepsilon \backslash \tau).
-\]
-\item For any other dependent function $v$ satisfying \eqref{eq:cokernel_colift}, $v = ( - \backslash \kappa)$.
-\end{enumerate}
-\end{definition}
-
-\begin{definition}{(Pre-Abelian category)}
-A \ul{pre-abelian category} consists of the following data:
-\begin{enumerate}
-\item An additive category $\mathcal{C}$.
-\item A dependent function mapping every morphism $f : A \rightarrow B$ for $A, B \in \mathcal{C}_{0}$ to a
-kernel of $f$.
-\item A dependent function mapping every morphism $f : A \rightarrow B$ for $A, B \in \mathcal{C}_{0}$ to a
-cokernel of $f$.
-\end{enumerate}
-\end{definition}
 
 \begin{example}[$\kmat$ is a pre-abelian category]
 Construction 2.14 in \cite{[Posur]} defines four algorithms deduced from Gaussian elimination
@@ -503,47 +630,11 @@ from which we can build kernels and cokernels in the matrix category:
 With these constructions, $\kmat$ becomes a pre-abelian category.
 \end{example}
 
-\begin{definition}[Abelian category]\label{def:abelian_category}
-An \ul{abelian category} is
-\begin{itemize}
-\item a pre-abelian category $\mathcal{A}$ where
-\item every monomorphism $\iota$ is a kernel-embedding of some kernel object $K$ and
-\item every epimorphism $\varepsilon$ is a cokernel-projection of some cokernel object $C$.
-\end{itemize}
-\end{definition}
 
-\begin{definition}{(Abelian category)}\endnote{(From \cite{[context]}, appendix E.5, Def. E.5.1)}
-A category $\mathcal{C}$ is \ul{abelian} if
-\begin{itemize}
-\item it has a zero object $0$,
-\item it has all \ul{binary products} and \ul{binary coproducts},
-\item it has all \ul{kernels} and \ul{cokernels}, defined repsectively to be the \ul{equalizer} and
-\ul{coequalizer} of a map $f : A \rightarrow B$ with the zero map $A \rightarrow 0 \rightarrow B$, and
-\item all monomorphisms and epimorphisms arise as kernels or cokernels, respectively.
-\end{itemize}
-\end{definition}
+\subsection{Kernel and cokernel; image and coimage}
 
-\begin{definition}[Lift and colift]
-(if they exist...)
-\begin{itemize}
-\item For objects $A, K, T \in \kmat_{0}$ and morphisms $\iota : K \rightarrow A, \tau : T \rightarrow A$ we have a lift of $\tau$ along $\iota$
-given by a morphism $u : T \rightarrow K$ such that $u \iota = \tau$.
-\[
-\begin{tikzcd}
-                                              & K \arrow[rd, "\iota"] &   \\
-T \arrow[rr, "\tau"'] \arrow[ru, "u", dashed] &                       & A
-\end{tikzcd}
-\]
-\item For objects $A,C,T \in \kmat_{0}$ and morphisms $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ we have a colift of $\tau$ along
-$\varepsilon$ given by a morphism $u : C \rightarrow T$ such that $\varepsilon u = \tau$.
-\[
-\begin{tikzcd}
-A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T \\
-                                                & C \arrow[ru, "u"', dashed] &  
-\end{tikzcd}
-\]
-\end{itemize}
-\end{definition}
+
+
 
 %%% functors between abelian categories.
 

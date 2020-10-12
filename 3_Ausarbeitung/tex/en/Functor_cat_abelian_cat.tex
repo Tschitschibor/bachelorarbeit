@@ -34,22 +34,12 @@ called kernel, i.e. for the matrix $\alpha : A \rightarrow B$ we have
 \[
 (K = \mathrm{ker}(\alpha), \mathrm{KernelEmbedding}(\alpha), \mathrm{KernelLift}(\alpha,\tau))
 \]
-\[
-\begin{tikzcd}
-K \arrow[rrr, "{\mathrm{KernelEmbedding}(\alpha)}", hook]                              &  &  & A \arrow[r, "\alpha"] & B \\
-T \arrow[rrru, "\tau"', bend right] \arrow[u, "{\mathrm{KernelLift}(\alpha,\tau)}", dashed] &  &  &                       &  
-\end{tikzcd}
-\]
+
 \item A co-equalizer of the same diagram called cokernel, i.e. for the matrix $A \in \Bbbk^{m\times n}$ we have
 \[
 (C = \mathrm{coker}(\alpha), \mathrm{CokernelProjection}(\alpha), \mathrm{CokernelColift}(\alpha,\tau))
 \]
-\[
-\begin{tikzcd}
-C \arrow[d, "{\mathrm{CokernelColift}(\alpha,\tau)}"', dashed] &  &  & B \arrow[lll, "\mathrm{CokernelProjection}(\alpha)"', two heads] \arrow[llld, "\tau", bend left] & A \arrow[l, "\alpha"'] \\
-T                                                              &  &  &                                                                                       &                       
-\end{tikzcd}
-\]
+
 
 
 \end{itemize}
