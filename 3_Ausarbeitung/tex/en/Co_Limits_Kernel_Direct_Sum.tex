@@ -116,7 +116,7 @@ Note that every hom-set has its own unique zero morphism. E.g. in $\kmat$ the $2
 $0_{2,3} \in \textup{Hom}_{\kmat}(2,3)$ is different from the $4 \times 4$ zero-matrix $0_{4,4} \in \textup{Hom}_{\kmat}(4,4)$.
 \end{definition}
 
-\begin{doctrine}[Ab-category]
+\begin{doctrine}[Ab-category]\label{doc:ab-category}
 The doctrine $\mathtt{IsAbCategory}$ therefore involves algorithms for
 \begin{itemize}
 \item $\mathtt{AdditionForMorphisms}$,
@@ -412,8 +412,8 @@ cokernel of its kernel:\\
 \begin{tikzcd}[
   ampersand replacement=\&,
 ]
-K \arrow[r, "\kappa", hook, shift left] \arrow[r, "{0_{K,A}}"', shift right] \& A \arrow[r, "f"] \arrow[rd, "\varepsilon", two heads] \arrow[rdd, "\tau"'] \& B                                                                                                   \\
-                                                                             \&                                                                            \& C \arrow[u, "(\varepsilon\backslash f)"', dashed] \arrow[d, "(\varepsilon\backslash \tau)", dashed] \\
+K \arrow[r, "\kappa", hook, shift left] \arrow[r, "{0_{K,A}}"', shift right] \& A \arrow[r, "f"] \arrow[rd, "{\varepsilon_{\kappa}}", two heads] \arrow[rdd, "\tau"'] \& B                                                                                                   \\
+                                                                             \&                                                                            \& C \arrow[u, "({\varepsilon_{\kappa}}\backslash f)"', dashed] \arrow[d, "({\varepsilon_{\kappa}}\backslash \tau)", dashed] \\
                                                                              \&                                                                            \& T                                                                                                  
 \end{tikzcd}
 \]
@@ -423,16 +423,18 @@ Since $\kappa$ is the kernel embedding of $f$, the morphism $f : A \rightarrow B
 same role as any $\tau : A \rightarrow T$ with $\kappa\,\tau = 0_{K,T}$ in that it factors over the cokernel object $C$ in a
 unique way:
 \[
-f = \varepsilon\,(\varepsilon\backslash f)
+f = \varepsilon_{\kappa}\,(\varepsilon_{\kappa}\backslash f)
 \]
 \end{minipage}
 \begin{minipage}{.06\textwidth} \phantom{} \end{minipage}
 
 Thus, the coimage is
 \begin{itemize}
-\item An object $\mathrm{Coim}(f) := \mathrm{Coker}(\varepsilon)$ where $\varepsilon = \mathrm{CokernelProjection}(f)$,
-\item A morphism $\mathrm{CoimageProjection}(f) := \mathrm{CokernelProjection}(\mathrm{KernelEmbedding}(f))$
+\item An object $\mathrm{Coim}(f) := \mathrm{Coker}(\kappa)$ where $\kappa = \mathrm{KernelEmbedding}(f)$,
+\item A morphism $\varepsilon_{\kappa} := \mathrm{CoimageProjection}(f) := \mathrm{CokernelProjection}(\mathrm{KernelEmbedding}(f))$
 \end{itemize}
+Since it was reserved for cokernel, we are not using $C$ to denote the coimage object. In fact, in the doctrine of abelian
+categories we will not need a distinct variable name for the coimage, which will be more clear in \ref{cor:kernel_cokernel_sequence}.
 \end{definition}
 
 \begin{definition}{(Pre-Abelian category)}
@@ -459,31 +461,47 @@ The doctrine $\mathtt{IsPreAbelianCategory}$ therefore involves algorithms of $\
 \end{itemize}
 \end{doctrine}
 
+\newpage
 \subsubsection{Abelian categories}
 
 In categories with kernels and cokernels we can compute images and coimages together with an induced morphism
-$\bar{\varphi} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$. This morphism being an isomorphism
+$\overline{\varphi} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$. This morphism being an isomorphism
 is one of the defining axioms of Abelian categories.
 
 The kernel lift of the cokernel colift
 $(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$
+
 \[
 \begin{tikzcd}
-\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", bend left] &                                                                                                                                                                                              &  &                                                                                               & \mathrm{Coker}(\varphi) \arrow[llld, "0"', bend right] \\
-                                                                                                             & M \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads]                                                                                                                       &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                                                        \\
-                                                                                                             &                                                                                                                                                                                              &  &                                                                                               &                                                        \\
-                                                                                                             & \mathrm{Coim}(\varphi) \arrow[rruu, "(\varepsilon_{\kappa}\backslash \varphi)"'] \arrow[rr, "(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon}"'] \arrow[rrruuu, "0", pos=.7, color=red, bend left] &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                                                       
+\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", bend left] &                                                                                                                                                                                             &  &                                                                                               & \mathrm{Coker}(\varphi) \\
+                                                                                                             & M \arrow[rrru, "0", bend left] \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads]                                                                                         &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                         \\
+                                                                                                             &                                                                                                                                                                                             &  &                                                                                               &                         \\
+                                                                                                             & \mathrm{Coim}(\varphi) \arrow[rruu, "(\varepsilon_{\kappa}\backslash \varphi)"'] \arrow[rr, "(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon}"'] \arrow[rrruuu, "0", pos=.7, color=red, bend left] &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                        
 \end{tikzcd}
 \]
 
+We want to prove that the composition
+$(\varepsilon_{\kappa}\backslash\varphi) \varepsilon : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Coker}(\varphi)$ is the zero morphism (as
+indicated by the red arrow).
+Assuming
+\begin{align*}
+&M \xrightarrow{\varphi} N \\
+=\, &M \xrightarrow{\varepsilon_{\kappa}} \mathrm{Coim}(\varphi) \xrightarrow{(\varepsilon_{\kappa}\backslash\varphi)} N \\
+=\, &M \xrightarrow{\varepsilon_{\kappa}} \mathrm{Coim}(\varphi) \xrightarrow{(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon}}
+\mathrm{Im}(\varphi) \xrightarrow{\kappa_{\varepsilon}} N,
+\end{align*}
+i.e. that both triangles and thus the square commute.
+Then 
+
 The cokernel colift of the kernel lift
 $\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon}) : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$
+
 \[
 \begin{tikzcd}
-\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", bend left] \arrow[rrrddd, "0", pos=.3, color=red, bend right] &                                                                                                                       &  &                                                                                               & \mathrm{Coker}(\varphi) \arrow[llld, "0"', bend right] \\
-                                                                                                                                             & M \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads] \arrow[rrdd, "(\varphi/\kappa_{\varepsilon})"] &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                                                        \\
-                                                                                                                                             &                                                                                                                       &  &                                                                                               &                                                        \\
-                                                                                                                                             & \mathrm{Coim}(\varphi) \arrow[rr, "\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon})"']                    &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                                                       
+\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", bend left] \arrow[rrrddd, "0", pos=.3, color=red, shift left=2, bend right] &                                                                                                                                                    &  &                                                                                               & \mathrm{Coker}(\varphi) \\
+                                                                                                                                             & M \arrow[rrru, "0", bend left] \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads] \arrow[rrdd, "(\varphi/\kappa_{\varepsilon})"] &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                         \\
+                                                                                                                                             &                                                                                                                                                    &  &                                                                                               &                         \\
+                                                                                                                                             & \mathrm{Coim}(\varphi) \arrow[rr, "\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon})"']                                                 &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                        
 \end{tikzcd}
 \]
 
@@ -507,6 +525,16 @@ A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T
 \]
 \end{itemize}
 \end{definition}
+
+\begin{corollary}\label{cor:kernel_cokernel_sequence}
+\[
+\begin{tikzcd}
+K \arrow[rd, "\kappa", hook] &                                                       &                             &                                        & C \\
+                             & M \arrow[rr, "\varphi"] \arrow[rd, "\pi"', two heads] &                             & N \arrow[ru, "\varepsilon", two heads] &   \\
+                             &                                                       & I \arrow[ru, "\iota", hook] &                                        &  
+\end{tikzcd}
+\]
+\end{corollary}
 
 \begin{definition}[Abelian category]\label{def:abelian_category}
 An \ul{abelian category} is
@@ -585,9 +613,6 @@ $\Rightarrow A = (m \times 0) \cdot (0 \times n)$.
 \noindent The matrices $(m \times 0)$ and $(0 \times n)$ have zero columns or zero rows respectively, but it is
 important to note that for each $m \in \kmat_{0}$ there is exactly one such matrix $(m \times 0)$ and $(0 \times m)$
 (that's what initial and terminal object means), and for different $m$, these morphisms are different.
-\[
-\mathtt{ZeroMorphism}(m,n) := \mathtt{ZeroMat}(m,n,\Bbbk) = \mathtt{ZeroMat}(m,0,\Bbbk)\,\mathtt{ZeroMat}(0,n,\Bbbk)
-\]
 
 For two natural numbers $m,n \in {\kmat}_{0} = \mathbb{N} = \mathbb{N}_{0}$, the set of morphisms with source $m$ and target $n$ is
 $\Bbbk^{m\times n}$, the set of $m \times n$-matrices. This is an abelian group:
@@ -597,16 +622,22 @@ $\Bbbk^{m\times n}$, the set of $m \times n$-matrices. This is an abelian group:
 \item For every matrix $A \in \Bbbk^{m\times n}$ there is a negative matrix $-A \in \Bbbk^{m \times n}$ such that $A + (-A) = 0_{m,n}$.
 \end{itemize}
 Composition of matrices is defined as matrix multiplication, which is bilinear, i.e. satisfies the distributive laws \eqref{eq:dist1} and
-\eqref{eq:dist2}.
-
+\eqref{eq:dist2}.\\
+It is an easy exercise to provide the algorithms for an Ab-category mentioned in doctrine \ref{doc:ab-category}.
 \end{example}
 
 \begin{example}[$\kmat$ is an additive category]\label{ex:kmat_additive}
 Let for $I = \{1,\dots,N\},$ the set $\{n_{1},\dots,n_{N}\}$ be a family of objects in $\kmat_{0}$. Their direct sum is
 \begin{itemize}
-\item the object $n = \sum_{i=1}^{N} n_{i}$
-\item For $i \in I$ we have as identity morphism $1_{n_{i}}$ of the object $n_{i}$ the $n_{i} \times n_{i}$ identity matrix.\\
-The projection $\pi_{i} : n \rightarrow n_{i}$ is an $n \times n_{i}$ matrix that is a block matrix of $0_{n_{-i},n_{i}}$ and $1_{n_{i}}$.
+\item the object $n := \bigoplus_{i=1}^{N} n_{i} := \sum_{i=1}^{N} n_{i}$
+\item For $i \in I$ we have as identity morphism $1_{n_{i}}$ of the object $n_{i}$ the $n_{i} \times n_{i}$ identity matrix.
+Define
+\[
+n_{<i} := \sum_{j=1}^{i-1} n_{j}\quad \text{ and }\quad n_{>i} := \sum_{j=i+1}^{N} n_{j}.
+\]
+Then we have
+\item The projection $\pi_{i} : n \rightarrow n_{i}$ is an $n \times n_{i}$ matrix that is a stacked matrix of the $n_{j}\times n_{i}$
+zero matrices not including $0_{n_{i},n_{i}}$ and the identity matrix $1_{n_{i}}$.
 \begin{align}
 \pi_{i} = \label{eq:projection_direct_sum_matrix}
 \begin{pmatrix}
@@ -621,18 +652,30 @@ The projection $\pi_{i} : n \rightarrow n_{i}$ is an $n \times n_{i}$ matrix tha
 \end{pmatrix}
 =
 \begin{pmatrix}
-0_{\sum\limits_{j=1}^{i-1} n_{j},\,n_{i}} \\
+0_{n_{<i},\,n_{i}} \\
 1_{n_{i}} \\
-0_{\sum\limits_{j=i+1}^{N} n_{j},\,n_{i}}
+0_{n_{>i},\,n_{i}}
 \end{pmatrix}
 \end{align}
-\item The coprojection $\iota_{i} : n_{i} \rightarrow n$ is the transposed matrix $\iota_{i} = \pi_{i}^{T}$, i.e. an $n_{i} \times n$ block matrix
+\item The coprojection $\iota_{i} : n_{i} \rightarrow n$ is the transposed matrix $\iota_{i} = \pi_{i}^{T}$, i.e. an $n_{i} \times n$ matrix of
+the $n_{i} \times n_{j}$ zero matrices not including $0_{n_{i},n_{i}}$ and the identity matrix $1_{n_{i}}$ lined up next to each other.
 \begin{align}
 \iota_{i} = \label{eq:coprojection_direct_sum_matrix}
+\begingroup
+\setlength\arraycolsep{2pt}
 \begin{pmatrix}
-0_{n_{i},\,\sum\limits_{j=1}^{i-1} n_{j}} & 1_{n_{i}} & 0_{n_{i},\,\sum\limits_{j=i+1}^{N} n_{j}}
+0_{n_{i},n_{1}} & 0_{n_{i},n_{2}} & \dots & 0_{n_{i},n_{i-1}} & 1_{n_{i}} & 0_{n_{i},n_{i+1}} & \dots & 0_{n_{i},n_{N}}
 \end{pmatrix}
+= \begin{pmatrix}
+0_{n_{i},\,n_{<i}} & 1_{n_{i}} & 0_{n_{i},\,n_{>i}}
+\end{pmatrix} \endgroup
 \end{align}
+
+We get the projection $\pi_{i}$ as a result of
+\[
+\mathtt{ProjectionInFactorOfDirectSum}( [ n_{1},\dots,n_{N} ], i ) := 
+\]
+
 \item For a family $\tau = (\tau_{i} : t \rightarrow n_{i})_{i\in I}$ we have the morphism $u_{\text{in}}(\tau)$ which is a $t \times n$ block matrix of
 the $\tau_{i}$:
 \begin{align}
@@ -656,6 +699,8 @@ with $\iota_{i} u_{\text{out}}(\tau) = \tau_{i}$.
 \end{itemize}
 One can easily verify the conditions for $\pi$, $\iota$, $u_{\text{in}}$ and $u_{\text{out}}$ in Definitions \ref{def:biproduct} and \ref{def:direct_sum}.
 \end{example}
+
+Algorithms for the doctrine of 
 
 \begin{example}[Block-Diagonal matrices]\phantom{}\label{ex:block_diagonal_matrix}\\
 In a situation with an index set $I = \{1,\dots,N\}$, two families of objects $\{m_{i}\}_{i\in I}, \{n_{i}\}_{i\in I}$ and a family of
