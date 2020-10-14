@@ -25,7 +25,7 @@ morphism $u(\tau) : T \rightarrow \mathrm{lim}\, D$ such that $\lambda(i) \cdot 
 A \ul{colimit} of $D$ is a limit of $D' : \mathbf{I} \rightarrow \mathcal{C}^{\mathrm{op}}$.
 \end{definition}
 
-\begin{definition}{(Limits of type \textbf{I})}
+\begin{definition}[Limits of type \textbf{I}]
 Let $\mathbf{I}$ be a category. We say a category $\mathcal{C}$ \ul{has limits of type} $\mathbf{I}$ if it is
 equipped with a dependent function $\lambda$ mapping a functor $D : \mathbf{I} \rightarrow \mathcal{C}$ to a limit
 $(\mathrm{lim}\, D, \lambda_{D}, u_{D})$ of $D$.
@@ -47,18 +47,32 @@ $ \cdot \rightrightarrows \cdot$ & binary equalizer & binary coequalizer
 \end{center}
 \end{example}
 
+A category having or lacking limits and colimits of a certain type formalizes the notion of what one can or cannot \textit{do} in a category.
+Since we are \textit{doing} constructive category theory, this all boils down to which limits and colimits we can \ul{compute}, i.e. for which we
+have algorithms, and what needs to be true for the category in order for those algorithms to terminate with a correct output.
+Just as in algebra words like ``field'' or ``ring'' or ``abelian group'' are established names and adjectives for sets with additional structure,
+in category theory we give special names for categories which have certain limits. This is summarized under the vaguely defined
+notion of ``doctrine''.
+
+\begin{definition}[Categorical doctrine]
+We say a category is of a certain \ul{categorical doctrine}, if it has all limits and colimits of a specified set of types.
+In this thesis, we will define hierarchies of categorical doctrines as sets of algorithms that compute the (co-)limits in that category.
+\end{definition}
+
 \subsection{The categorical doctrines of abelian categories}
 
-In the following subsections, we give explicit definitions for the limits in \ref{ex:limits} and define the
-doctrines for our categories with such limits. The doctrine we are interested in is that of an abelian category with
+In this subsection, we give explicit definitions for the (co-)limits in \ref{ex:limits} and define the
+doctrines for our categories with such (co-)limits. The doctrine we are interested in is that of an abelian category with
 enough projectives and enough injectives. For now we will describe the doctrines up to and including abelian categories, and
-leave projective and injective objects for later.
+leave projective and injective objects for section 5. In section 3 we will work on the doctrines of explicitly cyclic finite concrete
+categories and leading up to $\Bbbk$-Algebroids or $\Bbbk$-linear categories.
 
 \subsubsection{Ab-categories}
-We are starting simple with Ab-categories. All we need is a zero object.
+We are starting simple with Ab-categories. All we need is an abelian group structure on the hom-set between two objects.
+Since this involves neutral elements of addition, we are skipping ahead and define the zero object and from it the zero morphism.
 
 \begin{remark}[Terminal object, initial object, zero object]\label{def:init_term_zero_object}
-The limit / colimit of $\emptyset$.\\
+The limit / colimit of $\emptyset$.
 \renewcommand{\labelenumi}{(\theenumi)}
 \begin{enumerate}
 \item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
@@ -81,7 +95,10 @@ $\exists \varphi_{1} : M \rightarrow 0, \varphi_{2} : 0 \rightarrow N$\\
 such that $\varphi = \varphi_{1}\varphi_{2}$.
 \end{minipage}
 Since the zero object $0$ is both initial and terminal, a zero morphism is uniquely defined by its source and target, thus we can
-talk about \textit{the} zero morphism from $M$ to $N$, which we denote by $0_{M,N}$.
+talk about \textit{the} zero morphism from $M$ to $N$, which we denote by $0_{M,N}$.\endnote{We could define the zero morphism without
+the zero object, just as the neutral element of the abelian group $\mathrm{Hom}_{\mathcal{C}}(M,N)$. Therefore $\mathtt{ZeroMorphism}(M,N)$
+is needed in the doctrine of $\mathtt{IsAbCategory}$, but the $\mathtt{ZeroObject}$ is not. Eventually at additive categories the
+zero object arrises naturally as the direct sum of $\emptyset$, which is why $\mathtt{ZeroObject}$ is listed only there.}
 \end{definition}
 
 \begin{definition}[Ab-category]
@@ -89,7 +106,7 @@ An \ul{Ab-category} (also called \ul{pre-additive category}) is a category in wh
 and composition distributes over addition.\\
 In other words, a category $\mathcal{C}$ is an Ab-category if for every pair of objects $M,N \in \mathcal{C}_{0}$,
 $( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the zero morphism $0_{M,N}$ as the neutral element),
-and for all morphisms $\gamma, \delta \in \textup{Hom}_{\mathcal{C}}(M,N),
+and for all morphisms $\gamma, \delta \in \mathrm{Hom}_{\mathcal{C}}(M,N),
 \alpha, \beta \in \textup{Hom}_{\mathcal{C}}(N,L)$
 \begin{align}
 (\gamma + \delta)\alpha &=\label{eq:dist1} \gamma\alpha + \delta\alpha \textup{ and }\\
@@ -110,7 +127,7 @@ The doctrine $\mathtt{IsAbCategory}$ therefore involves algorithms for
 \end{itemize}
 \end{doctrine}
 
-\begin{definition}{(Ab-functor)}
+\begin{definition}[Ab-functor]
 A functor between Ab-categories is called an \ul{Ab-functor} if in the functor definition \ref{def:functor} the function $Ff$ for each
 morphism $f$ is a homomorphism of abelian groups, i.e. $F(f+g) = Ff + Fg$.
 \end{definition}
@@ -120,7 +137,7 @@ The definition of the binary operation $+$ in a pre-additive category came as ar
 in multiple ways. A category with the following limits is additive in at most one way, warrenting the name additive category.
 
 \begin{definition}[Product, coproduct]\label{def:prod_coprod}
-The limit / colimit of a set of objects $\cdot \text{\phantom{$\rightarrow$}} \cdot$\\
+The limit / colimit of a set of objects $\,\cdot \text{\phantom{$\rightarrow$}} \cdot$\\
 Let $I$ be an index set and $\{A_{i}\}_{i\in I}$ a family of objects in a category $\mathcal{C}$.
 \setlist[description]{font=\normalfont}
 \begin{description}
@@ -184,6 +201,21 @@ A \ul{direct sum} is a biproduct of objects in an Ab-category such that
 where $\delta_{i, j} \in \mathrm{Hom}(S_{i}, S_{j})$ is the identity if $i = j$, and the zero morphism $0_{ij} := 0_{S_{i}, S_{j}}$ otherwise.
 \end{definition}
 
+\begin{example}[The direct sum of $\emptyset$]
+For the index set $I = \emptyset$ we get an empty family of objects in a category $\mathcal{C}$. Its direct sum is
+\begin{itemize}
+\item an object $Z \in \mathcal{C}_{0}$,
+\item empty morphism sets $\pi$ and $\iota$,
+\item a dependent function $u_{\text{in}}$ maps an empty collection $\tau$ of morphisms with same source $T$ to a unique
+morphism $u_{\text{in}}(\tau) : T \rightarrow Z$.
+\item a dependent function $u_{\text{out}}$ maps an empty collection $\rho$ of morphisms with same target $R$ to a unique
+morphism $u_{\text{out}}(\rho) : Z \rightarrow R$.
+\end{itemize}
+The unique morphisms $T \rightarrow Z$ and $Z \rightarrow T$ for any object $T$ (the empty family $\tau$ imposing no further condition)
+suggests that our object $Z = \mathrm{DirectSum}(\emptyset)$ is in fact the zero object from \ref{def:init_term_zero_object}, and the
+unique morphisms are the unique zero morphisms in $\mathrm{Hom}(Z,T)$ and $\mathrm{Hom}(T,Z)$ from \ref{def:zero_morphism}.
+\end{example}
+
 \begin{definition}\label{def:additive_category}
 An \ul{additive category} is a pre-additive category $\mathcal{C}$ together with a dependent function $\oplus^{\mathcal{C}}$ mapping
 a finite set $I$ and a family $(A_{i})_{i\in I}$ of objects in $\mathcal{C}$ to a corresponding direct sum $(\oplus_{i\in I}^{\mathcal{C}} A_{i},
@@ -197,12 +229,12 @@ For $\rho_{1}, \rho_{2} \in \mathrm{Hom}_{\mathcal{C}}(M,N)$
 \rho_{1} + \rho_{2} = u_{\mathrm{in}}(1_{M},1_{M}) u_{\mathrm{out}}(\rho_{1},\rho_{2}) 
 = u_{\mathrm{in}}(\rho_{1},\rho_{2}) u_{\mathrm{out}}(1_{N},1_{N})
 \]
-This makes $\kmat$ an example of an additive category. The above equation illustrates that an additive category is
+The above equation illustrates that an additive category is
 pre-additive in at most one way, i.e. we don't have a choice how we define the abelian group structure on the hom-sets.
 \endnote{This result is already implemented in \textsc{Cap} as a derivation of \texttt{AdditionForMorphisms} from the four morphisms
 \texttt{UniversalMorphismIntoDirectSum}, \texttt{IdentityMorphism}, \texttt{UniversalMorphismFromDirectSum} and \texttt{PreCompose}.
 See 
-\url{https://github.com/homalg-project/CAP_project/blob/v2019.06.06/CAP/gap/DerivedMethods.gi\#L1024})}
+\url{https://github.com/homalg-project/CAP_project/blob/v2019.06.06/CAP/gap/DerivedMethods.gi\#L1024}}
 \end{remark}
 
 \begin{doctrine}[Additive category]
@@ -244,7 +276,7 @@ this definition was moved to the endnotes, and proving the equivalences is left 
 \end{definition}
 
 \begin{definition}[binary equalizer]
-The limit of two parallel morphisms $\cdot \rightrightarrows \cdot$\\
+The limit of two parallel morphisms $\,\cdot \rightrightarrows \cdot$\\
 If it exists in a category $\mathcal{C}$, the \ul{equalizer} of two morphisms $f, g : A \rightrightarrows B \in \mathcal{C}_{1}$
 consists of the data
 \begin{itemize}
@@ -267,7 +299,7 @@ T \arrow[ru, "\tau"] \arrow[u, "u(\tau)", dashed] &                             
 \end{tikzcd}
 \]
 \end{itemize}
-The dual concept is that of a \ul{coequalizer}, which is the colimit of $\cdot \rightrightarrows \cdot$.
+The dual concept is that of a \ul{coequalizer}, which is the colimit of $\,\cdot \rightrightarrows \cdot$.
 \end{definition}
 
 The following definition is a special case of an equalizer where $g = 0_{A,B}$. We will write it all out explicitly with their
@@ -299,8 +331,8 @@ morphism $\mathrm{KernelLift}(f,\tau) = (\tau / \kappa) : T \rightarrow K$ such 
 \end{enumerate}
 \[
 \begin{tikzcd}
-K \arrow[rrr, "\mathrm{KernelEmbedding}(f)", hook]                                     &  &  & A \arrow[r, "f"] & B \\
-T \arrow[rrru, "\tau"', bend right] \arrow[u, "{\mathrm{KernelLift}(f,\tau)}", dashed] &  &  &                       &  
+K \arrow[r, "\kappa"]                            & A \arrow[r, "f"] & B \\
+T \arrow[ru, "\tau"'] \arrow[u, "(\tau/\kappa)", dashed] &                  &  
 \end{tikzcd}
 \]
 \end{definition}
@@ -331,15 +363,15 @@ $f \tau  = 0_{A,T}$ to a morphism $\mathrm{CokernelColift}(f,\tau) = ( \varepsil
 \end{enumerate}
 \[
 \begin{tikzcd}
-A \arrow[r, "f"] & B \arrow[rrr, "\mathrm{CokernelProjection}(f)", two heads] \arrow[rrrd, "\tau"', bend right] &  &  & C \arrow[d, "{\mathrm{CokernelColift}(f,\tau)}", dashed] \\
-                      &                                                                                                   &  &  & T                                                            
+A \arrow[r, "f"] & B \arrow[r, "\varepsilon", two heads] \arrow[rd, "\tau"] & C \arrow[d, "(\varepsilon\backslash\tau)", dashed] \\
+                 &                                                          & T                                                 
 \end{tikzcd}
 \]
 \end{definition}
 
 \begin{definition}[Image]
-In an additive category $\mathcal{C}$ we define the \ul{image} of a morphism $f : A \rightarrow B \in \mathcal{C}_{1}$ as the 
-kernel of its cokernel:\\
+In an additive category $\mathcal{C}$ we define the \ul{image} of a morphism\\
+$f : A \rightarrow B \in \mathcal{C}_{1}$ as the kernel of its cokernel:\\
 \begin{minipage}{.06\textwidth} \phantom{} \end{minipage}
 \begin{minipage}{.39\textwidth}
 \[
@@ -403,8 +435,6 @@ Thus, the coimage is
 \end{itemize}
 \end{definition}
 
-With these limits we get our next categorical doctrine:
-
 \begin{definition}{(Pre-Abelian category)}
 A \ul{pre-abelian category} consists of the following data:
 \begin{enumerate}
@@ -431,7 +461,33 @@ The doctrine $\mathtt{IsPreAbelianCategory}$ therefore involves algorithms of $\
 
 \subsubsection{Abelian categories}
 
-\begin{definition}[Lift and colift]
+In categories with kernels and cokernels we can compute images and coimages together with an induced morphism
+$\bar{\varphi} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$. This morphism being an isomorphism
+is one of the defining axioms of Abelian categories.
+
+The kernel lift of the cokernel colift
+$(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$
+\[
+\begin{tikzcd}
+\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", bend left] &                                                                                                                                                                                              &  &                                                                                               & \mathrm{Coker}(\varphi) \arrow[llld, "0"', bend right] \\
+                                                                                                             & M \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads]                                                                                                                       &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                                                        \\
+                                                                                                             &                                                                                                                                                                                              &  &                                                                                               &                                                        \\
+                                                                                                             & \mathrm{Coim}(\varphi) \arrow[rruu, "(\varepsilon_{\kappa}\backslash \varphi)"'] \arrow[rr, "(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon}"'] \arrow[rrruuu, "0", pos=.7, color=red, bend left] &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                                                       
+\end{tikzcd}
+\]
+
+The cokernel colift of the kernel lift
+$\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon}) : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$
+\[
+\begin{tikzcd}
+\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", bend left] \arrow[rrrddd, "0", pos=.3, color=red, bend right] &                                                                                                                       &  &                                                                                               & \mathrm{Coker}(\varphi) \arrow[llld, "0"', bend right] \\
+                                                                                                                                             & M \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads] \arrow[rrdd, "(\varphi/\kappa_{\varepsilon})"] &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                                                        \\
+                                                                                                                                             &                                                                                                                       &  &                                                                                               &                                                        \\
+                                                                                                                                             & \mathrm{Coim}(\varphi) \arrow[rr, "\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon})"']                    &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                                                       
+\end{tikzcd}
+\]
+
+\begin{definition}[Lift and colift] The limit of 
 \begin{itemize}
 \item For objects $A, K, T \in \kmat_{0}$ and morphisms $\iota : K \rightarrow A, \tau : T \rightarrow A$ we have a lift of $\tau$ along $\iota$
 given by a morphism $u : T \rightarrow K$ such that $u \iota = \tau$.
