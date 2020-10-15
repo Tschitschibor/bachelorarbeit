@@ -82,7 +82,8 @@ $\leq 2$. Both $3$-dimensional vector spaces are isomorphic $\Bbbk[x] \backslash
 \end{example}
 
 An example for a categorical doctrine could therefore be $\mathtt{IsSkeletal}$ which in itself doesn't yield any algorithms,
-but the assumption that a category is skeletal could simplify computation in those categories tremendously.
+but the assumption that a category is skeletal could simplify computation in those categories tremendously or even make computation
+possible in the first place.
 
 \subsection{The categorical doctrines of abelian categories}
 
@@ -716,7 +717,7 @@ It is an easy exercise to provide the algorithms for an Ab-category mentioned in
 \begin{example}[$\kmat$ is an additive category]\label{ex:kmat_additive}
 Let for $I = \{1,\dots,N\},$ the set $\{n_{1},\dots,n_{N}\}$ be a family of objects in $\kmat_{0}$. Their direct sum is
 \begin{itemize}
-\item the object $n := \bigoplus_{i=1}^{N} n_{i} := \sum_{i=1}^{N} n_{i}$
+\item the object $n := \bigoplus_{i=1}^{N} n_{i} := \sum_{i=1}^{N} n_{i} = \mathtt{Sum}$
 \item For $i \in I$ we have as identity morphism $1_{n_{i}}$ of the object $n_{i}$ the $n_{i} \times n_{i}$ identity matrix.
 Define
 \[
@@ -758,11 +759,6 @@ the $n_{i} \times n_{j}$ zero matrices not including $0_{n_{i},n_{i}}$ and the i
 \end{pmatrix} \endgroup
 \end{align}
 
-We get the projection $\pi_{i}$ as a result of
-\[
-\mathtt{ProjectionInFactorOfDirectSum}( [ n_{1},\dots,n_{N} ], i ) := 
-\]
-
 \item For a family $\tau = (\tau_{i} : t \rightarrow n_{i})_{i\in I}$ we have the morphism $u_{\text{in}}(\tau)$ which is a $t \times n$ block matrix of
 the $\tau_{i}$:
 \begin{align}
@@ -787,7 +783,92 @@ with $\iota_{i} u_{\text{out}}(\tau) = \tau_{i}$.
 One can easily verify the conditions for $\pi$, $\iota$, $u_{\text{in}}$ and $u_{\text{out}}$ in Definitions \ref{def:biproduct} and \ref{def:direct_sum}.
 \end{example}
 
-Algorithms for the doctrine of 
+\begin{computation} In the following \textsc{GAP} session, we 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@d := [ 3, 5, 2 ];|
+  [ 3, 5, 2 ]
+  !gapprompt@gap>| !gapinput@n := Sum( D );|
+  10
+  !gapprompt@gap>| !gapinput@V3 := VectorSpaceObject( 3, GF3 );|
+  <A vector space object over GF(3) of dimension 3>
+  !gapprompt@gap>| !gapinput@V5 := VectorSpaceObject( 5, GF3 );|
+  <A vector space object over GF(3) of dimension 5>
+  !gapprompt@gap>| !gapinput@V2 := VectorSpaceObject( 2, GF3 );|
+  <A vector space object over GF(3) of dimension 2>
+  !gapprompt@gap>| !gapinput@D := [ V3, V5, V2 ];|
+  [ <A vector space object over GF(3) of dimension 3>,
+    <A vector space object over GF(3) of dimension 5>,
+    <A vector space object over GF(3) of dimension 2> ]
+  !gapprompt@gap>| !gapinput@S := DirectSum( D );|
+  <A vector space object over GF(3) of dimension 10>
+  !gapprompt@gap>| !gapinput@pi1 := ProjectionInFactorOfDirectSum( D, 1 );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@pi2 := ProjectionInFactorOfDirectSum( D, 2 );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@pi3 := ProjectionInFactorOfDirectSum( D, 3 );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( pi1 );|
+   1 . .
+   . 1 .
+   . . 1
+   . . .
+   . . .
+   . . .
+   . . .
+   . . .
+   . . .
+   . . .
+  
+  A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@Display( pi3 );|
+   . .
+   . .
+   . .
+   . .
+   . .
+   . .
+   . .
+   . .
+  1 .
+  . 1
+  
+  A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@iota1 := InjectionOfCofactorOfDirectSum( D, 1 );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( iota1 );|
+   1 . . . . . . . . .
+   . 1 . . . . . . . .
+   . . 1 . . . . . . .
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@Source( iota1 ) = Range( pi1 );|
+  true
+  !gapprompt@gap>| !gapinput@Source( iota1 );|
+  <A vector space object over GF(3) of dimension 3>
+  !gapprompt@gap>| !gapinput@iota2 := InjectionOfCofactorOfDirectSum( D, 2 );|
+  <A vector space object over GF(3) of dimension 3>
+  !gapprompt@gap>| !gapinput@Display( iota1 );|
+   . . . 1 . . . . . .
+   . . . . 1 . . . . .
+   . . . . . 1 . . . .
+   . . . . . . 1 . . .
+   . . . . . . . 1 . .
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@iotatwo := UniversalMorphismIntoDirectSum( [ ZeroMorphism( V5, V3 ),|
+  !gapprompt@>| !gapinput@             IdentityMorphism( V5 ), ZeroMorphism( V5, V2 ) ] );;|
+  !gapprompt@gap>| !gapinput@Display( iotatwo );|
+   . . . 1 . . . . . .
+   . . . . 1 . . . . .
+   . . . . . 1 . . . .
+   . . . . . . 1 . . .
+   . . . . . . . 1 . .
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@iotatwo = iota2;|
+  true
+\end{Verbatim}
+\end{computation}
 
 \begin{example}[Block-Diagonal matrices]\phantom{}\label{ex:block_diagonal_matrix}\\
 In a situation with an index set $I = \{1,\dots,N\}$, two families of objects $\{m_{i}\}_{i\in I}, \{n_{i}\}_{i\in I}$ and a family of
