@@ -57,7 +57,32 @@ notion of ``doctrine''.
 \begin{definition}[Categorical doctrine]
 We say a category is of a certain \ul{categorical doctrine}, if it has all limits and colimits of a specified set of types.
 In this thesis, we will define hierarchies of categorical doctrines as sets of algorithms that compute the (co-)limits in that category.
+But there are other categorical doctrines that don't directly translate into algorithms computing (co-)limits.
 \end{definition}
+
+To give an example, recall the definition of isomorphism
+
+\begin{definition}[Isomorphism]
+An \ul{isomorphism} in a category $\mathcal{C}$ is a morphism $f : X \rightarrow Y$ for which there exists a morphism
+$g : Y \rightarrow X$ so that $fg = 1_{X}$ and $gf = 1_{Y}$. The objects $X$ and $Y$ are \ul{isomorphic} whenever there
+exists an isomorphism between $X$ and $Y$, in which case one writes $X \cong Y$.
+\end{definition}
+
+\begin{definition}[Skeletal category, skeleton]
+A category $\mathcal{C}$ is \ul{skeletal} if $A \cong A'$ implies $A = A'$ for all objects $A, A' \in \mathcal{C}_{0}$.
+We define a \ul{skeleton} S$\mathcal{C}$ to be a skeletal subcategory of $\mathcal{C}$ whose inclusion functor exhibits it
+as equivalent to $\mathcal{C}$.
+\end{definition}
+
+\begin{example}[$\Bbbk\textnormal{-}\mathbf{vec}^{\text{fd}}$ is not skeletal]
+In the category $\Bbbk\textnormal{-}\mathbf{vec}^{\text{fd}}$ of finite-dimensional vector spaces over a field $\Bbbk$,
+a tuple $[a_{0},a_{1},a_{2}]$ can be interpreted as coordinates $(a_{0},a_{1},a_{2})$ in $3$D space, i.e. an element of $\Bbbk^{3}$, or
+as the coefficients of a polynomial $a_{0} + a_{1}x + a_{2}x^{2} + x^{3}\Bbbk[x] \in \Bbbk[x] \backslash (x^{3})$ of degree
+$\leq 2$. Both $3$-dimensional vector spaces are isomorphic $\Bbbk[x] \backslash (x^{3}) \cong \Bbbk^{3}$ but not equal.
+\end{example}
+
+An example for a categorical doctrine could therefore be $\mathtt{IsSkeletal}$ which in itself doesn't yield any algorithms,
+but the assumption that a category is skeletal could simplify computation in those categories tremendously.
 
 \subsection{The categorical doctrines of abelian categories}
 
@@ -253,15 +278,16 @@ The doctrine $\mathtt{IsAdditiveCategory}$ therefore involves algorithms of $\ma
 
 \subsubsection{Pre-abelian categories}
 
-The dashed arrow in the diagrams of last subsection carried the meaning of uniqueness in the sense of \ref{def:limit}(3).
-Throughout the thesis we will be using two other kinds of arrows $\hookrightarrow$ and $\twoheadrightarrow$ which we will define next.
-We encourage the reader to prove themselves the use of these arrows, i.e. that the indicated arrows are in fact a mono or an epi.
+TODO: (Some short introduction in subsubsection)
+%The dashed arrow in the diagrams of last subsection carried the meaning of uniqueness in the sense of \ref{def:limit}(3).
+%Throughout the thesis we will be using two other kinds of arrows $\hookrightarrow$ and $\twoheadrightarrow$ which we will define next.
+%We encourage the reader to prove themselves the use of these arrows, i.e. that the indicated arrows are in fact a mono or an epi.
 
 \begin{definition}[Monomorphism and epimorphism]
 A morphism $f : A \rightarrow B$ in a category is
 \begin{itemize}
 \item a \ul{monomorphism} if for any parallel morphisms $h, k : Z \rightrightarrows A, hf = kf$ implies that
-$h = k$; or
+$h = k$
 \item an \ul{epimorphism} if for any parallel morphisms $h, k : B \rightrightarrows C, fh = fk$ implies that
 $h = k$.
 \end{itemize}
@@ -378,9 +404,10 @@ $f : A \rightarrow B \in \mathcal{C}_{1}$ as the kernel of its cokernel:\\
 \begin{tikzcd}[
   ampersand replacement=\&,
 ]
-A \arrow[r, "f"] \arrow[d, "(f/\kappa)"', dashed]         \& B \arrow[r, "\varepsilon", shift left, two heads] \arrow[r, "{0_{B,C}}"', shift right] \& C \\
-K \arrow[ru, "\kappa", hook]                                    \&                            \&   \\
-T \arrow[u, "(\tau/\kappa)", dashed] \arrow[ruu, "\tau"'] \&                            \&  
+A \arrow[r, "f"] \arrow[d, "(f/\kappa_{\varepsilon})"', dashed]         \& B \arrow[r, "\varepsilon", shift left, two heads]
+\arrow[r, "{0_{B,C}}"', shift right] \& C \\
+K \arrow[ru, "\kappa_{\varepsilon}", hook]                                    \&                            \&   \\
+T \arrow[u, "(\tau/\kappa_{\varepsilon})", dashed] \arrow[ruu, "\tau"'] \&                            \&  
 \end{tikzcd}
 \]
 \end{minipage}
@@ -389,7 +416,7 @@ Since $\varepsilon$ is the cokernel projection of $f$, the morphism $f : A \righ
 same role as any $\tau : T \rightarrow B$ with $\tau\,\varepsilon = 0_{T,C}$ in that it factors over the kernel object $K$ in a
 unique way: 
 \[
-f = (f/\kappa)\,\kappa
+f = (f/\kappa_{\varepsilon})\,\kappa_{\varepsilon}
 \]
 \end{minipage}
 \begin{minipage}{.06\textwidth} \phantom{} \end{minipage}
@@ -505,26 +532,10 @@ $\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon}) : \mathrm{Coim}(\v
 \end{tikzcd}
 \]
 
-\begin{definition}[Lift and colift] The limit of 
-\begin{itemize}
-\item For objects $A, K, T \in \kmat_{0}$ and morphisms $\iota : K \rightarrow A, \tau : T \rightarrow A$ we have a lift of $\tau$ along $\iota$
-given by a morphism $u : T \rightarrow K$ such that $u \iota = \tau$.
-\[
-\begin{tikzcd}
-                                              & K \arrow[rd, "\iota"] &   \\
-T \arrow[rr, "\tau"'] \arrow[ru, "u", dashed] &                       & A
-\end{tikzcd}
-\]
-\item For objects $A,C,T \in \kmat_{0}$ and morphisms $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ we have a colift of $\tau$ along
-$\varepsilon$ given by a morphism $u : C \rightarrow T$ such that $\varepsilon u = \tau$.
-\[
-\begin{tikzcd}
-A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T \\
-                                                & C \arrow[ru, "u"', dashed] &  
-\end{tikzcd}
-\]
-\end{itemize}
-\end{definition}
+
+
+
+
 
 \begin{corollary}\label{cor:kernel_cokernel_sequence}
 \[
@@ -539,21 +550,94 @@ K \arrow[rd, "\kappa", hook] &                                                  
 \begin{definition}[Abelian category]\label{def:abelian_category}
 An \ul{abelian category} is
 \begin{itemize}
-\item a pre-abelian category $\mathcal{A}$ where
-\item every monomorphism $\iota$ is a kernel-embedding of some kernel object $K$ and
-\item every epimorphism $\varepsilon$ is a cokernel-projection of some cokernel object $C$.
+\item a pre-abelian category $\mathcal{C}$ where
+\item every monomorphism $\kappa$ is a kernel-embedding of its cokernel-projection and
+\item every epimorphism $\varepsilon$ is a cokernel-projection of  its kernel-embedding.
 \end{itemize}
 \end{definition}
 
-\begin{definition}{(Abelian category)}\endnote{(From \cite{[context]}, appendix E.5, Def. E.5.1)}
-A category $\mathcal{C}$ is \ul{abelian} if
+The above definition, that we can regard
 \begin{itemize}
-\item it has a zero object $0$,
-\item it has all \ul{binary products} and \ul{binary coproducts},
-\item it has all \ul{kernels} and \ul{cokernels}, defined repsectively to be the \ul{equalizer} and
-\ul{coequalizer} of a map $f : A \rightarrow B$ with the zero map $A \rightarrow 0 \rightarrow B$, and
-\item all monomorphisms and epimorphisms arise as kernels or cokernels, respectively.
+\item every monomorphism $\kappa : K \hookrightarrow A$ as a kernel-embedding
+of its cokernel-projection $\varepsilon_{\kappa} : A \twoheadrightarrow C$, with $K$ being the kernel object
+$\mathrm{Ker}(\varepsilon_{\kappa})$,
+\item and every epimorphism
+$\varepsilon : B \twoheadrightarrow C$ as a cokernel-projection of its kernel-embedding $\kappa_{\varepsilon} : K \hookrightarrow B$,
+with $C$ being the cokernel object $\mathrm{Coker}(\kappa_{\varepsilon})$
 \end{itemize}
+implies that we also have the third ingredient
+for kernels and cokernels, namely the dependent functions
+\begin{itemize}
+\item kernel lift $(-/\kappa) : \underline{\phantom{T}} \rightarrow K$ mapping a morphism $\tau : T \rightarrow A$ with same
+target $t(\tau) = t(\kappa) = A$ and same cokernel $\varepsilon_{\kappa} = \varepsilon_{\tau}$ (i.e. $\tau\varepsilon_{\kappa} = 0_{T,C}$)
+as $\kappa$ to a unique kernel lift $(\tau / \kappa) : T \rightarrow K$
+\[
+\begin{tikzcd}
+K \arrow[r, "\kappa", hook] \arrow[r, "{0_{K,A}}", bend left, shift left=2]                                & A \arrow[r, "\varepsilon_{\kappa}", two heads] \arrow[r, "\varepsilon_{\tau}"', two heads] & C \\
+T \arrow[ru, "{0_{T,A}}"', bend right, shift right=2] \arrow[ru, "\tau"] \arrow[u, "(\tau/\kappa)", dashed] &                                                                                            &  
+\end{tikzcd}
+\]
+\item cokernel colift $(\varepsilon \backslash - ) : C \rightarrow \underline{\phantom{T}}$ mapping a morphism $\tau : B \rightarrow T$ with
+same source $s(\tau) = s(\varepsilon) = B$ and same kernel $\kappa_{\varepsilon} = \kappa_{\tau}$
+(i.e. $\kappa_{\varepsilon}\tau = 0_{K,T}$)  as $\varepsilon$ to a unique cokernel
+colift $(\varepsilon \backslash \tau) : C \rightarrow T$.
+\[
+\begin{tikzcd}
+K \arrow[r, "\kappa_{\varepsilon}", hook] \arrow[r, "\kappa_{\tau}"', hook] & B \arrow[r, "\varepsilon", two heads] \arrow[r, "{0_{B,C}}", bend left, shift left=2] \arrow[rd, "\tau"] \arrow[rd, "{0_{B,T}}"', bend right, shift right=2] & C \arrow[d, "(\varepsilon\backslash\tau)", dashed] \\
+                                                                            &                                                                                                                                                   & T                                                 
+\end{tikzcd}
+\]
+\end{itemize}
+
+
+\begin{definition}[Lift and colift] The limit of \\
+Let $A, K, C, T \in \mathcal{C}_{0}$ be objects in a category $\mathcal{C}$.
+\begin{itemize}
+\item For two morphisms with the same target $\iota : K \rightarrow A, \tau : T \rightarrow A$ we call a morphism $u : T \rightarrow K$ a
+\ul{lift of $\tau$ along $\iota$} if $u \iota = \tau$.
+\[
+\begin{tikzcd}
+                                              & K \arrow[rd, "\iota"] &   \\
+T \arrow[rr, "\tau"'] \arrow[ru, "u", dashed] &                       & A
+\end{tikzcd}
+\]
+In this case we say that $\iota$ \ul{dominates} $\tau$
+\item For two morphisms with the same source $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ we call a morphism
+$u : C \rightarrow T$ a \ul{colift of $\tau$ along $\varepsilon$} if $\varepsilon u = \tau$.
+\[
+\begin{tikzcd}
+A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T \\
+                                                & C \arrow[ru, "u"', dashed] &  
+\end{tikzcd}
+\]
+In this case we say that $\varepsilon$ \ul{codominates} $\tau$.
+\end{itemize}
+\end{definition}
+
+\begin{remark}[Lift along mono, colift along epi]
+If they exist, lifts along monos and colifts along epis are necessarily unique.
+\end{remark}
+\begin{proof}
+In the above diagram for $\iota$ a monomorphism and as lifts of $\tau$ along $\iota$ we have the two competing
+$u, v : T \rightrightarrows K$, both with $u \iota = \tau = v \iota$, the definition of $\iota$ being a monomorphism
+implies $u = v$. Dually for colifts along epis.
+\end{proof}
+
+The existence of all lifts along monos and all colifts along epis
+in a pre-abelian category is therefore an equivalent definition of an abelian category.
+
+\begin{definition}[Abelian category]
+An \ul{Abelian category} consists of the following data:
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item A pre-abelian category $\mathcal{C}$.
+\item A dependent function $( - / - )$ mapping a monomorphism $\kappa : K \hookrightarrow A$ and a morphism $\tau : T \rightarrow A$ with
+the same target $t(\tau) = t(\kappa)$ and the same cokernel projection $\varepsilon_{\tau} = \varepsilon_{\kappa}$ to a lift $(\tau / \kappa)$ of
+$\tau$ along $\kappa$.
+\item A dependent function $( - \backslash - )$ mapping an epimorphism $\varepsilon : B \twoheadrightarrow C$ and a morphism
+$\tau : B \rightarrow T$ with same source $s(\tau) = s(\varepsilon)$ and the same kernel embedding $\kappa_{\tau} = \kappa_{\varepsilon}$
+to a colift $(\varepsilon \backslash \tau)$ of $\tau$ along $\varepsilon$.
+\end{enumerate}
 \end{definition}
 
 \begin{doctrine}[Abelian category]
@@ -564,18 +648,21 @@ The doctrine $\mathtt{IsAbelianCategory}$ therefore involves algorithms of $\mat
 \end{itemize}
 \end{doctrine}
 
-In sections \ref{sec:linear_categories} and \ref{sec:projective_objects} we will introduce additional doctrines building on abelian categories.
-
+\newpage
 \subsection{The matrix category $\kmat$ is an abelian category}
 
-The following is an example of a category which has all the limits and colimits mentioned so far, and has them implemented constructively,
-i.e. we will be mentioning the algorithms that output the objects, morphisms and dependent functions needed.
+The following is an example of a category which has all the limits and colimits mentioned so far, and has them implemented constructively.
+We will check the four doctrines $\mathtt{IsAbCategory}$, $\mathtt{IsAdditiveCategory}$, $\mathtt{IsPreAbelianCategory}$ and
+$\mathtt{IsAbelianCategory}$ by providing the needed algorithms.
 
 \begin{example}{(The matrix category $\kmat$ over a commutative ring $\Bbbk$)}\label{ex:kmat_skeletal}
 \begin{itemize}
-\item Objects are natural numbers $\kmat_{0} = \mathbb{N} = \mathbb{N}_{0} = \{0,1,2,\dots\}$
+\item Objects are natural numbers $\kmat_{0} = \mathbb{N} = \mathbb{N}_{0} = \{0,1,2,\dots\}$ for wich we use small latin letters
+($m,n,k,dots$).
 \item Morphisms $(m \rightarrow n) \in \kmat_{1}$ are $m \times n$ matrices over $\Bbbk$.
 We write the set of morphisms between $m$ and $n$, as $\Bbbk^{m\times n} := \textup{Hom}_{\kmat}(m,n)$. 
+For variables that are Matrices we use small greek letters ($\varphi, \psi,\dots$) or capital latin letters ($A, B, C,\dots$). When only source and target are relevant,
+we write $(m \times n)$.
 \item $s(\varphi) = \mathtt{Source}(\varphi) := \mathtt{NrRows}(\varphi)$
 \item $t(\varphi) = \mathtt{Range}(\varphi) := \mathtt{NrColumns}(\varphi)$
 \item Identity morphisms are the identity matrices.
