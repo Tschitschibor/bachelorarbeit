@@ -248,7 +248,7 @@ a finite set $I$ and a family $(A_{i})_{i\in I}$ of objects in $\mathcal{C}$ to 
 (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I})$.
 \end{definition}
 
-\begin{remark}[Addition of morphisms]
+\begin{remark}[Addition of morphisms]\label{rmk:addition_derived_from_direct_sum}
 In an additive category the abelian group structure on $\mathrm{Hom}_{\mathcal{C}}(M,N)$ can be derived from the direct sum:
 For $\rho_{1}, \rho_{2} \in \mathrm{Hom}_{\mathcal{C}}(M,N)$
 \[
@@ -783,12 +783,42 @@ with $\iota_{i} u_{\text{out}}(\tau) = \tau_{i}$.
 One can easily verify the conditions for $\pi$, $\iota$, $u_{\text{in}}$ and $u_{\text{out}}$ in Definitions \ref{def:biproduct} and \ref{def:direct_sum}.
 \end{example}
 
-\begin{computation} In the following \textsc{GAP} session, we 
+
+\begin{computation} 
+If we assume algorithms for adding natural numbers
+\begin{alignat*}{3}
+&\mathtt{Sum}( [ m, n &&] ) = m + n, \\
+&\mathtt{Sum}( [  &&] ) = 0,
+\end{alignat*}
+transposing matrices
+\begin{align*}
+\varphi : m \rightarrow n \\
+\mathtt{TransposedMatrix}( \varphi ) = \varphi^{T} : n \rightarrow m
+\end{align*}
+and for stacking two matrices with the same target on top of each other
+\begin{align*}
+\varphi : k \rightarrow n \\
+\psi : l \rightarrow n\\
+\mathtt{StackMatrix}( \varphi, \psi ) =
+\begin{pmatrix}
+\varphi \\
+\psi
+\end{pmatrix} : k + l \rightarrow n
+\end{align*}
+together with the algorithms from $\mathtt{IsAbCategory}$, then we can calculate all the algorithms in the doctrine $\mathtt{IsAdditiveCategory}$.
+
+In the following \Gap{} session, we demonstrate the algorithms of\\
+$\mathtt{IsAdditiveCategory}$.
+The implementation of objects in the matrix category $\kmat$ in \textsc{Cap} is slightly different than simply natural numbers, since
+we always have to mention the commutative ring $\Bbbk$ for the objects. We are using the finite field
+$\Bbbk := \mathrm{GF}_{3} := \{ \mathtt{ \cdot, 1, 2 } \}$ for most our calculations.
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@d := [ 3, 5, 2 ];|
+  !gapprompt@gap>| !gapinput@dims := [ 3, 5, 2 ];|
   [ 3, 5, 2 ]
-  !gapprompt@gap>| !gapinput@n := Sum( D );|
+  !gapprompt@gap>| !gapinput@n := Sum( dims );|
   10
+  !gapprompt@gap>| !gapinput@GF3 := HomalgRingOfIntegers( 3 );|
+  GF(3)
   !gapprompt@gap>| !gapinput@V3 := VectorSpaceObject( 3, GF3 );|
   <A vector space object over GF(3) of dimension 3>
   !gapprompt@gap>| !gapinput@V5 := VectorSpaceObject( 5, GF3 );|
@@ -801,13 +831,40 @@ One can easily verify the conditions for $\pi$, $\iota$, $u_{\text{in}}$ and $u_
     <A vector space object over GF(3) of dimension 2> ]
   !gapprompt@gap>| !gapinput@S := DirectSum( D );|
   <A vector space object over GF(3) of dimension 10>
+  !gapprompt@gap>| !gapinput@V10 := VectorSpaceObject( Sum( [3, 5, 2 ] ), GF3 );|
+  <A vector space object over GF(3) of dimension 10>
+  !gapprompt@gap>| !gapinput@one3 := IdentityMorphism( V3 );|
+  <An identity morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( one3 );|
+   1 . .
+   . 1 .
+   . . 1
+   
+   An identity morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@zero53 := ZeroMorphism( V5, V3 );|
+  <A zero morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( zero53 );|
+   . . .
+   . . .
+   . . .
+   . . .
+   . . .
+   
+   A zero morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@zero23 := ZeroMorphism( V2, V3 );|
+  <A zero morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( zero23 );|
+   . . .
+   . . .
+   
+   A zero morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@factor1 := StackMatrix( [ one3, zero53, zero23 ] );|
+  <A morphism in Category of matrices over GF(3)>
   !gapprompt@gap>| !gapinput@pi1 := ProjectionInFactorOfDirectSum( D, 1 );|
   <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@pi2 := ProjectionInFactorOfDirectSum( D, 2 );|
-  <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@pi3 := ProjectionInFactorOfDirectSum( D, 3 );|
-  <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@Display( pi1 );|
+  !gapprompt@gap>| !gapinput@pi1 = factor1;|
+  true
+  !gapprompt@gap>| !gapinput@Display( factor1 );|
    1 . .
    . 1 .
    . . 1
@@ -820,63 +877,79 @@ One can easily verify the conditions for $\pi$, $\iota$, $u_{\text{in}}$ and $u_
    . . .
   
   A morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@Display( pi3 );|
-   . .
-   . .
-   . .
-   . .
-   . .
-   . .
-   . .
-   . .
-  1 .
-  . 1
-  
-  A morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@iota1 := InjectionOfCofactorOfDirectSum( D, 1 );|
+  !gapprompt@gap>| !gapinput@jot1 := TransposedMatrix( factor1 );|
   <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@Display( iota1 );|
+  !gapprompt@gap>| !gapinput@Display( jot1 );|
    1 . . . . . . . . .
    . 1 . . . . . . . .
    . . 1 . . . . . . .
    
    A morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@Source( iota1 ) = Range( pi1 );|
+  !gapprompt@gap>| !gapinput@iota1 := InjectionOfCofactorOfDirectSum( D, 1 );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@jot1 = iota1;|
+   true
+\end{Verbatim}
+
+We can also verify the result in \ref{rmk:addition_derived_from_direct_sum} that the abelian group operation
+$\mathtt{AdditionForMorphisms}$ can be derived from $\mathtt{UniversalMorphismIntoDirectSum}$,
+$\mathtt{UniversalMorphismFromDirectSum}$,\\
+$\mathtt{IdentityMorphism}$ and
+$\mathtt{PreCompose}$. As an example we add two $\mathrm{GF}_{3}$-matrices from $\mathtt{V2}$ to $\mathtt{V3}$ in three
+different ways.
+
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@mat1 := HomalgMatrix( [ 0, 1, 2, 1, 1, 2 ], 2, 3, GF3 );|
+  <A 2 x 3 matrix over an internal ring>
+  !gapprompt@gap>| !gapinput@mat2 := HomalgMatrix( [ 1, 1, 1, 1, 1, 1 ], 2, 3, GF3 );|
+  <A 2 x 3 matrix over an internal ring>
+  !gapprompt@>| !gapinput@mor1 := VectorSpaceMorphism( V2, mat1, V3 );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@>| !gapinput@mor2 := VectorSpaceMorphism( V2, mat2, V3 );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@>| !gapinput@result1 := mor1 + mor2;|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( result1 );|
+   1 2 .
+   2 2 .
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@one2 := IdentityMorphism( V2 );|
+  <An identity morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@result2 := PreCompose( UniversalMorphismIntoDirectSum( [ one2, one2 ] ),|
+  !gapprompt@>| !gapinput@  UniversalMorphismFromDirectSum( [ mor1, mor2 ] ) );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( result2 );|
+   1 2 .
+   2 2 .
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@result1 = result2;|
   true
-  !gapprompt@gap>| !gapinput@Source( iota1 );|
-  <A vector space object over GF(3) of dimension 3>
-  !gapprompt@gap>| !gapinput@iota2 := InjectionOfCofactorOfDirectSum( D, 2 );|
-  <A vector space object over GF(3) of dimension 3>
-  !gapprompt@gap>| !gapinput@Display( iota1 );|
-   . . . 1 . . . . . .
-   . . . . 1 . . . . .
-   . . . . . 1 . . . .
-   . . . . . . 1 . . .
-   . . . . . . . 1 . .
-   
-   A morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@iotatwo := UniversalMorphismIntoDirectSum( [ ZeroMorphism( V5, V3 ),|
-  !gapprompt@>| !gapinput@             IdentityMorphism( V5 ), ZeroMorphism( V5, V2 ) ] );;|
-  !gapprompt@gap>| !gapinput@Display( iotatwo );|
-   . . . 1 . . . . . .
-   . . . . 1 . . . . .
-   . . . . . 1 . . . .
-   . . . . . . 1 . . .
-   . . . . . . . 1 . .
-   
-   A morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@iotatwo = iota2;|
+  !gapprompt@gap>| !gapinput@result3 := PreCompose( UniversalMorphismIntoDirectSum( [ mor1, mor2 ] ),|
+  !gapprompt@>| !gapinput@  UniversalMorphismFromDirectSum( [ one3, one3 ] ) );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@result3 = result2;|
   true
 \end{Verbatim}
 \end{computation}
 
+\begin{doctrine}[Algorithms in $\kmat$ for $\mathtt{IsAdditive}$]
+
+\begin{itemize}
+\item $\mathtt{DirectSum (V, W) := VectorSpaceObject( Dimension( V ) + Dimension( W ), R )}$
+\item $\mathtt{UniversalMorphismIntoDirectSum}$
+\end{itemize}
+
+\end{doctrine}
+
 \begin{example}[Block-Diagonal matrices]\phantom{}\label{ex:block_diagonal_matrix}\\
 In a situation with an index set $I = \{1,\dots,N\}$, two families of objects $\{m_{i}\}_{i\in I}, \{n_{i}\}_{i\in I}$ and a family of
-morphisms $\{a_{i} : m_{i} \rightarrow n_{i}\}$ we have the two direct sums
-\begin{align}
-m &:= \bigoplus_{i\in I} m_{i}, &&(\pi_{i})_{m} : m \rightarrow m_{i}, &&(\iota_{i})_{m} : m_{i} \rightarrow m, \\
-n &:= \bigoplus_{i\in I} n_{i}, &&(\pi_{i})_{n} : n \rightarrow n_{i}, &&(\iota_{i})_{n} : n_{i} \rightarrow n.
-\end{align}
+morphisms $\{a_{i} : m_{i} \rightarrow n_{i}\}_{i\in I}$ we have the two direct sums
+\begin{alignat}{4}
+m &:= \bigoplus_{i\in I} m_{i},\quad &&(\pi_{i})_{m} : m \rightarrow m_{i},\quad &&(\iota_{i})_{m} : m_{i} \rightarrow m, \\
+n &:= \bigoplus_{i\in I} n_{i},\quad &&(\pi_{i})_{n} : n \rightarrow n_{i},\quad &&(\iota_{i})_{n} : n_{i} \rightarrow n.
+\end{alignat}
 This situation is displayed in the following diagram
 \[
 \begin{tikzcd}
@@ -906,110 +979,6 @@ So we have
 (\iota_{i})_{m} u_{\text{out}}(\iota_{m} a) (\pi_{i})_{n} = a_{i} = (\iota_{i})_{m} u_{\text{in}}(a \pi_{n}) (\pi_{i})_{n}
 \end{align}
 \end{example}
-
-
-\begin{example}[A number example for the direct sum in $\kmat$]
-The direct sum of $m = 3, n = 5 \in \kmat_{0}$ is the object $m+n = 8 \in \kmat_{0}$ together with the following morphisms:
-\begin{align*}
-\pi_{1} = \begin{pmatrix}
-1 \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand 1 \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand 1 \\
-\cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot
-\end{pmatrix},
-\pi_{2} = \begin{pmatrix}
-\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
-1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1
-\end{pmatrix}, 
-\begin{array}{rr}
-\iota_{1} &= \begin{pmatrix}
-1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot
-\end{pmatrix} \\
-\\
-\iota_{2} &= \begin{pmatrix}
-\cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \\
-\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1
-\end{pmatrix}
-\end{array}
-\end{align*}\\
-\noindent One can easily verify that $\pi_{1} \iota_{1} + \pi_{2} \iota_{2} = 1_{(3+5)} = 1_{8}$ and e.g. $\iota_{1} \pi_{2} = 0_{3,5}$.\\
-
-\noindent \begin{minipage}[t]{.5\textwidth}
-For $t = 4$, $\tau = (\tau_{1}, \tau_{2})$ defined as
-\begin{align*}
-\tau_{1} = \begin{pmatrix}
-1 \ampersand 2 \ampersand 2 \\
-4 \ampersand 3 \ampersand 1 \\
-\cdot \ampersand 1 \ampersand \cdot \\
-1 \ampersand 2 \ampersand 1
-\end{pmatrix},
-\tau_{2} = \begin{pmatrix}
-1 \ampersand 1 \ampersand 2 \ampersand 2 \ampersand 3 \\
-3 \ampersand 4 \ampersand 4 \ampersand 5 \ampersand 5 \\
-6 \ampersand 6 \ampersand 7 \ampersand 7 \ampersand 8 \\
-8 \ampersand 9 \ampersand 9 \ampersand 4 \ampersand 4
-\end{pmatrix}
-\end{align*}
-we get the matrix
-\begin{align*}
-u_{\text{in}}(\tau) = \begin{pmatrix}
-1 \ampersand 2 \ampersand 2 \ampersand 1 \ampersand 1 \ampersand 2 \ampersand 2 \ampersand 3 \\
-4 \ampersand 3 \ampersand 1 \ampersand 3 \ampersand 4 \ampersand 4 \ampersand 5 \ampersand 5 \\
-\cdot \ampersand 1 \ampersand \cdot \ampersand 6 \ampersand 6 \ampersand 7 \ampersand 7 \ampersand 8 \\
-1 \ampersand 2 \ampersand 1 \ampersand 8 \ampersand 9 \ampersand 9 \ampersand 4 \ampersand 4
-\end{pmatrix}
-\end{align*}
-\end{minipage}
-\begin{minipage}[t]{.5\textwidth}
-and for $r = 2$, $\rho = (\rho_{1}, \rho_{2})$ we get the matrix
-\begin{align*}
-\begin{array}{rr}
-\rho_{1} &= \begin{pmatrix}
-\cdot \ampersand 1 \\
-1 \ampersand 1 \\
-2 \ampersand 2
-\end{pmatrix} \\
-\\
-\rho_{2} &= \begin{pmatrix}
-4 \ampersand 5 \\
-7 \ampersand \cdot \\
-\cdot \ampersand 5 \\
-\cdot \ampersand \cdot \\
-1 \ampersand 1
-\end{pmatrix}
-\end{array}
-u_{\text{out}}(\rho) = \begin{pmatrix}
-\cdot \ampersand 1 \\
-1 \ampersand 1 \\
-2 \ampersand 2 \\
-4 \ampersand 5 \\
-7 \ampersand \cdot \\
-\cdot \ampersand 5 \\
-\cdot \ampersand \cdot \\
-1 \ampersand 1
-\end{pmatrix}
-\end{align*}
-\end{minipage}\\
-
-\noindent One can easily verify that e.g. $\tau_{1} = u_{\mathrm{in}}(\tau) \pi_{1}$ and $\rho_{2} = \iota_{2} u_{\mathrm{out}}(\rho)$.
-\end{example}
-
-
 
 \begin{example}[$\kmat$ is a pre-abelian category]\label{ex:kmat_pre-abelian}
 Construction 2.14 in \cite{[Posur]} defines four algorithms deduced from Gaussian elimination
