@@ -477,7 +477,7 @@ cokernel of $f$.
 \end{enumerate}
 \end{definition}
 
-\begin{doctrine}[Pre-abelian category]
+\begin{doctrine}[Pre-abelian category]\label{doc:pre-abelian}
 The doctrine $\mathtt{IsPreAbelianCategory}$ therefore involves algorithms of $\mathtt{IsAdditiveCategory}$ together with algorithms for
 \begin{itemize}
 \item $\mathtt{KernelObject}$,
@@ -627,7 +627,7 @@ implies $u = v$. Dually for colifts along epis.
 The existence of all lifts along monos and all colifts along epis
 in a pre-abelian category is therefore an equivalent definition of an abelian category.
 
-\begin{definition}[Abelian category]
+\begin{definition}[Abelian category]\label{def:abelian_category}
 An \ul{Abelian category} consists of the following data:
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
@@ -797,15 +797,31 @@ transposing matrices
 \end{align*}
 and for stacking two matrices with the same target on top of each other
 \begin{align*}
-\varphi : k \rightarrow n \\
-\psi : l \rightarrow n\\
+\varphi &: k \rightarrow n \\
+\psi &: m \rightarrow n\\
 \mathtt{StackMatrix}( \varphi, \psi ) =
 \begin{pmatrix}
 \varphi \\
 \psi
-\end{pmatrix} : k + l \rightarrow n
+\end{pmatrix} &: k + m \rightarrow n
 \end{align*}
-together with the algorithms from $\mathtt{IsAbCategory}$, then we can calculate all the algorithms in the doctrine $\mathtt{IsAdditiveCategory}$.
+together with the algorithms from $\mathtt{IsAbCategory}$, then we can calculate all the algorithms in the doctrine
+$\mathtt{IsAdditiveCategory}$:
+
+The direct sum of the objects $\mathtt{D := [ V1, V2, \dots, VN ]}$ in $\kmat$ is defined as
+\begin{itemize}
+\item $\mathtt{ DirectSum ( D ) := VectorSpaceObject( Sum( List( D, V \mapsto Dimension( V ) ) ), GF3 )}$
+\item $\mathtt{ ProjectionInFactorOfDirectSum( D, i ) := StackMatrix( [ }$\\
+$\quad\mathtt{ List( D[1 .. (i-1)], V \mapsto ZeroMorphism( V, D[i] ) ), }$\\
+$\quad\mathtt{ IdentityMorphism( D[i] ),}$\\
+$\quad\mathtt{ List( D[(i+1) .. N], V \mapsto ZeroMorphism( V, D[i] ) ) ] )}$
+\item $\mathtt{ InjectionOfCofactorOfDirectSum( D, i ) := AugmentMatrix( [ }$\\
+$\quad\mathtt{ List( D[1 .. (i-1)], V \mapsto ZeroMorphism( D[i], V ) ), }$\\
+$\quad\mathtt{ IdentityMorphism( D[i] ), }$\\
+$\quad\mathtt{  List( D[(i+1) .. N], V \mapsto ZeroMorphism( D[i], V ) ) ] )}$
+\item $\mathtt{UniversalMorphismIntoDirectSum ( [ phi, psi ] ) := StackMatrix( [ phi, psi ] )}$
+\item $\mathtt{UniversalMorphismFromDirectSum ( [ phi, psi ] ) := AugmentMatrix( [ phi, psi ] )}$
+\end{itemize}
 
 In the following \Gap{} session, we demonstrate the algorithms of\\
 $\mathtt{IsAdditiveCategory}$.
@@ -890,6 +906,28 @@ $\Bbbk := \mathrm{GF}_{3} := \{ \mathtt{ \cdot, 1, 2 } \}$ for most our calculat
   !gapprompt@gap>| !gapinput@jot1 = iota1;|
    true
 \end{Verbatim}
+We could be taking the minimalistic approach of defining all the functions from the least set of existing matrix algorithms,
+and using the fact that appending the columns of two given matrices with $\mathtt{AugmentMatrix( [ phi, psi ] )}$ is
+the same as stacking their transposed matrices and then transpose the stacked matrix
+\begin{align*}
+&\mathtt{TransposedMatrix( StackMatrix( [ TransposedMatrix( phi ), TransposedMatrix( psi ) ] ) )} \\
+=\,&\mathtt{AugmentMatrix( [ phi, psi ] )} =: \mathtt{UniversalMorphismFromDirectSum( [ phi, psi ] )}
+\end{align*}
+
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@zero35 := ZeroMorphism( V3, V5 );|
+  <A zero morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@zero32 := ZeroMorphism( V3, V2 );|
+  <A zero morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@jotta1 := AugmentMatrix( [ one3, zero35, zero32 ] );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@jotta1 = iota1;|
+   true
+  !gapprompt@gap>| !gapinput@joda1 := TransposedMatrix( StackMatrix( [ TransposedMatrix( phi ), TransposedMatrix( psi ) ] ) );|
+  <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@joda1 = iota1;|
+   true
+\end{Verbatim}
 
 We can also verify the result in \ref{rmk:addition_derived_from_direct_sum} that the abelian group operation
 $\mathtt{AdditionForMorphisms}$ can be derived from $\mathtt{UniversalMorphismIntoDirectSum}$,
@@ -934,18 +972,13 @@ different ways.
 \end{Verbatim}
 \end{computation}
 
-\begin{doctrine}[Algorithms in $\kmat$ for $\mathtt{IsAdditive}$]
-
-\begin{itemize}
-\item $\mathtt{DirectSum (V, W) := VectorSpaceObject( Dimension( V ) + Dimension( W ), R )}$
-\item $\mathtt{UniversalMorphismIntoDirectSum}$
-\end{itemize}
-
-\end{doctrine}
+The following situation where we have a family of matrices $\{a_{i} : m_{i} \rightarrow n_{i}\}_{i\in I}$,
+i.e. a family $\{m_{i}\}_{i\in I}$ of sources and $\{n_{i}\}_{i\in I}$ of targets, is useful to understand. There are two
+different direct sums involved, one of the $m_{i}$'s and one of the $n_{i}$'s.
 
 \begin{example}[Block-Diagonal matrices]\phantom{}\label{ex:block_diagonal_matrix}\\
 In a situation with an index set $I = \{1,\dots,N\}$, two families of objects $\{m_{i}\}_{i\in I}, \{n_{i}\}_{i\in I}$ and a family of
-morphisms $\{a_{i} : m_{i} \rightarrow n_{i}\}_{i\in I}$ we have the two direct sums
+morphisms $\{a_{i} : m_{i} \rightarrow n_{i}\}_{i\in I}$ in $\kmat$, we have the two direct sums
 \begin{alignat}{4}
 m &:= \bigoplus_{i\in I} m_{i},\quad &&(\pi_{i})_{m} : m \rightarrow m_{i},\quad &&(\iota_{i})_{m} : m_{i} \rightarrow m, \\
 n &:= \bigoplus_{i\in I} n_{i},\quad &&(\pi_{i})_{n} : n \rightarrow n_{i},\quad &&(\iota_{i})_{n} : n_{i} \rightarrow n.
@@ -964,61 +997,92 @@ a = \sum_{i \in I} (\pi_{i})_{m} a_{i} (\iota_{i})_{n}
 \end{align}
 satisfies
 \begin{align}
-(\iota_{i})_{m} a (\pi_{i})_{n} &= a_{i}
+(\iota_{i})_{m}\, a &= a_{i}\, (\iota_{i})_{n}, \\
+a\, (\pi_{i})_{n} &= (\pi_{i})_{m}\, a_{i}\,\text{ and }\\
+(\iota_{i})_{m}\, a\, (\pi_{i})_{n} &= a_{i}.
 \end{align}
 This an be interpreted in two ways:
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
-\item For the family $\iota_{m} a := \{ (\iota_{i})_{m} a : m_{i} \rightarrow n \}$ of morphisms with same target $n$, we have the morphism
-$u_{\text{out}}(\iota_{m} a) : m \rightarrow n$ such that $(\iota_{i})_{m} u_{\text{out}}(\iota_{m} a) = (\iota_{i})_{m} a$, and
-\item For the family $a \pi_{n} := \{ a (\pi_{i})_{n} : m \rightarrow n_{i} \}$ of morphisms with same source $m$, we have the morphism
-$u_{\text{in}}(a \pi_{n}) : m \rightarrow n$ such that $u_{\text{in}}(a \pi_{n}) (\pi_{i})_{n} = a (\pi_{i})_{n}$.
+\item For the family $\iota_{m} a := \{ (\iota_{i})_{m} a : m_{i} \rightarrow n \} := \{ a_{i}\,(\iota_{i})_{n} : m_{i} \rightarrow n \}$
+of morphisms with same target $n$, we have the morphism
+$u_{\text{out}}(\iota_{m} a) : m \rightarrow n$ such that\\
+$(\iota_{i})_{m} u_{\text{out}}(\iota_{m} a) = (\iota_{i})_{m} a = a_{i}\,(\iota_{i})_{n}$, and
+\item For the family $a \pi_{n} := \{ a (\pi_{i})_{n} : m \rightarrow n_{i} \} := \{ (\pi_{i})_{m}\,a_{i} : m \rightarrow n_{i} \}$ of
+morphisms with same source $m$, we have the morphism
+$u_{\text{in}}(a \pi_{n}) : m \rightarrow n$ such that\\
+$u_{\text{in}}(a \pi_{n}) (\pi_{i})_{n} = a (\pi_{i})_{n} = (\pi_{i})_{m}\,a_{i}$.
 \end{enumerate}
 So we have
-\begin{align}
-(\iota_{i})_{m} u_{\text{out}}(\iota_{m} a) (\pi_{i})_{n} = a_{i} = (\iota_{i})_{m} u_{\text{in}}(a \pi_{n}) (\pi_{i})_{n}
-\end{align}
+\begin{alignat}{3}
+(\iota_{i})_{m} u_{\text{out}}(\iota_{m} a) (\pi_{i})_{n} &= a_{i} &&= (\iota_{i})_{m} u_{\text{in}}(a \pi_{n}) (\pi_{i})_{n}\,
+\text{ and }\\
+u_{\text{out}}(\iota_{m} a) &= a &&= u_{\text{in}}(a \pi_{n})
+\end{alignat}
 \end{example}
 
+Next we provide the algorithms from \ref{doc:pre-abelian} that make $\kmat$ into a pre-abelian category.
+They are all based on the well-known $\mathtt{Gauss}$ algorithm that gives us the row echolon form (REF) and
+the column echolon form (CEF) of a matrix.
+
+\begin{computation}\label{comp:gauss-algorithms}
+Let $\varphi : m \rightarrow n \in \kmat_{1}$ be a matrix (with transposed matrix $\varphi^{T} : n \rightarrow m$).
+We assume algorithms for 
+\begin{itemize}
+\item The rank of a matrix, $r := \mathtt{Rank( phi )}$, defined as $\Bbbk$-dimension of the column space
+$\mathrm{dim_{Col}}\,( \varphi ) = r$ which is the
+same\endnote{The result ``row-rank = column-rank'' whose importance a first-year student might not understand
+right away, is a very nice property of matrices.}
+as the $\Bbbk$-dimension of the row space $\mathrm{dim_{Row}}( \varphi ) = \mathrm{dim_{Col}}( \varphi^{T} ) = r$,
+\item The left nullspace of a matrix, $N( \varphi^{T} ) := \mathtt{LeftNullSpace( phi )}$, defined as the subspace
+of $\Bbbk^{m\times 1}$ that is the solution to $\varphi^{T}\, y^{T} = 0 \Leftrightarrow y\, \varphi = 0$, $y : k \rightarrow m$
+for some $k \in \kmat_{0}$.
+\item The right nullspace of a matrix, $N( \varphi ) := \mathtt{RightNullSpace( phi )}$, defined as the subspace of $\Bbbk^{1\times n}$
+that is the solution to $\varphi\,x = 0$, $x : n \rightarrow c$ for some $c \in \kmat_{0}$.
+\item As the standardized form to represent these subspaces, the $\mathtt{Gauss}$-algorithm can calculate the
+row-echolon-form $\mathtt{REF( LeftNullSpace( phi ) )}$ and the\\
+column-echolon-form $\mathtt{CEF( RightNullSpace( phi ) )}$.
+\item Given the row-echolon-form $\mathtt{Solve( y \cdot REF( LeftNullSpace( phi ) ) = 0 )}$
+as the solution to the homogeneous equation $y\, \varphi = 0$, we get the solution to the inhomogeneous equation
+$y\, \varphi = \tau$ as $\mathtt{Solve( y \cdot REF( LeftNullSpace( phi ) ) = tau )}$.
+\item Given the column-echolon-form $\mathtt{Solve(CEF( RightNullSpace( phi ) ) \cdot x = 0 )}$
+as the solution to the homogeneous equation $\varphi\, x= 0$, we get the solution to the inhomogeneous equation
+$\varphi \,x= \tau$ as $\mathtt{Solve( CEF( RightNullSpace( phi ) ) \cdot x = tau )}$. 
+\end{itemize}
+\end{computation}
+
 \begin{example}[$\kmat$ is a pre-abelian category]\label{ex:kmat_pre-abelian}
-Construction 2.14 in \cite{[Posur]} defines four algorithms deduced from Gaussian elimination
-\begin{enumerate}
-\renewcommand{\labelenumi}{(\theenumi)}
-\item SyzygiesOfRows
-\item SyzygiesOfColumns
-\item LeftDivide
-\item RightDivide
-\end{enumerate}
-from which we can build kernels and cokernels in the matrix category:
-\begin{enumerate}
-\renewcommand{\labelenumi}{(\theenumi)}
-\item Let $A \in \Bbbk^{m\times n}$, then we define:
-\begin{enumerate}
-\renewcommand{\labelenumii}{(\alph{enumii})}
-\item $\mathrm{ker}(A) :=\,\text{ number of rows of }\,\mathrm{SyzygiesOfRows}(A)$,
-\item $\mathrm{KernelEmbedding}(A) := \mathrm{SyzygiesOfRows}(A) \in \mathrm{Hom}_{\kmat}(\mathrm{ker}(A), m)$,
-\item for any $T \in \Bbbk^{o\times m}$ such that $TA = 0$, set the universal morphism
-\[
-\mathrm{KernelLift}(A,T) := \mathrm{RightDivide}(T, \mathrm{SyzygiesOfRows}(A)).
-\]
-\end{enumerate}
-\item Let $A \in \Bbbk^{m\times n}$, then we define:
-\begin{enumerate}
-\renewcommand{\labelenumii}{(\alph{enumii})}
-\item $\mathrm{coker}(A) :=\,\text{ number of columns of }\,\mathrm{SyzygiesOfColumns}(A)$,
-\item $\mathrm{CokernelProjection}(A) := \mathrm{SyzygiesOfColumns}(A) \in \mathrm{Hom}_{\kmat}(n, \mathrm{coker}(A))$,
-\item for any $T \in \Bbbk^{n\times o}$ such that $AT = 0$, set the universal morphism
-\[
-\mathrm{CokernelColift}(A,T) := \mathrm{LeftDivide}(\mathrm{SyzygiesOfColumns}(A), T).
-\]
-\end{enumerate}
-\end{enumerate}
+With the algorithms in \ref{comp:gauss-algorithms} taken as given, we now give all the algorithms needed for the doctrine
+$\mathtt{IsPreAbelianCategory}$ in \ref{doc:pre-abelian}:
+\begin{itemize}
+\item $\mathtt{KernelObject( phi ) := NrRows( phi ) - Rank( phi )}$
+\item $\mathtt{KernelEmbedding( phi ) := REF( LeftNullSpace( phi ) )}$
+\item $\mathtt{KernelLift( phi, tau ) := Solve( x \cdot REF( LeftNullSpace( phi ) ) = tau )}$
+\item $\mathtt{CokernelObject( phi ) := NrColumns( phi ) - Rank( phi )}$
+\item $\mathtt{CokernelProjection( phi ) := CEF( RightNullSpace( phi ) )}$
+\item $\mathtt{CokernelColift( phi, tau ) := Solve( CEF( RightNullSpace( phi ) ) \cdot x = tau )}$
+\end{itemize}
 With these constructions, $\kmat$ becomes a pre-abelian category.
 \end{example}
 
+The defining property of an Abelian category, that ``every monomorphism is a kernel'' and ``every epimorphism is a cokernel'',
+makes us put the monomorphism $\kappa$ in place of $\mathtt{REF( LeftNullSpace( phi ) )}$, and the epimorphism
+$\varepsilon$ in place of $\mathtt{CEF( RightNullSpace( phi ) )}$ in \label{ex:kmat_pre-abelian}, giving us the two
+algorithms needed for the doctrine $\mathtt{IsAbelianCategory}$.
 
-
-
+\begin{example}[$\kmat$ is an Abelian category]\phantom{}\\
+\begin{itemize}
+\item Let $\kappa : K \hookrightarrow A \in \kmat_{1}$ and $\tau : T \rightarrow A \in \kmat_{1}$ be as in
+\ref{def:abelian_category}(2).
+Then with the algorithms from \label{comp:gauss-algorithms} we define
+$\mathtt{ LiftAlongMonomorphism( kappa, tau ) := Solve( x \cdot kappa = tau )}$.
+\item Let $\varepsilon : B \twoheadrightarrow A \in \kmat_{1}$ and $\tau : B \rightarrow T \in \kmat_{1}$ be as in
+\ref{def:abelian_category}(2).
+Then with the algorithms from \label{comp:gauss-algorithms} we define
+$\mathtt{ ColiftAlongEpimorphism( epsilon, tau ) := Solve( epsilon \cdot x = tau )}$
+\end{itemize}
+With these algorithms, $\kmat$ becomes an abelian category.
+\end{example}
 
 %%% functors between abelian categories.
 
