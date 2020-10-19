@@ -316,7 +316,7 @@ The dual concept is that of a \ul{coequalizer}, which is the colimit of $\,\cdot
 \end{definition}
 
 The following definition is a special case of an equalizer where $g = 0_{A,B}$. We will write it all out explicitly with their
-own names for objects and morphisms.
+own names for objects, morphisms and (co-)lifts.
 
 \begin{definition}[Kernel]
 In an additive category $\mathcal{C}$, the \ul{kernel} of a morphism $f : A \rightarrow B \in \mathcal{C}_{1}$ is the equalizer
@@ -550,10 +550,10 @@ The above definition, that we can regard
 \begin{itemize}
 \item every monomorphism $\kappa : K \hookrightarrow A$ as a kernel-embedding
 of its cokernel-projection $\varepsilon_{\kappa} : A \twoheadrightarrow C$, with $K$ being the kernel object
-$\mathrm{Ker}(\varepsilon_{\kappa})$,
+$\mathrm{Ker}(\varepsilon_{\kappa}) = s(\kappa)$,
 \item and every epimorphism
 $\varepsilon : B \twoheadrightarrow C$ as a cokernel-projection of its kernel-embedding $\kappa_{\varepsilon} : K \hookrightarrow B$,
-with $C$ being the cokernel object $\mathrm{Coker}(\kappa_{\varepsilon})$
+with $C$ being the cokernel object $\mathrm{Coker}(\kappa_{\varepsilon}) = t(\varepsilon)$
 \end{itemize}
 implies that we also have the third ingredient
 for kernels and cokernels, namely the dependent functions
@@ -617,7 +617,7 @@ $\mathtt{IsAbelianCategory}$ by providing the needed algorithms.
 \begin{example}{(The matrix category $\kmat$ over a commutative ring $\Bbbk$)}\label{ex:kmat_skeletal}
 \begin{itemize}
 \item Objects are natural numbers $\kmat_{0} = \mathbb{N} = \mathbb{N}_{0} = \{0,1,2,\dots\}$ for wich we use small latin letters
-($m,n,k,dots$).
+($m, n, k,\dots$).
 \item Morphisms $(m \rightarrow n) \in \kmat_{1}$ are $m \times n$ matrices over $\Bbbk$.
 We write the set of morphisms between $m$ and $n$, as $\Bbbk^{m\times n} := \textup{Hom}_{\kmat}(m,n)$. 
 For variables that are Matrices we use small greek letters ($\varphi, \psi,\dots$) or capital latin letters ($A, B, C,\dots$). When only source and target are relevant,
@@ -632,13 +632,13 @@ we write $(m \times n)$.
 \[
 \varphi\psi = \mathtt{PreCompose}(\varphi,\psi) := \mathtt{MatMul}(\varphi,\psi).
 \]
-\item It is a skeletal category, i.e. $m \simeq n \Rightarrow m = n$. Only quadratic matrices ($m = n$) can be
+\item It is a skeletal category, i.e. $m \cong n \Rightarrow m = n$. Only quadratic matrices ($m = n$) can be
 isomorphisms.
 \end{itemize}
 \end{example}
 
 \begin{example}[$\kmat$ is an Ab-category]\label{ex:kmat_pre-additive}
-In $\kmat$, the number $0$ is the zero object.\\
+In $\kmat$, the number $0$ is the zero object. $\mathtt{ZeroObject := 0}$\\
 A zero matrix (zero morphism) is a matrix factoring through the zero object $0$.\\
 \begin{minipage}{.2\textwidth}\phantom{ }\end{minipage}
 \begin{minipage}{.25\textwidth}
@@ -659,6 +659,12 @@ $\Rightarrow A = (m \times 0) \cdot (0 \times n)$.
 \noindent The matrices $(m \times 0)$ and $(0 \times n)$ have zero columns or zero rows respectively, but it is
 important to note that for each $m \in \kmat_{0}$ there is exactly one such matrix $(m \times 0)$ and $(0 \times m)$
 (that's what initial and terminal object means), and for different $m$, these morphisms are different.
+
+\begin{itemize}
+\item For matrices $(m \times 0)$ we write $\mathtt{ZeroMorphism(m, 0) := ZeroMatrix( m, 0 )}$,
+\item For matrices $(0 \times n)$ we write $\mathtt{ZeroMorphism(0, n) := ZeroMatrix( 0, n )}$,
+\item For zero matrices $(m \times n)$ we write $\mathtt{ZeroMorphism(m, n) := ZeroMatrix( m, n )}$.
+\end{itemize}
 
 For two natural numbers $m,n \in {\kmat}_{0} = \mathbb{N} = \mathbb{N}_{0}$, the set of morphisms with source $m$ and target $n$ is
 $\Bbbk^{m\times n}$, the set of $m \times n$-matrices. This is an abelian group:
@@ -748,12 +754,7 @@ If we assume algorithms for adding natural numbers
 &\mathtt{Sum}( [ m, n &&] ) = m + n, \\
 &\mathtt{Sum}( [  &&] ) = 0,
 \end{alignat*}
-transposing matrices
-\begin{align*}
-\varphi : m \rightarrow n \\
-\mathtt{TransposedMatrix}( \varphi ) = \varphi^{T} : n \rightarrow m
-\end{align*}
-and for stacking two matrices with the same target on top of each other
+for stacking two matrices with the same number of columns ($\widehat{=}$ same target) on top of each other
 \begin{align*}
 \varphi &: k \rightarrow n \\
 \psi &: m \rightarrow n\\
@@ -761,24 +762,33 @@ and for stacking two matrices with the same target on top of each other
 \begin{pmatrix}
 \varphi \\
 \psi
-\end{pmatrix} &: k + m \rightarrow n
+\end{pmatrix} &: k + m \rightarrow n,
 \end{align*}
-together with the algorithms from $\mathtt{IsAbCategory}$, then we can calculate all the algorithms in the doctrine
-$\mathtt{IsAdditiveCategory}$:
+and for aligning two matrices with the same number of rows ($\widehat{=}$ same source) next to each other
+\begin{align*}
+\varphi &: m \rightarrow k \\
+\psi &: m \rightarrow n\\
+\mathtt{AugmentMatrix}( \varphi, \psi ) =
+\begin{pmatrix}
+\varphi & \psi
+\end{pmatrix} &: m \rightarrow k + n.
+\end{align*}
+Together with the algorithms $\mathtt{IdentityMorphism( n )}$ and $\mathtt{ZeroMorphism( m, n )}$ from $\mathtt{IsAbCategory}$
+we can then calculate all the algorithms in the doctrine $\mathtt{IsAdditiveCategory}$:
 
 The direct sum of the objects $\mathtt{D := [ V1, V2, \dots, VN ]}$ in $\kmat$ is defined as
 \begin{itemize}
-\item $\mathtt{ DirectSum ( D ) := VectorSpaceObject( Sum( List( D, V \mapsto Dimension( V ) ) ), k )}$
-\item $\mathtt{ ProjectionInFactorOfDirectSum( D, i ) := StackMatrix( [ }$\\
-$\quad\mathtt{ List( D[1 .. (i-1)], V \mapsto ZeroMorphism( V, D[i] ) ), }$\\
-$\quad\mathtt{ IdentityMorphism( D[i] ),}$\\
-$\quad\mathtt{ List( D[(i+1) .. N], V \mapsto ZeroMorphism( V, D[i] ) ) ] )}$
-\item $\mathtt{ InjectionOfCofactorOfDirectSum( D, i ) := AugmentMatrix( [ }$\\
-$\quad\mathtt{ List( D[1 .. (i-1)], V \mapsto ZeroMorphism( D[i], V ) ), }$\\
-$\quad\mathtt{ IdentityMorphism( D[i] ), }$\\
-$\quad\mathtt{  List( D[(i+1) .. N], V \mapsto ZeroMorphism( D[i], V ) ) ] )}$
-\item $\mathtt{UniversalMorphismIntoDirectSum ( [ phi, psi ] ) := StackMatrix( [ phi, psi ] )}$
-\item $\mathtt{UniversalMorphismFromDirectSum ( [ phi, psi ] ) := AugmentMatrix( [ phi, psi ] )}$
+\item \texttt{DirectSum ( D ) := VectorSpaceObject( Sum( List( D, V $\mapsto$ Dimension( V ) ) ), k )}
+\item \texttt{ProjectionInFactorOfDirectSum( D, i ) := StackMatrix( [ \\
+\phantom{x}\hspace{3ex}List( D[1, \dots, (i-1)], V $\mapsto$ ZeroMorphism( V, D[i] ) ), \\
+\phantom{x}\hspace{3ex}IdentityMorphism( D[i] ), \\
+\phantom{x}\hspace{3ex}List( D[(i+1), \dots, N], V $\mapsto$ ZeroMorphism( V, D[i] ) ) ] )}
+\item \texttt{InjectionOfCofactorOfDirectSum( D, i ) := AugmentMatrix( [ \\
+\phantom{x}\hspace{3ex}List( D[1, \dots, (i-1)], V $\mapsto$ ZeroMorphism( D[i], V ) ), \\
+\phantom{x}\hspace{3ex}IdentityMorphism( D[i] ), \\
+\phantom{x}\hspace{3ex}List( D[(i+1), \dots, N], V $\mapsto$ ZeroMorphism( D[i], V ) ) ] )}
+\item \texttt{UniversalMorphismIntoDirectSum ( [ phi, psi ] ) := StackMatrix( [ phi, psi ] )}
+\item \texttt{UniversalMorphismFromDirectSum ( [ phi, psi ] ) := AugmentMatrix( [ phi, psi ] )}
 \end{itemize}
 
 In the following \Gap{} session, we demonstrate the algorithms of\\
@@ -969,6 +979,7 @@ With these constructions, $\kmat$ becomes a pre-abelian category.
 
 \begin{example}[$\kmat$ is an Abelian category]\phantom{}\\
 \begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
 \item Let $\kappa : K \hookrightarrow A \in \kmat_{1}$ and $\tau : T \rightarrow A \in \kmat_{1}$ be as in
 \ref{def:abelian_category}(2).
 Then with the algorithms from \ref{comp:gauss-algorithms} we define
@@ -1001,7 +1012,7 @@ n &:= \bigoplus_{i\in I} n_{i},\quad &&(\pi_{i})_{n} : n \rightarrow n_{i},\quad
 This situation is displayed in the following diagram
 \[
 \begin{tikzcd}
-m \arrow[dd, "(\pi_{i})_{m}", shift left=2]                           &  & n \arrow[dd, "(\pi_{i})_{n}", shift left=2]       \\
+m \arrow[dd, "(\pi_{i})_{m}", shift left=2] \arrow[rr, "a"]           &  & n \arrow[dd, "(\pi_{i})_{n}", shift left=2]       \\
                                                                       &  &                                                   \\
 m_{i} \arrow[uu, "(\iota_{i})_{m}", shift left=2] \arrow[rr, "a_{i}"] &  & n_{i} \arrow[uu, "(\iota_{i})_{n}", shift left=2]
 \end{tikzcd}
