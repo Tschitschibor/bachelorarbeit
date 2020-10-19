@@ -3,81 +3,27 @@ Goal is to show that
 
 The functor category with values in $\kmat$ is an Abelian category with enough projectives (constructively) and direct sum decomposition (constructively).
 
+\subsection{$\HomAkmat$ is an abelian category}
 
 \begin{definition}[The functor category $\HomAkmat$]
 Let $\Bbbk$ be a commutative ring, and let $\mathcal{A}$ be a finite-dimensional algebroid over $\Bbbk$.\\
-The \ul{functor category} $\HomAkmat$ has as objects $\Bbbk$-linear functors $F : \mathcal{A} \rightarrow \kmat \in \HomAkmat_{0}$, where each
+The \ul{functor category} $\HomAkmat$ has as objects $\Bbbk$-linear functors\\
+$F : \mathcal{A} \rightarrow \kmat \in \HomAkmat_{0}$, where each
 object $i \in \mathcal{A}$ gets mapped to a natural number $F(i) \in \kmat_{0} = \mathbb{N}_{0}$, and each
-morphism $b : i \rightarrow j \in \mathcal{A}_{1}$ gets mapped to an $F(i) \times F(j)$ matrix $F(b) : F(i) \rightarrow F(j) \in \kmat_{1}$.
+morphism $b : i \rightarrow j \in \mathcal{A}_{1}$ gets mapped to an $F(i) \times F(j)$ matrix\\
+$F(b) : F(i) \rightarrow F(j) \in \kmat_{1}$.
 A morphism $\alpha : F \rightarrow G \in \HomAkmat_{1}$ is a natural transformation $\alpha : F \Rightarrow G$ with each component
 $\alpha_{i} : F(i) \rightarrow G(i) \in \kmat_{1}$ for an object $i \in \mathcal{A}$ being a $F(i) \times G(i)$ matrix satisfying the
-naturality conditions in \eqref{eq:naturality_condition}.
-\end{definition}
-
-\begin{example}[Limits and colimits in $\kmat$]
-In our target category $\kmat$ which is an abelian category, we have the following limits, colimits and special bilimts:
-\begin{itemize}
-\item A zero object $0 \in \kmat_{0}$
-\item For every finite set $I$ and family $\{S_{i}\}_{i \in I}$ we have the direct sum
-\[
-(S = \bigoplus_{i\in I} S_{i}, \{\pi_{i} : S \rightarrow S_{i}\}, \{\iota_{i} : S_{i} \rightarrow S\}, u_{\text{in}}(\tau), u_{\text{out}}(\tau))
-\]
-\item An equalizer of the diagram 
+naturality conditions in \eqref{eq:naturality_condition}, i.e.
 \[
 \begin{tikzcd}
-A \arrow[rr, "{0_{A,B}}"', shift right] \arrow[rd] \arrow[rr, "\alpha", shift left] &              & B \\
-                                                                               & 0 \arrow[ru] &  
+F(i) \arrow[rr, "\alpha_{i}"] \arrow[dd, "Fb"] &  & G(i) \arrow[dd, "Gb"] \\
+                                             &  &                     \\
+F(j) \arrow[rr, "\alpha_{j}"]                &  & G(j)                
 \end{tikzcd}
 \]
-called kernel, i.e. for the matrix $\alpha : A \rightarrow B$ we have
-\[
-(K = \mathrm{ker}(\alpha), \mathrm{KernelEmbedding}(\alpha), \mathrm{KernelLift}(\alpha,\tau))
-\]
-
-\item A co-equalizer of the same diagram called cokernel, i.e. for the matrix $A \in \Bbbk^{m\times n}$ we have
-\[
-(C = \mathrm{coker}(\alpha), \mathrm{CokernelProjection}(\alpha), \mathrm{CokernelColift}(\alpha,\tau))
-\]
-
-
-
-\end{itemize}
-\end{example}
-
-\begin{example}[Lift along mono and colift along epi]
-In an abelian category there exist lifts along monos and colifts along epis, more precisely there exist two dependent functions:
-\begin{itemize}
-\item A dependent function $( - / - )$ mapping a pair $\iota : K \rightarrow A, \tau : T \rightarrow A$ to a lift $(\tau / \iota )$ of
-$\tau$ along $\iota$, where $A, K, T \in \kmat_{0}$, 
-
-$\iota$ is a monomorphism and 
-
-$\tau\,\mathrm{CokernelProjection}(\iota) = 0$.
-
-\item A dependent function $( - \backslash - )$ mapping a pair $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ to a colift
-$(\varepsilon \backslash \tau )$ of
-$\tau$ along $\varepsilon$, where $A, C, T \in \kmat_{0}$,
-
-$\varepsilon$ is an epimorphism and
-
-$\mathrm{KernelEmbedding}(\varepsilon)\tau = 0$.
-
-\end{itemize}
-Lifts along monos and colifts along epis are unique.
-\end{example}
-
-\begin{remark}
-The existence of lifts along monos and colifts along epis is equivalent to \ref{def:abelian_category}.
-\end{remark}
-\begin{proof}
-
-Each mono is a kernel embedding, each epi is cokernel projection.
-\end{proof}
-
-
-Our category $\HomAkmat$ has all of these limits.
-
-\subsection{$\HomAkmat$ is an abelian category}
+commutes for all $b : i \rightarrow j \in \mathcal{A}_{1}$.
+\end{definition}
 
 \begin{theorem}\label{thm:functor_category_abelian}
 Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category $\HomAkmat$
