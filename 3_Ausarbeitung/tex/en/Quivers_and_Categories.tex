@@ -232,6 +232,79 @@ The properties of a monoid are precisely the associativity of composition and th
 \ref{unit_property}.
 \end{proof}
 
+\begin{definition}[Monomorphism and epimorphism]
+A morphism $f : A \rightarrow B$ in a category is
+\begin{itemize}
+\item a \ul{monomorphism} if for any parallel morphisms $h, k : Z \rightrightarrows A, hf = kf$ implies that
+$h = k$
+\item an \ul{epimorphism} if for any parallel morphisms $h, k : B \rightrightarrows C, fh = fk$ implies that
+$h = k$.
+\end{itemize}
+We write $f : A \hookrightarrow B$ for a monomorphism and $f : A \twoheadrightarrow B$ for an epimorphism.
+\endnote{We can define monomorphisms and epimorphisms in a different way which gives us an opportunity to use the limit of
+$\cdot \rightarrow \cdot \leftarrow \cdot$ called \ul{pullback} and the colimit of $\cdot \leftarrow \cdot \rightarrow \cdot$ called \ul{pushout}. 
+A morphism $f : A \rightarrow B$ is a monomorphism if and only if the pullback of $f$ and $f$ exists and is equal to $A$
+(together with the identity maps $1_{A}$). Dually, a morphism $f : A \rightarrow B$ is an epimorphism if and only if the pushout of
+$f$ and $f$ exists and is equal to $B$ (together with the identity maps $1_{B}$). Since we will not be using pullbacks and pushouts any further,
+this definition was moved to the endnotes, and proving the equivalences is left as an exercise for the reader. For further reading
+\url{https://qchu.wordpress.com/2012/09/29/monomorphisms-and-epimorphisms/}}
+\end{definition}
+
+\begin{definition}[Isomorphism]
+An \ul{isomorphism} in a category $\mathcal{C}$ is a morphism $f : X \rightarrow Y$ for which there exists a morphism
+$g : Y \rightarrow X$ so that $fg = 1_{X}$ and $gf = 1_{Y}$. The objects $X$ and $Y$ are \ul{isomorphic} whenever there
+exists an isomorphism between $X$ and $Y$, in which case one writes $X \cong Y$.
+\end{definition}
+
+\begin{definition}[$Aut_{C}$]
+TODO
+\end{definition}
+
+\begin{definition}[Skeletal category, skeleton]
+A category $\mathcal{C}$ is \ul{skeletal} if $A \cong A'$ implies $A = A'$ for all objects $A, A' \in \mathcal{C}_{0}$.
+We define a \ul{skeleton} S$\mathcal{C}$ to be a skeletal subcategory of $\mathcal{C}$ whose inclusion functor exhibits it
+as equivalent to $\mathcal{C}$.
+\end{definition}
+
+\begin{example}[$\Bbbk\textnormal{-}\mathbf{vec}^{\text{fd}}$ is not skeletal]
+The category $\Bbbk\textnormal{-}\mathbf{vec}^{\text{fd}}$ of finite-dimensional vector spaces over a field $\Bbbk$ is obviously not
+skeletal.
+For example, the standard vector space $\Bbbk^{3}$ and the quotient vector space $\Bbbk[x] / (x^{3})$ are isomorphic but not equal.
+\end{example}
+
+\begin{definition}[Lift and colift]\phantom{}\\
+Let $A, K, C, T \in \mathcal{C}_{0}$ be objects in a category $\mathcal{C}$.
+\begin{itemize}
+\item For two morphisms with the same target $\iota : K \rightarrow A, \tau : T \rightarrow A$ we call a morphism $u : T \rightarrow K$ a
+\ul{lift of $\tau$ along $\iota$} if $u \iota = \tau$.
+\[
+\begin{tikzcd}
+                                              & K \arrow[rd, "\iota"] &   \\
+T \arrow[rr, "\tau"'] \arrow[ru, "u", dashed] &                       & A
+\end{tikzcd}
+\]
+In this case we say that $\iota$ \ul{dominates} $\tau$
+\item For two morphisms with the same source $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ we call a morphism
+$u : C \rightarrow T$ a \ul{colift of $\tau$ along $\varepsilon$} if $\varepsilon u = \tau$.
+\[
+\begin{tikzcd}
+A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T \\
+                                                & C \arrow[ru, "u"', dashed] &  
+\end{tikzcd}
+\]
+In this case we say that $\varepsilon$ \ul{codominates} $\tau$.
+\end{itemize}
+\end{definition}
+
+\begin{remark}[Lift along mono, colift along epi]
+If they exist, lifts along monos and colifts along epis are necessarily unique.
+\end{remark}
+\begin{proof}
+In the above diagram for $\iota$ a monomorphism and as lifts of $\tau$ along $\iota$ we have the two competing
+$u, v : T \rightrightarrows K$, both with $u \iota = \tau = v \iota$, the definition of $\iota$ being a monomorphism
+implies $u = v$. Dually for colifts along epis.
+\end{proof}
+
 \subsection{Functors}
 
 Categories are themselves objects in the category of categories, which leads to a question: What is a morphism between categories?

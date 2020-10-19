@@ -19,10 +19,10 @@ following data:
 \renewcommand{\labelenumi}{(\theenumi)}
 \item A source of $D$ given by the data $(\mathrm{lim}\, D, (\lambda(i) : \mathrm{lim}\, D \rightarrow D(i))_{i\in\mathbf{I}_{0}})$.
 \item A dependent function $u$, called the \ul{lift}, mapping every source $\tau = (T, (\tau(i) : T \rightarrow D(i))_{i \in \mathbf{I}})$ to a
-morphism $u(\tau) : T \rightarrow \mathrm{lim}\, D$ such that $\lambda(i) \cdot u(\tau) = \tau(i)$ for all $i \in \mathbf{I}$.\label{itm:2}
-\item For any other dependent function $v$ satisfying (\ref{itm:2}), we have $u = v$, i.e. $u$ is unique with that property.
+morphism $u(\tau) : T \rightarrow \mathrm{lim}\, D$ such that $\lambda(i) \cdot u(\tau) = \tau(i)$ for all $i \in \mathbf{I}$.
+This dependent function $u$ is unique with this property.
 \end{enumerate}
-A \ul{colimit} of $D$ is a limit of $D' : \mathbf{I} \rightarrow \mathcal{C}^{\mathrm{op}}$.
+A \ul{colimit} in $\mathcal{C}$ is a limit in $\mathcal{C}^{\mathrm{op}}$.
 \end{definition}
 
 \begin{definition}[Limits of type \textbf{I}]
@@ -54,48 +54,75 @@ Just as in algebra words like ``field'' or ``ring'' or ``abelian group'' are est
 in category theory we give special names for categories which have certain limits. This is summarized under the vaguely defined
 notion of ``doctrine''.
 
-\begin{definition}[Categorical doctrine]
-We say a category is of a certain \ul{categorical doctrine}, if it has all limits and colimits of a specified set of types.
-In this thesis, we will define hierarchies of categorical doctrines as sets of algorithms that compute the (co-)limits in that category.
-But there are other categorical doctrines that don't directly translate into algorithms computing (co-)limits.
-\end{definition}
+We say a category is of a certain \ul{categorical doctrine}, if it has all categorical operations appearing in the
+defining axioms of the doctrine, in particular if it has all limits and colimits of a required set of types.
+In this thesis, we will define a categorical doctrine by specifying a set of algorithms for all existential quantifyers and
+disjunctions appearing in the defining axioms of the doctrine, in particular by specifying all algorithms needed to
+compute the required (co-)limits.
 
-To give an example, recall the definition of isomorphism
+Being a skeletal category ($\mathtt{IsSkeletalCategory}$) is not a categorical doctrine. Still, it is of high computational benefit
+if we can represent a category by a skeletal model.
 
-\begin{definition}[Isomorphism]
-An \ul{isomorphism} in a category $\mathcal{C}$ is a morphism $f : X \rightarrow Y$ for which there exists a morphism
-$g : Y \rightarrow X$ so that $fg = 1_{X}$ and $gf = 1_{Y}$. The objects $X$ and $Y$ are \ul{isomorphic} whenever there
-exists an isomorphism between $X$ and $Y$, in which case one writes $X \cong Y$.
-\end{definition}
-
-\begin{definition}[Skeletal category, skeleton]
-A category $\mathcal{C}$ is \ul{skeletal} if $A \cong A'$ implies $A = A'$ for all objects $A, A' \in \mathcal{C}_{0}$.
-We define a \ul{skeleton} S$\mathcal{C}$ to be a skeletal subcategory of $\mathcal{C}$ whose inclusion functor exhibits it
-as equivalent to $\mathcal{C}$.
-\end{definition}
-
-\begin{example}[$\Bbbk\textnormal{-}\mathbf{vec}^{\text{fd}}$ is not skeletal]
-In the category $\Bbbk\textnormal{-}\mathbf{vec}^{\text{fd}}$ of finite-dimensional vector spaces over a field $\Bbbk$,
-a tuple $[a_{0},a_{1},a_{2}]$ can be interpreted as coordinates $(a_{0},a_{1},a_{2})$ in $3$D space, i.e. an element of $\Bbbk^{3}$, or
-as the coefficients of a polynomial $a_{0} + a_{1}x + a_{2}x^{2} + x^{3}\Bbbk[x] \in \Bbbk[x] \backslash (x^{3})$ of degree
-$\leq 2$. Both $3$-dimensional vector spaces are isomorphic $\Bbbk[x] \backslash (x^{3}) \cong \Bbbk^{3}$ but not equal.
-\end{example}
-
-An example for a categorical doctrine could therefore be $\mathtt{IsSkeletal}$ which in itself doesn't yield any algorithms,
-but the assumption that a category is skeletal could simplify computation in those categories tremendously or even make computation
-possible in the first place.
-
-\subsection{The categorical doctrines of abelian categories}
+\subsection{A hierarchy of categorical doctrines}
 
 In this subsection, we give explicit definitions for the (co-)limits in \ref{ex:limits} and define the
 doctrines for our categories with such (co-)limits. The doctrine we are interested in is that of an abelian category with
 enough projectives and enough injectives. For now we will describe the doctrines up to and including abelian categories, and
-leave projective and injective objects for section 5. In section 3 we will work on the doctrines of explicitly cyclic finite concrete
-categories and leading up to $\Bbbk$-Algebroids or $\Bbbk$-linear categories.
+leave projective and injective objects for section 5. In section 3 we will work on the doctrine of $\Bbbk$-algebroids or $\Bbbk$-linear
+categories.
+
+\begin{doctrine}[Category]\label{doc:category}
+The doctrine $\mathtt{IsCategory}$ involves the two algorithms
+\begin{itemize}
+\item $\mathtt{Source}$\endnote{The two algorithms $\mathtt{Source}$ and $\mathtt{Range}$ are implicit since
+each morphism in \CAP has to be defined with source and target.},
+\item $\mathtt{Range}$,
+\item $\mathtt{PreCompose}$,
+\item $\mathtt{IdentityMorphism}$.
+\end{itemize}
+\end{doctrine}
+
 
 \subsubsection{Ab-categories}
 We are starting simple with Ab-categories. All we need is an abelian group structure on the hom-set between two objects.
 Since this involves neutral elements of addition, we are skipping ahead and define the zero object and from it the zero morphism.
+
+\begin{definition}[Zero morphism]\label{def:zero_morphism}\phantom{}\\
+A \ul{zero morphism} from $M$ to $N$ is the neutral element of the abelian group $\mathrm{Hom}_{\mathcal{C}}(M,N)$.
+\end{definition}
+
+\begin{definition}[Ab-category]
+An \ul{Ab-category} (also called \ul{pre-additive category}) is a category in which all homomorphism sets are abelian groups,
+and composition distributes over addition.\\
+In other words, a category $\mathcal{C}$ is an Ab-category if for every pair of objects $M,N \in \mathcal{C}_{0}$,
+$( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the zero morphism $0_{M,N}$ as the neutral element),
+and for all morphisms $\gamma, \delta \in \mathrm{Hom}_{\mathcal{C}}(M,N),
+\alpha, \beta \in \textup{Hom}_{\mathcal{C}}(N,L)$
+\begin{align}
+(\gamma + \delta)\alpha &=\label{eq:dist1} \gamma\alpha + \delta\alpha \textup{ and }\\
+\gamma(\alpha+\beta) &=\label{eq:dist2} \gamma\alpha + \gamma\beta.
+\end{align}
+Note that every hom-set has its own unique zero morphism. E.g. in $\kmat$ the $2 \times 3$ zero-matrix
+$0_{2,3} \in \textup{Hom}_{\kmat}(2,3)$ is different from the $4 \times 4$ zero-matrix $0_{4,4} \in \textup{Hom}_{\kmat}(4,4)$.
+\end{definition}
+
+\begin{doctrine}[Ab-category]\label{doc:ab-category}
+The doctrine $\mathtt{IsAbCategory}$ therefore involves algorithms for $\mathtt{IsCategory}$ and
+\begin{itemize}
+\item $\mathtt{AdditionForMorphisms}$,
+\item $\mathtt{AdditiveInverseForMorphisms}$,
+\item ($\mathtt{SubtractionForMorphisms}$),
+\item $\mathtt{ZeroMorphism}$,
+\item $\mathtt{IsZeroForMorphisms}$.
+\end{itemize}
+\end{doctrine}
+
+\begin{definition}[Ab-functor]
+A functor between Ab-categories is called an \ul{Ab-functor} if in the functor definition \ref{def:functor} the function $Ff$ for each
+morphism $f$ is a homomorphism of abelian groups, i.e. $F(f+g) = Ff + Fg$.
+\end{definition}
+
+\subsubsection{Categories with a zero object}
 
 \begin{remark}[Terminal object, initial object, zero object]\label{def:init_term_zero_object}
 The limit / colimit of $\emptyset$.
@@ -103,7 +130,7 @@ The limit / colimit of $\emptyset$.
 \begin{enumerate}
 \item A \ul{terminal object} $T$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(-,T)$ is a singleton.
 \item An \ul{initial object} $I$ in a category $\mathcal{C}$ is an object such that $\textup{Hom}_{\mathcal{C}}(I,-)$ is a singleton.
-\item An object $Z$ or $0$ is a \ul{zero object} if it is both initial and terminal.
+\item An object $Z$ or $0$ is a \ul{zero object} if it is both initial and terminal. (Bilimit of $\emptyset$).
 \end{enumerate}
 \end{remark}
 
@@ -127,36 +154,17 @@ is needed in the doctrine of $\mathtt{IsAbCategory}$, but the $\mathtt{ZeroObjec
 zero object arrises naturally as the direct sum of $\emptyset$, which is why $\mathtt{ZeroObject}$ is listed only there.}
 \end{definition}
 
-\begin{definition}[Ab-category]
-An \ul{Ab-category} (also called \ul{pre-additive category}) is a category in which all homomorphism sets are abelian groups,
-and composition distributes over addition.\\
-In other words, a category $\mathcal{C}$ is an Ab-category if for every pair of objects $M,N \in \mathcal{C}_{0}$,
-$( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the zero morphism $0_{M,N}$ as the neutral element),
-and for all morphisms $\gamma, \delta \in \mathrm{Hom}_{\mathcal{C}}(M,N),
-\alpha, \beta \in \textup{Hom}_{\mathcal{C}}(N,L)$
-\begin{align}
-(\gamma + \delta)\alpha &=\label{eq:dist1} \gamma\alpha + \delta\alpha \textup{ and }\\
-\gamma(\alpha+\beta) &=\label{eq:dist2} \gamma\alpha + \gamma\beta.
-\end{align}
-Note that every hom-set has its own unique zero morphism. E.g. in $\kmat$ the $2 \times 3$ zero-matrix
-$0_{2,3} \in \textup{Hom}_{\kmat}(2,3)$ is different from the $4 \times 4$ zero-matrix $0_{4,4} \in \textup{Hom}_{\kmat}(4,4)$.
-\end{definition}
 
-\begin{doctrine}[Ab-category]\label{doc:ab-category}
-The doctrine $\mathtt{IsAbCategory}$ therefore involves algorithms for
+\begin{doctrine}[Category with zero object]
+The doctrine $\mathtt{IsCategoryWithZeroObject}$ therefore involves algorithms for
 \begin{itemize}
-\item $\mathtt{AdditionForMorphisms}$,
-\item $\mathtt{ZeroMorphism}$,
-\item $\mathtt{IsZeroForMorphisms}$,
-\item $\mathtt{SubtractionForMorphisms}$,
-\item $\mathtt{AdditiveInverseForMorphisms}$
+ \item $\mathtt{ZeroObject}$,
+ \item $\mathtt{UniversalMorphismFromZeroObject}$,
+ \item $\mathtt{UniversalMorphismIntoZeroObject}$.
 \end{itemize}
 \end{doctrine}
 
-\begin{definition}[Ab-functor]
-A functor between Ab-categories is called an \ul{Ab-functor} if in the functor definition \ref{def:functor} the function $Ff$ for each
-morphism $f$ is a homomorphism of abelian groups, i.e. $F(f+g) = Ff + Fg$.
-\end{definition}
+If an Ab-category has a zero object, then both notions of a zero morphism coincide.
 
 \subsubsection{Additive categories}
 The definition of the binary operation $+$ in a pre-additive category came as arbitrary outside data and could be defined
@@ -264,43 +272,21 @@ See
 \end{remark}
 
 \begin{doctrine}[Additive category]
-The doctrine $\mathtt{IsAdditiveCategory}$ therefore involves algorithms of $\mathtt{IsAbCategory}$ together with algorithms for
+The doctrine $\mathtt{IsAdditiveCategory}$ therefore involves algorithms of $\mathtt{IsAbCategory}$ and
+$\mathtt{IsCategoryWithZeroObject}$ together with algorithms for
 \begin{itemize}
- \item $\mathtt{ZeroObject}$,
- \item $\mathtt{UniversalMorphismFromZeroObject}$,
- \item $\mathtt{UniversalMorphismIntoZeroObject}$,
  \item $\mathtt{DirectSum}$,
  \item $\mathtt{ProjectionInFactorOfDirectSum}$,
  \item $\mathtt{InjectionOfCofactorOfDirectSum}$,
  \item $\mathtt{UniversalMorphismIntoDirectSum}$,
- \item $\mathtt{UniversalMorphismFromDirectSum}$
+ \item $\mathtt{UniversalMorphismFromDirectSum}$.
 \end{itemize}
 \end{doctrine}
 
 \subsubsection{Pre-abelian categories}
 
-TODO: (Some short introduction in subsubsection)
-%The dashed arrow in the diagrams of last subsection carried the meaning of uniqueness in the sense of \ref{def:limit}(3).
-%Throughout the thesis we will be using two other kinds of arrows $\hookrightarrow$ and $\twoheadrightarrow$ which we will define next.
-%We encourage the reader to prove themselves the use of these arrows, i.e. that the indicated arrows are in fact a mono or an epi.
-
-\begin{definition}[Monomorphism and epimorphism]
-A morphism $f : A \rightarrow B$ in a category is
-\begin{itemize}
-\item a \ul{monomorphism} if for any parallel morphisms $h, k : Z \rightrightarrows A, hf = kf$ implies that
-$h = k$
-\item an \ul{epimorphism} if for any parallel morphisms $h, k : B \rightrightarrows C, fh = fk$ implies that
-$h = k$.
-\end{itemize}
-We write $f : A \hookrightarrow B$ for a monomorphism and $f : A \twoheadrightarrow B$ for an epimorphism.
-\endnote{We can define monomorphisms and epimorphisms in a different way which gives us an opportunity to use the limit of
-$\cdot \rightarrow \cdot \leftarrow \cdot$ called \ul{pullback} and the colimit of $\cdot \leftarrow \cdot \rightarrow \cdot$ called \ul{pushout}. 
-A morphism $f : A \rightarrow B$ is a monomorphism if and only if the pullback of $f$ and $f$ exists and is equal to $A$
-(together with the identity maps $1_{A}$). Dually, a morphism $f : A \rightarrow B$ is an epimorphism if and only if the pushout of
-$f$ and $f$ exists and is equal to $B$ (together with the identity maps $1_{B}$). Since we will not be using pullbacks and pushouts any further,
-this definition was moved to the endnotes, and proving the equivalences is left as an exercise for the reader. For further reading
-\url{https://qchu.wordpress.com/2012/09/29/monomorphisms-and-epimorphisms/}}
-\end{definition}
+A pre-abelian category is an additive category with kernels and cokernels, and hence images and coimages. To define
+kernels and cokernels we need the following definition.
 
 \begin{definition}[binary equalizer]
 The limit of two parallel morphisms $\,\cdot \rightrightarrows \cdot$\\
@@ -349,12 +335,11 @@ of $f$ and $0_{A,B}$, i.e. consists of the data
 {= \, K} \arrow[rr, "{0_{K,B}}"] \&                            \& B
 \end{tikzcd}
 \end{align*}
-\item A dependent function $\mathrm{KernelLift}(f,-) := ( - /\kappa)$ mapping a morphism $\tau : T \rightarrow A$ with $\tau f = 0_{T,B}$ to a
+\item A unique dependent function $\mathrm{KernelLift}(f,-) := ( - /\kappa)$ mapping a morphism $\tau : T \rightarrow A$ with $\tau f = 0_{T,B}$ to a
 morphism $\mathrm{KernelLift}(f,\tau) = (\tau / \kappa) : T \rightarrow K$ such that
 \[
-\tau =\label{eq:kernel_lift} (\tau / \kappa)\, \kappa.
+\tau = (\tau / \kappa)\, \kappa.
 \]
-\item For any other dependent function $v$ satisfying \eqref{eq:kernel_lift}, $v = ( - / \kappa)$.
 \end{enumerate}
 \[
 \begin{tikzcd}
@@ -381,12 +366,11 @@ $f$ and $0_{A,B}$, i.e. consists of the data
 {= \, A} \arrow[rr, "{0_{A,C}}"] \&                            \& C
 \end{tikzcd}
 \end{align*}
-\item A dependent function $\mathrm{CokernelColift}(f,-) := ( \varepsilon \backslash -)$ mapping a morphism $\tau : B \rightarrow T$ with
+\item A unique dependent function $\mathrm{CokernelColift}(f,-) := ( \varepsilon \backslash -)$ mapping a morphism $\tau : B \rightarrow T$ with
 $f \tau  = 0_{A,T}$ to a morphism $\mathrm{CokernelColift}(f,\tau) = ( \varepsilon \backslash \tau) : C \rightarrow T$ such that
 \[
 \tau =\label{eq:cokernel_colift} \varepsilon \, (\varepsilon \backslash \tau).
 \]
-\item For any other dependent function $v$ satisfying \eqref{eq:cokernel_colift}, $v = ( \varepsilon \backslash - )$.
 \end{enumerate}
 \[
 \begin{tikzcd}
@@ -461,8 +445,7 @@ Thus, the coimage is
 \item An object $\mathrm{Coim}(f) := \mathrm{Coker}(\kappa)$ where $\kappa = \mathrm{KernelEmbedding}(f)$,
 \item A morphism $\varepsilon_{\kappa} := \mathrm{CoimageProjection}(f) := \mathrm{CokernelProjection}(\mathrm{KernelEmbedding}(f))$
 \end{itemize}
-Since it was reserved for cokernel, we are not using $C$ to denote the coimage object. In fact, in the doctrine of abelian
-categories we will not need a distinct variable name for the coimage, which will be more clear in \ref{cor:kernel_cokernel_sequence}.
+Since it was reserved for cokernel, we are not using $C$ to denote the coimage object.
 \end{definition}
 
 \begin{definition}{(Pre-Abelian category)}
@@ -489,8 +472,6 @@ The doctrine $\mathtt{IsPreAbelianCategory}$ therefore involves algorithms of $\
 \end{itemize}
 \end{doctrine}
 
-\newpage
-\subsubsection{Abelian categories}
 
 In categories with kernels and cokernels we can compute images and coimages together with an induced morphism
 $\overline{\varphi} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$. This morphism being an isomorphism
@@ -538,6 +519,13 @@ $\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon}) : \mathrm{Coim}(\v
 
 
 
+\newpage
+\subsubsection{Abelian categories}
+
+A pre-Abelian category is Abelian if the natural morphism from $Coim$ to $Im$ is an isomorphism.
+Therefore in the doctrine of abelian categories we will not need to distinguish between coimages and images and
+the above diagrams simplify into an epi-mono factorization diagram.
+
 \begin{corollary}\label{cor:kernel_cokernel_sequence}
 \[
 \begin{tikzcd}
@@ -548,7 +536,7 @@ K \arrow[rd, "\kappa", hook] &                                                  
 \]
 \end{corollary}
 
-\begin{definition}[Abelian category]\label{def:abelian_category}
+\begin{definition}[Abelian category]
 An \ul{abelian category} is
 \begin{itemize}
 \item a pre-abelian category $\mathcal{C}$ where
@@ -557,6 +545,7 @@ An \ul{abelian category} is
 \end{itemize}
 \end{definition}
 
+\begin{remark}
 The above definition, that we can regard
 \begin{itemize}
 \item every monomorphism $\kappa : K \hookrightarrow A$ as a kernel-embedding
@@ -589,42 +578,9 @@ K \arrow[r, "\kappa_{\varepsilon}", hook] \arrow[r, "\kappa_{\tau}"', hook] & B 
 \end{tikzcd}
 \]
 \end{itemize}
-
-
-\begin{definition}[Lift and colift] The limit of \\
-Let $A, K, C, T \in \mathcal{C}_{0}$ be objects in a category $\mathcal{C}$.
-\begin{itemize}
-\item For two morphisms with the same target $\iota : K \rightarrow A, \tau : T \rightarrow A$ we call a morphism $u : T \rightarrow K$ a
-\ul{lift of $\tau$ along $\iota$} if $u \iota = \tau$.
-\[
-\begin{tikzcd}
-                                              & K \arrow[rd, "\iota"] &   \\
-T \arrow[rr, "\tau"'] \arrow[ru, "u", dashed] &                       & A
-\end{tikzcd}
-\]
-In this case we say that $\iota$ \ul{dominates} $\tau$
-\item For two morphisms with the same source $\varepsilon : A \rightarrow C, \tau : A \rightarrow T$ we call a morphism
-$u : C \rightarrow T$ a \ul{colift of $\tau$ along $\varepsilon$} if $\varepsilon u = \tau$.
-\[
-\begin{tikzcd}
-A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T \\
-                                                & C \arrow[ru, "u"', dashed] &  
-\end{tikzcd}
-\]
-In this case we say that $\varepsilon$ \ul{codominates} $\tau$.
-\end{itemize}
-\end{definition}
-
-\begin{remark}[Lift along mono, colift along epi]
-If they exist, lifts along monos and colifts along epis are necessarily unique.
 \end{remark}
-\begin{proof}
-In the above diagram for $\iota$ a monomorphism and as lifts of $\tau$ along $\iota$ we have the two competing
-$u, v : T \rightrightarrows K$, both with $u \iota = \tau = v \iota$, the definition of $\iota$ being a monomorphism
-implies $u = v$. Dually for colifts along epis.
-\end{proof}
 
-The existence of all lifts along monos and all colifts along epis
+The existence of \ul{lifts along monos} and \ul{colifts along epis} (in the sense of the above remark)
 in a pre-abelian category is therefore an equivalent definition of an abelian category.
 
 \begin{definition}[Abelian category]\label{def:abelian_category}
@@ -642,11 +598,13 @@ to a colift $(\varepsilon \backslash \tau)$ of $\tau$ along $\varepsilon$.
 \end{definition}
 
 \begin{doctrine}[Abelian category]
-The doctrine $\mathtt{IsAbelianCategory}$ therefore involves algorithms of $\mathtt{IsPreAbelianCategory}$ together with algorithms for
+The doctrine $\mathtt{IsAbelianCategory}$ therefore involves algorithms of $\mathtt{IsPreAbelianCategory}$ together
+with two additional algorithms
 \begin{itemize}
 \item $\mathtt{LiftAlongMonomorphism}$,
-\item $\mathtt{ColiftAlongEpimorphism}$
+\item $\mathtt{ColiftAlongEpimorphism}$,
 \end{itemize}
+fulfilling the specification of definition \ref{def:abelian_category}
 \end{doctrine}
 
 \newpage
@@ -810,7 +768,7 @@ $\mathtt{IsAdditiveCategory}$:
 
 The direct sum of the objects $\mathtt{D := [ V1, V2, \dots, VN ]}$ in $\kmat$ is defined as
 \begin{itemize}
-\item $\mathtt{ DirectSum ( D ) := VectorSpaceObject( Sum( List( D, V \mapsto Dimension( V ) ) ), GF3 )}$
+\item $\mathtt{ DirectSum ( D ) := VectorSpaceObject( Sum( List( D, V \mapsto Dimension( V ) ) ), k )}$
 \item $\mathtt{ ProjectionInFactorOfDirectSum( D, i ) := StackMatrix( [ }$\\
 $\quad\mathtt{ List( D[1 .. (i-1)], V \mapsto ZeroMorphism( V, D[i] ) ), }$\\
 $\quad\mathtt{ IdentityMorphism( D[i] ),}$\\
@@ -827,7 +785,7 @@ In the following \Gap{} session, we demonstrate the algorithms of\\
 $\mathtt{IsAdditiveCategory}$.
 The implementation of objects in the matrix category $\kmat$ in \textsc{Cap} is slightly different than simply natural numbers, since
 we always have to mention the commutative ring $\Bbbk$ for the objects. We are using the finite field
-$\Bbbk := \mathrm{GF}_{3} := \{ \mathtt{ \cdot, 1, 2 } \}$ for most our calculations.
+$\Bbbk := \mathbb{F}_{3}$ for our calculations below.
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>| !gapinput@dims := [ 3, 5, 2 ];|
   [ 3, 5, 2 ]
@@ -972,9 +930,66 @@ different ways.
 \end{Verbatim}
 \end{computation}
 
+
+Next we provide the algorithms from \ref{doc:pre-abelian} that make $\kmat$ into a pre-abelian category.
+They are all based on the well-known $\mathtt{Gauss}$ algorithm that gives us the row echolon form (REF) and
+the column echolon form (CEF) of a matrix.
+
+\begin{computation}\label{comp:gauss-algorithms}
+Let $\varphi : m \rightarrow n \in \kmat_{1}$ be a matrix. We assume algorithms for 
+\begin{itemize}
+\item The rank of a matrix, $r := \mathtt{Rank( phi )}$, defined as $\Bbbk$-dimension of the column space
+$\mathrm{dim_{Col}}\,( \varphi ) = r$ which is the
+same\endnote{The result ``row-rank = column-rank'' whose importance a first-year student might not understand
+right away, is a very nice property of matrices.}
+as the $\Bbbk$-dimension of the row space $\mathrm{dim_{Row}}( \varphi ) = r$,
+\item The left nullspace of a matrix $\varphi$ is a matrix $x = \mathtt{LeftNullSpace( phi )}$ satisfying $x\, \varphi = 0$ and
+for each matrix $y$ with $y\,\varphi = 0$ there exists a matrix $z$ with $zx = y$.
+\item The right nullspace of a matrix $\varphi$ is a matrix $x = \mathtt{RightNullSpace( phi )}$ satisfying $\varphi \,x= 0$ and
+for each matrix $y$ with $\varphi \,y= 0$ there exists a matrix $z$ with $xz = y$.
+\item As the standardized form to represent these subspaces, the $\mathtt{Gauss}$-algorithm can calculate the
+row-echolon-form $\mathtt{REF( LeftNullSpace( phi ) )}$ and the\\
+column-echolon-form $\mathtt{CEF( RightNullSpace( phi ) )}$.
+\end{itemize}
+\end{computation}
+
+\begin{example}[$\kmat$ is a pre-abelian category]\label{ex:kmat_pre-abelian}
+With the algorithms in \ref{comp:gauss-algorithms} taken as given, we now give all the algorithms needed for the doctrine
+$\mathtt{IsPreAbelianCategory}$ in \ref{doc:pre-abelian}:
+\begin{itemize}
+\item $\mathtt{KernelObject( phi ) := NrRows( phi ) - Rank( phi )}$
+\item $\mathtt{KernelEmbedding( phi ) := REF( LeftNullSpace( phi ) )}$
+\item $\mathtt{KernelLift( phi, tau ) := Solve( x \cdot REF( LeftNullSpace( phi ) ) = tau )}$
+\item $\mathtt{CokernelObject( phi ) := NrColumns( phi ) - Rank( phi )}$
+\item $\mathtt{CokernelProjection( phi ) := CEF( RightNullSpace( phi ) )}$
+\item $\mathtt{CokernelColift( phi, tau ) := Solve( CEF( RightNullSpace( phi ) ) \cdot x = tau )}$
+\end{itemize}
+With these constructions, $\kmat$ becomes a pre-abelian category.
+\end{example}
+
+\begin{example}[$\kmat$ is an Abelian category]\phantom{}\\
+\begin{enumerate}
+\item Let $\kappa : K \hookrightarrow A \in \kmat_{1}$ and $\tau : T \rightarrow A \in \kmat_{1}$ be as in
+\ref{def:abelian_category}(2).
+Then with the algorithms from \ref{comp:gauss-algorithms} we define
+\begin{itemize}
+\item $\mathtt{LiftAlongMonomorphism( kappa, tau ) := Solve( x \cdot kappa = tau )}$.
+\end{itemize}
+\item Let $\varepsilon : B \twoheadrightarrow A \in \kmat_{1}$ and $\tau : B \rightarrow T \in \kmat_{1}$ be as in
+\ref{def:abelian_category}(2).
+Then with the algorithms from \ref{comp:gauss-algorithms} we define
+\begin{itemize}
+\item $\mathtt{ColiftAlongEpimorphism( epsilon, tau ) := Solve( epsilon \cdot x = tau )}$
+\end{itemize}
+\end{enumerate}
+With these algorithms, $\kmat$ becomes an abelian category.
+\end{example}
+
+
 The following situation where we have a family of matrices $\{a_{i} : m_{i} \rightarrow n_{i}\}_{i\in I}$,
 i.e. a family $\{m_{i}\}_{i\in I}$ of sources and $\{n_{i}\}_{i\in I}$ of targets, is useful to understand. There are two
-different direct sums involved, one of the $m_{i}$'s and one of the $n_{i}$'s.
+different direct sums involved, one of the $m_{i}$'s and one of the $n_{i}$'s. We will need this construction in section 4
+for the direct sum of functors.
 
 \begin{example}[Block-Diagonal matrices]\phantom{}\label{ex:block_diagonal_matrix}\\
 In a situation with an index set $I = \{1,\dots,N\}$, two families of objects $\{m_{i}\}_{i\in I}, \{n_{i}\}_{i\in I}$ and a family of
@@ -1021,74 +1036,12 @@ u_{\text{out}}(\iota_{m} a) &= a &&= u_{\text{in}}(a \pi_{n})
 \end{alignat}
 \end{example}
 
-Next we provide the algorithms from \ref{doc:pre-abelian} that make $\kmat$ into a pre-abelian category.
-They are all based on the well-known $\mathtt{Gauss}$ algorithm that gives us the row echolon form (REF) and
-the column echolon form (CEF) of a matrix.
-
-\begin{computation}\label{comp:gauss-algorithms}
-Let $\varphi : m \rightarrow n \in \kmat_{1}$ be a matrix (with transposed matrix $\varphi^{T} : n \rightarrow m$).
-We assume algorithms for 
-\begin{itemize}
-\item The rank of a matrix, $r := \mathtt{Rank( phi )}$, defined as $\Bbbk$-dimension of the column space
-$\mathrm{dim_{Col}}\,( \varphi ) = r$ which is the
-same\endnote{The result ``row-rank = column-rank'' whose importance a first-year student might not understand
-right away, is a very nice property of matrices.}
-as the $\Bbbk$-dimension of the row space $\mathrm{dim_{Row}}( \varphi ) = \mathrm{dim_{Col}}( \varphi^{T} ) = r$,
-\item The left nullspace of a matrix, $N( \varphi^{T} ) := \mathtt{LeftNullSpace( phi )}$, defined as the subspace
-of $\Bbbk^{m\times 1}$ that is the solution to $\varphi^{T}\, y^{T} = 0 \Leftrightarrow y\, \varphi = 0$, $y : k \rightarrow m$
-for some $k \in \kmat_{0}$.
-\item The right nullspace of a matrix, $N( \varphi ) := \mathtt{RightNullSpace( phi )}$, defined as the subspace of $\Bbbk^{1\times n}$
-that is the solution to $\varphi\,x = 0$, $x : n \rightarrow c$ for some $c \in \kmat_{0}$.
-\item As the standardized form to represent these subspaces, the $\mathtt{Gauss}$-algorithm can calculate the
-row-echolon-form $\mathtt{REF( LeftNullSpace( phi ) )}$ and the\\
-column-echolon-form $\mathtt{CEF( RightNullSpace( phi ) )}$.
-\item Given the row-echolon-form $\mathtt{Solve( y \cdot REF( LeftNullSpace( phi ) ) = 0 )}$
-as the solution to the homogeneous equation $y\, \varphi = 0$, we get the solution to the inhomogeneous equation
-$y\, \varphi = \tau$ as $\mathtt{Solve( y \cdot REF( LeftNullSpace( phi ) ) = tau )}$.
-\item Given the column-echolon-form $\mathtt{Solve(CEF( RightNullSpace( phi ) ) \cdot x = 0 )}$
-as the solution to the homogeneous equation $\varphi\, x= 0$, we get the solution to the inhomogeneous equation
-$\varphi \,x= \tau$ as $\mathtt{Solve( CEF( RightNullSpace( phi ) ) \cdot x = tau )}$. 
-\end{itemize}
-\end{computation}
-
-\begin{example}[$\kmat$ is a pre-abelian category]\label{ex:kmat_pre-abelian}
-With the algorithms in \ref{comp:gauss-algorithms} taken as given, we now give all the algorithms needed for the doctrine
-$\mathtt{IsPreAbelianCategory}$ in \ref{doc:pre-abelian}:
-\begin{itemize}
-\item $\mathtt{KernelObject( phi ) := NrRows( phi ) - Rank( phi )}$
-\item $\mathtt{KernelEmbedding( phi ) := REF( LeftNullSpace( phi ) )}$
-\item $\mathtt{KernelLift( phi, tau ) := Solve( x \cdot REF( LeftNullSpace( phi ) ) = tau )}$
-\item $\mathtt{CokernelObject( phi ) := NrColumns( phi ) - Rank( phi )}$
-\item $\mathtt{CokernelProjection( phi ) := CEF( RightNullSpace( phi ) )}$
-\item $\mathtt{CokernelColift( phi, tau ) := Solve( CEF( RightNullSpace( phi ) ) \cdot x = tau )}$
-\end{itemize}
-With these constructions, $\kmat$ becomes a pre-abelian category.
-\end{example}
-
-The defining property of an Abelian category, that ``every monomorphism is a kernel'' and ``every epimorphism is a cokernel'',
-makes us put the monomorphism $\kappa$ in place of $\mathtt{REF( LeftNullSpace( phi ) )}$, and the epimorphism
-$\varepsilon$ in place of $\mathtt{CEF( RightNullSpace( phi ) )}$ in \label{ex:kmat_pre-abelian}, giving us the two
-algorithms needed for the doctrine $\mathtt{IsAbelianCategory}$.
-
-\begin{example}[$\kmat$ is an Abelian category]\phantom{}\\
-\begin{itemize}
-\item Let $\kappa : K \hookrightarrow A \in \kmat_{1}$ and $\tau : T \rightarrow A \in \kmat_{1}$ be as in
-\ref{def:abelian_category}(2).
-Then with the algorithms from \label{comp:gauss-algorithms} we define
-$\mathtt{ LiftAlongMonomorphism( kappa, tau ) := Solve( x \cdot kappa = tau )}$.
-\item Let $\varepsilon : B \twoheadrightarrow A \in \kmat_{1}$ and $\tau : B \rightarrow T \in \kmat_{1}$ be as in
-\ref{def:abelian_category}(2).
-Then with the algorithms from \label{comp:gauss-algorithms} we define
-$\mathtt{ ColiftAlongEpimorphism( epsilon, tau ) := Solve( epsilon \cdot x = tau )}$
-\end{itemize}
-With these algorithms, $\kmat$ becomes an abelian category.
-\end{example}
-
 %%% functors between abelian categories.
 
 \begin{theorem}
 The functor category has all limits, colimits and bilimits which exist in the target category.
 \end{theorem}
 
-Instead of proving this in general, we prove this as part of \ref{thm:functor_category_abelian} for the direct sum, which is a very special bilimit.
+Instead of proving this in general, we prove this as part of \ref{thm:functor_category_abelian} for the direct sum, from which
+the procedure of the general proof becomes apparent.
 
