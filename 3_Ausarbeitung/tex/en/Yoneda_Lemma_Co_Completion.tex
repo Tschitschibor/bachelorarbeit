@@ -28,7 +28,7 @@ $\mathrm{Hom}(c,-) \cong F$ (for a covariant $F$, or $\mathrm{Hom}(-,c) \cong F$
 \end{enumerate}
 \end{definition}
 
-\begin{lemma}{(Yoneda's Lemma)}\endnote{(Statement and proof from \cite{[context]}, 2.2.4, pp 57-59)}
+\begin{lemma}{(Yoneda's Lemma)}\endnote{(Statement of Yoneda's lemma from \cite{[context]}, Lemma 2.2.4)}
 For any functor $F : \mathcal{C} \rightarrow \mathrm{Set}$, whose source $\mathcal{C}$ is locally small and any
 object $c \in \mathcal{C}_{0}$, there is a bijection
 \[
@@ -40,73 +40,8 @@ Moreover, this correspondence is natural in both $c$ and $F$.
 As $\mathcal{C}$ is locally small but not necessarily small, a priori the collection of natural transformations
 $\mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-),F)$ might be large. However, the bijection in the Yoneda lemma proves that this particular
 collection of natural transformations indeed forms a set.
-\begin{proof}[Proof of the bijection]\begin{subproof}[\nopunct]\phantom{}\\
-There is clearly a function $\Phi : \mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-), F) \rightarrow Fc$ that maps
-a natural transformation $\alpha : \mathrm{Hom}_{\mathcal{C}}(c,-) \Rightarrow F$ to the image of $1_{c}$ under the component
-function $\alpha_{c} : \mathrm{Hom}_{\mathcal{C}}(c,c) \rightarrow Fc$, i.e.,
-\begin{align}
-&\Phi : \mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-), F) \rightarrow Fc; \\
-&\Phi(\alpha) := \alpha_{c}(1_{c}).
-\end{align}
-Our first aim is to define an inverse function $\Psi : Fc \rightarrow \mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-), F)$ that constructs a
-natural transformation $\Psi(x) : \mathrm{Hom}_{\mathcal{C}}(c,-) \Rightarrow F$ from any $x \in Fc$ (note that $Fc$ is a set). To this end,
-we must define components $\Psi(x)_{d} : \mathrm{Hom}_{\mathcal{C}}(c,d) \rightarrow Fd$ so that naturality squares, such as displayed for
-$f : c \rightarrow d$ in $\mathcal{C}$, commute:
-\[
-\begin{tikzcd}
-{\mathrm{Hom}_{\mathcal{C}}(c,c)} \arrow[r, "\Psi(x)_{c}"] \arrow[d, "f_{*}"'] & Fc \arrow[d, "Ff"] \\
-{\mathrm{Hom}_{\mathcal{C}}(c,d)} \arrow[r, "\Psi(x)_{d}"']                    & Fd                
-\end{tikzcd}
-\]
-where $f_{*} := \mathrm{Hom}_{\mathcal{C}}(c,f) : \mathrm{Hom}_{\mathcal{C}}(c,c) \rightarrow \mathrm{Hom}_{\mathcal{C}}(c,d)$
-is the image of $f$ under the partial Hom-functor $\mathrm{Hom}_{\mathcal{C}}(c,-)$ as defined in \ref{ex:hom_functor}.
-The image of the identity element $1_{c} \in \mathrm{Hom}_{\mathcal{C}}(c,c)$ under the left-bottom composite is
-$\Psi(x)_{d}(f) \in Fd$, the value of the component $\Psi(x)_{d}$ at the element $f \in \mathrm{Hom}_{\mathcal{C}}(c,d)$. The image under
-the top-right composite is $Ff(\Psi(x)_{c}(1_{c}))$. For $\Psi$ to define an inverse for $\Phi$, we must define
-$\Psi(x)_{c}(1_{c}) = x$. Now, naturality forces us to define
-\begin{align}\label{eq:Yoneda-Inverse_Psi}
-&\Psi : Fc \rightarrow \mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-),F); \\
-&\Psi(x)_{d}(f) := F\,f(x).
-\end{align}
-This condition completely determines the components $\Psi(x)_{d}$ of $\Psi(x)$.
-
-It remains to verify that $\Psi(x)$ is natural. To that end, we must show for a generic morphism $g : d \rightarrow e$ in $\mathcal{C}_{1}$, (one
-whose domain is not necessarily the distinguished object c), that the square
-\[
-\begin{tikzcd}
-{\mathrm{Hom}_{\mathcal{C}}(c,d)} \arrow[r, "\Psi(x)_{d}"] \arrow[d, "g_{*}"'] & Fd \arrow[d, "Fg"] \\
-{\mathrm{Hom}_{\mathcal{C}}(c,e)} \arrow[r, "\Psi(x)_{e}"']                    & Fe                
-\end{tikzcd}
-\]
-commutes. The image of $f \in \mathrm{Hom}_{\mathcal{C}}(c,d)$ along the left-bottom composite is
-$\Psi(x)_{e}(gf) := F(gf)(x)$. The image along the top-right composite is $Fg(\Psi(x)_{d}(f)) := Fg(Ff(x))$. By functoriality of $F$,
-$F(gf) = Fg \cdot Ff$, so these elements agree. Thus, the formula \eqref{eq:Yoneda-Inverse_Psi} defines the function
-$\Psi : Fc \rightarrow \mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-),F)$.
-
-By construction, $\Phi\Psi(x) = \Psi(x)_{c}(1_{c}) = x$, so $\Psi$ is a right inverse to $\Phi$. We wish to show that
-$\Psi\Phi(\alpha) = \alpha$, i.e., that the natural transformation $\Psi(\alpha_{c}(1_{c}))$ is $\alpha$. It suffices to show that
-these natural transformations have the same components. By definition,
-\begin{align*}
-\Psi(\alpha_{c}(1_{c}))_{d}(f) = F\,f(\alpha_{c}(1_{c})).
-\end{align*}
-By naturality of $\alpha$, the square
-\begin{align}
-\begin{tikzcd}[ampersand replacement = \&]
-{\mathrm{Hom}_{\mathcal{C}}(c,c)} \arrow[r, "\alpha_{c}"] \arrow[d, "f_{*}"'] \& Fc \arrow[d, "Ff"] \\
-{\mathrm{Hom}_{\mathcal{C}}(c,d)} \arrow[r, "\alpha_{d}"']                    \& Fd                
-\end{tikzcd}
-\end{align}
-commutes, from which we see that $F\,f(\alpha_{c}(1_{c})) = \alpha_{d}(f)$. Thus, $\Psi(\alpha_{c}(1_{c}))_{d} = \alpha_{d}$,
-proving that $\Psi$ is also a left inverse to $\Phi$. The explicit bijections $\Phi$ and $\Psi$ prove that evaluation of a natural
-transformation at the identity of the representing object defines an isomorphism
-\[
-\mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-), F)  \xrightarrow{\cong} Fc,
-\]
-as claimed.
-\end{subproof}
-\begin{subproof}[Proof of the naturality]\phantom{}\\
-
-\end{subproof}
+\begin{proof}
+A proof of Yoneda's lemma can be found in many books on category theory, e.g. \cite{[context]}, Lemma 2.2.4, pages 57-59.
 \end{proof}
 
 \begin{definition}{(Yoneda embedding)}\label{def:yoneda_embedding}\endnote{(cited from ncatlab \cite{[ncatlab_yoneda_emb]})}\\
