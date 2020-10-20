@@ -711,7 +711,7 @@ The algorithm $\mathtt{RelationsOfEndomorphism}$ calculates a list of relations 
 \unlhd \Bbbk q. \label{eq:ideal_of_endos}
 \end{equation}
 From the $\sigma$-lemma \ref{la:sigma-lemma} we know that each relation is of the form $\alpha_{i}^{m_{i}+n_{i}} - \alpha_{i}^{m_{i}}$
-for some natural numbers $m_{i}, n_{i} \in \mathbb{N}_{0}$, especially with $n_{i} \geq 1$, the ideal in \eqref{eq:ideal_of_endos} is not the
+for some natural numbers $m_{i}, n_{i} \in \mathbb{N}_{0}$. Especially with $n_{i} \geq 1$, the ideal in \eqref{eq:ideal_of_endos} is not the
 zero ideal (provided that the $\alpha_{i} \neq 0$).
 
 With the list of relations of endomorphisms
@@ -726,10 +726,49 @@ This is a finite-dimensional $\Bbbk$-algebra with a distinct set of idempotents.
 In the following subsection we show that this is equivalent to a $\Bbbk$-linear category (also called $\kAlgebroid$).
 \end{remark}
 
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{RelationsOfEndomorphisms}}\label{algo:RelationsOfEndomorphisms}
+	\SetKwInput{Input}{~Input}
+	\SetKwInput{Output}{~Output}
+	\Input{~a commutative ring $k$ and a finite concrete category $C$}
+	\Output{~the endomorphism relations of the category $C$ given as generators of an ideal of the path algebra}
+	\BlankLine
+	$q := \mathtt{RightQuiverFromConcreteCategory}(C)$\;
+	$kq := \mathtt{PathAlgebra}(k, q)$\;
+	$gMor := \mathtt{SetOfGeneratingMorphisms}(C)$\;
+	$A := \mathtt{Arrows}(q)$\;
+	$relsEndo := \emptyset$\;
+	\For{$i = 1, \dots, \mathtt{Length}(gMor)$}{
+	    let $mor := gMor_i$\\
+	    \If{\Not{$\mathtt{IsEndomorphism}(mor)$}}{
+		continue\;
+	    }
+	    $m := 0$\;
+	    $mPowers := \emptyset$\;
+	    $foundEqual := \mathtt{false}$\;
+	    \While{$mor^{m}\notin mPowers$}{
+		let $n := 1$\;
+	    	$nPowers := \emptyset$\;
+		\While{\Not{} $foundEqual$ \AndAlg{} $mor^{(m+n)} \notin nPowers$}{
+		    \If{$mor^{(m+n)} = mor^{m}$}{
+		    	Add the relation $kq.(A_{i})^{(m+n)}-kq.(A_{i})^{m}$ to relsEndo\;
+		    	$foundEqual := \mathtt{true}$\;
+		    }
+		    Add $mor^{(m+n)}$ to mpowers\;
+		    n := n+1\;
+		}
+		Add $mor^{m}$ to mpowers\;
+		m := m+1\;
+	    }
+	}
+	\Return{relsEndo}\;
+\end{algorithm}
+
 %% 
+\newpage
 \subsection{$\Bbbk$-linear categories, $\Bbbk$-algebroids and $\Bbbk$-algebras with orthogonal idempotents}
 
-\begin{definition}{($\Bbbk$-linear category, $\Bbbk$-$\mathrm{algebroid}$)}
+\begin{definition}[$\Bbbk$-linear category, $\Bbbk$-$\mathrm{algebroid}$]
 Let $\Bbbk$ be a commutative unital ring. A \ul{$\Bbbk$-linear category}, also called \ul{$\Bbbk$-$\mathrm{algebroid}$},$\,\mathcal{A}$ is a
 category where every hom-set is a $\Bbbk$-module, and where for $x,y,z \in \mathcal{A}_{0}$ composition of morphisms
 \[
@@ -737,8 +776,16 @@ category where every hom-set is a $\Bbbk$-module, and where for $x,y,z \in \math
 \]
 is $\Bbbk$-bilinear.
 
-Note that this does imply that $\mathcal{A}$ is a pre-additive category, but it need not be additive.
+Note that this does imply that $\mathcal{A}$ is an Ab-category, but it need not be additive nor does it need to have a zero object.
 \end{definition}
+
+\begin{doctrine}[$\Bbbk$-algebroid]
+The doctrine $\mathtt{IsAlgebroid}$ also known as\\
+$\mathtt{IsLinearCategoryOverCommutativeRing}$ involves algorithms for $\mathtt{IsAbCategory}$ and
+\begin{itemize}
+\item $\mathtt{MultiplyWithElementOfCommutativeRingForMorphisms}$.
+\end{itemize}
+\end{doctrine}
 
 \begin{definition}{($\Bbbk$-linear functor)}
 Let $\Bbbk$ be a commutative ring. A \ul{functor of $\Bbbk$-linear categories} or a \ul{$\Bbbk$-linear functor} is a functor

@@ -346,21 +346,33 @@ objects $M$ and $N$. There are two ways to leave blank one of the objects and th
 \begin{example}{(partial Hom-functor)}\label{ex:hom_functor}
 Let $\mathcal{C}$ be a category and $P \in \mathcal{C}_{0}$ any object. The \ul{Hom-functor}, also called \ul{partial Hom-functor},
 \begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
 \item $\textup{Hom}(P,-)$ is a functor from $\mathcal{C}$ to $\mathcal{C}_{1}$ where objects in $\mathcal{C}_{1}$ are the hom-sets 
 $\textup{Hom}(P,N)$, and morphisms are maps from one hom-set to another.
-$\textup{Hom}(P,-)$ works on objects by mapping the object $N \in \mathcal{C}_{0}$ to
-the hom-set $\textup{Hom}(P,N) \in \mathcal{C}_{1}$.
-$\textup{Hom}(P,-)$ works on morphisms by mapping the morphism $(f : M \rightarrow N ) \in \mathcal{C}_{1}$ to the transformation
-$\textup{Hom}(P,f) : \textup{Hom}(P,M) \rightarrow \textup{Hom}(P,N); \varphi \mapsto \varphi f$, so for every morphism
-$\varphi \in \textup{Hom}(P,M)$, you post-compose $f \in \textup{Hom}(M,N)$ to get a new morphism $\varphi f \in \textup{Hom}(P,N)$.
+\begin{itemize}
+\item $\textup{Hom}(P,-)$ works on objects by mapping the object $N \in \mathcal{C}_{0}$ to
+the hom-set\\
+$\textup{Hom}(P,N) \in \mathcal{C}_{1}$.
+\item $\textup{Hom}(P,-)$ works on morphisms by mapping the morphism $(f : M \rightarrow N ) \in \mathcal{C}_{1}$ to the transformation
+\begin{align}
+f_{*} := \textup{Hom}(P,f) : \textup{Hom}(P,M) \rightarrow \textup{Hom}(P,N); \varphi \mapsto \varphi f,
+\end{align}
+so for every morphism $\varphi \in \textup{Hom}(P,M)$, you post-compose $f \in \textup{Hom}(M,N)$ to get a new
+morphism $\varphi f \in \textup{Hom}(P,N)$.
+\end{itemize}
 
 \item $\textup{Hom}(-,P)$ is a functor from $\mathcal{C}$ to $\mathcal{C}_{1}$ where objects in $\mathcal{C}_{1}$ are the hom-sets 
 $\textup{Hom}(N,P)$, and morphisms are maps from one hom-set to another.
-$\textup{Hom}(-,P)$ works on objects by mapping the object $N \in \mathcal{C}_{0}$ to
+\begin{itemize}
+\item $\textup{Hom}(-,P)$ works on objects by mapping the object $N \in \mathcal{C}_{0}$ to
 the hom-set $\textup{Hom}(N,P) \in \mathcal{C}_{1}$.
-$\textup{Hom}(-,P)$ works on morphisms by mapping the morphism $(f : M \rightarrow N ) \in \mathcal{C}_{1}$ to the transformation
-$\textup{Hom}(f,P) : \textup{Hom}(N,P) \rightarrow \textup{Hom}(M,P); \varphi \mapsto f\varphi$, so for every morphism
-$\varphi \in \textup{Hom}(N,P)$, you pre-compose $f \in \textup{Hom}(M,N)$ to get a new morphism $f\varphi \in \textup{Hom}(M,P)$.
+\item $\textup{Hom}(-,P)$ works on morphisms by mapping the morphism $(f : M \rightarrow N ) \in \mathcal{C}_{1}$ to the transformation
+\begin{align}
+f^{*} := \textup{Hom}(f,P) : \textup{Hom}(N,P) \rightarrow \textup{Hom}(M,P); \varphi \mapsto f\varphi,
+\end{align}
+so for every morphism $\varphi \in \textup{Hom}(N,P)$, you pre-compose $f \in \textup{Hom}(M,N)$ to get a new
+morphism $f\varphi \in \textup{Hom}(M,P)$.
+\end{itemize}
 \end{enumerate}
 
 The important difference between these two functors was how they worked on morphisms. If in both cases we take a morphism
