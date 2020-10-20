@@ -85,25 +85,24 @@ each morphism in \CAP has to be defined with source and target.},
 
 \subsubsection{Ab-categories}
 We are starting simple with Ab-categories. All we need is an abelian group structure on the hom-set between two objects.
-Since this involves neutral elements of addition, we are skipping ahead and define the zero object and from it the zero morphism.
 
 \begin{definition}[Zero morphism]\label{def:zero_morphism}\phantom{}\\
 A \ul{zero morphism} from $M$ to $N$ is the neutral element of the abelian group $\mathrm{Hom}_{\mathcal{C}}(M,N)$.
 \end{definition}
+Note that every hom-set has its own unique zero morphism. E.g. in $\kmat$ the $2 \times 3$ zero-matrix
+$0_{2,3} \in \textup{Hom}_{\kmat}(2,3)$ is different from the $4 \times 4$ zero-matrix $0_{4,4} \in \textup{Hom}_{\kmat}(4,4)$.
 
 \begin{definition}[Ab-category]
 An \ul{Ab-category} (also called \ul{pre-additive category}) is a category in which all homomorphism sets are abelian groups,
 and composition distributes over addition.\\
 In other words, a category $\mathcal{C}$ is an Ab-category if for every pair of objects $M,N \in \mathcal{C}_{0}$,
-$( \textup{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the zero morphism $0_{M,N}$ as the neutral element),
+$( \mathrm{Hom}_{\mathcal{C}}(M,N), + )$ is an abelian group (with the zero morphism $0_{M,N}$ as the neutral element),
 and for all morphisms $\gamma, \delta \in \mathrm{Hom}_{\mathcal{C}}(M,N),
-\alpha, \beta \in \textup{Hom}_{\mathcal{C}}(N,L)$
+\alpha, \beta \in \mathrm{Hom}_{\mathcal{C}}(N,L)$
 \begin{align}
-(\gamma + \delta)\alpha &=\label{eq:dist1} \gamma\alpha + \delta\alpha \textup{ and }\\
+(\gamma + \delta)\alpha &=\label{eq:dist1} \gamma\alpha + \delta\alpha\quad \mathrm{ and }\\
 \gamma(\alpha+\beta) &=\label{eq:dist2} \gamma\alpha + \gamma\beta.
 \end{align}
-Note that every hom-set has its own unique zero morphism. E.g. in $\kmat$ the $2 \times 3$ zero-matrix
-$0_{2,3} \in \textup{Hom}_{\kmat}(2,3)$ is different from the $4 \times 4$ zero-matrix $0_{4,4} \in \textup{Hom}_{\kmat}(4,4)$.
 \end{definition}
 
 \begin{doctrine}[Ab-category]\label{doc:ab-category}
@@ -153,7 +152,6 @@ the zero object, just as the neutral element of the abelian group $\mathrm{Hom}_
 is needed in the doctrine of $\mathtt{IsAbCategory}$, but the $\mathtt{ZeroObject}$ is not. Eventually at additive categories the
 zero object arrises naturally as the direct sum of $\emptyset$, which is why $\mathtt{ZeroObject}$ is listed only there.}
 \end{definition}
-
 
 \begin{doctrine}[Category with zero object]
 The doctrine $\mathtt{IsCategoryWithZeroObject}$ therefore involves algorithms for
@@ -472,7 +470,7 @@ The doctrine $\mathtt{IsPreAbelianCategory}$ therefore involves algorithms of $\
 \end{itemize}
 \end{doctrine}
 
-
+\begin{remark}[Kernel lift of cokernel colift $=$ cokernel colift of kernel lift]\label{rmk:kerl_col_col_kerl}\phantom{}\\
 In categories with kernels and cokernels we can compute images and coimages together with an induced morphism
 $\overline{\varphi} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$. This morphism being an isomorphism
 is one of the defining axioms of Abelian categories.
@@ -513,7 +511,7 @@ $\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon}) : \mathrm{Coim}(\v
                                                                                                                                              & \mathrm{Coim}(\varphi) \arrow[rr, "\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon})"']                                                 &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                        
 \end{tikzcd}
 \]
-
+\end{remark}
 
 
 
@@ -522,11 +520,23 @@ $\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon}) : \mathrm{Coim}(\v
 \newpage
 \subsubsection{Abelian categories}
 
-A pre-Abelian category is Abelian if the natural morphism from $Coim$ to $Im$ is an isomorphism.
-Therefore in the doctrine of abelian categories we will not need to distinguish between coimages and images and
-the above diagrams simplify into an epi-mono factorization diagram.
+In this section we give three equivalent definitions for Abelian categories, starting abstractly from the above diagrams
+and ending with the existence of two algorithms needed for the doctrine $\mathtt{IsAbelianCategory}$.
+
+\begin{definition}[Abelian category]
+A pre-Abelian category is Abelian if the natural morphism
+$\overline{\varphi} := \varepsilon_{\kappa}\backslash \varphi/\kappa_{\varepsilon} : \mathrm{Coim}(\varphi)
+\xrightarrow{\sim} \mathrm{Im}(\varphi)$
+is an isomorphism.
+\end{definition}
+Therefore in the doctrine of Abelian categories we will not need to distinguish between coimages and images\endnote{Especially
+in a skeletal category such as $\kmat$.}, and
+the diagrams from \ref{rmk:kerl_col_col_kerl} simplify into an epi-mono factorization diagram.
 
 \begin{corollary}\label{cor:kernel_cokernel_sequence}
+Every morphism $\varphi : M \rightarrow N$ in an abelian category $\mathcal{C}$ can be factored as the
+composition of an epimorphism $\pi : M \twoheadrightarrow I$ and a monomorphism $\iota : I \hookrightarrow N$\\
+where $I \cong \mathrm{Im}(\varphi) \cong \mathrm{Coim}(\varphi)$.
 \[
 \begin{tikzcd}
 K \arrow[rd, "\kappa", hook] &                                                       &                             &                                        & C \\
@@ -534,6 +544,7 @@ K \arrow[rd, "\kappa", hook] &                                                  
                              &                                                       & I \arrow[ru, "\iota", hook] &                                        &  
 \end{tikzcd}
 \]
+The factorization is unique up to unique isomorphism.
 \end{corollary}
 
 \begin{definition}[Abelian category]
@@ -658,11 +669,17 @@ $\Rightarrow A = (m \times 0) \cdot (0 \times n)$.
 
 \noindent The matrices $(m \times 0)$ and $(0 \times n)$ have zero columns or zero rows respectively, but it is
 important to note that for each $m \in \kmat_{0}$ there is exactly one such matrix $(m \times 0)$ and $(0 \times m)$
-(that's what initial and terminal object means), and for different $m$, these morphisms are different.
+(that's what initial and terminal object means), and for different $m$, these morphisms are different.\endnote{It is
+challenging to decide between different types of zero matrices with zero rows or zero columns, if they
+are represented by lists of lists with their entries. How many rows does the $(3 \times 0)$ matrix have, if you represent it
+by the empty list \texttt{[ ]}? That's why the implenentation in \homalgProject uses a special function
+\texttt{HomalgZeroMatrix}, and why the morphisms in \CAP are always implemented with their source and target defined.}
 
 \begin{itemize}
-\item For matrices $(m \times 0)$ we write $\mathtt{ZeroMorphism(m, 0) := ZeroMatrix( m, 0 )}$,
-\item For matrices $(0 \times n)$ we write $\mathtt{ZeroMorphism(0, n) := ZeroMatrix( 0, n )}$,
+\item For the matrix $(m \times 0)$ we have\\
+$\mathtt{UniversalMorphismIntoZeroObject (m) := ZeroMorphism(m, 0) := ZeroMatrix( m, 0 )}$,
+\item For the matrix $(0 \times n)$ we have\\
+$\mathtt{UniversalMorphismFromZeroObject (n) := ZeroMorphism(0, n) := ZeroMatrix( 0, n )}$,
 \item For zero matrices $(m \times n)$ we write $\mathtt{ZeroMorphism(m, n) := ZeroMatrix( m, n )}$.
 \end{itemize}
 
@@ -670,7 +687,7 @@ For two natural numbers $m,n \in {\kmat}_{0} = \mathbb{N} = \mathbb{N}_{0}$, the
 $\Bbbk^{m\times n}$, the set of $m \times n$-matrices. This is an abelian group:
 \begin{itemize}
 \item The neutral element of the addition is the $m \times n$ zero matrix $0_{m,n}$.
-\item Addition of matrices is associative and commutative.
+\item Addition of matrices $\mathtt{AdditionForMorphisms( phi, psi ) := phi + psi}$ is associative and commutative.
 \item For every matrix $A \in \Bbbk^{m\times n}$ there is a negative matrix $-A \in \Bbbk^{m \times n}$ such that $A + (-A) = 0_{m,n}$.
 \end{itemize}
 Composition of matrices is defined as matrix multiplication, which is bilinear, i.e. satisfies the distributive laws \eqref{eq:dist1} and
@@ -753,7 +770,7 @@ If we assume algorithms for adding natural numbers
 &\mathtt{Sum}( [ m, n &&] ) = m + n, \\
 &\mathtt{Sum}( [  &&] ) = 0,
 \end{alignat*}
-for stacking two matrices with the same number of columns ($\widehat{=}$ same target) on top of each other
+for stacking two matrices with the same number of columns (same target) on top of each other
 \begin{align*}
 \varphi &: k \rightarrow n \\
 \psi &: m \rightarrow n\\
@@ -763,7 +780,7 @@ for stacking two matrices with the same number of columns ($\widehat{=}$ same ta
 \psi
 \end{pmatrix} &: k + m \rightarrow n,
 \end{align*}
-and for aligning two matrices with the same number of rows ($\widehat{=}$ same source) next to each other
+and for aligning two matrices with the same number of rows (same source) next to each other
 \begin{align*}
 \varphi &: m \rightarrow k \\
 \psi &: m \rightarrow n\\
@@ -786,20 +803,20 @@ The direct sum of the objects $\mathtt{D := [ V1, V2, \dots, VN ]}$ in $\kmat$ i
 \phantom{x}\hspace{3ex}List( D[1, \dots, (i-1)], V $\mapsto$ ZeroMorphism( D[i], V ) ), \\
 \phantom{x}\hspace{3ex}IdentityMorphism( D[i] ), \\
 \phantom{x}\hspace{3ex}List( D[(i+1), \dots, N], V $\mapsto$ ZeroMorphism( D[i], V ) ) ] )}
-\item \texttt{UniversalMorphismIntoDirectSum ( [ phi, psi ] ) := StackMatrix( [ phi, psi ] )}
-\item \texttt{UniversalMorphismFromDirectSum ( [ phi, psi ] ) := AugmentMatrix( [ phi, psi ] )}
+\item \texttt{UniversalMorphismIntoDirectSum( [ phi, psi ] ) := StackMatrix( [ phi, psi ] )}
+\item \texttt{UniversalMorphismFromDirectSum( [ phi, psi ] ) := AugmentMatrix( [ phi, psi ] )}
 \end{itemize}
 
-In the following \Gap{} session, we demonstrate the algorithms of\\
-$\mathtt{IsAdditiveCategory}$.
+In the following \Gap{} session, we demonstrate the algorithms of $\mathtt{IsAdditiveCategory}$ and verify in
+an example the two axioms of the direct sum in \ref{def:direct_sum}. To verify two these properties for a general case
+of a direct sum of objects in the matrix category is left as an exercise.
+
 The implementation of objects in the matrix category $\kmat$ in \textsc{Cap} is slightly different than simply natural numbers, since
 we always have to mention the commutative ring $\Bbbk$ for the objects. We are using the finite field
 $\Bbbk := \mathbb{F}_{3}$ for our calculations below.
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@dims := [ 3, 5, 2 ];|
-  [ 3, 5, 2 ]
-  !gapprompt@gap>| !gapinput@n := Sum( dims );|
-  10
+  !gapprompt@gap>| !gapinput@LoadPackage("LinearAlgebraForCAP");|
+  true
   !gapprompt@gap>| !gapinput@GF3 := HomalgRingOfIntegers( 3 );|
   GF(3)
   !gapprompt@gap>| !gapinput@V3 := VectorSpaceObject( 3, GF3 );|
@@ -814,65 +831,119 @@ $\Bbbk := \mathbb{F}_{3}$ for our calculations below.
     <A vector space object over GF(3) of dimension 2> ]
   !gapprompt@gap>| !gapinput@S := DirectSum( D );|
   <A vector space object over GF(3) of dimension 10>
-  !gapprompt@gap>| !gapinput@V10 := VectorSpaceObject( Sum( [3, 5, 2 ] ), GF3 );|
-  <A vector space object over GF(3) of dimension 10>
-  !gapprompt@gap>| !gapinput@one3 := IdentityMorphism( V3 );|
+  !gapprompt@gap>| !gapinput@zero35 := ZeroMorphism( V3, V5 );|
+  <A zero morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( zero35 );|
+   . . . . .
+   . . . . .
+   . . . . .
+   
+   A zero morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@one5 := IdentityMorphism( V5 );|
   <An identity morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@Display( one3 );|
-   1 . .
-   . 1 .
-   . . 1
+  !gapprompt@gap>| !gapinput@Display( one5 );|
+   1 . . . .
+   . 1 . . .
+   . . 1 . .
+   . . . 1 .
+   . . . . 1
    
    An identity morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@zero53 := ZeroMorphism( V5, V3 );|
+  !gapprompt@gap>| !gapinput@zero25 := ZeroMorphism( V2, V5 );|
   <A zero morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@Display( zero53 );|
-   . . .
-   . . .
-   . . .
-   . . .
-   . . .
+  !gapprompt@gap>| !gapinput@Display( zero25 );|
+   . . . . .
+   . . . . .
    
    A zero morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@zero23 := ZeroMorphism( V2, V3 );|
-  <A zero morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@Display( zero23 );|
-   . . .
-   . . .
-   
-   A zero morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@factor1 := StackMatrix( [ one3, zero53, zero23 ] );|
+  !gapprompt@gap>| !gapinput@pi2 := ProjectionInFactorOfDirectSum( D, 2 );|
   <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@pi1 := ProjectionInFactorOfDirectSum( D, 1 );|
-  <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@pi1 = factor1;|
-  true
-  !gapprompt@gap>| !gapinput@Display( factor1 );|
-   1 . .
-   . 1 .
-   . . 1
-   . . .
-   . . .
-   . . .
-   . . .
-   . . .
-   . . .
-   . . .
+  !gapprompt@gap>| !gapinput@Display( pi2 );|
+   . . . . .
+   . . . . .
+   . . . . .
+   1 . . . .
+   . 1 . . .
+   . . 1 . .
+   . . . 1 .
+   . . . . 1
+   . . . . .
+   . . . . .
   
   A morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@jot1 := TransposedMatrix( factor1 );|
+  !gapprompt@gap>| !gapinput@iota1 := InjectionOfCofactorOfDirectSum( D, 1 );|
   <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@Display( jot1 );|
+  !gapprompt@gap>| !gapinput@Display( iota1 );|
    1 . . . . . . . . .
    . 1 . . . . . . . .
    . . 1 . . . . . . .
    
    A morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@iota1 := InjectionOfCofactorOfDirectSum( D, 1 );|
-  <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@jot1 = iota1;|
-   true
+  !gapprompt@gap>| !gapinput@Display( PreCompose( iota1, pi2 ) );|
+   . . . . .
+   . . . . .
+   . . . . .
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@IsEqualForMorphisms( PreCompose( iota1, pi2 ), ZeroMorphism( V3, V5 ) );|
+  true
+  !gapprompt@gap>| !gapinput@iota2 := InjectionOfCofactorOfDirectSum( D, 2 );;|
+  !gapprompt@gap>| !gapinput@Display( iota2 );|
+   . . . 1 . . . . . .
+   . . . . 1 . . . . .
+   . . . . . 1 . . . .
+   . . . . . . 1 . . .
+   . . . . . . . 1 . .
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@Display( PreCompose( iota2, pi2 ) );|
+   1 . . . .
+   . 1 . . .
+   . . 1 . .
+   . . . 1 .
+   . . . . 1
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@IsEqualForMorphisms( PreCompose( iota2, pi2 ), IdentityMorphism( V5 ) );|
+  true
+  !gapprompt@gap>| !gapinput@Display( PreCompose( pi2, iota2 ) );|
+   . . . . . . . . . .
+   . . . . . . . . . .
+   . . . . . . . . . .
+   . . . 1 . . . . . .
+   . . . . 1 . . . . .
+   . . . . . 1 . . . .
+   . . . . . . 1 . . .
+   . . . . . . . 1 . .
+   . . . . . . . . . .
+   . . . . . . . . . .
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@iota3 := InjectionOfCofactorOfDirectSum( D, 3 );;|
+  !gapprompt@gap>| !gapinput@pi1 := ProjectionInFactorOfDirectSum( D, 1 );;|
+  !gapprompt@gap>| !gapinput@pi3 := ProjectionInFactorOfDirectSum( D, 3 );;|
+  !gapprompt@gap>| !gapinput@Display( PreCompose( pi1, iota1 ) + PreCompose( pi2, iota2 )|
+  !gapprompt@>| !gapinput@   + PreCompose( pi3, iota3 ) );|
+   1 . . . . . . . . .
+   . 1 . . . . . . . .
+   . . 1 . . . . . . .
+   . . . 1 . . . . . .
+   . . . . 1 . . . . .
+   . . . . . 1 . . . .
+   . . . . . . 1 . . .
+   . . . . . . . 1 . .
+   . . . . . . . . 1 .
+   . . . . . . . . . 1
+   
+   A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@IsEqualForMorphisms(|
+  !gapprompt@>| !gapinput@     PreCompose( pi1, iota1 )|
+  !gapprompt@>| !gapinput@   + PreCompose( pi2, iota2 )|
+  !gapprompt@>| !gapinput@   + PreCompose( pi3, iota3 ),|
+  !gapprompt@>| !gapinput@   IdentityMorphism( S ) );|
+  true
 \end{Verbatim}
+
 We could be taking the minimalistic approach of defining all the functions from the least set of existing matrix algorithms,
 and using the fact that appending the columns of two given matrices with $\mathtt{AugmentMatrix( [ phi, psi ] )}$ is
 the same as stacking their transposed matrices and then transpose the stacked matrix
@@ -922,7 +993,7 @@ different ways.
   !gapprompt@gap>| !gapinput@one2 := IdentityMorphism( V2 );|
   <An identity morphism in Category of matrices over GF(3)>
   !gapprompt@gap>| !gapinput@result2 := PreCompose( UniversalMorphismIntoDirectSum( [ one2, one2 ] ),|
-  !gapprompt@>| !gapinput@  UniversalMorphismFromDirectSum( [ mor1, mor2 ] ) );|
+  !gapprompt@>| !gapinput@   UniversalMorphismFromDirectSum( [ mor1, mor2 ] ) );|
   <A morphism in Category of matrices over GF(3)>
   !gapprompt@gap>| !gapinput@Display( result2 );|
    1 2 .
