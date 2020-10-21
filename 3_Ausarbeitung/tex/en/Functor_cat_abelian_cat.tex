@@ -7,13 +7,14 @@ The functor category with values in $\kmat$ is an Abelian category with enough p
 
 \begin{definition}[The functor category $\HomAkmat$]
 Let $\Bbbk$ be a commutative ring, and let $\mathcal{A}$ be a finite-dimensional algebroid over $\Bbbk$.\\
-The \ul{functor category} $\HomAkmat$ has as objects $\Bbbk$-linear functors\\
-$F : \mathcal{A} \rightarrow \kmat \in \HomAkmat_{0}$, where each
+The \ul{functor category} $\HomAkmat$ has
+\begin{itemize}
+\item as objects $\Bbbk$-linear functors $F : \mathcal{A} \rightarrow \kmat \in \HomAkmat_{0}$, where each
 object $i \in \mathcal{A}$ gets mapped to a natural number $F(i) \in \kmat_{0} = \mathbb{N}_{0}$, and each
-morphism $b : i \rightarrow j \in \mathcal{A}_{1}$ gets mapped to an $F(i) \times F(j)$ matrix\\
-$F(b) : F(i) \rightarrow F(j) \in \kmat_{1}$.
-A morphism $\alpha : F \rightarrow G \in \HomAkmat_{1}$ is a natural transformation $\alpha : F \Rightarrow G$ with each component
-$\alpha_{i} : F(i) \rightarrow G(i) \in \kmat_{1}$ for an object $i \in \mathcal{A}$ being a $F(i) \times G(i)$ matrix satisfying the
+morphism $b : i \rightarrow j \in \mathcal{A}_{1}$ gets mapped to an $F(i) \times F(j)$ matrix
+$F(b) : F(i) \rightarrow F(j) \in \kmat_{1}$,
+\item as morphisms $\alpha : F \rightarrow G \in \HomAkmat_{1}$ natural transformations $\alpha : F \Rightarrow G$ with each component
+$\alpha_{i} : F(i) \rightarrow G(i) \in \kmat_{1}$ for an object $i \in \mathcal{A}$ being an $F(i) \times G(i)$ matrix satisfying the
 naturality conditions in \eqref{eq:naturality_condition}, i.e.
 \[
 \begin{tikzcd}
@@ -22,7 +23,11 @@ F(i) \arrow[rr, "\alpha_{i}"] \arrow[dd, "Fb"] &  & G(i) \arrow[dd, "Gb"] \\
 F(j) \arrow[rr, "\alpha_{j}"]                &  & G(j)                
 \end{tikzcd}
 \]
-commutes for all $b : i \rightarrow j \in \mathcal{A}_{1}$.
+commutes for all $b : i \rightarrow j \in \mathcal{A}_{1}$, i.e.
+\begin{align}
+\alpha_{i}\,Gb &= Fb\,\alpha_{j}
+\end{align}
+\end{itemize}
 \end{definition}
 
 \begin{theorem}\label{thm:functor_category_abelian}
@@ -223,7 +228,7 @@ For the components $\eta_{c} : Fc \rightarrow Gc \in \kmat_{1}$ we have in $\kma
 and the kernel embedding
 $\kappa_{c} := \mathrm{KernelEmbedding}(\eta_{c}) : Kc \rightarrow Fc$ such that
 $\kappa_{c} \eta_{c} = 0_{Kc,Fc}$.
-We define the kernel embedding of $\eta$ as $\kappa : K \rightarrow F$ by its components
+We define the kernel embedding of $\eta$ as $\kappa : K \hookrightarrow F$ by its components
 $\kappa_{c} = \mathrm{KernelEmbedding}(\eta)_{c} := \mathrm{KernelEmbedding}(\eta_{c}) : Kc \rightarrow Fc$ with source
 $K = \mathrm{KernelObject}(\eta)$ defined on objects as $Kc := \mathrm{KernelObject}(\eta_{c})$ which is the source of the
 kernel embedding of $\eta_{c}$.\\
@@ -232,8 +237,8 @@ how $K$ works on morphisms.
 
 We have for each morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ the morphisms $Fa : Fc \rightarrow Fc'$ and
 $Ga : Gc \rightarrow Gc'$. Then the kernel embedding $\kappa$ of a natural transformation $\eta : F \rightarrow G$ has components
-$\kappa_{c} : Fc \rightarrow Gc$ with $\kappa_{c} = \mathrm{KernelEmbedding}(\eta_{c})$ and the kernel object $K$ acts on objects
-as $\mathrm{KernelObject}(\eta)c = \mathrm{KernelObject}(\eta_{c})$.
+$\kappa_{c} : Kc \rightarrow Fc$ with $\kappa_{c} = \mathrm{KernelEmbedding}(\eta_{c})$ and the kernel object $K$ acts on objects
+as $\mathrm{KernelObject}(\eta)c = \mathrm{KernelObject}(\eta_{c}) = Kc$.
 And on morphisms $Ka := \mathrm{KernelLift}(\eta_{c},\kappa_{c}Fa)$.
 
 \[
@@ -244,124 +249,14 @@ Kc' \arrow[rr, "\kappa_{c'}", hook]                                             
 \end{tikzcd}
 \]
 
-
-As an example, let $\mathcal{A}$ be our concrete category $C_{3}C_{3}$ with objects $1,2$ and morphisms
-$a : 1\rightarrow 1, b : 1 \rightarrow 2, c : 2 \rightarrow 2$. Then the following rectangle describes how the functors $F,G$ and $K$ act on
-$\mathcal{A}$:
+Now for the $\mathrm{KernelLift}(\eta, \tau)$:
 
 \[
 \begin{tikzcd}
-K1 \arrow["Ka"', loop, distance=2em, in=125, out=55] \arrow[d, "Kb"] \arrow[r, "\kappa_{1}"] & F1 \arrow["Fa"', loop, distance=2em, in=125, out=55] \arrow[d, "Fb"] \arrow[r, "\eta_{1}"] & G1 \arrow["Ga"', loop, distance=2em, in=125, out=55] \arrow[d, "Gb"] \\
-K2 \arrow["Kc"', loop, distance=2em, in=305, out=235] \arrow[r, "\kappa_{2}"]                & F2 \arrow["Fc"', loop, distance=2em, in=305, out=235] \arrow[r, "\eta_{2}"]                & G2 \arrow["Gc"', loop, distance=2em, in=305, out=235]               
-\end{tikzcd}
-\]
-Naturality of $\kappa$ and $\eta$ gives the following equations:\\
-\begin{minipage}{.20\textwidth}
-\phantom{}
-\end{minipage}
-\begin{minipage}{.28\textwidth}
-\begin{subequations}
-\begin{align}
-Ka \kappa_{1} &=\label{eq:natural_Ka_kappa_kappa_Fa}
- \kappa_{1} Fa \\
-Kb \kappa_{2} &= \kappa_{1} Fb \\
-Kc \kappa_{2} &= \kappa_{2} Fc
-\end{align}
-\end{subequations}
-\end{minipage}
-\begin{minipage}{.04\textwidth}
-\phantom{}
-\end{minipage}
-\begin{minipage}{.28\textwidth}
-\begin{subequations}
-\begin{align}
-Fa \eta_{1} &= \eta_{1} Ga \\
-Fb \eta_{2} &= \eta_{1} Gb \\
-Fc \eta_{2} &= \eta_{2} Gc
-\end{align}
-\end{subequations}
-\end{minipage}
-\begin{minipage}{.20\textwidth}
-\phantom{}
-\end{minipage}
-
-which together with $\kappa \eta = 0_{K,G}$ gives the following equations:
-
-\begin{subequations}
-\begin{alignat}{4}
-Ka\kappa_{1}\eta_{1} &= \kappa_{1}Fa\eta_{1} &= \kappa_{1}\eta_{1}Ga &= 0 : K1 \rightarrow G1 \\
-Kb\kappa_{2}\eta_{2} &= \kappa_{1}Fb\eta_{2} &= \kappa_{1}\eta_{1}Gb &= 0 : K1 \rightarrow G2 \\
-Kc\kappa_{2}\eta_{2} &= \kappa_{2}Fc\eta_{2} &= \kappa_{2}\eta_{2}Gc &= 0 : K2 \rightarrow G2
-\end{alignat}
-\end{subequations}
-
-To determine the morphism $Ka$, we are writing $\kappa_{1} : K1 \rightarrow F1$ and $Ka \kappa_{1} : K1 \rightarrow F1$ in one diagram:
-\[
-\begin{tikzcd}
-K1 \arrow[rr, "\kappa_{1}", hook]                                 &                                   & F1 \arrow[rr, "\eta_{1}"] &  & G1 \\
-                                                                  & K1 \arrow[ru, "\kappa_{1}", hook] &                           &  &    \\
-K1 \arrow[ru, "Ka"] \arrow[uu, "(Ka\kappa_{1}/\eta_{1})", dashed] &                                   &                           &  &   
-\end{tikzcd}
-\]
-Then we have two competing morphisms, $\kappa_{1}$ and $Ka \kappa_{1}$ both from $K1 \rightarrow F1$, and both with
-\begin{align*}
-\kappa_{1}\eta_{1} &= 0_{K1,G1} \\
-Ka \kappa_{1}\eta_{1} &= 0_{K1,G1}
-\end{align*}
-Then we get a unique morphism $(Ka\kappa_{1}/\eta_{1}) := \mathrm{KernelLift}(\eta_{1},Ka\kappa_{1})$ such that
-\begin{align*}
-Ka\kappa_{1} &= (Ka\kappa_{1}/\eta_{1})\kappa_{1}
-\end{align*}
-But since $\kappa_{1}$ is a monomorphism, we get that
-\begin{align*}
-Ka = (Ka\kappa_{1}/\eta_{1}) = \mathrm{KernelLift}(\eta_{1},Ka\kappa_{1})
-\end{align*}
-which a priori doesn't help calculating $Ka$, since it stands on both sides of the equation, but with equation
-\eqref{eq:natural_Ka_kappa_kappa_Fa} we get
-\begin{align*}
-Ka\kappa_{1} &= \kappa_{1} Fa \\
-\end{align*}
-and therefore
-\begin{align*}
-Ka = \mathrm{KernelLift}(\eta_{1},\kappa_{1} Fa)
-\end{align*}
-
-We have for each morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ the morphisms $Fa : Fc \rightarrow Fc'$ and
-$Ga : Gc \rightarrow Gc'$. Then the kernel embedding $\kappa$ of a natural transformation $\eta : F \rightarrow G$ has components
-$\kappa_{c} : Fc \rightarrow Gc$ with $\kappa_{c} = \mathrm{KernelEmbedding}(\eta_{c})$ and the kernel object $K$ acts on objects
-as $\mathrm{KernelObject}(\eta)c = \mathrm{KernelObject}(\eta_{c})$.
-And on morphisms $Ka := \mathrm{KernelLift}(\eta_{c},\kappa_{c}Fa)$.
-
-\[
-\begin{tikzcd}
-Kc \arrow[dd, "Ka"] \arrow[rr, "\kappa_{c}", hook] \arrow[rrdd, "\kappa_{c}Fa", shift left] \arrow[rrdd, "Ka\kappa_{c'}"', shift right] \arrow[dd, "(\kappa_{c}Fa/\eta_{c'})"', dashed, shift right=2] &  & Fc \arrow[rr, "\eta_{c}"] \arrow[dd, "Fa"] &  & Gc \arrow[dd, "Ga"] \arrow[rr, "\varepsilon_{c}", two heads] \arrow[rrdd, "Ga\varepsilon_{c'}"', shift right] \arrow[rrdd, "\varepsilon_{c}Ca", shift left] &  & Cc \arrow[dd, "Ca"'] \arrow[dd, "(Ga\varepsilon_{c'}\backslash \eta_{c})", dashed, shift left=2] \\
-                                                                                                                                                                                                       &  &                                            &  &                                                                                                                                                             &  &                                                                                                  \\
-Kc' \arrow[rr, "\kappa_{c'}", hook]                                                                                                                                                                    &  & Fc' \arrow[rr, "\eta_{c'}"]                &  & Gc' \arrow[rr, "\varepsilon_{c'}", two heads]                                                                                                               &  & Cc'                                                                                             
-\end{tikzcd}
-\]
-
-KernelLift:
-\[
-\begin{tikzcd}
-K \arrow[r, "\kappa"]                                   & F \arrow[r, "\eta"] & G \\
+K \arrow[r, "\kappa", hook]                                   & F \arrow[r, "\eta"] & G \\
 T \arrow[ru, "\tau"] \arrow[u, "(\tau / \eta)", dashed] &                     &  
 \end{tikzcd}
 \]
-
-CokernelColift:
-\[
-\begin{tikzcd}
-F \arrow[r, "\eta"] & G \arrow[r, "\varepsilon"] \arrow[rd, "\tau"'] & C                                            \\
-                    &                                                & T \arrow[u, "(\tau\backslash\eta)"', dashed]
-\end{tikzcd}
-\]
-
-This describes the kernel object $K$.
-
-Analogous we have the cokernel object $C$ with $Cc = \mathrm{CokernelObject}(\eta_{c})$ and
-$Ca = \mathrm{CokernelColift}(\eta_{c}, Ga\varepsilon_{c'})$.
-
-Now for the $\mathrm{KernelLift}(\eta, \tau)$.
 
 $\eta : F \rightarrow G$
 
@@ -373,6 +268,45 @@ The natural transformation $\lambda : T \rightarrow K$ defined by its components
 $\lambda_{c} := (\tau_{c} / \eta_{c}) := \mathrm{KernelLift}( \eta_{c}, \tau_{c} )$ satisfies
 $\tau_{c} = \lambda_{c} \kappa_{c} = (\tau_{c} / \eta_{c} ) \kappa_{c}$ and therefore
 $\tau = \lambda \kappa$, i.e. $\lambda$ is the kernel lift $\mathrm{KernelLift}(\eta, \tau)$.
+
+This fully describes the kernel of $\eta$.
+\end{subproof}
+\begin{subproof}
+For the same morphism $\eta : F \rightarrow G \in \HomAkmat_{1}$  we want to define its cokernel, i.e. the triple
+\begin{itemize}
+\item $C := \mathrm{CokernelObject}(\eta)$
+\item $\varepsilon := \mathrm{CokernelProjection}(\eta) : K \twoheadrightarrow F$ such that $\eta\,\varepsilon = 0_{F,C}$.
+\item For any other $\tau : G \rightarrow T$ such that $\eta\,\tau = 0_{G,T}$ we have a unique morphism
+$(\varepsilon \backslash \tau) := \mathrm{CokernelColift}(\eta,\tau)$ such that $\tau = \varepsilon (\varepsilon \backslash \tau)$
+\end{itemize}
+We have for each morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ the morphisms $Fa : Fc \rightarrow Fc'$ and
+$Ga : Gc \rightarrow Gc'$. Then the cokernel projection $\varepsilon$ of a natural transformation $\eta : F \rightarrow G$ has components
+$\varepsilon_{c} : Gc \rightarrow Cc$ with $\varepsilon_{c} = \mathrm{CokernelProjection}(\eta_{c})$ and the Cokernel object $C$ acts on
+objects as $\mathrm{CokernelObject}(\eta)c = \mathrm{CokernelObject}(\eta_{c}) = Cc$.
+And on morphisms $Ca := \mathrm{CokernelColift}(\eta_{c},Ga\,\varepsilon_{c'})$.
+
+\[
+\begin{tikzcd}
+Kc \arrow[dd, "Ka"] \arrow[rr, "\kappa_{c}", hook] \arrow[rrdd, "\kappa_{c}Fa", shift left] \arrow[rrdd, "Ka\kappa_{c'}"', shift right] \arrow[dd, "(\kappa_{c}Fa/\eta_{c'})"', dashed, shift right=2] &  & Fc \arrow[rr, "\eta_{c}"] \arrow[dd, "Fa"] &  & Gc \arrow[dd, "Ga"] \arrow[rr, "\varepsilon_{c}", two heads] \arrow[rrdd, "Ga\varepsilon_{c'}"', shift right] \arrow[rrdd, "\varepsilon_{c}Ca", shift left] &  & Cc \arrow[dd, "Ca"'] \arrow[dd, "(Ga\varepsilon_{c'}\backslash \eta_{c})", dashed, shift left=2] \\
+                                                                                                                                                                                                       &  &                                            &  &                                                                                                                                                             &  &                                                                                                  \\
+Kc' \arrow[rr, "\kappa_{c'}", hook]                                                                                                                                                                    &  & Fc' \arrow[rr, "\eta_{c'}"]                &  & Gc' \arrow[rr, "\varepsilon_{c'}", two heads]                                                                                                               &  & Cc'                                                                                             
+\end{tikzcd}
+\]
+
+
+CokernelColift:
+\[
+\begin{tikzcd}
+F \arrow[r, "\eta"] & G \arrow[r, "\varepsilon", two heads] \arrow[rd, "\tau"'] & C \arrow[d, "(\tau\backslash\eta)", dashed]                                           \\
+                    &                                                & T 
+\end{tikzcd}
+\]
+
+
+Analogous we have the cokernel object $C$ with $Cc = \mathrm{CokernelObject}(\eta_{c})$ and
+$Ca = \mathrm{CokernelColift}(\eta_{c}, Ga\varepsilon_{c'})$.
+
+
 
 \end{subproof}
 
@@ -411,3 +345,101 @@ with $(\tau / \iota)$ defined as $(\tau / \iota)_{c} := (\tau_{c} / \iota_{c})$.
 \end{subproof}
 \end{enumerate}
 \end{proof}
+
+
+\begin{example}[Naturality equations in $C_{3}C_{3}$]
+
+As an example, let $\mathcal{A}$ be our concrete category $C_{3}C_{3}$ with objects $1,2$ and morphisms
+$a : 1\rightarrow 1,\, b : 1 \rightarrow 2,\, c : 2 \rightarrow 2$. Then the following rectangle describes how the functors $F$, $G$, $K$ and $C$
+act on $\mathcal{A}$:
+
+\[
+\begin{tikzcd}
+K1 \arrow["Ka"', loop, distance=2em, in=125, out=55] \arrow[d, "Kb"] \arrow[r, "\kappa_{1}"] & F1 \arrow["Fa"', loop, distance=2em, in=125, out=55] \arrow[d, "Fb"] \arrow[r, "\eta_{1}"] & G1 \arrow["Ga"', loop, distance=2em, in=125, out=55] \arrow[d, "Gb"] \arrow[r, "\varepsilon_{1}"] & C1 \arrow[d, "Cb"] \arrow["Ca"', loop, distance=2em, in=125, out=55] \\
+K2 \arrow["Kc"', loop, distance=2em, in=305, out=235] \arrow[r, "\kappa_{2}"]                & F2 \arrow["Fc"', loop, distance=2em, in=305, out=235] \arrow[r, "\eta_{2}"]                & G2 \arrow["Gc"', loop, distance=2em, in=305, out=235] \arrow[r, "\varepsilon_{2}"]                & C2 \arrow["Cc"', loop, distance=2em, in=305, out=235]               
+\end{tikzcd}
+\]
+
+\noindent Naturality of $\kappa$, $\eta$ and $\varepsilon$ gives the following equations:\\
+\begin{minipage}{.04\textwidth}
+\phantom{}
+\end{minipage}
+\begin{minipage}{.28\textwidth}
+\begin{subequations}
+\begin{align}
+Ka \kappa_{1} &=\label{eq:naturality_equations_first}
+ \kappa_{1} Fa \\
+Kb \kappa_{2} &= \kappa_{1} Fb \\
+Kc \kappa_{2} &= \kappa_{2} Fc
+\end{align}
+\end{subequations}
+\end{minipage}
+\begin{minipage}{.04\textwidth}
+\phantom{}
+\end{minipage}
+\begin{minipage}{.28\textwidth}
+\begin{subequations}
+\begin{align}
+Fa \eta_{1} &= \eta_{1} Ga \\
+Fb \eta_{2} &= \eta_{1} Gb \\
+Fc \eta_{2} &= \eta_{2} Gc
+\end{align}
+\end{subequations}
+\end{minipage}
+\begin{minipage}{.04\textwidth}
+\phantom{}
+\end{minipage}
+\begin{minipage}{.28\textwidth}
+\begin{subequations}
+\begin{align}
+Ga \varepsilon_{1} &= \varepsilon_{1} Ca \\
+Gb \varepsilon_{2} &= \varepsilon_{1} Cb \\
+Gc \varepsilon_{2} &=\label{eq:naturality_equations_last}
+ \varepsilon_{2} Cc
+\end{align}
+\end{subequations}
+\end{minipage}
+\begin{minipage}{.04\textwidth}
+\phantom{}
+\end{minipage}
+
+\noindent which together with $\kappa \, \eta = 0_{K,G}$ and $\eta\, \varepsilon = 0_{F,C}$ gives the following equations:
+\begin{subequations}
+\begin{alignat}{4}
+Ka\kappa_{1}\eta_{1} &= \kappa_{1}Fa\eta_{1} &= \kappa_{1}\eta_{1}Ga &= 0 : K1 \rightarrow G1 \\
+Kb\kappa_{2}\eta_{2} &= \kappa_{1}Fb\eta_{2} &= \kappa_{1}\eta_{1}Gb &= 0 : K1 \rightarrow G2 \\
+Kc\kappa_{2}\eta_{2} &= \kappa_{2}Fc\eta_{2} &= \kappa_{2}\eta_{2}Gc &= 0 : K2 \rightarrow G2
+\end{alignat}
+\end{subequations}
+
+To determine the morphism $Ka$, we are writing $\kappa_{1} : K1 \rightarrow F1$ and $Ka \kappa_{1} : K1 \rightarrow F1$ in one diagram:
+\[
+\begin{tikzcd}
+K1 \arrow[rr, "\kappa_{1}", hook]                                 &                                   & F1 \arrow[rr, "\eta_{1}"] &  & G1 \\
+                                                                  & K1 \arrow[ru, "\kappa_{1}", hook] &                           &  &    \\
+K1 \arrow[ru, "Ka"] \arrow[uu, "(Ka\kappa_{1}/\eta_{1})", dashed] &                                   &                           &  &   
+\end{tikzcd}
+\]
+Then we have two competing morphisms, $\kappa_{1}$ and $Ka \kappa_{1}$ both from $K1 \rightarrow F1$, and both with
+\begin{align*}
+\kappa_{1}\eta_{1} &= 0_{K1,G1} \\
+Ka \kappa_{1}\eta_{1} &= 0_{K1,G1}
+\end{align*}
+Then we get a unique morphism $(Ka\kappa_{1}/\eta_{1}) := \mathrm{KernelLift}(\eta_{1},Ka\kappa_{1})$ such that
+\begin{align*}
+Ka\kappa_{1} &= (Ka\kappa_{1}/\eta_{1})\kappa_{1}
+\end{align*}
+But since $\kappa_{1}$ is a monomorphism, we get that
+\begin{align*}
+Ka = (Ka\kappa_{1}/\eta_{1}) = \mathrm{KernelLift}(\eta_{1},Ka\kappa_{1})
+\end{align*}
+which a priori doesn't help calculating $Ka$, since it stands on both sides of the equation, but with equation
+\eqref{eq:naturality_equations_first} we get
+\begin{align*}
+Ka\kappa_{1} &= \kappa_{1} Fa \\
+\end{align*}
+and therefore
+\begin{align*}
+Ka = \mathrm{KernelLift}(\eta_{1},\kappa_{1} Fa)
+\end{align*}
+\end{example}

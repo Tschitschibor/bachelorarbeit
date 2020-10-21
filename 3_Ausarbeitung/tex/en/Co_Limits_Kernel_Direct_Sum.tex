@@ -214,9 +214,11 @@ A \ul{biproduct} is a product and a coproduct simultaneously, i.e. consists of t
 \item an object $S \in \mathcal{C}_{0}$,
 \item a family of morphisms $\pi = \{ \pi_{i} : S \rightarrow S_{i} \}_{i\in I}$,
 \item a family of morphisms $\iota = \{ \iota_{i} : S_{i} \rightarrow S \}_{i\in I}$,
-\item a dependent function $u_{\text{in}}$ mapping every family $\tau = \{ \tau_{i} : T \rightarrow S_{i} \}_{i\in I}$ to a morphism
+\item a dependent function $u_{\text{in}}$ mapping every family $\tau = \{ \tau_{i} : T \rightarrow S_{i} \}_{i\in I}$ of morphisms
+with the same source $T$ to a morphism
 $u_{\text{in}}(\tau) : T \rightarrow S$ such that $u_{\text{in}}(\tau) \pi_{i} \sim \tau_{i}$ for all $i \in I$,
-\item a dependent function $u_{\text{out}}$ mapping every family $\rho = \{ \rho_{i} : S_{i} \rightarrow R \}_{i\in I}$ to a morphism
+\item a dependent function $u_{\text{out}}$ mapping every family $\rho = \{ \rho_{i} : S_{i} \rightarrow R \}_{i\in I}$ of morphisms
+with the same target $R$ to a morphism
 $u_{\text{out}}(\rho) : S \rightarrow R$ such that $\iota_{i} u_{\text{out}}(\rho) \sim \rho_{i}$ for all $i \in I$,
 \end{itemize}
 \end{definition}
@@ -345,6 +347,8 @@ K \arrow[r, "\kappa"]                            & A \arrow[r, "f"] & B \\
 T \arrow[ru, "\tau"'] \arrow[u, "(\tau/\kappa)", dashed] &                  &  
 \end{tikzcd}
 \]
+The last property means that the kernel embedding $\kappa$ dominates every such $\tau$, and that the kernel lift
+$(\tau/\kappa)$ is the unique lift of $\tau$ along $\kappa$ in the sense of \ref{def:lift_colift_codominate}(1).
 \end{definition}
 
 \begin{definition}[Cokernel]
@@ -376,6 +380,8 @@ A \arrow[r, "f"] & B \arrow[r, "\varepsilon", two heads] \arrow[rd, "\tau"] & C 
                  &                                                          & T                                                 
 \end{tikzcd}
 \]
+The last property means that the cokernel projection $\varepsilon$ codominates every such $\tau$, and that the cokernel colift
+$(\varepsilon \backslash \tau)$ is the unique colift of $\tau$ along $\varepsilon$ in the sense of \ref{def:lift_colift_codominate}(2).
 \end{definition}
 
 \begin{definition}[Image]
@@ -472,46 +478,127 @@ The doctrine $\mathtt{IsPreAbelianCategory}$ therefore involves algorithms of $\
 
 \begin{remark}[Kernel lift of cokernel colift $=$ cokernel colift of kernel lift]\label{rmk:kerl_col_col_kerl}\phantom{}\\
 In categories with kernels and cokernels we can compute images and coimages together with an induced morphism
-$\overline{\varphi} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$. This morphism being an isomorphism
-is one of the defining axioms of Abelian categories.
+\begin{align}
+\overline{\varphi} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi).
+\end{align}
+This morphism being an isomorphism is one of the defining axioms of Abelian categories.
+\end{remark}
+\begin{proof}
+Given a morphism $\varphi : M \rightarrow N$ in a pre-Abelian category $\mathcal{C}$, we can compute its kernel embedding
+$\kappa : \mathrm{Ker}(\varphi) \hookrightarrow M$ and its cokernel projection
+$\varepsilon : N \twoheadrightarrow \mathrm{Coker}(\varphi)$. They are the equalizer and coequalizer of $\varphi$ and $0_{M,N}$,
+in particular we have $\kappa \, \varphi = 0_{\mathrm{Ker}(\varphi),N}$ and
+$\varphi \, \varepsilon = 0_{M,\mathrm{Coker}(\varphi)}$ (the two $0$-arrows on the top).
 
-The kernel lift of the cokernel colift
-$(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$
+For the kernel embedding $\kappa$ we can compute its cokernel projection
+$\varepsilon_{\kappa} : M \twoheadrightarrow \mathrm{Coim}(\varphi)$ which we called the coimage projection of $\varphi$.
+Keeping in mind, that it is the cokernel of $\kappa$, i.e. the coequalizer of $\kappa$ and $0_{\mathrm{Ker}(\varphi),M}$, we get
+the zero morphism $0_{\mathrm{Ker}(\varphi),\mathrm{Coim}(\varphi)}$ (the bottom left $0$-arrow).
+
+Dually for the cokernel projection $\varepsilon$ we can compute its kernel embedding
+$\kappa_{\varepsilon} : \mathrm{Im} \hookrightarrow N$ which we called the image embedding of $\varphi$. Again we see
+that we have the zero morphism $0_{\mathrm{Im}(\varphi),\mathrm{Coker}(\varphi)}$ (the bottom right $0$-arrow).
+
+The two morphisms $\varphi$ and its coimage projection $\varepsilon_{\kappa}$ have the same source $M$ and
+composed with $\kappa$, both yield zero morphisms. Since $\varepsilon_{\kappa}$ codominates $\varphi$, we have
+a unique cokernel colift\\
+$(\varepsilon_{\kappa}\backslash \varphi) : \mathrm{Coim}(\varphi) \rightarrow N$, which is one of the two diagonals
+in the square diagram, and for which\\
+$\varepsilon_{\kappa} \cdot (\varepsilon_{\kappa}\backslash \varphi) = \varphi$.
+
+Now $\kappa_{\varepsilon}$ and the above colift $(\varepsilon_{\kappa}\backslash \varphi)$ both have the same target $N$.
+For $\kappa_{\varepsilon}$ we already know that composed with $\varepsilon$ we get the zero morphism.
+If we also proved that
+$(\varepsilon_{\kappa}\backslash \varphi) \cdot \varepsilon = 0_{\mathrm{Coim}(\varphi),\mathrm{Coker}(\varphi)}$, i.e.
+the red $0$-arrow in the picture, then since $\kappa_{\varepsilon}$ dominates $(\varepsilon_{\kappa}\backslash \varphi)$
+we get the existence of the kernel lift of the cokernel colift
+\[
+(\varepsilon_{\kappa}\backslash \varphi) / \kappa_{\varepsilon} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)
+\]
 
 \[
 \begin{tikzcd}
-\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", bend left] &                                                                                                                                                                                             &  &                                                                                               & \mathrm{Coker}(\varphi) \\
-                                                                                                             & M \arrow[rrru, "0", bend left] \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads]                                                                                         &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                         \\
+\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", pos=0.3, bend left] &                                                                                                                                                                                             &  &                                                                                               & \mathrm{Coker}(\varphi) \\
+                                                                                                             & M \arrow[rrru, "0", pos=0.7, bend left] \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads]                                                                                         &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                         \\
                                                                                                              &                                                                                                                                                                                             &  &                                                                                               &                         \\
-                                                                                                             & \mathrm{Coim}(\varphi) \arrow[rruu, "(\varepsilon_{\kappa}\backslash \varphi)"'] \arrow[rr, "(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon}"'] \arrow[rrruuu, "0", pos=.7, color=red, bend left] &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                        
+                                                                                                             & \mathrm{Coim}(\varphi) \arrow[rruu, "(\varepsilon_{\kappa}\backslash \varphi)"'] \arrow[rr, "(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon}"'] \arrow[rrruuu, "0", pos=0.7, color=red, bend left] &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                        
 \end{tikzcd}
 \]
 
-We want to prove that the composition
-$(\varepsilon_{\kappa}\backslash\varphi) \varepsilon : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Coker}(\varphi)$ is the zero morphism (as
-indicated by the red arrow).
-Assuming
+\begin{subproof}[Proof that $(\varepsilon_{\kappa}\backslash \varphi) \cdot \varepsilon = 0_{\mathrm{Coim}(\varphi),\mathrm{Coker}(\varphi)}$]\phantom{}\\
+We have $\varepsilon_{\kappa} \cdot (\varepsilon_{\kappa}\backslash \varphi) = \varphi$, i.e. the top left triangle
+of the square commutes. But then since composition with a zero morphism gives a zero morphism we have
 \begin{align*}
-&M \xrightarrow{\varphi} N \\
-=\, &M \xrightarrow{\varepsilon_{\kappa}} \mathrm{Coim}(\varphi) \xrightarrow{(\varepsilon_{\kappa}\backslash\varphi)} N \\
-=\, &M \xrightarrow{\varepsilon_{\kappa}} \mathrm{Coim}(\varphi) \xrightarrow{(\varepsilon_{\kappa}\backslash\varphi)/\kappa_{\varepsilon}}
-\mathrm{Im}(\varphi) \xrightarrow{\kappa_{\varepsilon}} N,
+&\varepsilon_{\kappa} \cdot 0_{\mathrm{Coim}(\varphi),\mathrm{Coker}(\varphi)} : M \rightarrow \mathrm{Coker}(\varphi) \\
+=\, &0_{M,\mathrm{Coker}(\varphi)} \\
+=\, &\varphi \cdot \varepsilon \\
+=\, &\varepsilon_{\kappa} \cdot (\varepsilon_{\kappa}\backslash \varphi) \cdot \varepsilon
 \end{align*}
-i.e. that both triangles and thus the square commute.
-Then 
+And pre-cancellation of the epimorphism $\varepsilon_{\kappa}$ gives
+\begin{align*}
+0_{\mathrm{Coim}(\varphi),\mathrm{Coker}(\varphi)} = (\varepsilon_{\kappa}\backslash \varphi) \cdot \varepsilon.
+\end{align*}
+\end{subproof}
 
-The cokernel colift of the kernel lift
-$\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon}) : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)$
+Dual to the above picture, the two morphisms $\varphi$ and its image embedding $\kappa_{\varepsilon}$ both have the same
+target $N$ and composed with $\varepsilon$, both yield zero morphisms. Since $\kappa_{\varepsilon}$ dominates $\varphi$,
+we have a unique kernel lift
+$(\varphi / \kappa_{\varepsilon}) : M \rightarrow \mathrm{Im}(\varphi)$, which is the other diagonal in the square diagram,
+and for which $(\varphi / \kappa_{\varepsilon})\cdot \kappa_{\varepsilon} = \varphi$.
+
+Now $\varepsilon_{\kappa}$ and $(\varphi / \kappa_{\varepsilon})$ both have the same source $M$. For $\varepsilon_{\kappa}$
+we already know that composed with $\kappa$ we get the zero morphism. If we also proved that
+$\kappa \cdot (\varphi / \kappa_{\varepsilon}) = 0_{\mathrm{Ker}(\varphi),\mathrm{Im}(\varphi)}$, i.e. the red $0$-arrow in the
+picture, then, since $\varepsilon_{\kappa}$ codominates $(\varphi / \kappa_{\varepsilon})$ we get the existence of the
+cokernel colift of the kernel lift
+\[
+\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon}) : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi)
+\]
 
 \[
 \begin{tikzcd}
-\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", bend left] \arrow[rrrddd, "0", pos=.3, color=red, shift left=2, bend right] &                                                                                                                                                    &  &                                                                                               & \mathrm{Coker}(\varphi) \\
-                                                                                                                                             & M \arrow[rrru, "0", bend left] \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads] \arrow[rrdd, "(\varphi/\kappa_{\varepsilon})"] &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                         \\
+\mathrm{Ker}(\varphi) \arrow[rd, "\kappa", hook] \arrow[rddd, "0"', bend right] \arrow[rrrd, "0", pos=0.3, bend left] \arrow[rrrddd, "0"', pos=0.25, color=red, shift left=2, bend right] &                                                                                                                                                    &  &                                                                                               & \mathrm{Coker}(\varphi) \\
+                                                                                                                                             & M \arrow[rrru, "0", pos=0.7, bend left] \arrow[rr, "\varphi"] \arrow[dd, "\varepsilon_{\kappa}"', two heads] \arrow[rrdd, "(\varphi/\kappa_{\varepsilon})"] &  & N \arrow[ru, "\varepsilon", two heads]                                                        &                         \\
                                                                                                                                              &                                                                                                                                                    &  &                                                                                               &                         \\
                                                                                                                                              & \mathrm{Coim}(\varphi) \arrow[rr, "\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon})"']                                                 &  & \mathrm{Im}(\varphi) \arrow[uu, "\kappa_{\varepsilon}"', hook] \arrow[ruuu, "0"', bend right] &                        
 \end{tikzcd}
 \]
-\end{remark}
+
+\begin{subproof}[Proof that $\kappa \cdot (\varphi / \kappa_{\varepsilon}) = 0_{\mathrm{Ker}(\varphi),\mathrm{Im}(\varphi)}$]\phantom{}\\
+We have $(\varphi / \kappa_{\varepsilon}) \cdot \kappa_{\varepsilon} = \varphi$, i.e. the top right triangle
+of the square commutes. But then since composition with a zero morphism gives a zero morphism we have
+\begin{align*}
+&0_{\mathrm{Ker}(\varphi),\mathrm{Im}(\varphi)} \cdot \kappa_{\varepsilon} : \mathrm{Ker}(\varphi) \rightarrow N \\
+=\, &0_{\mathrm{Ker}(\varphi),N} \\
+=\, &\kappa \cdot \varphi \\
+=\, &\kappa \cdot (\varphi / \kappa_{\varepsilon}) \cdot \kappa_{\varepsilon}
+\end{align*}
+And post-cancellation of the monomorphism $\kappa_{\varepsilon}$ gives
+\begin{align*}
+0_{\mathrm{Ker}(\varphi),\mathrm{Im}(\varphi)} = \kappa \cdot (\varphi / \kappa_{\varepsilon}).
+\end{align*}
+\end{subproof}
+
+So we have two morphisms from $\mathrm{Coim}(\varphi)$ to $\mathrm{Im}(\varphi)$:
+\begin{alignat*}{3}
+\underbrace{(\varepsilon_{\kappa}\backslash \varphi) / \kappa_{\varepsilon}}_{\alpha} & \quad\text{and}\quad
+&& \underbrace{\varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon})}_{\beta}.
+\end{alignat*}
+In fact they are equal since the two commutative traingles give commutative squares.
+\begin{align*}
+\varepsilon_{\kappa}\, \alpha \, \kappa_{\varepsilon} = \varphi = \varepsilon_{\kappa}\, \beta \, \kappa_{\varepsilon} 
+\end{align*}
+Since the epi $\varepsilon_{\kappa}$ is pre-cancelable and the mono $\kappa_{\varepsilon}$ is post-cancelable, we get $\alpha = \beta$, i.e.
+\begin{align*}
+(\varepsilon_{\kappa}\backslash \varphi) / \kappa_{\varepsilon} = \varepsilon_{\kappa}\backslash(\varphi/\kappa_{\varepsilon})
+\end{align*}
+This justifies the notation
+\begin{align}\label{eq:natural_morphism}
+\overline{\varphi} := \varepsilon_{\kappa}\backslash \varphi / \kappa_{\varepsilon} : \mathrm{Coim}(\varphi) \rightarrow \mathrm{Im}(\varphi).
+\end{align}
+In this context associativity holds, i.e. we can leave out the parentheses of the lift and colift.
+\end{proof}
+
 
 
 
@@ -524,9 +611,12 @@ In this section we give three equivalent definitions for Abelian categories, sta
 and ending with the existence of two algorithms needed for the doctrine $\mathtt{IsAbelianCategory}$.
 
 \begin{definition}[Abelian category]
-A pre-Abelian category is Abelian if the natural morphism
-$\overline{\varphi} := \varepsilon_{\kappa}\backslash \varphi/\kappa_{\varepsilon} : \mathrm{Coim}(\varphi)
-\xrightarrow{\sim} \mathrm{Im}(\varphi)$
+A pre-Abelian category $\mathcal{C}$ is Abelian if for every morphism $\varphi \in \mathcal{C}_{1}$, the natural morphism
+in \eqref{eq:natural_morphism}
+\[
+\overline{\varphi} := \varepsilon_{\kappa}\backslash \varphi/\kappa_{\varepsilon} : \mathrm{Coim}(\varphi)
+\xrightarrow{\sim} \mathrm{Im}(\varphi)
+\]
 is an isomorphism.
 \end{definition}
 Therefore in the doctrine of Abelian categories we will not need to distinguish between coimages and images\endnote{Especially
@@ -944,29 +1034,6 @@ $\Bbbk := \mathbb{F}_{3}$ for our calculations below.
   true
 \end{Verbatim}
 
-We could be taking the minimalistic approach of defining all the functions from the least set of existing matrix algorithms,
-and using the fact that appending the columns of two given matrices with $\mathtt{AugmentMatrix( [ phi, psi ] )}$ is
-the same as stacking their transposed matrices and then transpose the stacked matrix
-\begin{align*}
-&\mathtt{TransposedMatrix( StackMatrix( [ TransposedMatrix( phi ), TransposedMatrix( psi ) ] ) )} \\
-=\,&\mathtt{AugmentMatrix( [ phi, psi ] )} =: \mathtt{UniversalMorphismFromDirectSum( [ phi, psi ] )}
-\end{align*}
-
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@zero35 := ZeroMorphism( V3, V5 );|
-  <A zero morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@zero32 := ZeroMorphism( V3, V2 );|
-  <A zero morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@jotta1 := AugmentMatrix( [ one3, zero35, zero32 ] );|
-  <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@jotta1 = iota1;|
-   true
-  !gapprompt@gap>| !gapinput@joda1 := TransposedMatrix( StackMatrix( [ TransposedMatrix( phi ), TransposedMatrix( psi ) ] ) );|
-  <A morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@joda1 = iota1;|
-   true
-\end{Verbatim}
-
 We can also verify the result in \ref{rmk:addition_derived_from_direct_sum} that the abelian group operation
 $\mathtt{AdditionForMorphisms}$ can be derived from $\mathtt{UniversalMorphismIntoDirectSum}$,
 $\mathtt{UniversalMorphismFromDirectSum}$,\\
@@ -981,8 +1048,18 @@ different ways.
   <A 2 x 3 matrix over an internal ring>
   !gapprompt@>| !gapinput@mor1 := VectorSpaceMorphism( V2, mat1, V3 );|
   <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( mor1 );|
+   . 1 2
+   1 1 2
+   
+   A morphism in Category of matrices over GF(3)
   !gapprompt@>| !gapinput@mor2 := VectorSpaceMorphism( V2, mat2, V3 );|
   <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( mor2 );|
+   1 1 1
+   1 1 1
+   
+   A morphism in Category of matrices over GF(3)
   !gapprompt@>| !gapinput@result1 := mor1 + mor2;|
   <A morphism in Category of matrices over GF(3)>
   !gapprompt@gap>| !gapinput@Display( result1 );|
@@ -1002,14 +1079,20 @@ different ways.
    A morphism in Category of matrices over GF(3)
   !gapprompt@gap>| !gapinput@result1 = result2;|
   true
+  !gapprompt@gap>| !gapinput@one3 := IdentityMorphism( V3 );|
+  <An identity morphism in Category of matrices over GF(3)>
   !gapprompt@gap>| !gapinput@result3 := PreCompose( UniversalMorphismIntoDirectSum( [ mor1, mor2 ] ),|
   !gapprompt@>| !gapinput@  UniversalMorphismFromDirectSum( [ one3, one3 ] ) );|
   <A morphism in Category of matrices over GF(3)>
+  !gapprompt@gap>| !gapinput@Display( result3 );|
+   1 2 .
+   2 2 .
+   
+   A morphism in Category of matrices over GF(3)
   !gapprompt@gap>| !gapinput@result3 = result2;|
   true
 \end{Verbatim}
 \end{computation}
-
 
 Next we provide the algorithms from \ref{doc:pre-abelian} that make $\kmat$ into a pre-abelian category.
 They are all based on the well-known $\mathtt{Gauss}$ algorithm that gives us the row echolon form (REF) and
@@ -1047,6 +1130,20 @@ $\mathtt{IsPreAbelianCategory}$ in \ref{doc:pre-abelian}:
 With these constructions, $\kmat$ becomes a pre-abelian category.
 \end{example}
 
+Note that the right-hand side $B$ in the equation 
+\[
+A \cdot x = B
+\]
+can be more than a single column vector, but a matrix with multiple columns, as long as they have the same number of rows as $A$.
+This corresponds to solving the system of equations simultaneously for different right-hand sides. In case that it is solvable,
+we get a particular solution as a matrix $x = \mathtt{LeftDivide( A, B )}$.
+
+Dually for $B$ and $A$ matrices having the same number of columns, for the equation
+\[
+x \cdot A = B
+\]
+we get a particular solution as a matrix $x = \mathtt{RightDivide( B, A )}$, if it exists.
+
 \begin{example}[$\kmat$ is an Abelian category]\phantom{}\\
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
@@ -1054,16 +1151,29 @@ With these constructions, $\kmat$ becomes a pre-abelian category.
 \ref{def:abelian_category}(2).
 Then with the algorithms from \ref{comp:gauss-algorithms} we define
 \begin{itemize}
-\item $\mathtt{LiftAlongMonomorphism( kappa, tau ) := Solve( x \cdot kappa = tau )}$.
+\item $\mathtt{LiftAlongMonomorphism( kappa, tau ) := Solve( x \cdot kappa = tau )}$\\
+$\mathtt{ := RightDivide( tau, kappa )}$.
 \end{itemize}
-\item Let $\varepsilon : B \twoheadrightarrow A \in \kmat_{1}$ and $\tau : B \rightarrow T \in \kmat_{1}$ be as in
-\ref{def:abelian_category}(2).
+\item Let $\varepsilon : B \twoheadrightarrow C \in \kmat_{1}$ and $\tau : B \rightarrow T \in \kmat_{1}$ be as in
+\ref{def:abelian_category}(3).
 Then with the algorithms from \ref{comp:gauss-algorithms} we define
 \begin{itemize}
-\item $\mathtt{ColiftAlongEpimorphism( epsilon, tau ) := Solve( epsilon \cdot x = tau )}$
+\item $\mathtt{ColiftAlongEpimorphism( epsilon, tau ) := Solve( epsilon \cdot x = tau )}$\\
+$\mathtt{ := LeftDivide( epsilon, tau )}$
 \end{itemize}
 \end{enumerate}
-With these algorithms, $\kmat$ becomes an abelian category.
+
+Since a matrix $\kappa : m \rightarrow n$ is a monomorphism iff its kernel is $0$ iff it has full row rank $\mathtt{Rank(kappa) = m}$,
+the lift along monomorphism $\mathtt{RightDivide( tau, kappa )}$ always exists.
+
+Since a matrix $\varepsilon : m \rightarrow n$ is an epimorphism iff its image is $n$ iff it has full column rank
+$\mathtt{Rank(kappa) = n}$, the colift along epimorphism $\mathtt{LeftDivide( epsilon, tau )}$ always exists.
+
+With these algorithms, $\kmat$ becomes an abelian category. In particular we have
+\begin{align*}
+\mathrm{Coim}(\varphi) &\cong \mathrm{Im}(\varphi)\quad\text{and since $\kmat$ is skeletal}\\
+\Rightarrow\, \mathrm{Coim}(\varphi) &=\mathrm{Im}(\varphi).
+\end{align*}
 \end{example}
 
 

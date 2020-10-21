@@ -9,6 +9,19 @@ F = \bigoplus_{i\in I} F_{i}
 
 \subsection{The algorithm $\mathtt{DecomposeOnceByRandomEndomorphism}$}
 
+The following algorithm assumes that we already have an algorithm to compute a $\Bbbk$-basis of the external hom
+$\mathrm{Hom}_{\HomAkmat}(F,F)$.
+That algorithm $\mathtt{BasisOfExternalHom}( F, G )$ for two functors $F$ and $G$ works by solving systems of matrix equations such as
+\eqref{eq:naturality_equations_first}-\eqref{eq:naturality_equations_last}, also known as Sylvester equations, which can be solved using the
+Kronecker product
+\[
+\otimes : (n\times n), (m \times m) \mapsto (nm \times nm)
+\]
+and the vectorization operator
+\[
+\mathrm{vec} : (m \times n) \mapsto (mn \times 1).
+\]\\
+
 \begin{algorithm}[H]\capstart
     \caption{\texttt{DecomposeOnceByRandomEndomorphism}}\label{algo:DecomposeOnceByRandomEndomorphism}
 	\SetKwInput{Input}{Input~}
@@ -19,7 +32,7 @@ F = \bigoplus_{i\in I} F_{i}
 	\BlankLine
 	$d := \max \{ \mathrm{dim}_{\Bbbk}Fc \}_{c \in \mathcal{A}_{0}}$\;
 	\If{$d = 0$}{
-	    \Return $\mathtt{fail}$\;
+	    \Return $\mathtt{fail}$\tcp*{the zero representation is indecomposable}
 	}
 	$\mathcal{B} = [\beta_{1},\dots,\beta_{h}]$ is a $\Bbbk$-basis of $\mathrm{Hom}_{\HomAkmat}(F,F)$\;
 	add $0_{F,F}$ to $\mathcal{B}$\;
@@ -53,6 +66,7 @@ F = \bigoplus_{i\in I} F_{i}
 	\BlankLine
 	\Return $\mathtt{fail}$\tcp*{The input functor $F$ is indecomposable with a high probability.}
 \end{algorithm}
+\phantom{}\\
 
 To justify proposition \ref{prop:Decompose_terminates_correct} below we need the following lemma which is a linear analogue of the
 $\sigma$-lemma \ref{la:sigma-lemma}.

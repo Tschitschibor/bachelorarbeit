@@ -218,9 +218,10 @@ this definition was moved to the endnotes, and proving the equivalences is left 
 \url{https://qchu.wordpress.com/2012/09/29/monomorphisms-and-epimorphisms/}}
 \end{definition}
 
-\begin{definition}[Lift and colift, dominate and codominate]\phantom{}\\
+\begin{definition}[Lift and colift, dominate and codominate]\label{def:lift_colift_codominate}\phantom{}\\
 Let $A, K, C, T \in \mathcal{C}_{0}$ be objects in a category $\mathcal{C}$.
-\begin{itemize}
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
 \item For two morphisms with the same target $\iota : K \rightarrow A, \tau : T \rightarrow A$ we call a morphism $u : T \rightarrow K$ a
 \ul{lift of $\tau$ along $\iota$} if $u \iota = \tau$.
 \[
@@ -239,7 +240,7 @@ A \arrow[rr, "\tau"] \arrow[rd, "\varepsilon"'] &                            & T
 \end{tikzcd}
 \]
 In this case we say that $\varepsilon$ \ul{codominates} $\tau$.
-\end{itemize}
+\end{enumerate}
 \end{definition}
 
 \begin{remark}[Lift along mono, colift along epi]
