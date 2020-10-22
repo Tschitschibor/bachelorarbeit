@@ -405,15 +405,10 @@ But their respective \ul{right-exactedness} is equivalent to dual concepts conce
 A functor is \ul{right exact} or \ul{finitely cocontinuous} if it preserves finite colimits, and \ul{left exact} or \ul{finitely continuous} if it preserves finite limits.
 \end{definition}
 
-\begin{remark}
-Without going into the details of defining what a limit and a colimit is, and with \ul{pullbacks} and \ul{pushouts} as specific kinds of
-finite limits or colimits, and with the following proposition characterizing monomorphisms and epimorphisms,
-we can give a definition for exact functor that is useful enough for our purposes.\endnote{(For a more on exact functors see above footnote,
-on limits and colimits the same \cite{[context]}, chapter 3, pages 73 (91/258) onward, on pullback and pushout Def 3.1.15 p. 78 / Ex. 3.1.22, p. 80 f)}
-\end{remark}
-
-\begin{lemma}\label{prop:mono_pullback}
-A morphism $f : a \rightarrow b$ is a monomorphism if and only if
+\begin{lemma}\label{prop:mono_pullback}\phantom{}\\
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item A morphism $f : a \rightarrow b$ is a monomorphism if and only if
 the pullback of $f$ and $f$ exists and is $a$, together with the identity maps $1_{a} : a \rightarrow a$.
 In other words, $f : a \rightarrow b$ is a monomorphism if and only if the commutative square
 \[
@@ -423,13 +418,21 @@ a \arrow[r, "f"]                         & b
 \end{tikzcd}
 \]
 is a pullback square.\endnote{(Cited from \cite{[Annoying Precision]})}
-
-A dual statement exists for epimorphisms and pushouts, which are finite colimits.
+\item A morphism $f : a \rightarrow b$ is an epimorphism if and only if
+the pushout of $f$ and $f$ exists and is $b$, together with the identity maps $1_{b} : b \rightarrow b$.
+In other words, $f : a \rightarrow b$ is a monomorphism if and only if the commutative square
+\[
+\begin{tikzcd}
+a \arrow[r, "f"] \arrow[d, "f"'] & b \arrow[d, "1_{b}"] \\
+b \arrow[r, "1_{b}"]                         & b               
+\end{tikzcd}
+\]
+is a pushout square.\endnote{(Cited from \cite{[Annoying Precision]})}
 \end{lemma}
 
-\begin{corollary}{(from \ref{prop:mono_pullback})}\label{cor:preserve_mono_epi}
-
+\begin{corollary}\label{cor:preserve_mono_epi}\phantom{}\\
 \begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
 \item Being a monomorphism is a “limit property”: more precisely, any functor which preserves pullbacks
 (in particular any functor which preserves finite limits, in particular any functor which preserves all limits)
 preserves monomorphisms.
