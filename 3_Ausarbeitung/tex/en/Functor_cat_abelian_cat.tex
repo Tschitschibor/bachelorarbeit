@@ -349,7 +349,8 @@ with $(\tau / \iota)$ defined as $(\tau / \iota)_{c} := (\tau_{c} / \iota_{c})$.
 
 \begin{example}[Naturality equations in $C_{3}C_{3}$]
 
-As an example, let $\mathcal{A}$ be our concrete category $C_{3}C_{3}$ with objects $1,2$ and morphisms
+As an example, let $\mathcal{A}$ be our concrete category $C_{3}C_{3}$ from \ref{ex:quiver_q(2)[a:1->1,b:1->2,c:2->2]}
+with objects $1,2$ and morphisms
 $a : 1\rightarrow 1,\, b : 1 \rightarrow 2,\, c : 2 \rightarrow 2$. Then the following rectangle describes how the functors $F$, $G$, $K$ and $C$
 act on $\mathcal{A}$:
 
@@ -404,6 +405,13 @@ Gc \varepsilon_{2} &=\label{eq:naturality_equations_last}
 \end{minipage}
 
 \noindent which together with $\kappa \, \eta = 0_{K,G}$ and $\eta\, \varepsilon = 0_{F,C}$ gives the following equations:
+\begin{subequations}
+\begin{alignat}{4}
+Ka\kappa_{1}\eta_{1} &= \kappa_{1}Fa\eta_{1} &= \kappa_{1}\eta_{1}Ga &= 0 : K1 \rightarrow G1 \\
+Kb\kappa_{2}\eta_{2} &= \kappa_{1}Fb\eta_{2} &= \kappa_{1}\eta_{1}Gb &= 0 : K1 \rightarrow G2 \\
+Kc\kappa_{2}\eta_{2} &= \kappa_{2}Fc\eta_{2} &= \kappa_{2}\eta_{2}Gc &= 0 : K2 \rightarrow G2
+\end{alignat}
+\end{subequations}
 \begin{subequations}
 \begin{alignat}{4}
 Ka\kappa_{1}\eta_{1} &= \kappa_{1}Fa\eta_{1} &= \kappa_{1}\eta_{1}Ga &= 0 : K1 \rightarrow G1 \\
