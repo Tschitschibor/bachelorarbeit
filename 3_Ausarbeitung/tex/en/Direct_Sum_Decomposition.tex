@@ -637,7 +637,7 @@ and with $I_{111}, K_{111}, I_{1121}, K_{1121}, K_{112}, I_{12}, K_{12} $ indeco
 the bottom to the top gives us the list of embeddings, i.e. morphisms with source an indecomposable representation and target $F$,
 which are thus added to $\mathtt{summands}$.
 
-\begin{subproof}[Proof that the $\mathtt{queue}$ will be empty]\phantom{}\\
+\begin{subproof}[Proof that the algorithm terminates, i.e. that $\mathtt{queue}$ will be empty]\phantom{}\\
 \noindent In each run of the while loop, a morphism $\eta$ from the $\mathtt{queue}$ gets either deleted and not replaced,
 since $s(\eta)$ was indecomposable, or it gets deleted and replaced by two morphisms $[\iota\eta, \kappa\eta]$.\\
 If at some point, $s(\eta)$ is indecomposable for every $\eta \in \mathtt{queue}$, then the $\eta$ will be deleted from the

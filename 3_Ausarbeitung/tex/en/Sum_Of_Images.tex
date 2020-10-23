@@ -1,36 +1,59 @@
 
+We want to distinguish between different objects $F$, $G$ in our functor category $\HomAkmat$. A good method for this is by comparing the output of a
+binary morphism\\
+$\varphi( -, - ) : \HomAkmat \times \HomAkmat \rightarrow \HomAkmat$ with the first input being the same constant functor,
+e.g. the tensor unit $\mathtt{const} : \mathcal{A}_{0} \rightarrow \{1\}; \mathcal{A}_{1} \rightarrow \{1\}^{1\times 1}$.
+Then if $\varphi( \mathtt{const}, F )$ is different from $\varphi( \mathtt{const}, G )$, we can be sure that $F$ and $G$ are categorically different objects.
+
+We are defining such a morphism $\varphi$ in three steps.
 
 \subsection{The algorithm $\mathtt{MorphismOntoSumOfImagesOfAllMorphisms}$}
 In an Abelian category 
 {It can be derived from the algorithms
 $\mathtt{BasisOfExternalHom}$ and $\mathtt{UniversalMorphismFromDirectSum}$ or $\mathtt{UniversalMorphismFromZeroObject}$}
 
-AddDerivationToCAP( MorphismOntoSumOfImagesOfAllMorphisms,
-        [ [ BasisOfExternalHom, 1 ],
-          [ UniversalMorphismFromZeroObject, 1 ],
-          [ UniversalMorphismFromDirectSum, 1 ]
-          ],
-        
-  function( a, b )
-    local hom;
-    
-    hom := BasisOfExternalHom( a, b );
-    
-    if hom = [ ] then
-        return UniversalMorphismFromZeroObject( b );
-    fi;
-    
-    return UniversalMorphismFromDirectSum( hom );
-    
-end : Description := "MorphismOntoSumOfImagesOfAllMorphisms using BasisOfExternalHom and UniversalMorphismFromDirectSum",
-      CategoryFilter := IsAbelianCategory );
+a copy of $M$ for each basis element in the $\Bbbk$-module $\mathrm{Hom}_{\mathcal{C}}(M,N)$.
 
+a morphism with source $\oplus_{b \in \mathcal{B}} M$ and target $N$.\\
 
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{MorphismOntoSumOfImagesOfAllMorphisms}}\label{algo:MorphismOntoSumOfImagesOfAllMorphisms}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~two objects $M$ and $N$ in an abelian category}
+	\Output{~a morphism with source $\oplus_{b \in \mathcal{B}} M$ and target $N$}
+	\BlankLine
+	$\mathtt{hom} := \mathtt{BasisOfExternalHom}( M, N )$\;
+	\If(\tcp*[f]{the direct sum of the empty set is the zero object}){$\mathtt{hom} = \emptyset$}{
+	    \Return $\mathtt{UniversalMorphismFromZeroObject}( N )$\;
+	}
+	\BlankLine
+	\Return $\mathtt{UniversalMorphismFromDirectSum}( \mathtt{hom} )$\;
+\end{algorithm}
 
+\subsection{The algorithm $\mathtt{EmbeddingOfSumOfImagesOfAllMorphisms}$}
 
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{EmbeddingOfSumOfImagesOfAllMorphisms}}\label{algo:EmbeddingOfSumOfImagesOfAllMorphisms}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~two objects $M$ and $N$ in an abelian category}
+	\Output{~an embedding morphism with source $I$ and target $N$}
+	\BlankLine
+	\Return $\mathtt{ImageEmbedding}( \mathtt{MorphismOntoSumOfImagesOfAllMorphisms}( M, N ) )$\;
+\end{algorithm}
 
+\subsection{The algorithm $\mathtt{SumOfImagesOfAllMorphisms}$}
 
-
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{SumOfImagesOfAllMorphisms}}\label{algo:SumOfImagesOfAllMorphisms}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~two objects $M$ and $N$ in an abelian category}
+	\Output{~the image $I$ over which the direct sum factors}
+	\BlankLine
+	\Return $\mathtt{Source}( \mathtt{EmbeddingOfSumOfImagesOfAllMorphisms}( M, N ) )$\;
+\end{algorithm}
 
 
 
