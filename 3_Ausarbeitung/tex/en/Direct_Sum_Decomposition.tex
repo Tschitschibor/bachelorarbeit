@@ -1,4 +1,6 @@
 
+
+
 We have shown in section \ref{sect:abelian_cat} that for a family $\{F_{i}\}_{i\in I}$ of functors in $\HomAkmat$, there is the
 direct sum $F := \bigoplus_{i\in I} F_{i}$ with embeddings $\iota_{i} : F_{i} \rightarrow F$ (and projections $\pi_{i} : F \rightarrow F_{i}$).
 In this section we show constructively the other direction, i.e. that for each $F$ there is a direct sum decomposition
@@ -7,20 +9,58 @@ $\{F_{i}\}_{i\in I}$ and $\iota_{i} : F_{i} \rightarrow F$ such that
 F = \bigoplus_{i\in I} F_{i}
 \]
 
-\subsection{The algorithm $\mathtt{DecomposeOnceByRandomEndomorphism}$}
+
+\subsection{$\mathrm{Hom}$-structure of $\HomAkmat$}
+
+Sylvester-equation
 
 The following algorithm assumes that we already have an algorithm to compute a $\Bbbk$-basis of the external hom
 $\mathrm{Hom}_{\HomAkmat}(F,F)$.
 That algorithm $\mathtt{BasisOfExternalHom}( F, G )$ for two functors $F$ and $G$ works by solving systems of matrix equations such as
 \eqref{eq:naturality_equations_first}-\eqref{eq:naturality_equations_last}, also known as Sylvester equations, which can be solved using the
 Kronecker product
+
+As already noticed by Sylvester, one can bring a two-sided homogeneous system of linear equations (of morphisms in $\kmat$) into a classical
+one-sided homogeneous system of linear equations (of morphisms in $\kmat$). 
+
 \[
-\otimes : (n\times n), (m \times m) \mapsto (nm \times nm)
+\begin{tikzcd}
+F1 \arrow["Fa"', loop, distance=2em, in=125, out=55] \arrow[rr, "Fb"] \arrow[dd, "\eta_{1}"]
+&  & F2 \arrow["Fc"', loop, distance=2em, in=125, out=55] \arrow[dd, "\eta_{2}"] \\
+&  &                                                                                 \\
+G1 \arrow["Ga"', loop, distance=2em, in=305, out=235] \arrow[rr, "Gb"]
+&  & G2 \arrow["Gc"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
 \]
-and the vectorization operator
-\[
-\mathrm{vec} : (m \times n) \mapsto (mn \times 1).
-\]\\
+
+\begin{align}
+Fa\,\eta_{1} &= \eta_{1} Ga \\
+Fb\,\eta_{2} &= \eta_{1} Gb \\
+Fc\,\eta_{2} &= \eta_{2} Gc
+\end{align}
+
+For the first equation we have
+
+\begin{align}
+Fa\,\eta_{1} - \eta_{1} Ga = 0
+\end{align}
+
+thus
+
+\begin{align}
+\left( Fa\,\eta_{1} - \eta_{1} Ga \right)_{i,j} = 0,\, 1\leq i \leq 5, 1\leq j \leq 3
+\end{align}
+
+Sylvester equations
+
+
+
+
+
+
+
+
+\subsection{The algorithm $\mathtt{DecomposeOnceByRandomEndomorphism}$}
 
 \begin{algorithm}[H]\capstart
     \caption{\texttt{DecomposeOnceByRandomEndomorphism}}\label{algo:DecomposeOnceByRandomEndomorphism}
@@ -510,7 +550,7 @@ the diagonal: A $3\times 3$-matrix from \texttt{S(kq.a)}, a $3 \times 1$-matrix 
 	(with a high probability).}
 	\BlankLine
 	$\mathtt{queue} := [ 1_{F} ]$\;
-	$\mathtt{summands} := [ \quad ]$\;
+	$\mathtt{summands} := \emptyset$\;
 	
 	\While{ $\mathtt{queue} \neq \emptyset$ }{
 	    let $\eta$ be the last element in $\mathtt{queue}$ and delete $\eta$ from $\mathtt{queue}$\;
@@ -556,46 +596,46 @@ $\mathtt{summands}$ stays empty, and instead we have $\mathtt{queue} = [\iota_{1
 \[
 I_{1} \oplus K_{1} = F
 \]
-which is exactly what we assert for the output of $\mathtt{DecomposeOnceByRandomEndomorphism}$.\\
+which is exactly what we proved above for the output of $\mathtt{DecomposeOnceByRandomEndomorphism}$.\\
 Thus after the first while loop, equation \eqref{eq:direct_sum_decomposition} holds.\\
+
 In each run of the while loop, we are replacing $I_{j}$ with $I_{j,1}$ and $K_{j,1}$ with $I_{j} = I_{j,1} \oplus K_{j,1}$ and
-$K_{j}$ with $I_{j,2} \oplus K_{j,2}$ if possible. That is we have 
+$K_{j}$ with $I_{j,2}$ and $K_{j,2}$ with $K_{j} = I_{j,2} \oplus K_{j,2}$, if possible. That is we have 
 \begin{alignat*}{5}
 F &=  &&I_{1} &&\oplus &&K_{1} \\
 &= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12}) \\
 &= \dots
 \end{alignat*}
 
+This decomposition tree can end earlier for some $K_{j}$ and $I_{j'}$, which are already decomposed into indecomposables after
+two steps, while for other $K_{i}$ and $I_{i'}$ the decomposition can go on for three or more steps, as illustrated in the following figure:
+
 \[
 \begin{tikzcd}
-                                                   &                                                           &                                                                                   &                                                    & F                                                          &                                                           &                                                                                       &                                                           &                                                     \\
-                                                   &                                                           & F \arrow[rru, "\eta_{1}", bend left]                                              &                                                    &                                                            &                                                           & F \arrow[llu, "\eta_{1}"', bend right]                                                &                                                           &                                                     \\
-                                                   &                                                           & I_{1} \arrow[u, "\iota_{1}"] \arrow[rr, dash] \arrow[rruu, "\iota_{1}\eta_{1}"] &                                                    & \bigoplus \arrow[uu, "I_{1} \oplus K_{1}" description]     &                                                           & K_{1} \arrow[u, "\kappa_{1}"'] \arrow[ll, dash] \arrow[lluu, "\kappa_{1}\eta_{1}"'] &                                                           &                                                     \\
-                                                   & I_{1} \arrow[ru, "\eta_{11}"', bend left=49, shift right] &                                                                                   &                                                    & I_{1} \arrow[llu, "\eta_{11}", bend right]                  & K_{1} \arrow[ru, "\eta_{12}"', bend left=49, shift right] &                                                                                       & K_{1} \arrow[lu, "\eta_{12}", bend right=49, shift left]  &                                                     \\
-                                                   & I_{11} \arrow[u, "\iota_{11}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{11}\oplus K_{11}" description]                           &                                                    & K_{11} \arrow[ll, dash] \arrow[u, "\kappa_{11}"]         & I_{12} \arrow[u, "\iota_{12}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{12} \oplus K_{12}" description]                              & K_{12} \arrow[u, "\kappa_{12}"'] \arrow[l, dash]        &                                                     \\
-I_{11} \arrow[ru, "\eta_{111}"', bend left=49]     &                                                           & I_{11} \arrow[lu, "\eta_{111}", bend right=49]                                    & K_{11} \arrow[ru, "\eta_{112}"', bend left=49]     &                                                            & K_{11} \arrow[lu, "\eta_{112}", bend right=49]            & K_{12} \arrow[ru, "\eta_{122}"', bend left=49]                                        &                                                           & K_{12} \arrow[lu, "\eta_{122}", bend right=49]      \\
-I_{111} \arrow[r, dash] \arrow[u, "\iota_{111}"] & \bigoplus \arrow[uu, "I_{111}\oplus K_{111}" description] & K_{111} \arrow[l, dash] \arrow[u, "\kappa_{111}"]                               & I_{112} \arrow[u, "\iota_{112}"] \arrow[r, dash] & \bigoplus \arrow[uu, "I_{112} \oplus K_{112}" description] & K_{112} \arrow[u, "\kappa_{112}"] \arrow[l, dash]       & I_{122} \arrow[r, dash] \arrow[u, "\iota_{122}"]                                    & \bigoplus \arrow[uu, "I_{122}\oplus K_{122}" description] & K_{122} \arrow[l, dash] \arrow[u, "\kappa_{122}"]
+                                                   &                                                           &                                                         &                                                             & F                                                          &                                                           &                                                          &                                                          \\
+                                                   &                                                           & F \arrow[rru, "\eta_{1}", bend left]                    &                                                             &                                                            &                                                           & F \arrow[llu, "\eta_{1}"', bend right]                   &                                                          \\
+                                                   &                                                           & I_{1} \arrow[u, "\iota_{1}"] \arrow[rr, dash]         &                                                             & \bigoplus \arrow[uu, "I_{1} \oplus K_{1}" description]     &                                                           & K_{1} \arrow[u, "\kappa_{1}"'] \arrow[ll, dash]        &                                                          \\
+                                                   & I_{1} \arrow[ru, "\eta_{11}"', bend left=49, shift right] &                                                         &                                                             & I_{1} \arrow[llu, "\eta_{11}", pos=0.35, bend right]                 & K_{1} \arrow[ru, "\eta_{12}"', pos=0.40, bend left=49, shift left] &                                                          & K_{1} \arrow[lu, "\eta_{12}", bend right=49, shift left] \\
+                                                   & I_{11} \arrow[u, "\iota_{11}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{11}\oplus K_{11}" description] &                                                             & K_{11} \arrow[ll, dash] \arrow[u, "\kappa_{11}"]         & I_{12} \arrow[u, "\iota_{12}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{12} \oplus K_{12}" description] & K_{12} \arrow[u, "\kappa_{12}"'] \arrow[l, dash]       \\
+I_{11} \arrow[ru, "\eta_{111}"', bend left=49]     &                                                           & I_{11} \arrow[lu, "\eta_{111}", bend right=49]          & K_{11} \arrow[ru, "\eta_{112}"', bend left=49]              &                                                            & K_{11} \arrow[lu, "\eta_{112}", bend right=49]            &                                                          &                                                          \\
+I_{111} \arrow[r, dash] \arrow[u, "\iota_{111}"] & \bigoplus \arrow[uu, "I_{111}\oplus K_{111}" description] & K_{111} \arrow[l, dash] \arrow[u, "\kappa_{111}"]     & I_{112} \arrow[u, "\iota_{112}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{112} \oplus K_{112}" description] & K_{112} \arrow[u, "\kappa_{112}"] \arrow[l, dash]       &                                                          &                                                          \\
+                                                   &                                                           & I_{112} \arrow[ru, "\eta_{1121}"', bend left=49]        &                                                             & I_{112} \arrow[lu, "\eta_{1121}", bend right=49]           &                                                           &                                                          &                                                          \\
+                                                   &                                                           & I_{1121} \arrow[u, "\iota_{1121}"] \arrow[r, dash]    & \bigoplus \arrow[uu, "I_{1121}\oplus K_{1121}" description] & K_{1121} \arrow[u, "\kappa_{1121}"] \arrow[l, dash]      &                                                           &                                                          &                                                         
 \end{tikzcd}
 \]
 
-In this example we have
+Assuming that the bottom-most nodes in the tree represent indecomposable functors (for which the algorithm stopped in line 6), in this example
+we have a decomposition of $F$ as the direct sum
 
 \begin{align*}
 F &= I_{1} \oplus K_{1} \\
-&= (I_{11} \oplus K_{11}) \oplus (I_{12} \oplus K_{12}) \\
-&= I_{111} \oplus K_{111} \oplus I_{112} \oplus K_{112} \oplus I_{12} \oplus I_{122} \oplus K_{122}
+&= I_{11} \oplus K_{11} \oplus I_{12} \oplus K_{12} \\
+&= I_{111} \oplus K_{111} \oplus I_{112} \oplus K_{112} \oplus I_{12} \oplus K_{12} \\
+&= I_{111} \oplus K_{111} \oplus I_{1121} \oplus K_{1121} \oplus K_{112} \oplus I_{12} \oplus K_{12} \\
 \end{align*}
-and with $I_{111}, K_{111}, I_{112}, K_{112}, I_{12}, I_{122}, K_{122}$ indecomposable, we are finished. Tracing the morphisms from
-the bottom to the top gives us the list of embeddings
-\begin{align*}
-[ &\iota_{111}\eta_{111}\iota_{11}\eta_{11}\iota_{1}\eta_{1}, \\
-&\kappa_{111}\eta_{111}\iota_{11}\eta_{11}\iota_{1}\eta_{1}, \\
-&\iota_{112}\eta_{112}\kappa_{11}\eta_{11}\iota_{1}\eta_{1}, \\
-&\kappa_{112}\eta_{112}\kappa_{11}\eta_{11}\iota_{1}\eta_{1}, \\
-&\iota_{12}\eta_{12}\kappa_{1}\eta_{1}, \\
-&\iota_{122}\eta_{122}\kappa_{12}\eta_{12}\kappa_{1}\eta_{1}, \\
-&\kappa_{122}\eta_{122}\kappa_{12}\eta_{12}\kappa_{1}\eta_{1} ]\\
-\end{align*}
+and with $I_{111}, K_{111}, I_{1121}, K_{1121}, K_{112}, I_{12}, K_{12} $ indecomposable, we are finished. Tracing the morphisms from
+the bottom to the top gives us the list of embeddings, i.e. morphisms with source an indecomposable representation and target $F$,
+which are thus added to $\mathtt{summands}$.
 
 \begin{subproof}[Proof that the $\mathtt{queue}$ will be empty]\phantom{}\\
 \noindent In each run of the while loop, a morphism $\eta$ from the $\mathtt{queue}$ gets either deleted and not replaced,
@@ -623,7 +663,7 @@ equation \eqref{eq:direct_sum_decomposition} becomes
 F = \bigoplus_{\eta \in \mathtt{summands}} s(\eta)
 \end{align}
 \end{subproof}
-
+This proves that the algorithm terminates with the correct output.
 \end{proof}
 
 
@@ -757,74 +797,4 @@ When we have $\mathrm{ImgEmb}(\alpha) = 0$ or $\mathrm{KerEmb}(\alpha) = 0$ for 
 &F &&= I &&\oplus \{0\},
 \end{alignat}
 i.e. F was indecomposable.
-
-
-
-\begin{tikzcd}
-F1 \arrow["Fa"', loop, distance=2em, in=125, out=55] \arrow[rr, "Fb"] \arrow[dd, "\eta_{1}"]
-&  & F2 \arrow["Fc"', loop, distance=2em, in=125, out=55] \arrow[dd, "\eta_{2}"] \\
-&  &                                                                                 \\
-G1 \arrow["Ga"', loop, distance=2em, in=305, out=235] \arrow[rr, "Gb"]
-&  & G2 \arrow["Gc"', loop, distance=2em, in=305, out=235]
-\end{tikzcd}
-
-\begin{align}
-Fa\,\eta_{1} &= \eta_{1} Ga \\
-Fb\,\eta_{2} &= \eta_{1} Gb \\
-Fc\,\eta_{2} &= \eta_{2} Gc
-\end{align}
-
-For the first equation we have
-
-\begin{align}
-Fa\,\eta_{1} - \eta_{1} Ga = 0
-\end{align}
-
-thus
-
-\begin{align}
-\left( Fa\,\eta_{1} - \eta_{1} Ga \right)_{i,j} = 0,\, 1\leq i \leq 5, 1\leq j \leq 3
-\end{align}
-
-Sylvester equations
-
-\subsection{The algorithm $\mathtt{MorphismOntoSumOfImagesOfAllMorphisms}$}
-
-In an Abelian category 
-{It can be derived from the algorithms
-$\mathtt{BasisOfExternalHom}$ and $\mathtt{UniversalMorphismFromDirectSum}$ or $\mathtt{UniversalMorphismFromZeroObject}$}
-
-AddDerivationToCAP( MorphismOntoSumOfImagesOfAllMorphisms,
-        [ [ BasisOfExternalHom, 1 ],
-          [ UniversalMorphismFromZeroObject, 1 ],
-          [ UniversalMorphismFromDirectSum, 1 ]
-          ],
-        
-  function( a, b )
-    local hom;
-    
-    hom := BasisOfExternalHom( a, b );
-    
-    if hom = [ ] then
-        return UniversalMorphismFromZeroObject( b );
-    fi;
-    
-    return UniversalMorphismFromDirectSum( hom );
-    
-end : Description := "MorphismOntoSumOfImagesOfAllMorphisms using BasisOfExternalHom and UniversalMorphismFromDirectSum",
-      CategoryFilter := IsAbelianCategory );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
