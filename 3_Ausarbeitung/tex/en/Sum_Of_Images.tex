@@ -1,0 +1,41 @@
+
+
+\subsection{The algorithm $\mathtt{MorphismOntoSumOfImagesOfAllMorphisms}$}
+In an Abelian category 
+{It can be derived from the algorithms
+$\mathtt{BasisOfExternalHom}$ and $\mathtt{UniversalMorphismFromDirectSum}$ or $\mathtt{UniversalMorphismFromZeroObject}$}
+
+AddDerivationToCAP( MorphismOntoSumOfImagesOfAllMorphisms,
+        [ [ BasisOfExternalHom, 1 ],
+          [ UniversalMorphismFromZeroObject, 1 ],
+          [ UniversalMorphismFromDirectSum, 1 ]
+          ],
+        
+  function( a, b )
+    local hom;
+    
+    hom := BasisOfExternalHom( a, b );
+    
+    if hom = [ ] then
+        return UniversalMorphismFromZeroObject( b );
+    fi;
+    
+    return UniversalMorphismFromDirectSum( hom );
+    
+end : Description := "MorphismOntoSumOfImagesOfAllMorphisms using BasisOfExternalHom and UniversalMorphismFromDirectSum",
+      CategoryFilter := IsAbelianCategory );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
