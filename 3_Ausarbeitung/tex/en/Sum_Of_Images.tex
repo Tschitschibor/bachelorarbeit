@@ -12,10 +12,12 @@ We are defining such a morphism $\varphi$ in three steps.
 In an Abelian category the hom-set $\mathtt{hom} := \mathtt{BasisOfExternalHom}( M, N )$ of morphisms from $M$ to $N$ is a family of
 morphisms with same source $M$ and same target $N$.
 \[
-\begin{tikzcd}
+\begin{tikzcd}[
+  row sep=0.5ex,
+]
 M \arrow[r, "b_{1}"] & N \\
 M \arrow[r, "b_{2}"] & N \\
-M \arrow[r, "b_{3}"] & N
+M \arrow[r, "\dots"] & N
 \end{tikzcd}
 \]
 If we take this basis $\mathtt{hom}$ as an index set $I := \{1,\dots,\abs{\mathtt{hom}}\}$, we can make a direct sum out of that many copies of $M$,
@@ -23,9 +25,9 @@ If we take this basis $\mathtt{hom}$ as an index set $I := \{1,\dots,\abs{\matht
 S := \bigoplus_{i\in I} M.
 \]
 Then for these morphisms $\mathtt{hom}$ we can calculate their universal morphism out of the direct sum as in \ref{def:biproduct}, i.e.
-\begin{align}
+\begin{align*}
 \mathtt{UniversalMorphismFromDirectSum}( \mathtt{hom} ) := u_{\text{out}}(\mathtt{hom}) : S \rightarrow N.
-\end{align}
+\end{align*}
 
 In the case where $\mathtt{hom} = \emptyset$, i.e. there are no (non-zero) morphisms from $M$ to $N$, we still get a
 universal morphism with target $N$, namely the unique morphism from the zero object
@@ -34,14 +36,19 @@ universal morphism with target $N$, namely the unique morphism from the zero obj
 \]
 as in \ref{ex:sum_of_empty}.
 
-In both cases we get one morphism that encodes all the information of the whole family of morphisms. 
+In both cases we get one morphism that encodes all the information of the whole family of morphisms, especially their images. 
+\[
+\begin{tikzcd}
+\bigoplus_{i\in I} M \arrow[r, "u_{\text{out}}(\mathtt{hom})"'] & N
+\end{tikzcd}
+\]
 
 \begin{algorithm}[H]\capstart
     \caption{\texttt{MorphismOntoSumOfImagesOfAllMorphisms}}\label{algo:MorphismOntoSumOfImagesOfAllMorphisms}
 	\SetKwInput{Input}{Input~}
 	\SetKwInput{Output}{Output~}
 	\Input{~two objects $M$ and $N$ in an abelian category}
-	\Output{~a morphism with source $\oplus_{b \in \mathcal{B}} M$ and target $N$}
+	\Output{~a morphism with source $\oplus_{i \in I} M$ and target $N$, where $\abs{I} = \abs{\mathtt{hom}}$}
 	\BlankLine
 	$\mathtt{hom} := \mathtt{BasisOfExternalHom}( M, N )$\;
 	\If(\tcp*[f]{the direct sum of the empty set is the zero object}){$\mathtt{hom} = \emptyset$}{
@@ -52,6 +59,17 @@ In both cases we get one morphism that encodes all the information of the whole 
 \end{algorithm}
 
 \subsection{The algorithm $\mathtt{EmbeddingOfSumOfImagesOfAllMorphisms}$}
+
+Since we are in the setting of an Abelian category, the morphism $u_{\text{out}}(\mathtt{hom})$ from above can
+be factored with the Corollary \ref{cor:epi_mono_factorization} into an epimorphism $\pi$ and a monomorphism $\iota$.
+\[
+\begin{tikzcd}
+\bigoplus_{i\in I} M \arrow[rr, "u_{\text{out}}(\mathtt{hom})"] \arrow[rd, "\pi"', two heads] &                              & N \\
+                                                                                              & I \arrow[ru, "\iota"', hook] &  
+\end{tikzcd}
+\]
+
+The monomorphism $\iota$ is the image embedding of $u_{\text{out}}(\mathtt{hom})$.
 
 \begin{algorithm}[H]\capstart
     \caption{\texttt{EmbeddingOfSumOfImagesOfAllMorphisms}}\label{algo:EmbeddingOfSumOfImagesOfAllMorphisms}
@@ -65,6 +83,10 @@ In both cases we get one morphism that encodes all the information of the whole 
 
 \subsection{The algorithm $\mathtt{SumOfImagesOfAllMorphisms}$}
 
+As a last step, we are now looking at the source $I$ of the above embedding $\iota : I \hookrightarrow N$. The image
+embedding has all the information from $u_{\text{out}}(\mathtt{hom})$, but its source $I$ is considerably ``smaller'' than the
+direct sum $\bigoplus_{i\in I} M$ that we started with. 
+
 \begin{algorithm}[H]\capstart
     \caption{\texttt{SumOfImagesOfAllMorphisms}}\label{algo:SumOfImagesOfAllMorphisms}
 	\SetKwInput{Input}{Input~}
@@ -75,10 +97,14 @@ In both cases we get one morphism that encodes all the information of the whole 
 	\Return $\mathtt{Source}( \mathtt{EmbeddingOfSumOfImagesOfAllMorphisms}( M, N ) )$\;
 \end{algorithm}
 
-
-
-
-
-
+Since the objects and morphisms we calculated,
+\begin{itemize}
+\item $\mathtt{hom} := \mathtt{BasisOfExternalHom}(\mathtt{const},F)$,
+\item $u_{\text{out}}(\mathtt{hom}) := \mathtt{UniversalMorphismFromDirectSum}(\mathtt{hom})$,
+\item $\iota := \mathtt{ImageEmbedding}(u_{\text{out}}(\mathtt{hom}))$ and
+\item the image object $I := \mathtt{Source}(\iota)$ are all unique up to isomorphism,
+\end{itemize}
+we get as output an object that is unique up to unique isomorphism, and thus a good candidate to distinguish
+between two categorically different objects $F$ and $G$ as we wanted.
 
 
