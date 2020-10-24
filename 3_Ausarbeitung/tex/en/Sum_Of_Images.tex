@@ -107,4 +107,15 @@ Since the objects and morphisms we calculated,
 we get as output an object that is unique up to unique isomorphism, and thus a good candidate to distinguish
 between two categorically different objects $F$ and $G$ as we wanted.
 
+\begin{example}
+Comparing emb and e1 in the following line gives a first proof that six and proj1 are nonisomorphic:
 
+emb = EmbeddingOfSumOfImagesOfAllMorphisms( unit, six )
+
+e1 = EmbeddingOfSumOfImagesOfAllMorphisms( unit, proj1 )
+
+This is a second proof that six and proj1 are nonisomorphic:
+
+IsEpimorphism( EmbeddingOfSumOfImagesOfAllMorphisms( proj1, six ) )
+false
+\end{example}
