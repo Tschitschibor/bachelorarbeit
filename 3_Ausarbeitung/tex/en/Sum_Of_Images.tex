@@ -8,13 +8,33 @@ Then if $\varphi( \mathtt{const}, F )$ is different from $\varphi( \mathtt{const
 We are defining such a morphism $\varphi$ in three steps.
 
 \subsection{The algorithm $\mathtt{MorphismOntoSumOfImagesOfAllMorphisms}$}
-In an Abelian category 
-{It can be derived from the algorithms
-$\mathtt{BasisOfExternalHom}$ and $\mathtt{UniversalMorphismFromDirectSum}$ or $\mathtt{UniversalMorphismFromZeroObject}$}
 
-a copy of $M$ for each basis element in the $\Bbbk$-module $\mathrm{Hom}_{\mathcal{C}}(M,N)$.
+In an Abelian category the hom-set $\mathtt{hom} := \mathtt{BasisOfExternalHom}( M, N )$ of morphisms from $M$ to $N$ is a family of
+morphisms with same source $M$ and same target $N$.
+\[
+\begin{tikzcd}
+M \arrow[r, "b_{1}"] & N \\
+M \arrow[r, "b_{2}"] & N \\
+M \arrow[r, "b_{3}"] & N
+\end{tikzcd}
+\]
+If we take this basis $\mathtt{hom}$ as an index set $I := \{1,\dots,\abs{\mathtt{hom}}\}$, we can make a direct sum out of that many copies of $M$,
+\[
+S := \bigoplus_{i\in I} M.
+\]
+Then for these morphisms $\mathtt{hom}$ we can calculate their universal morphism out of the direct sum as in \ref{def:biproduct}, i.e.
+\begin{align}
+\mathtt{UniversalMorphismFromDirectSum}( \mathtt{hom} ) := u_{\text{out}}(\mathtt{hom}) : S \rightarrow N.
+\end{align}
 
-a morphism with source $\oplus_{b \in \mathcal{B}} M$ and target $N$.\\
+In the case where $\mathtt{hom} = \emptyset$, i.e. there are no (non-zero) morphisms from $M$ to $N$, we still get a
+universal morphism with target $N$, namely the unique morphism from the zero object
+\[
+\mathtt{UniversalMorphismFromZeroObject}( N ) := 0_{0,N} : 0 \rightarrow N
+\]
+as in \ref{ex:sum_of_empty}.
+
+In both cases we get one morphism that encodes all the information of the whole family of morphisms. 
 
 \begin{algorithm}[H]\capstart
     \caption{\texttt{MorphismOntoSumOfImagesOfAllMorphisms}}\label{algo:MorphismOntoSumOfImagesOfAllMorphisms}

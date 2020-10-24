@@ -12,53 +12,127 @@ F = \bigoplus_{i\in I} F_{i}
 
 \subsection{$\mathrm{Hom}$-structure of $\HomAkmat$}
 
-Sylvester-equation
-
-The following algorithm assumes that we already have an algorithm to compute a $\Bbbk$-basis of the external hom
+The following algorithms assume that we already have an algorithm to compute a $\Bbbk$-basis of the external hom
 $\mathrm{Hom}_{\HomAkmat}(F,F)$.
-That algorithm $\mathtt{BasisOfExternalHom}( F, G )$ for two functors $F$ and $G$ works by solving systems of matrix equations such as
-\eqref{eq:naturality_equations_first}-\eqref{eq:naturality_equations_last}, also known as Sylvester equations, which can be solved using the
-Kronecker product
+That algorithm $\mathtt{BasisOfExternalHom}( F, G )$ for two functors $F$ and $G$ works by solving systems of matrix equations, also known as
+Sylvester equations, which can be solved using the Kronecker product.
 
 As already noticed by Sylvester, one can bring a two-sided homogeneous system of linear equations (of morphisms in $\kmat$) into a classical
-one-sided homogeneous system of linear equations (of morphisms in $\kmat$). 
+one-sided homogeneous system of linear equations (of morphisms in $\kmat$).
+
+\begin{example}[Sylvester equations for a natural transformation $\eta : F \Rightarrow G$ between two representations of $C_{3}C_{3}$]
+The naturality constraints, that the following diagram
 
 \[
 \begin{tikzcd}
-F1 \arrow["Fa"', loop, distance=2em, in=125, out=55] \arrow[rr, "Fb"] \arrow[dd, "\eta_{1}"]
-&  & F2 \arrow["Fc"', loop, distance=2em, in=125, out=55] \arrow[dd, "\eta_{2}"] \\
-&  &                                                                                 \\
-G1 \arrow["Ga"', loop, distance=2em, in=305, out=235] \arrow[rr, "Gb"]
-&  & G2 \arrow["Gc"', loop, distance=2em, in=305, out=235]
+F1 \arrow["Fa"', loop, distance=2em, in=215, out=145] \arrow[rr, "Fb"] \arrow[dd, "\eta_{1}"] &  & F2 \arrow["Fc"', loop, distance=2em, in=35, out=325] \arrow[dd, "\eta_{2}"] \\
+                                                                                              &  &                                                                             \\
+G1 \arrow["Ga"', loop, distance=2em, in=215, out=145] \arrow[rr, "Gb"]                        &  & G2 \arrow["Gc"', loop, distance=2em, in=35, out=325]                       
 \end{tikzcd}
 \]
+commutes for all three morphisms $a, b, c \in \mathcal{A}_{1}$, with $\mathcal{A}$ being (the $\Bbbk$-linear closure of) our
+finite concrete category $C_{3}C_{3}$, are the following:
 
+\begin{subequations}\label{eq:naturality_constraints_c3c3}
 \begin{align}
 Fa\,\eta_{1} &= \eta_{1} Ga \\
 Fb\,\eta_{2} &= \eta_{1} Gb \\
 Fc\,\eta_{2} &= \eta_{2} Gc
 \end{align}
+\end{subequations}
 
-For the first equation we have
+We bring the terms with the matrix variables $\eta_{j}$ all on one side:
 
+\begin{subequations}
 \begin{align}
-Fa\,\eta_{1} - \eta_{1} Ga = 0
+Fa\,\eta_{1} - \eta_{1} Ga &= 0 \\
+Fb\,\eta_{2} - \eta_{1} Gb &= 0 \\
+Fc\,\eta_{2} - \eta_{2} Gc &= 0
+\end{align}
+\end{subequations}
+
+This system of equations can be obtained from the generalized system of Sylvester equations\endnote{(This is equation (A.17) in
+\cite{[FengYagoubi2017]}.)}
+
+\begin{align}\label{eq:general_sylvester_equations}
+\sum_{1\leq j \leq k} \Phi_{i\,j}\, \Theta_{j}\, \Psi_{i\,j} = P_{i}, \quad 1\leq i \leq f
 \end{align}
 
-thus
+by setting $f = 3$, $k = 2$, and defining the constant matrices $\Phi$, $\Psi$ and the right-hand side $P$ as follows:
 
+For the left matrices $\Phi$ we have
+\begin{align*}
+\Phi_{1,1} = \mathrm{Diag}(Fa, 0_{F2,F2}), &\quad \Phi_{1,2} = \mathrm{Diag}(-1_{F1}, 0_{F2,F2}), \\
+\Phi_{2,1} = \mathrm{Diag}(0_{F1,F1}, Fb), &\quad \Phi_{2,2} = \mathrm{Diag}(-1_{F1}, 0_{F2,F2}), \\
+\Phi_{3,1} = \mathrm{Diag}(0_{F1,F1}, Fc), &\quad \Phi_{3,2} = \mathrm{Diag}(0_{F1,F1}, -1_{F2}).
+\end{align*}
+
+For the right matrices $\Psi$ we have
+\begin{align*}
+\Psi_{1,1} = \mathrm{Diag}(1_{G1}, 0_{G2,G2}), &\quad \Psi_{1,2} = \mathrm{Diag}(Ga, 0_{F2,F2}), \\
+\Psi_{2,1} = \mathrm{Diag}(0_{G1,G1}, 1_{G2}), &\quad \Psi_{2,2} = \mathrm{Diag}(Gb, 0_{F2,F2}), \\
+\Psi_{3,1} = \mathrm{Diag}(0_{G1,G1}, 1_{G2}), &\quad \Psi_{3,2} = \mathrm{Diag}(0_{G1,G1}, Gc).
+\end{align*}
+
+For the right-hand side we have $P_{1} = P_{2} = P_{3} = 0_{F1+F2,\,G1+G2}$.
+
+Then the matrix variable $\Theta$ is
+\begin{align*}
+\Theta_{1} = \Theta_{2} = \mathrm{Diag}(\eta_{1}, \eta_{2}).
+\end{align*}
+
+With these definitions, our system of matrix equations \eqref{eq:naturality_constraints_c3c3} is equivalent to the following system of
+block matrix equations:
+
+\begin{subequations}
 \begin{align}
-\left( Fa\,\eta_{1} - \eta_{1} Ga \right)_{i,j} = 0,\, 1\leq i \leq 5, 1\leq j \leq 3
+\begin{pmatrix} Fa & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} 1_{G1} & 0 \\ 0 & 0 \end{pmatrix}
++ \begin{pmatrix} -1_{F1} & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} Ga & 0 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} \\
+\begin{pmatrix} 0 & 0 \\ 0 & Fb \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} 0 & 0 \\ 0 & 1_{G2} \end{pmatrix}
++ \begin{pmatrix} -1_{F1} & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} Gb & 0 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} \\
+\begin{pmatrix} 0 & 0 \\ 0 & Fc \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix}0 & 0 \\ 0 & 1_{G2} \end{pmatrix}
++ \begin{pmatrix} 0 & 0 \\ 0 & -1_{F2} \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} 0 & 0 \\ 0 & Gc \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} 
+\end{align}
+\end{subequations}
+
+And can be solved with the method suitable for the general systen of Sylvester equations \eqref{eq:general_sylvester_equations}.
+With the constants $F1, F2, G1, G2, Fa, Fb, Fc, Ga, Gb, Gc$ given as coefficients for the equations, we can thus solve the system and
+get a finite basis of the external hom, i.e. a basis for $\mathrm{Hom}_{\HomAkmat}(F,G)$.
+\end{example}
+
+We can generalize our example for any finite concrete category:
+
+\begin{remark}[General case of the Sylvester equation for naturality constraints]
+Let $\mathcal{A}$ be a finite-dimensional $\Bbbk$-algebroid with a finite set of objects $c \in \mathcal{A}_{0}$ and a finite set of
+generating morphisms $a_{i} \in \mathcal{A}_{1},\,1\leq i \leq f\,f := \abs{\mathcal{A}_{1}} < \infty$.
+Let $F$ and $G$ be two representations of $\mathcal{A}$, i.e. objects in $\HomAkmat_{0}$. 
+
+A natural transformation $\eta : F \Rightarrow G$ then fulfills the naturality constraints from \eqref{eq:naturality_condition}
+\begin{align*}
+Fa_{i}\, \eta_{c'} = \eta_{c}\, Ga_{i},\quad\forall (a_{i} : c \rightarrow c') \in \mathcal{A}_{1}.
+\end{align*}
+This equation can be brought to the form of the general Sylvester equation \eqref{eq:general_sylvester_equations}
+\begin{align*}
+\sum_{1\leq j \leq k} \Phi_{i\,j}\, \Theta_{j}\, \Psi_{i\,j} = P_{i}, \quad 1\leq i \leq f
+\end{align*}
+by setting the variables as follows:
+\begin{align}
+f = \abs{\mathcal{A}_{1}},\, k = 2, P_{i} = 0\,\forall i \\
+\Theta_{j} &= \mathrm{Diag}((\eta_{c})_{c \in \mathcal{A}_{0}})\,\forall j \\
+&= \sum_{i\in I} (\pi_{i})_{F}\,\eta_{i}\,(\iota_{i})_{G}
+\Phi_{i\,1} = \mathrm{Diag}(0F\,a_{i},)\quad \text{with}\, a_{i} : c_{i} \rightarrow c'_{i}\\
+\Phi_{i\,2} = \mathrm{Diag}()\\
+\Psi_{i\,1} = \mathrm{Diag}()\\
+\Psi_{i\,2} = \mathrm{Diag}()
 \end{align}
 
-Sylvester equations
-
-
-
-
-
-
-
+\end{remark}
 
 \subsection{The algorithm $\mathtt{DecomposeOnceByRandomEndomorphism}$}
 
