@@ -21,8 +21,34 @@ As already noticed by Sylvester, one can bring a two-sided homogeneous system of
 one-sided homogeneous system of linear equations (of morphisms in $\kmat$).
 
 \begin{example}[Sylvester equations for a natural transformation $\eta : F \Rightarrow G$ between two representations of $C_{3}C_{3}$]
-The naturality constraints, that the following diagram
+The naturality constraints, that the diagram on the right
 
+\begin{minipage}{0.05\textwidth} % left margin
+\phantom{}
+\end{minipage}
+\begin{minipage}{0.25\textwidth} % c3c3
+\[
+\begin{tikzcd}[boxedcd={inner xsep=2.2em, inner ysep=1.1em}]
+1 \arrow[r, "b"] \arrow["a"', loop, distance=2em, in=215, out=145] & 2 \arrow["c"', loop, distance=2em, in=35, out=325]
+\end{tikzcd}
+\]
+\end{minipage}
+\begin{minipage}{0.02\textwidth} % gap between
+\phantom{}
+\end{minipage}
+\begin{minipage}{0.15\textwidth} % -F-> =eta=> -G->
+\[
+\begin{tikzcd}
+{} \arrow[rr, "F"]  & {} \arrow[dd, "\eta" description, Rightarrow] & {} \\
+                    &                                               &    \\
+{} \arrow[rr, "G"'] & {}                                            & {}
+\end{tikzcd}
+\]
+\end{minipage}
+\begin{minipage}{0.05\textwidth} % gap between
+\phantom{}
+\end{minipage}
+\begin{minipage}{0.30\textwidth} % naturality CD
 \[
 \begin{tikzcd}
 F1 \arrow["Fa"', loop, distance=2em, in=215, out=145] \arrow[rr, "Fb"] \arrow[dd, "\eta_{1}"] &  & F2 \arrow["Fc"', loop, distance=2em, in=35, out=325] \arrow[dd, "\eta_{2}"] \\
@@ -30,6 +56,10 @@ F1 \arrow["Fa"', loop, distance=2em, in=215, out=145] \arrow[rr, "Fb"] \arrow[dd
 G1 \arrow["Ga"', loop, distance=2em, in=215, out=145] \arrow[rr, "Gb"]                        &  & G2 \arrow["Gc"', loop, distance=2em, in=35, out=325]                       
 \end{tikzcd}
 \]
+\end{minipage}
+\begin{minipage}{0.17\textwidth} % right margin
+\phantom{}
+\end{minipage}\\
 commutes for all three morphisms $a, b, c \in \mathcal{A}_{1}$, with $\mathcal{A}$ being (the $\Bbbk$-linear closure of) our
 finite concrete category $C_{3}C_{3}$, are the following:
 
