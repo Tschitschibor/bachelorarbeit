@@ -1,9 +1,15 @@
 
-We want to distinguish between different objects $F$, $G$ in our functor category $\HomAkmat$. A good method for this is by comparing the output of a
-binary morphism\\
-$\varphi( -, - ) : \HomAkmat \times \HomAkmat \rightarrow \HomAkmat$ with the first input being the same constant functor,
-e.g. the tensor unit $\mathtt{const} : \mathcal{A}_{0} \rightarrow \{1\}; \mathcal{A}_{1} \rightarrow \{1\}^{1\times 1}$.
-Then if $\varphi( \mathtt{const}, F )$ is different from $\varphi( \mathtt{const}, G )$, we can be sure that $F$ and $G$ are categorically different objects.
+We want to distinguish between different objects $F$, $G$ in our functor category $\HomAkmat$ up to isomorphism. A good method for this is by
+comparing the output of binary categorical operations
+\[
+\varphi( -, - ) : \HomAkmat_{0} \times \HomAkmat_{0} \rightarrow \HomAkmat_{0}
+\]
+up to isomorphism, with the first input being the same functor, e.g. the tensor unit in $\HomAkmat$.
+\[
+\mathtt{unit} : \mathcal{A}_{0} \rightarrow \{1\};\quad \mathcal{A}_{1} \rightarrow \{(1)^{1\times 1}\}.
+\]
+The idea is that the outputs of $\varphi$ are easier to compare up to isomorphism than $F$ and $G$ directly.
+If $\varphi( \mathtt{unit}, F )$ is not isomorphic to $\varphi( \mathtt{unit}, G )$, then $F$ and $G$ are not isomorphic.
 
 We are defining such a morphism $\varphi$ in three steps.
 
@@ -20,9 +26,9 @@ M \arrow[r, "b_{2}"] & N \\
 M \arrow[r, "\dots"] & N
 \end{tikzcd}
 \]
-If we take this basis $\mathtt{hom}$ as an index set $I := \{1,\dots,\abs{\mathtt{hom}}\}$, we can make a direct sum out of that many copies of $M$,
+If we take this basis $\mathtt{hom}$ as an index set, we can make a direct sum out of that many copies of $M$,
 \[
-S := \bigoplus_{i\in I} M.
+S := \bigoplus_{i\in \mathtt{hom}} M.
 \]
 Then for these morphisms $\mathtt{hom}$ we can calculate their universal morphism out of the direct sum as in \ref{def:biproduct}, i.e.
 \begin{align*}
@@ -38,8 +44,8 @@ as in \ref{ex:sum_of_empty}.
 
 In both cases we get one morphism that encodes all the information of the whole family of morphisms, especially their images. 
 \[
-\begin{tikzcd}
-\bigoplus_{i\in I} M \arrow[r, "u_{\text{out}}(\mathtt{hom})"'] & N
+\begin{tikzcd}%_\limits
+\bigoplus_{i\in \mathtt{hom}} M \arrow[r, "u_{\text{out}}(\mathtt{hom})"'] & N
 \end{tikzcd}
 \]
 
@@ -48,7 +54,7 @@ In both cases we get one morphism that encodes all the information of the whole 
 	\SetKwInput{Input}{Input~}
 	\SetKwInput{Output}{Output~}
 	\Input{~two objects $M$ and $N$ in an abelian category}
-	\Output{~a morphism with source $\oplus_{i \in I} M$ and target $N$, where $\abs{I} = \abs{\mathtt{hom}}$}
+	\Output{~a morphism with source $\oplus_{i \in \mathtt{hom}} M$ and target $N$}
 	\BlankLine
 	$\mathtt{hom} := \mathtt{BasisOfExternalHom}( M, N )$\;
 	\If(\tcp*[f]{the direct sum of the empty set is the zero object}){$\mathtt{hom} = \emptyset$}{
@@ -99,7 +105,7 @@ direct sum $\bigoplus_{i\in I} M$ that we started with.
 
 Since the objects and morphisms we calculated,
 \begin{itemize}
-\item $\mathtt{hom} := \mathtt{BasisOfExternalHom}(\mathtt{const},F)$,
+\item $\mathtt{hom} := \mathtt{BasisOfExternalHom}(\mathtt{unit},F)$,
 \item $u_{\text{out}}(\mathtt{hom}) := \mathtt{UniversalMorphismFromDirectSum}(\mathtt{hom})$,
 \item $\iota := \mathtt{ImageEmbedding}(u_{\text{out}}(\mathtt{hom}))$ and
 \item the image object $I := \mathtt{Source}(\iota)$
@@ -107,7 +113,7 @@ Since the objects and morphisms we calculated,
 are all unique up to unique isomorphism, we get as output an object that is unique up to unique isomorphism, and thus a good candidate to distinguish
 between two categorically different objects $F$ and $G$ as we wanted.
 
-\begin{example}
+\begin{example} % TODO gap code.
 Comparing emb and e1 in the following line gives a first proof that six and proj1 are nonisomorphic:
 
 emb = EmbeddingOfSumOfImagesOfAllMorphisms( unit, six )
