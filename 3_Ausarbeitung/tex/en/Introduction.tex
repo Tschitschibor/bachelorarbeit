@@ -8,8 +8,8 @@ Then we define (co-)limits in section 2 and use them to build up a hierarchy of 
 to three equivalent definitions for Abelian categories.
 As an example for an Abelian category we define the matrix category $\kmat$
 and follow the steps from Ab-category, category with zero object, additive category, pre-Abelian category and
-finally Abelian category, each time giving constructive algorithms for that doctrine in $\kmat$. This whole section is a 
-citation from \cite{[Posur]}, I.1.38-I.1.47 and I.2.
+finally Abelian category, each time giving constructive algorithms for that doctrine in $\kmat$. This section is in part a 
+citation from \cite{[Posur]}, I.1.38-I.1.47 and I.2, and from lecture notes from \cite{[AlgAlg]}.
 
 In section 3 we revisit the relation between quivers and categories from chapter 1
 and give an example for an adjunction, the free-forgetful adjunction. The rest of chapter 3 is concerned with
@@ -21,7 +21,7 @@ of the path algebra. The algorithm is an application of the orbit algorithm and 
 This allows us to compute the $\Bbbk$-linear closure of a finite concrete category
 as a finite-dimensional quotient algebra with orthogonal idempotents, i.e. a finite-dimensional $\Bbbk$-algebroid.
 
-Section 4 now is the synthesis of chapters 2 and 3, in that we define the category of representations $\CatReps$
+Section 4 is the synthesis of chapters 2 and 3, in that we define the category of representations $\CatReps$
 of our finite concrete category, which is the category $\HomAkmat$ of $\Bbbk$-linear functors from the $\Bbbk$-algebroid
 $\mathcal{A}$ to $\kmat$. Using only categorical constructions provided by the axioms of the abelian category $\kmat$, we prove that
 the functor category with values in an abelian category is an abelian category.
@@ -33,14 +33,16 @@ define our $\Bbbk$-linear version of Yoneda's embedding of the opposite $\Bbbk$-
 into the functor category $\HomAkmat$. In the rest of chapter 5 we define projective objects and that
 Yoneda projectives are in fact projective objects, closing with a statement that $\HomAkmat$ has enough projectives.
 
-The last two sections deal with the hom-structure of our functor category $\HomAkmat$. In section 6 we give
-algorithms for a probabilistic direct sum decomposition of functors. The proof of the decomposition is a linear
+The last two sections deal with the hom-structure of our functor category $\HomAkmat$. Since the morphisms between two
+functors are natural transformations, they must fulfill certain naturality constraints leading to Sylvester equations. 
+In section 6 we also give a probabilistic algorithm for the direct sum decomposition of functors. The proof of the decomposition is a linear
 analogue of the $\sigma$ lemma.
 
-In section 7 we give hom-based invariants that distinguish between different objects in our functor category, which provide 
+In section 7 we give hom-based invariants that distinguish between non-isomorphic objects in our functor category, which provide 
 categorical proofs that distinguish e.g. a Yoneda projective from other objects.
 
-The result of this thesis is the \Gap package \CatReps which was originally meant to wrap Peter Webb's
+The result of this thesis is the \Gap{} package \CatReps{} which was originally meant to wrap Peter Webb's
 pre-package \texttt{catreps} into the categorical framework offered by \CAP. Since the category of representations is
 just an application of the package \FunctorCategories, the entire functionality of \texttt{catreps} including the code developed
-in this thesis, is now available through \FunctorCategories.
+in this thesis, is now available through \FunctorCategories. All the algorithms developed and implemented while working on this
+thesis are included as code listings in the appendix.
