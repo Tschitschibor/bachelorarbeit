@@ -756,8 +756,8 @@ since these are responsible for the infinite hom-sets.
     \caption{\texttt{RelationsOfEndomorphisms}}\label{algo:RelationsOfEndomorphisms}
 	\SetKwInput{Input}{~Input}
 	\SetKwInput{Output}{~Output}
-	\Input{~a commutative ring $k$ and a finite concrete category $C$}
-	\Output{~the endomorphism relations of the category $C$ given as generators of an ideal of the path algebra}
+	\Input{~a finite concrete category $C$}
+	\Output{~the endomorphism relations of the category $C$ given as list $\mathtt{relsEndo}$ of pairs of paths}
 	\BlankLine
 	$q := \mathtt{RightQuiverFromConcreteCategory}(C)$\;
 	$kq := \mathtt{PathAlgebra}(k, q)$\;
@@ -787,7 +787,7 @@ since these are responsible for the infinite hom-sets.
 		m := m+1\;
 	    }
 	}
-	\Return{relsEndo}\;
+	\Return{$\mathtt{relsEndo}$}\;
 \end{algorithm}
 
 %% 
