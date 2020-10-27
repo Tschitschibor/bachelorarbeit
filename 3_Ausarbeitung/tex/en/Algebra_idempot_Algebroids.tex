@@ -669,7 +669,7 @@ An exercise for the reader could be to formulate the exact relations between pos
 
 \begin{definition}{(Ideal of an algebra)}\label{def:ideal_of_algebra}
 Let $\mathcal{A}$ be a $\Bbbk$-algebra over a field $\Bbbk$.
-A subset $L \subset \mathcal{A}$ is a \ul{left ideal} of $\mathcal{A}$, denoted $L \vartriangleleft \mathcal{A}$, if for every $x, y \in L$,
+A subset $L \subset \mathcal{A}$ is a \ul{left ideal} of $\mathcal{A}$, denoted $L \unlhd \mathcal{A}$, if for every $x, y \in L$,
 $z \in \mathcal{A}$ and $c \in \Bbbk$ we have the following three statements:
 \begin{align}
 x + y &\in L\, \text{ ($L$ is closed under addition) },\label{eq:ideal_cl_add} \\
@@ -746,6 +746,10 @@ finitely presented category $\text{fp}\mathcal{C}$ from the quiver $q$ and the r
 \[
 \text{fp}\mathcal{C} := \mathtt{Category}(\mathtt{q}, \mathtt{relsEndo}).
 \]
+Apart from the endomorphism relations, there are other, non-endomorphism paths that are equivalent under the relation
+$\mathtt{IsCongruentForMorphisms}$. These can be identified in order to present the finitely presented category
+$\text{fp}\mathcal{C}$ in a shorter form. However calculating the endomorphism relations was the more important task,
+since these are responsible for the infinite hom-sets.
 \end{remark}
 
 \begin{algorithm}[H]\capstart
