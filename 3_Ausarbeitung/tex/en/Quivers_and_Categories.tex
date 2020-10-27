@@ -49,7 +49,6 @@ we are talking about the \ul{internal hom}. Otherwise the hom-set exists outside
 \end{enumerate}
 \end{definition}
 
-
 \begin{example}[Quiver with 2 objects and 3 morphisms]\label{ex:quiver_q(2)[a:1->1,b:1->2,c:2->2]}\phantom{}\\
 \[
 \begin{tikzcd}
@@ -174,7 +173,8 @@ for all composable morphisms $\varphi, \psi \in \mathcal{C}$.
 \item \label{associativity_of_composition} \begin{minipage}{.55\textwidth} $(\varphi\psi)\rho = \varphi(\psi\rho)$ \hfill{} [associativity of composition]\end{minipage}
 \begin{minipage}{.45\textwidth}\phantom{}\end{minipage}
 \item \label{unit_property} \begin{minipage}{.55\textwidth} $1_{s(\varphi)}\varphi = \varphi = \varphi1_{t(\varphi)}$ \hfill{} [unit property]\end{minipage}
-\begin{minipage}{.45\textwidth}\phantom{}\end{minipage}\\
+\begin{minipage}{.55\textwidth}\phantom{}\end{minipage}\phantom{}\\
+\vspace{1ex}
 The identity is a left and right unit of the composition.
 \end{enumerate}
 \end{definition}
@@ -187,7 +187,7 @@ The identity is a left and right unit of the composition.
 \item Why is the composition associative?
 \end{itemize}
 
-\begin{example}[The category $\FinSets$]\phantom{}\\
+\begin{example}[The category $\FinSets$]\phantom{}
 \begin{itemize}
 \item The objects are finite sets.
 \item The morphisms are functions between sets, with the identity morphism on the set $X$ defined as $1_{X} := \mathrm{id}_{X} : X \rightarrow X; x \mapsto x$.
@@ -267,10 +267,10 @@ This functor $U$ typically carries an object of $\mathcal{C}$ to its \textit{und
 For more on functors see the next subsection, for more on the forgetful functor see \ref{sec:fin_concrete_cat_free_forgetful}.
 \end{definition}
 
-\begin{example}
-The categories $\FinSets$ which is a subcategory of $\Set$ are both concrete categories.
+\begin{definition}[Finite concrete category]
+The category $\FinSets$ is a finite subcategory of $\Set$. Both are examples of concrete categories.
 A \ul{finite concrete category} $\mathcal{C}$ is a finite subcategory of $\FinSets$.
-\end{example}
+\end{definition}
 
 \begin{remark}{(Endomorphism monoid; explicitly cyclic monoid)}\label{rmk:endo_monoid}
 Let $\mathcal{C}$ be a category and $M \in \mathcal{C}_{0}$ an object. Then the \ul{endomorphism set} $\mathrm{End}_{\mathcal{C}}(M)$
