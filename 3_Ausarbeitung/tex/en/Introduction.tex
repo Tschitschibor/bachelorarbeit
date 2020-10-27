@@ -42,7 +42,10 @@ In section 7 we give hom-based invariants that distinguish between non-isomorphi
 categorical proofs that distinguish e.g. a Yoneda projective from other objects.
 
 The result of this thesis is the \Gap{} package \CatReps{} which was originally meant to wrap Peter Webb's
-pre-package \texttt{catreps} into the categorical framework offered by \CAP. Since the category of representations is
-just an application of the package \FunctorCategories, the entire functionality of \texttt{catreps} including the code developed
-in this thesis, is now available through \FunctorCategories. All the algorithms developed and implemented while working on this
+pre-package \catreps{} into the categorical framework offered by \CAP. Since the category of representations is just an application of the package
+\FunctorCategories, most of the functionality used by \CatReps is provided through \FunctorCategories.
+Currently \CatReps consists of the procedures \funcref{ConvertToMapOfFinSets}, \funcref{ConcreteCategoryForCAP},
+\funcref{RightQuiverFromConcreteCategory}, \funcref{RelationsOfEndomorphisms}, \funcref{AsFpCategory},
+\hyperref[func:Algebroid_CatReps]{Algebroid (CatReps)} and \texttt{EmbeddingOfSubRepresentation}. The content of this package might move
+to \FunctorCategories in the future. All the algorithms developed and implemented while working on this
 thesis are included as code listings in the appendix.
