@@ -3,18 +3,29 @@
 %% From Gliederung preambel
 % left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm
 
-\usepackage[a4paper,% % top 37, bottom 37
-            top=25mm,bottom=25mm,left=27mm,right=27mm,%
+\usepackage[ % % top 37, bottom 37
+            top=27mm,bottom=27mm,left=27mm,right=27mm,%
             footskip=.6cm]{geometry}
             
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
 \let\endchangemargin=\endlist
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}%
 \usepackage{fancyvrb}
 \usepackage{enumitem}
 
+\usepackage{fixltx2e}%
+\usepackage{graphicx}%
+
+% size of table of contents
+\usepackage{tocloft}
+\renewcommand{\cftsecfont}{\small\bfseries}
+\renewcommand{\cftsubsecfont}{\small\mdseries}
+\renewcommand{\cftsubsubsecfont}{\small\mdseries}
+
 %%% For captions and references
+\usepackage{enotez} %[backref]
 \usepackage{hyperref}
 \usepackage{hypcap}
 \newcommand{\Algoref}[1]{%
@@ -32,6 +43,8 @@
 
 %%% For footnotes at end of text
 \usepackage{endnotes}
+
+\input{hyperendnotes.sty}
 %\let\footnote{\endnote}
 %% Heading of endnotes section
 \renewcommand*{\notesname}{Annotations}
@@ -42,6 +55,8 @@
    \@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
 \mbox{}\par\vskip-\baselineskip}
 \makeatother
+
+
 
 %%% For switching languages in quotes
 \usepackage[english]{babel}
