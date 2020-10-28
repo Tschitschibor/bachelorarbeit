@@ -802,7 +802,7 @@ category where every hom-set is a $\Bbbk$-module, and where for $x,y,z \in \math
 \]
 is $\Bbbk$-bilinear.
 
-Note that this does imply that $\mathcal{A}$ is an Ab-category, but it need not be additive nor does it need to have a zero object.
+Note that this does imply that a $\Bbbk$-linear category is an Ab-category, but it need not be additive nor does it need to have a zero object.
 \end{definition}
 
 \begin{doctrine}[$\Bbbk$-algebroid]
@@ -855,28 +855,28 @@ $M_{1},\dots,M_{n}$ $\mathbf{A}$-submodules of $\mathbf{A}$ such that
 \mathbf{A} = \bigoplus_{i=1}^{n} M_{i},
 \end{align}
 i.e.
-\begin{align}
+\begin{align*}
 \mathbf{A} &= \{ m_{1} + \dots + m_{n} : m_{i} \in M_{i} \}\, \text{ and }\\
 M_{i} \cap M_{j} &= \{0\}\, \text{ if }\, i\neq j 
-\end{align}
+\end{align*}
 Write $1 = \sum_{i=1}^{n} e_{i}$ for some $e_{i} \in M_{i}$. Then the $e_{i}$ are orthogonal idempotents in $\mathbf{A}$, and
-\begin{align}
+\begin{align*}
 M_{i} = \mathbf{A} e_{i},\, 1\leq i \leq n.
-\end{align}
+\end{align*}
 Furthermore, $M_{i}$ is indecomposable as a module if and only if $e_{i}$ is primitive.
 \end{proposition}
 \begin{proof}[Proof\nopunct]
 \begin{subproof}[that the $e_{i}$ are orthogonal idempotents]
 \phantom{}\\
-\begin{align}
+\begin{align*}
 1 &= \sum_{i=1}^{n} e_{i}\\
 e_{j} &= e_{j}\sum_{i=1}^{n} e_{i} = e_{j}^{2} + \sum_{i\neq j} e_{j} e_{i}
-\end{align}
+\end{align*}
 Since we can write $e_{j} = m_{1} + \dots + m_{n}$ in a unique way with $m_{j} \in M_{j}$, it follows that
-\begin{align}
+\begin{align*}
 e_{j} = m_{j} = e_{j}^{2}\, \text{ and }\\
 m_{i} = e_{j} e_{i} = 0\,\forall i \neq j,
-\end{align}
+\end{align*}
 i.e. the $e_{j}$ are orthogonal idempotents in $\mathbf{A}$.
 \end{subproof}
 \begin{subproof}[Proof that $M_{i} = \mathbf{A}e_{i}$]\phantom{}\\
@@ -886,9 +886,9 @@ We only have to show the other inclusion.
 \setlist[description]{font=\normalfont}
 \begin{description}
 \item[``$\subseteq$:''] Let $x \in M_{i}$. We are done, if we show that $x = xe_{i}$. With $1 = \sum_{i=1}^{n} e_{i}$ we have
-\begin{align}
+\begin{align*}
 x &= x1 = x\sum_{j=1}^{n} e_{j} = xe_{i} + \sum_{j\neq i} xe_{j}
-\end{align}
+\end{align*}
 By the above, we have $xe_{j} \in M_{j}$ for $j\neq i$, and since $x \in M_{i}$, we again have the unique sum $x = m_{1} + \dots + m_{n}$
 with $m_{i} = xe_{i}$ and $m_{j} = xe_{j} = 0$ for $j \neq i$. Therefore $x = xe_{i}$, i.e. $M_{i} \subseteq \mathbf{A}e_{i}$.
 \end{description}
@@ -901,9 +901,9 @@ $M_{i} = m_{i}\mathbf{A} = (n+p)\mathbf{A} = \{nx + py : x,y \in \mathbf{A}\} = 
 indecomposable, it follows that $n\mathbf{A} = \{0\} \vel p\mathbf{A} = \{0\}$. Therefore $n = 0 \vel p = 0$, i.e. $m_{i}$ is primitive.
 
 \item[``$\Leftarrow$:''] Let $m_{i}$ be primitive. Let $m_{i}\mathbf{A} = M_{i} = N \oplus P$. Since
-\[
+\begin{align*}
 \mathbf{A} = \bigoplus_{j=1}^{n} M_{j} = \bigoplus_{\begin{smallmatrix}j=1,\\ j \neq i\end{smallmatrix}}^{n} M_{j} \oplus (N \oplus P)
-\]
+\end{align*}
 there exist orthogonal idempotent $n, p \in \mathbf{A}$ such that $N = n\mathbf{A}$ and $P = p\mathbf{A}$ and also
 $1 = \sum_{j=1}^{n} m_{j} = \sum_{j\neq i} m_{j} + n + p$. Therefore $m_{i} = n + p$. With $m_{i}$ primitive, we have
 $n = 0 \vel p = 0$, and therefore $M_{i} = \{0\} \oplus (p\mathbf{A}) \vel M_{i} = (n\mathbf{A}) \oplus \{0\}$, i.e. $M_{i}$ is indecomposable.
@@ -998,10 +998,8 @@ Let $e := \sum_{x\in q_{0}} e_{x}$. Let $w$ be a path with $s(w) = x$ and $t(w) 
 thus $ew = e_{x}w + \sum_{z\neq x} e_{z}w = w + 0 = w$. Similarly, $we_{y} = w$ and $we_{z} = 0$ for $z \neq x$.
 \end{proof}
 
-\begin{computation}[The $\Bbbk$-linear closure of the finite concrete category $C_{3}C_{3}C_{3}$]\phantom{}\\
+\begin{computation}[A finitely presented category isomorphic to the finite concrete category $C_{3}C_{3}C_{3}$]\phantom{}\\
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@LoadPackage( "CatReps" );|
-  true
   !gapprompt@gap>| !gapinput@c3c3c3 := ConcreteCategoryForCAP(|
   !gapprompt@>| !gapinput@                  [ [2,3,1], [4,5,6], [,,,5,6,4],|
   !gapprompt@>| !gapinput@                    [,,,7,8,9], [,,,,,,8,9,7], [7,8,9] ] );|
@@ -1019,30 +1017,60 @@ thus $ew = e_{x}w + \sum_{z\neq x} e_{z}w = w + 0 = w$. Similarly, $we_{y} = w$ 
     A morphism in subcategory given by: <A morphism in FinSets> ]
   !gapprompt@gap>| !gapinput@q := RightQuiverFromConcreteCategory( c3c3c3 );|
   q(3)[a:1->1,b:1->2,c:2->2,d:2->3,e:3->3,f:1->3]
-  !gapprompt@gap>| !gapinput@Q := HomalgFieldOfRationals();|
-  Q
-  !gapprompt@gap>| !gapinput@kq := PathAlgebra( Q, q );|
-  Q * q
-  !gapprompt@gap>| !gapinput@IsFiniteDimensional( kq );|
-  false
-  !gapprompt@gap>| !gapinput@relEndo := RelationsOfEndomorphisms( Q, c3c3c3 );|
-  [ 1*(a*a*a) - 1*(1), 1*(c*c*c) - 1*(2), 1*(e*e*e) - 1*(3) ]
-  !gapprompt@gap>| !gapinput@kq := kq / relEndo;|
-  (Q * q) / [ 1*(a*a*a) - 1*(1), 1*(c*c*c) - 1*(2), 1*(e*e*e) - 1*(3) ]
-  !gapprompt@gap>| !gapinput@IsFiniteDimensional( kq );|
-  true
-  !gapprompt@gap>| !gapinput@A := Algebroid( Q, c3c3c3 );|
-  Algebroid generated by the right quiver
-  q(3)[a:1->1,b:1->2,c:2->2,d:2->3,e:3->3,f:1->3]
-  !gapprompt@gap>| !gapinput@kq := UnderlyingQuiverAlgebra( A );|
-  (Q * q) / [ 1*(a*a*a) - 1*(1), 1*(c*c*c) - 1*(2), 1*(e*e*e) - 1*(3), \
-  -1*(b*c) + 1*(a*b), -1*(b*d) + 1*(f), -1*(f*e) + 1*(a*f), -1*(d*e) + 1*(c*d) ]
-  !gapprompt@gap>| !gapinput@unit := kq.1 + kq.2 + kq.3;|
+  !gapprompt@gap>| !gapinput@relEndo := RelationsOfEndomorphisms( c3c3c3 );|
+  [ [ (a*a*a), (1) ], [ (c*c*c), (2) ], [ (e*e*e), (3) ] ]
+  !gapprompt@gap>| !gapinput@C := AsFpCategory( c3c3c3 );|
+  Category generated by the right quiver
+  q(3)[a:1->1,b:1->2,c:2->2,d:2->3,e:3->3,f:1->3] with relations
+\end{Verbatim}
+The underlying quiver algebra of $\mathcal{C}$ is a quotient algebra by the following relations. It also has a finite
+set of vertices, thus it has a unit.
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@A := UnderlyingQuiverAlgebra( C );|
+  (Q * q) / [ 1*(a*a*a) - 1*(1), 1*(c*c*c) - 1*(2), 1*(e*e*e) - 1*(3),
+  1*(b*c) - 1*(a*b), 1*(b*d) - 1*(f), 1*(f*e) - 1*(a*f), 1*(d*e) - 1*(c*d) ]
+  !gapprompt@gap>| !gapinput@unit := A.1 + A.2 + A.3;|
   { 1*(3) + 1*(2) + 1*(1) }
-  !gapprompt@gap>| !gapinput@unit * kq.a = kq.a;|
+  !gapprompt@gap>| !gapinput@unit * A.a = A.a;|
   true
-  !gapprompt@gap>| !gapinput@kq.f * unit = kq.f;|
+  !gapprompt@gap>| !gapinput@A.f * unit = A.f;|
   true
 \end{Verbatim}
+
+\begin{minipage}{0.40\textwidth}
+\[
+\begin{tikzcd}
+{\{1,2,3\}} \arrow["\begin{pmatrix} 1\mapsto 2 \\ 2\mapsto 3\\ 3\mapsto 1\end{pmatrix}"', loop, distance=2em, in=125, out=55] \arrow[rr, "\begin{pmatrix} 1\mapsto 4 \\ 2\mapsto 5\\ 3\mapsto 6\end{pmatrix}"] \arrow[rd, "\begin{pmatrix} 1\mapsto 7 \\ 2\mapsto 8\\ 3\mapsto 9\end{pmatrix}"'] &                                                                                                                                & {\{4,5,6\}} \arrow["\begin{pmatrix} 4\mapsto 5 \\ 5\mapsto 6\\ 6\mapsto 4\end{pmatrix}"', loop, distance=2em, in=125, out=55] \arrow[ld, "\begin{pmatrix} 4\mapsto 7 \\ 5\mapsto 8\\ 6\mapsto 9\end{pmatrix}"] \\
+                                                                                                                                                                                                                                                                                                 & {\{7,8,9\}} \arrow["\begin{pmatrix} 7\mapsto 8 \\ 8\mapsto 9\\ 9\mapsto 7\end{pmatrix}"', loop, distance=2em, in=305, out=235] &                                                                                                                                                                                                               
+\end{tikzcd}
+\]
+\end{minipage}
+\begin{minipage}{0.05\textwidth}
+\phantom{}
+\end{minipage}
+\begin{minipage}{0.10\textwidth}
+\[
+\begin{tikzcd}
+{} \arrow[rr, "\mathtt{q}"] &  & {}
+\end{tikzcd}
+\]
+\end{minipage}
+\begin{minipage}{0.02\textwidth}
+\phantom{}
+\end{minipage}
+\begin{minipage}{0.43\textwidth}
+\[
+\begin{tikzcd}
+1 \arrow["a"', loop, distance=2em, in=125, out=55] \arrow[rr, "b"] \arrow[rd, "f"'] &                                                     & 2 \arrow["c"', loop, distance=2em, in=125, out=55] \arrow[ld, "d"] \\
+                                                                                    & 3 \arrow["e"', loop, distance=2em, in=305, out=235] &                                                                   
+\end{tikzcd}
+\]
+\end{minipage}
 \end{computation}
+
+
+
+
+
+
 

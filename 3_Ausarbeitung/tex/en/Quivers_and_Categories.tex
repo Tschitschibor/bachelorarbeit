@@ -36,7 +36,10 @@ We indicate this by writing
 \end{tikzcd} or 
 \begin{tikzcd}[column sep=small]
 M \arrow[rr,"\varphi"] &  & N.
-\end{tikzcd} Hence $q_{1}$ is the disjoint union $\bigcup\limits^{\bigcdot}_{M,N \in q_{0}} \textup{Hom}_{q}(M,N) = q_{1}$.
+\end{tikzcd} Hence $q_{1}$ is the disjoint union
+\[
+\bigcup\limits^{\bigcdot}_{M,N \in q_{0}} \textup{Hom}_{q}(M,N) = q_{1}.
+\]
 As usual we define $\textup{End}_{q}(M):= \textup{Hom}_{q}(M,M)$.
 \item If the class $\textup{Hom}_{q}(M,N)$ is a \ul{set} for all pairs $(M,N)$ then we call the quiver \ul{locally small}.
 We therefore talk about \ul{hom-sets}.
@@ -90,7 +93,7 @@ The opposite quiver of \ref{ex:quiver_q(2)[a:1->1,b:1->2,c:2->2]} is
 \]
 \end{example}
 
-\begin{definition}[Composable arrows; path in a quiver]\label{def:path}\endnote{(ref. \ref{[leit4]} 4.1)}
+\begin{definition}[Composable arrows; path in a quiver]\label{def:path}\endnote{(ref. \cite{[leit4]} 4.1)}
 Let $q$ be a quiver.
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
@@ -306,6 +309,18 @@ as equivalent to $\mathcal{C}$.
 The category $\Bbbk\textnormal{-}\mathbf{vec}^{\text{fd}}$ of finite-dimensional vector spaces over a field $\Bbbk$ is obviously not
 skeletal.
 For example, the standard vector space $\Bbbk^{3}$ and the quotient vector space $\Bbbk[x] / (x^{3})$ are isomorphic but not equal.
+\end{example}
+
+\begin{example}[The finite concrete category $C_{3}C_{3}$]
+The following category has as morphisms the two identities $1_{\{1,2,3\}}, 1_{\{4,5,6\}}$, the other four isomorphisms
+$(2, 3, 1)$, $(3, 1, 2)$, $(5, 6, 4)$, $(6, 4, 5)$ and their pre- and post-compositions with the non-endomorphism\\
+$(1\mapsto 4, 2\mapsto 5, 3\mapsto 6)$.
+We are only displaying the three morphisms $(2, 3, 1), (5, 6, 4)$ and $(1\mapsto 4, 2\mapsto 5, 3\mapsto 6)$, the other morphisms are implied.
+\[
+\begin{tikzcd}
+{\{1,2,3\}} \arrow["\begin{pmatrix} 1\mapsto 2 \\ 2\mapsto 3\\ 3\mapsto 1\end{pmatrix}"', loop, distance=2em, in=125, out=55] \arrow[rr, "\begin{pmatrix} 1\mapsto 4 \\ 2\mapsto 5\\ 3\mapsto 6\end{pmatrix}"] &  & {\{4,5,6\}} \arrow["\begin{pmatrix} 4\mapsto 5 \\ 5\mapsto 6\\ 6\mapsto 4\end{pmatrix}"', loop, distance=2em, in=125, out=55]
+\end{tikzcd}
+\]
 \end{example}
 
 \subsection{Functors}
