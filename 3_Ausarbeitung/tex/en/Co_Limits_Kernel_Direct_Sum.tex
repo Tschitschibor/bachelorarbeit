@@ -75,7 +75,7 @@ categories.
 The doctrine $\mathtt{IsCategory}$ involves the two algorithms
 \begin{itemize}
 \item $\mathtt{Source}$\endnote{The two algorithms $\mathtt{Source}$ and $\mathtt{Range}$ are implicit since
-each morphism in \CAP has to be defined with source and target.},
+each morphism in \CAP{} has to be defined with source and target.},
 \item $\mathtt{Range}$,
 \item $\mathtt{PreCompose}$,
 \item $\mathtt{IdentityMorphism}$.
@@ -147,10 +147,7 @@ $\exists \varphi_{1} : M \rightarrow 0, \varphi_{2} : 0 \rightarrow N$\\
 such that $\varphi = \varphi_{1}\varphi_{2}$.
 \end{minipage}
 Since the zero object $0$ is both initial and terminal, a zero morphism is uniquely defined by its source and target, thus we can
-talk about \textit{the} zero morphism from $M$ to $N$, which we denote by $0_{M,N}$.\endnote{We could define the zero morphism without
-the zero object, just as the neutral element of the abelian group $\mathrm{Hom}_{\mathcal{C}}(M,N)$. Therefore $\mathtt{ZeroMorphism}(M,N)$
-is needed in the doctrine of $\mathtt{IsAbCategory}$, but the $\mathtt{ZeroObject}$ is not. Eventually at additive categories the
-zero object arrises naturally as the direct sum of $\emptyset$, which is why $\mathtt{ZeroObject}$ is listed only there.}
+talk about \textit{the} zero morphism from $M$ to $N$, which we denote by $0_{M,N}$.
 \end{definition}
 
 \begin{doctrine}[Category with zero object]
@@ -763,7 +760,7 @@ important to note that for each $m \in \kmat_{0}$ there is exactly one such matr
 challenging to decide between different types of zero matrices with zero rows or zero columns, if they
 are represented by lists of lists with their entries. How many rows does the $(3 \times 0)$ matrix have, if you represent it
 by the empty list \texttt{[ ]}? That's why the implenentation in \homalgProject uses a special function
-\texttt{HomalgZeroMatrix}, and why the morphisms in \CAP are always implemented with their source and target defined.}
+\texttt{HomalgZeroMatrix}, and why the morphisms in \CAP{} are always implemented with their source and target defined.}
 
 \begin{itemize}
 \item For the matrix $(m \times 0)$ we have\\
