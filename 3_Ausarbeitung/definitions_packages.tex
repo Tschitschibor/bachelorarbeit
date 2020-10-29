@@ -80,6 +80,10 @@
 	\hyperref[func:#1]{\texttt{#1}}%
 }
 
+
+\newcommand{\secref}[1]{%
+	\hyperref[sec:#1]{section~\ref*{sec:#1}}%
+}
 %%% For footnotes at end of text
 \usepackage{endnotes}
 
@@ -199,6 +203,8 @@
 \usepackage{esvect}
 \usepackage{commath}
 \usepackage[sc,osf]{mathpazo}
+
+\usepackage[sort&compress,capitalise]{cleveref}
 
 %%% Macros for our recurring categories
 \newcommand{\kmat}{\Bbbk\textnormal{-}\mathbf{mat}}
