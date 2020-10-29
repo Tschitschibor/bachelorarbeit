@@ -724,29 +724,58 @@ because of \eqref{eq:ideal_cl_add}, \eqref{eq:ideal_cl_scm} and the closure unde
 \eqref{eq:ideal_cl_rm}.
 \end{proof}
 
-\begin{remark}{(Relations of Endomorphisms)}
-Let the generating quiver $q$ of our finite concrete category $\mathcal{C}$ be explicitly cyclic with one generating endomorphism
-$\alpha_{i} : M_{i} \rightarrow M_{i}$ for each finite set $M_{i} \in \mathcal{C}_{0}, i = 1,\dots,N$ with $N := \abs{\mathcal{C}_{0}}$.
+\begin{remark}[Relations of Endomorphisms]
+Let the generating quiver $q$ of a finite concrete category $\mathcal{C}$ be explicitly cyclic with one generating endomorphism
+$\alpha_{i} : M_{i} \rightarrow M_{i} \in \mathcal{C}_{1}$ for each finite set $M_{i} \in \mathcal{C}_{0}, i = 1,\dots,N$
+with $N := \abs{\mathcal{C}_{0}}$.\\
+The free category $Fq$ of the quiver $q$ is infinite, since $q_{1}$ contains loops that get mapped by the functor $F$ to non-identity
+endomorphisms in $Fq_{1}$.
+Using the $\sigma$-lemma \ref{la:sigma-lemma} we can map each endomorphism $\alpha_{i} \in \mathcal{C}_{1}$ to a pair
+of natural numbers $m, n \in \mathbb{N}$ such that $\alpha^{m+n} = \alpha^{m}$, i.e. there
+are only finitely many endomorphisms in $\mathcal{C}$. We want to accomplish the same for our abstract category $Fq$.
 
-The algorithm $\mathtt{RelationsOfEndomorphism}$ calculates a list of equivalence classes under the equivalence relation
-$\mathtt{IsCongruentForMorphisms}$, i.e. a list of pairs of paths $[\alpha^{m+n}, \alpha^{m}]$,
-\begin{equation}
-\mathtt{relsEndo} :=\label{eq:pairs_of_endos}
-[ [\alpha_{1}^{m_{1}+n_{1}}, \alpha_{1}^{m_{1}}], \dots, [\alpha_{N}^{m_{N}+n_{N}}, \alpha_{N}^{m_{N}}] ].
-\end{equation}
-From the $\sigma$-lemma \ref{la:sigma-lemma} we know that each endomorphism relation is of the form
-$\alpha_{i}^{m_{i}+n_{i}} = \alpha_{i}^{m_{i}}$ for some natural numbers $m_{i}, n_{i} \in \mathbb{N}_{0}$.
-Especially with $n_{i} \geq 1$, the pairs in \eqref{eq:pairs_of_endos} have different exponents $m_{i}+n_{i} \neq m_{i}$.
+The algorithm \algoref{RelationsOfEndomorphisms} below calculates a list $\mathtt{relsEndo}$ of pairs of paths $[a^{m+n}, a^{m}]$ in
+$Fq$ for each relation $\alpha^{m+n} = \alpha^{m}$ in $\mathcal{C}$, where $a = FU(\alpha) : FU(M) \rightarrow FU(M)$ is the
+endomorphism arrow in $Fq$ corresponding to the endomorphism morphism $\alpha : M \rightarrow M$ in the set of
+generating morphisms of $\mathcal{C}$.
+\begin{equation*}
+\mathtt{relsEndo} :=
+[ [a_{1}^{m_{1}+n_{1}},\, a_{1}^{m_{1}}], \dots, [a_{N}^{m_{N}+n_{N}},\, a_{N}^{m_{N}}] ].
+\end{equation*}
 
-With the list $\mathtt{relsEndo}$ of relations of endomorphisms that we got from our algorithm, we can calculate the
-finitely presented category $\text{fp}\mathcal{C}$ from the quiver $q$ and the relations $\mathtt{relEndo}$,
+We can now define an auxiliary finitely presented category $\mathcal{C}' $ from the quiver $q$ modulo the endomorphism
+relations $\mathtt{relsEndo}$,
 \[
-\text{fp}\mathcal{C} := \mathtt{Category}(\mathtt{q}, \mathtt{relsEndo}).
+\mathcal{C}' := Fq / \mathtt{relsEndo}.
 \]
-Apart from the endomorphism relations, there are other, non-endomorphism paths that are equivalent under the relation
-$\mathtt{IsCongruentForMorphisms}$. These can be identified in order to present the finitely presented category
-$\text{fp}\mathcal{C}$ in a shorter form. However calculating the endomorphism relations was the more important task,
-since these are responsible for the infinite hom-sets.
+This category has finitely many morphisms.
+
+In a second step\endnote{Ref. \funcref{AsFpCategory}.} for all different vertices $s, t \in \mathcal{C}'_{0}, s \neq t$ we are mapping each non-endomorphism path 
+$p : s \rightarrow t \in \mathrm{Hom}_{\mathcal{C}'}(s,t)$ to a list $\mathtt{list}(p) := [ p, p', \dots ]$ containing all the paths
+$p, p' \in \mathrm{Hom}_{\mathcal{C}'}(s,t)$ that are congruent as morphisms $G(p) = G(p') \in \mathcal{C}$,
+where $G : \mathcal{C}' \rightarrow \mathcal{C}$ is a functor that maps morphisms in our auxiliary category $\mathcal{C}'$ to
+those in our concrete category $\mathcal{C}$.
+Each list $\mathtt{list}(p)$ of length greater than $1$ defines a list of pairs of paths
+\begin{equation*}
+\mathtt{relations}(p) := [ [ p, p' ], [ p, p'' ], \dots ].
+\end{equation*}
+Taking the union of these lists of pairs of paths over all paths $p : s \rightarrow t \in \mathrm{Hom}_{\mathcal{C}'}(s,t)$,
+\begin{equation*}
+\mathtt{relations}(s,t) := \bigcup_{p \in \mathrm{Hom}_{\mathcal{C}'}(s,t)} \mathtt{relations}(p),
+\end{equation*}
+and finally over all vertices $s, t \in \mathcal{C}'_{0}$
+\begin{equation*}
+\mathtt{relations} := \bigcup_{s, t \in \mathcal{C}'_{0}, s \neq t} \mathtt{relations}(s,t),
+\end{equation*}
+we end up with a list of relations such that
+\begin{align*}
+\text{fp}\mathcal{C} &:= \mathcal{C}' / \mathtt{relations} \\
+ &= (Fq / \mathtt{relsEndo}) / \mathtt{relations} \\
+ &= Fq / (\mathtt{relsEndo} \cup \mathtt{relations}) \\
+ &\cong \mathcal{C}
+\end{align*}
+which is a finitely presented category isomorphic to $\mathcal{C}$.\endnote{Using Groebner Bases some relations can be identified in order to
+present the finitely presented category $\text{fp}\mathcal{C}$ in a shorter form. Ref. \funcref{Category}.}
 \end{remark}
 
 \begin{algorithm}[H]\capstart
@@ -757,7 +786,7 @@ since these are responsible for the infinite hom-sets.
 	\Output{~the endomorphism relations of the category $C$ given as list $\mathtt{relsEndo}$ of pairs of paths}
 	\BlankLine
 	$q := \mathtt{RightQuiverFromConcreteCategory}(C)$\;
-	$kq := \mathtt{PathAlgebra}(k, q)$\;
+	$Fq :=\mathrm{Category closure}(q)$\;
 	$gMor := \mathtt{SetOfGeneratingMorphisms}(C)$\;
 	$A := \mathtt{Arrows}(q)$\;
 	$relsEndo := \emptyset$\;
@@ -766,22 +795,22 @@ since these are responsible for the infinite hom-sets.
 	    \If{\Not{$\mathtt{IsEndomorphism}(mor)$}}{
 		continue\;
 	    }
-	    $m := 0$\;
 	    $mPowers := \emptyset$\;
+	    $m := 0$\;
 	    $foundEqual := \mathtt{false}$\;
 	    \While{$mor^{m}\notin mPowers$}{
-		let $n := 1$\;
+		$n := 1$\;
 	    	$nPowers := \emptyset$\;
 		\While{\Not{} $foundEqual$ \AndAlg{} $mor^{(m+n)} \notin nPowers$}{
 		    \If{$\mathtt{IsCongruentForMorphisms}(mor^{(m+n)}, mor^{m})$}{
-		    	Add the relation $[kq.(A_{i})^{(m+n)}, kq.(A_{i})^{m}]$ to relsEndo\;
+		    	Add the relation $[Fq.(A_{i})^{(m+n)}, Fq.(A_{i})^{m}]$ to relsEndo\;
 		    	$foundEqual := \mathtt{true}$\;
 		    }
 		    Add $mor^{(m+n)}$ to mpowers\;
-		    n := n+1\;
+		    $n := n+1$\;
 		}
 		Add $mor^{m}$ to mpowers\;
-		m := m+1\;
+		$m := m+1$\;
 	    }
 	}
 	\Return{$\mathtt{relsEndo}$}\;
