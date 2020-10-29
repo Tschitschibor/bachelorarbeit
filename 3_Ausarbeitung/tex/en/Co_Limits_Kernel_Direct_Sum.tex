@@ -322,7 +322,7 @@ a finite set $I$ and a family $(A_{i})_{i\in I}$ of objects in $\mathcal{C}$ to 
 \end{definition}
 
 \begin{remark}[Addition of morphisms]\label{rmk:addition_derived_from_direct_sum}
-In an additive category the abelian group structure on $\mathrm{Hom}_{\mathcal{C}}(M,N)$ can be derived from the direct sum:
+In an additive category the abelian group structure on $\mathrm{Hom}_{\mathcal{C}}(M,N)$ can be derived from the direct sum:\\
 For $\rho_{1}, \rho_{2} \in \mathrm{Hom}_{\mathcal{C}}(M,N)$
 \[
 \rho_{1} + \rho_{2} = u_{\mathrm{in}}(1_{M},1_{M}) u_{\mathrm{out}}(\rho_{1},\rho_{2}) 
@@ -478,9 +478,10 @@ f = (f/\kappa_{\varepsilon})\,\kappa_{\varepsilon}
 
 Thus, the image is
 \begin{itemize}
-\item An object $\mathrm{Im}(f) := \mathrm{Ker}(\varepsilon)$ where $\varepsilon = \mathrm{CokernelProjection}(f)$,
-\item A morphism $\mathrm{ImageEmbedding}(f) := \mathrm{KernelEmbedding}(\mathrm{CokernelProjection}(f))$
+\item An object $\mathrm{Im}(f) := \mathrm{Ker}(\varepsilon)$,
+\item A morphism $\kappa_{\varepsilon} := \mathrm{ImageEmbedding}(f) := \mathrm{KernelEmbedding}(\varepsilon)$,
 \end{itemize}
+where $\varepsilon = \mathrm{CokernelProjection}(f)$.
 To differentiate the image of $f$ (which is a kernel, but not the kernel of $f$) from the kernel of $f$,
 we are using $I$ for $\mathrm{Im}(f)$ and $\iota$ for $\mathrm{ImageEmbedding}(f)$.
 \end{definition}
@@ -512,9 +513,10 @@ f = \varepsilon_{\kappa}\,(\varepsilon_{\kappa}\backslash f)
 
 Thus, the coimage is
 \begin{itemize}
-\item An object $\mathrm{Coim}(f) := \mathrm{Coker}(\kappa)$ where $\kappa = \mathrm{KernelEmbedding}(f)$,
-\item A morphism $\varepsilon_{\kappa} := \mathrm{CoimageProjection}(f) := \mathrm{CokernelProjection}(\mathrm{KernelEmbedding}(f))$
+\item An object $\mathrm{Coim}(f) := \mathrm{Coker}(\kappa)$,
+\item A morphism $\varepsilon_{\kappa} := \mathrm{CoimageProjection}(f) := \mathrm{CokernelProjection}(\kappa)$,
 \end{itemize}
+where $\kappa = \mathrm{KernelEmbedding}(f)$.
 Since it was reserved for cokernel, we are not using $C$ to denote the coimage object.
 \end{definition}
 
@@ -825,11 +827,14 @@ by the empty list \texttt{[ ]}? That's why the implenentation in \homalgProject 
 \texttt{HomalgZeroMatrix}, and why the morphisms in \CAP{} are always implemented with their source and target defined.}
 
 \begin{itemize}
-\item For the matrix $(m \times 0)$ we have\\
-$\mathtt{UniversalMorphismIntoZeroObject (m) := ZeroMorphism(m, 0) := ZeroMatrix( m, 0 )}$,
+\item For the matrix $(m \times 0)$ we have
+\begin{align*}
+&\mathtt{UniversalMorphismIntoZeroObject}(m)\\
+:=\, &\mathtt{ZeroMorphism}(m, 0) := \mathtt{ZeroMatrix}( m, 0 ),
+\end{align*}
 \item For the matrix $(0 \times n)$ we have\\
 $\mathtt{UniversalMorphismFromZeroObject (n) := ZeroMorphism(0, n) := ZeroMatrix( 0, n )}$,
-\item For zero matrices $(m \times n)$ we write $\mathtt{ZeroMorphism(m, n) := ZeroMatrix( m, n )}$.
+\item For zero matrices $(m \times n)$ we have $\mathtt{ZeroMorphism(m, n) := ZeroMatrix( m, n )}$.
 \end{itemize}
 
 For two natural numbers $m,n \in {\kmat}_{0} = \mathbb{N} = \mathbb{N}_{0}$, the set of morphisms with source $m$ and target $n$ is

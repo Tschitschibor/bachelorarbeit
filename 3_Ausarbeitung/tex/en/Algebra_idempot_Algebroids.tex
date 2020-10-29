@@ -750,7 +750,7 @@ relations $\mathtt{relsEndo}$,
 \]
 This category has finitely many morphisms.
 
-In a second step\endnote{Ref. \funcref{AsFpCategory}.} for all different vertices $s, t \in \mathcal{C}'_{0}, s \neq t$ we are mapping each non-endomorphism path 
+In a second step\endnote{Refer to \funcref{AsFpCategory}.} for all different vertices $s, t \in \mathcal{C}'_{0}, s \neq t$ we are mapping each non-endomorphism path 
 $p : s \rightarrow t \in \mathrm{Hom}_{\mathcal{C}'}(s,t)$ to a list $\mathtt{list}(p) := [ p, p', \dots ]$ containing all the paths
 $p, p' \in \mathrm{Hom}_{\mathcal{C}'}(s,t)$ that are congruent as morphisms $G(p) = G(p') \in \mathcal{C}$,
 where $G : \mathcal{C}' \rightarrow \mathcal{C}$ is a functor that maps morphisms in our auxiliary category $\mathcal{C}'$ to
@@ -775,19 +775,19 @@ we end up with a list of relations such that
  &\cong \mathcal{C}
 \end{align*}
 which is a finitely presented category isomorphic to $\mathcal{C}$.\endnote{Using Groebner Bases some relations can be identified in order to
-present the finitely presented category $\text{fp}\mathcal{C}$ in a shorter form. Ref. \funcref{Category}.}
+present the finitely presented category $\text{fp}\mathcal{C}$ in a shorter form. This is done in \funcref{Category}.}
 \end{remark}
 
 \begin{algorithm}[H]\capstart
     \caption{\texttt{RelationsOfEndomorphisms}}\label{algo:RelationsOfEndomorphisms}
 	\SetKwInput{Input}{~Input}
 	\SetKwInput{Output}{~Output}
-	\Input{~a finite concrete category $C$}
+	\Input{~a finite concrete category $\mathcal{C}$}
 	\Output{~the endomorphism relations of the category $C$ given as list $\mathtt{relsEndo}$ of pairs of paths}
 	\BlankLine
-	$q := \mathtt{RightQuiverFromConcreteCategory}(C)$\;
+	$q := \mathtt{RightQuiverFromConcreteCategory}(\mathcal{C})$\;
 	$Fq :=\mathrm{Category closure}(q)$\;
-	$gMor := \mathtt{SetOfGeneratingMorphisms}(C)$\;
+	$gMor := \mathtt{SetOfGeneratingMorphisms}(\mathcal{C})$\;
 	$A := \mathtt{Arrows}(q)$\;
 	$relsEndo := \emptyset$\;
 	\For{$i = 1, \dots, \mathtt{Length}(gMor)$}{
