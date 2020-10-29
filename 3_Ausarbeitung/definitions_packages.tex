@@ -34,10 +34,39 @@
 \renewcommand{\cftsubsecfont}{\small\mdseries}
 \renewcommand{\cftsubsubsecfont}{\small\mdseries}
 
+
+\usepackage[pdfauthor   = {Tibor\ Gr{\"u}n},
+            pdftitle    = {},
+            pdfsubject  = {},
+            pdfkeywords = {},
+            %plainpages
+            %breaklinks=true, % still buggy under Linux with \stackrel
+            %bookmarks=true,
+            %bookmarksopen=true,
+            %bookmarksnumbered=true, % produces errors on arXiv.org
+            %pagebackref=true,
+            hyperindex=true,
+            hyperfootnotes=true,
+            colorlinks=true,
+            %linkcolor=red,
+            linkcolor=blue,
+            %citecolor=green,
+            citecolor=blue,
+            %filecolor=magenta,
+            filecolor=blue,
+            %urlcolor=cyan,
+            urlcolor=blue,
+            %pdftex=true
+            %ps2pdf=true
+            %hypertex=true
+            ]{hyperref}
+\usepackage[all]{hypcap}
+
+
+
 %%% For captions and references
+%\usepackage{endnotes}
 \usepackage{enotez} %[backref]
-\usepackage[pagebackref=true]{hyperref}
-\usepackage{hypcap}
 \newcommand{\Algoref}[1]{%
 	\hyperref[algo:#1]{Algorithm~\ref*{algo:#1}}%
 }
