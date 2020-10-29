@@ -101,6 +101,10 @@
 \usepackage[english]{babel}
 %\usepackage[english, german]{babel} %% makes troubles
 
+\usepackage{etoolbox}
+\pretocmd{\section}{\cleardoublepage}{}{}
+
+
 %%% For quotation
 %% english guillemets have to be custom defined in /tex/latex/csquotes/csquotes.cfg
 %\usepackage[english = guillemets, autostyle = true,autopunct,csdisplay = true]{csquotes}

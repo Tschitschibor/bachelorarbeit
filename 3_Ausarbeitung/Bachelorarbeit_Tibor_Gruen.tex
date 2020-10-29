@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt,twoside]{article}
 
 \input{definitions_packages.tex}
 
@@ -26,39 +26,33 @@
 	\phantom{}% blank page
 	\newpage
 
-	\pagenumbering{roman}
-	
-\section*{Preface}
-\addcontentsline{toc}{section}{Preface}
-\input{tex/en/Introduction.tex}
-\newpage
+	%\pagenumbering{roman}
 	\pagenumbering{arabic}
-\section{Introduction to quivers and category theory}
+	
+\section{Introduction}
+%\addcontentsline{toc}{section}{Introduction}
+\input{tex/en/Introduction.tex}
+
+\section{Quivers and categories}\label{sec:quivers_categories}
 \input{tex/en/Quivers_and_Categories.tex}
 
-\newpage
-\section{Limits and colimits}
+\section{Limits and colimits}\label{sec:limits_colimits}
 \input{tex/en/Co_Limits_Kernel_Direct_Sum.tex}
 
-\newpage
 \section{$\Bbbk$-linear closure of a finite concrete category}
 \input{tex/en/Algebra_idempot_Algebroids.tex}
 
-\newpage
 \section{The functor category with values in an abelian category is an abelian category}
 \input{tex/en/Functor_cat_abelian_cat.tex}
 
-\newpage
 %%% Yoneda projectives + enough projectives
 \section{Yoneda's Lemma and projective objects}
 \input{tex/en/Yoneda_Lemma_Co_Completion.tex}
 
-\newpage
 %%% Direct sum decomposition
 \section{Direct sum decomposition (constructively)}
 \input{tex/en/Direct_Sum_Decomposition.tex}
 
-\newpage
 %%% Grand Finale: 
 \section{$\mathrm{Hom}$-based invariants}
 \input{tex/en/Sum_Of_Images.tex}
@@ -69,11 +63,13 @@
 %%% besonders die conclusio
 %%\section{Conclusion}
 
-\newpage
 %% best endnotes are in Westend-Verlag style: 
 %% All at the end, sorted by chapter, starting from 1 at each new chapter.
 
 %%% insert endnotes in some way
+
+\cleardoublepage
+\addcontentsline{toc}{section}{Annotations}
 \begingroup
      \parindent 0pt
      \parskip 2ex
@@ -81,6 +77,7 @@
      \theendnotes
 \endgroup 
 
+\cleardoublepage
 \addcontentsline{toc}{section}{References}
 \input{bib/sources.bib}
 
@@ -89,7 +86,7 @@
 \section{Implementation in \textsc{Cap}}
 \input{tex/en/Implementation_in_CAP.tex}
 
-\newpage
+\cleardoublepage
 \section{Selbstst\"andigkeitserkl\"arung}
 \input{tex/de/erklaerung.tex}
 \end{document}
