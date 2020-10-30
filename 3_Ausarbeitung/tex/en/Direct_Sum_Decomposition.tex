@@ -13,7 +13,7 @@ F = \bigoplus_{i\in I} F_{i}
 \subsection{$\mathrm{Hom}$-structure of $\HomAkmat$}
 
 The following algorithms assume that we already have an algorithm to compute a $\Bbbk$-basis of the external hom
-$\mathrm{Hom}_{\HomAkmat}(F,F)$.
+$\mathrm{Hom}_{\HomAkmat}(F,F)$.\\
 That algorithm $\mathtt{BasisOfExternalHom}( F, G )$ for two functors $F$ and $G$ works by solving systems of matrix equations, also known as
 Sylvester equations, which can be solved using the Kronecker product.
 
@@ -115,7 +115,7 @@ With these definitions, our system of matrix equations \eqref{eq:naturality_cons
 block matrix equations:
 
 \begin{subequations}
-\begin{align}
+\begin{align*}
 \begin{pmatrix} Fa & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
 \begin{pmatrix} 1_{G1} & 0 \\ 0 & 0 \end{pmatrix}
 + \begin{pmatrix} -1_{F1} & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
@@ -128,7 +128,7 @@ block matrix equations:
 \begin{pmatrix}0 & 0 \\ 0 & 1_{G2} \end{pmatrix}
 + \begin{pmatrix} 0 & 0 \\ 0 & -1_{F2} \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
 \begin{pmatrix} 0 & 0 \\ 0 & Gc \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} 
-\end{align}
+\end{align*}
 \end{subequations}
 
 And can be solved with the method suitable for the general system of Sylvester equations \eqref{eq:general_sylvester_equations}.
@@ -675,7 +675,10 @@ $\mathtt{summands}$ stays empty, and instead we have $\mathtt{queue} = [\iota_{1
 \[
 I_{1} \oplus K_{1} = F
 \]
-which is exactly what we proved above for the output of $\mathtt{DecomposeOnceByRandomEndomorphism}$.\\
+which is exactly what we proved above for the output of
+\[
+\mathtt{DecomposeOnceByRandomEndomorphism}.
+\]
 Thus after the first while loop, equation \eqref{eq:direct_sum_decomposition} holds.\\
 
 In each run of the while loop, we are replacing $I_{j}$ with $I_{j,1}$ and $K_{j,1}$ with $I_{j} = I_{j,1} \oplus K_{j,1}$ and

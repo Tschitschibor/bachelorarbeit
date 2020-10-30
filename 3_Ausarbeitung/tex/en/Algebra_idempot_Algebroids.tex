@@ -735,9 +735,11 @@ of natural numbers $m, n \in \mathbb{N}$ such that $\alpha^{m+n} = \alpha^{m}$, 
 are only finitely many endomorphisms in $\mathcal{C}$. We want to accomplish the same for our abstract category $Fq$.
 
 The algorithm \algoref{RelationsOfEndomorphisms} below calculates a list $\mathtt{relsEndo}$ of pairs of paths $[a^{m+n}, a^{m}]$ in
-$Fq$ for each relation $\alpha^{m+n} = \alpha^{m}$ in $\mathcal{C}$, where $a = FU(\alpha) : FU(M) \rightarrow FU(M)$ is the
-endomorphism arrow in $Fq$ corresponding to the endomorphism morphism $\alpha : M \rightarrow M$ in the set of
-generating morphisms of $\mathcal{C}$.
+$Fq$ for each relation $\alpha^{m+n} = \alpha^{m}$ in $\mathcal{C}$. Let the functor $E : q \rightarrow \mathcal{C}$ be the
+unique extension of the obvious embedding of the quiver $q$ in our concrete category $\mathcal{C}$.
+Then for each endomorphism $a \in q$ with $\alpha = E(a)$
+for an endomorphism $\alpha$ with $\alpha^{m+n} = \alpha^{m}$ we add the relation $[a^{m+n}, a^{m}]$ as a pair of paths to our
+list $\mathtt{relsEndo}$:
 \begin{equation*}
 \mathtt{relsEndo} :=
 [ [a_{1}^{m_{1}+n_{1}},\, a_{1}^{m_{1}}], \dots, [a_{N}^{m_{N}+n_{N}},\, a_{N}^{m_{N}}] ].
@@ -752,9 +754,8 @@ This category has finitely many morphisms.
 
 In a second step\endnote{Refer to \funcref{AsFpCategory}.} for all different vertices $s, t \in \mathcal{C}'_{0}, s \neq t$ we are mapping each non-endomorphism path 
 $p : s \rightarrow t \in \mathrm{Hom}_{\mathcal{C}'}(s,t)$ to a list $\mathtt{list}(p) := [ p, p', \dots ]$ containing all the paths
-$p, p' \in \mathrm{Hom}_{\mathcal{C}'}(s,t)$ that are congruent as morphisms $G(p) = G(p') \in \mathcal{C}$,
-where $G : \mathcal{C}' \rightarrow \mathcal{C}$ is a functor that maps morphisms in our auxiliary category $\mathcal{C}'$ to
-those in our concrete category $\mathcal{C}$.
+$p, p' \in \mathrm{Hom}_{\mathcal{C}'}(s,t)$ that are equal as morphisms $G(p) = G(p') \in \mathcal{C}$,
+where $G : \mathcal{C}' \rightarrow \mathcal{C}$ is the factorization of the functor $E$ over $\mathcal{C}'$.
 Each list $\mathtt{list}(p)$ of length greater than $1$ defines a list of pairs of paths
 \begin{equation*}
 \mathtt{relations}(p) := [ [ p, p' ], [ p, p'' ], \dots ].
@@ -769,7 +770,7 @@ and finally over all vertices $s, t \in \mathcal{C}'_{0}$
 \end{equation*}
 we end up with a list of relations such that
 \begin{align*}
-\text{fp}\mathcal{C} &:= \mathcal{C}' / \mathtt{relations} \\
+\text{fp}\mathcal{C} :&= \mathcal{C}' / \mathtt{relations} \\
  &= (Fq / \mathtt{relsEndo}) / \mathtt{relations} \\
  &= Fq / (\mathtt{relsEndo} \cup \mathtt{relations}) \\
  &\cong \mathcal{C}

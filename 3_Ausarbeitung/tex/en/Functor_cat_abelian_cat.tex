@@ -1,5 +1,5 @@
 \label{sect:abelian_cat}
-From now on instead of dealing with a finite concrete category $\mathcal{C}$ directly, we can intead take its finite-dimensional $\Bbbk$-linear
+From now on instead of dealing with a finite concrete category $\mathcal{C}$ directly, we can instead take its finite-dimensional $\Bbbk$-linear
 closure, i.e. the algebroid $\mathcal{A}$. This is the source of our functors in the functor category $\HomAkmat$. The target of
 our functors is the abelian category $\kmat$.
 
@@ -43,18 +43,28 @@ category and finally that it is a $\Bbbk$-linear abelian category.
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
 \item In order to show that $\HomAkmat$ is a $\Bbbk$-linear category, we must show that 
-\begin{enumerate}
+\begin{enumerate}[align=left, leftmargin=0pt]
 \renewcommand{\labelenumii}{(\roman{enumii})}
-\item for any two objects $F,G \in \HomAkmat_{0}$ the hom-set $\mathrm{Hom}_{\HomAkmat}(F,G)$ between them is a $\Bbbk$-module, and
-\item that the composition of two morphisms\\
-$\mu : \mathrm{Hom}_{\HomAkmat}(F,G) \times \mathrm{Hom}_{\HomAkmat}(G,H) \rightarrow \mathrm{Hom}_{\HomAkmat}(F,H)$ is a
-$\Bbbk$-bilinear map, i.e. for $\eta, \varepsilon \in \mathrm{Hom}_{\HomAkmat}(F,G)$,
-$\varphi, \psi \in \mathrm{Hom}_{\HomAkmat}(G,H)$ and for $x \in \Bbbk$
-\begin{align}
+\item for any two objects $F,G \in \HomAkmat_{0}$ the hom-set
+\[
+\mathrm{Hom}_{\HomAkmat}(F,G)
+\]
+between them is a $\Bbbk$-module, and
+\item that the composition of two morphisms
+\[
+\mu : \mathrm{Hom}_{\HomAkmat}(F,G) \times \mathrm{Hom}_{\HomAkmat}(G,H) \rightarrow \mathrm{Hom}_{\HomAkmat}(F,H)
+\]
+is a $\Bbbk$-bilinear map, i.e. for
+\begin{align*}
+\eta, \varepsilon &\in \mathrm{Hom}_{\HomAkmat}(F,G), \\
+\varphi, \psi &\in \mathrm{Hom}_{\HomAkmat}(G,H)\,\text{and for} \\
+x &\in \Bbbk
+\end{align*}
+\begin{align*}
 (\eta + \varepsilon)\varphi &= \eta\varphi + \varepsilon\varphi \\
 \eta(\varphi + \psi) &= \eta\varphi + \eta\psi \\
 (x\eta)\varphi &= \eta(x\varphi) = x(\eta\varphi).
-\end{align}
+\end{align*}
 \end{enumerate}
 
 \begin{subproof}[Proof of (i)]
@@ -100,11 +110,14 @@ This concludes the first part of the proof, i.e. $\HomAkmat$ is a $\Bbbk$-linear
 \end{subproof}
 
 \item Next we show that $\HomAkmat$ is a $\Bbbk$-linear additive category, i.e. it is
-\begin{enumerate}
+\begin{enumerate}[align=left, leftmargin=0pt]
 \renewcommand{\labelenumii}{(\roman{enumii})}
 \item A $\Bbbk$-linear category with
 \item A dependent function $\oplus$ mapping a finite set $I$ and a collection $(F_{i})_{i\in I}$ of objects in $\HomAkmat$
-to a corresponding direct sum $( \oplus_{i\in I} F_{i}, (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I}, u_{\mathrm{in}}, u_{\mathrm{out}} )$.
+to a corresponding direct sum
+\begin{align*}
+( \oplus_{i\in I} F_{i}, (\pi_{i})_{i\in I}, (\iota_{i})_{i\in I}, u_{\mathrm{in}}, u_{\mathrm{out}} ).
+\end{align*}
 \end{enumerate}
 \begin{subproof}[Proof of (ii)]
 We will make extensive use of the direct sum in $\kmat$ as described in \ref{ex:kmat_additive} and \ref{ex:block_diagonal_matrix} to
@@ -155,9 +168,9 @@ which again can be checked component-wise
 \item For a morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ we have a family of morphisms 
 $\{F_{i} a : F_{i} c \rightarrow F_{i} c'\}_{i \in I}$. Analogous to \ref{ex:block_diagonal_matrix} we define
 
-\begin{align}
+\begin{align*}
 F a := \sum_{i \in I} (\pi_{i})_{c} F_{i} a (\iota_{i})_{c'} : Fc \rightarrow Fc'
-\end{align}
+\end{align*}
 which satisfies
 \begin{align*}
 (\iota_{i})_{c} Fa (\pi_{i})_{c'} &= (\iota_{i})_{c} \sum_{j \in I} (\pi_{j})_{c} F_{j} a (\iota_{j})_{c'} (\pi_{i})_{c'} \\
@@ -177,29 +190,35 @@ For these we have by \eqref{eq:u_in_direct_sum_matrix} the morphism $u_{\text{in
 u_{\text{in}}(\tau_{c}) (\pi_{i})_{c} =
 (\tau_{i})_{c}
 \end{align*}
-We can thus define the natural transformation $u_{\text{in}}(\tau) : G \rightarrow F \in \HomAkmat_{1}$ by the components
-\begin{align}
+We can thus define the natural transformation
+\begin{align*}
+u_{\text{in}}(\tau) : G \rightarrow F \in \HomAkmat_{1}
+\end{align*}
+by the components
+\begin{align*}
 (u_{\text{in}}(\tau))_{c} := u_{\text{in}}(\tau_{c})
-\end{align}
+\end{align*}
 and we can verify that $u_{\text{in}}(\tau) (\pi_{i})$ is the natural transformation with components
-\begin{align}
+\begin{align*}
 (u_{\text{in}}(\tau) (\pi_{i}))_{c} &= (u_{\text{in}}(\tau))_{c} (\pi_{i})_{c} \\
 &= u_{\text{in}}(\tau_{c}) (\pi_{i})_{c} \\
 &= (\tau_{i})_{c}
-\end{align}
+\end{align*}
 per definition, i.e. $u_{\text{in}}(\tau)$ is the natural transformation fulfilling $u_{\text{in}}(\tau) (\pi_{i}) = \tau_{i}$.
 \item Analogous for a family $\rho = \{ \rho_{i} : F_{i} \rightarrow H \}$ of natural transformations with the same target
 $H \in \HomAkmat_{0}$ we have for each object $c \in \mathcal{A}_{0}$ a family
 $\rho_{c} = \{ (\rho_{i})_{c} : F_{i} c \rightarrow Hc \}_{i \in I}$ and get the
-natural transformation $u_{\text{out}}(\rho) : F \rightarrow H \in \HomAkmat_{1}$ with components
-\begin{align}
+natural transformation
+\begin{align*}
+u_{\text{out}}(\rho) : F \rightarrow H \in \HomAkmat_{1}
+\end{align*}
+with components
+\begin{align*}
 (u_{\text{out}}(\rho))_{c} := u_{\text{out}}(\rho_{c})
-\end{align}
+\end{align*}
 fulfilling $\iota_{i} u_{\text{out}}(\rho) = \rho_{i}$.
 \end{itemize}
-
 All in all we have 
-
 \begin{align*}
 \forall c \in \mathcal{A}_{0},&& &&  (\oplus_{i \in I} F_{i}) c &= \oplus_{i \in I} (F_{i} c) \\
 \forall c \in \mathcal{A}_{0},&& \forall i \in I,&& (\pi_{i} : F \rightarrow F_{i})_{c} &= (\pi_{i})_{c} : Fc \rightarrow F_{i} c \\
@@ -216,7 +235,7 @@ And thus we proved that $\HomAkmat$ is a $\Bbbk$-linear additive category.
 \end{subproof}
 
 \item Next we show that $\HomAkmat$ is a $\Bbbk$-linear pre-abelian category, i.e.
-\begin{enumerate}
+\begin{enumerate}[align=left, leftmargin=0pt]
 \renewcommand{\labelenumii}{(\roman{enumii})}
 \item a $\Bbbk$-linear additive category with
 \item a dependent function mapping a morphism $\eta : F \rightarrow G \in \HomAkmat_{1}$ to a kernel of $\eta$ and
@@ -231,12 +250,25 @@ For a morphism $\eta : F \rightarrow G \in \HomAkmat_{1}$ we want to define its 
 $(\tau / \eta) := \mathrm{KernelLift}(\eta,\tau)$ such that $\tau = (\tau / \eta) \kappa$
 \end{itemize}
 
-For the components $\eta_{c} : Fc \rightarrow Gc \in \kmat_{1}$ we have in $\kmat$ the kernel object $Kc := \mathrm{KernelObject}(\eta_{c})$
+For the components $\eta_{c} : Fc \rightarrow Gc \in \kmat_{1}$ we have in $\kmat$ the kernel object
+\[
+Kc := \mathrm{KernelObject}(\eta_{c})
+\]
 and the kernel embedding
-$\kappa_{c} := \mathrm{KernelEmbedding}(\eta_{c}) : Kc \rightarrow Fc$ such that
+\[
+\kappa_{c} := \mathrm{KernelEmbedding}(\eta_{c}) : Kc \rightarrow Fc
+\]
+such that
 $\kappa_{c} \eta_{c} = 0_{Kc,Fc}$.
-We define the kernel embedding of $\eta$ as $\kappa : K \hookrightarrow F$ by its components
-$\kappa_{c} = \mathrm{KernelEmbedding}(\eta)_{c} := \mathrm{KernelEmbedding}(\eta_{c}) : Kc \rightarrow Fc$ with source
+We define the kernel embedding of $\eta$ as
+\[
+\kappa : K \hookrightarrow F
+\]
+by its components
+\[
+\kappa_{c} = \mathrm{KernelEmbedding}(\eta)_{c} := \mathrm{KernelEmbedding}(\eta_{c}) : Kc \rightarrow Fc
+\]
+with source
 $K = \mathrm{KernelObject}(\eta)$ defined on objects as $Kc := \mathrm{KernelObject}(\eta_{c})$ which is the source of the
 kernel embedding of $\eta_{c}$.\\
 Rather than proving that the so defined $\kappa : K \rightarrow F$ is a natural transformation, we assume it is and fill in the blanks, i.e. 
