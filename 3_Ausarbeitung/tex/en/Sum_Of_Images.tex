@@ -120,7 +120,8 @@ resulting from our direct sum decomposition.
 \begin{Verbatim}[commandchars=!@B,fontsize=\small,frame=single,label=Example]
   !gapprompt@gap>B !gapinput@etas := WeakDirectSumDecomposition( fortyone : random := false );;B
   !gapprompt@gap>B !gapinput@dec := List( etas, eta -> List( SetOfObjects( A ),B
-  !gapprompt@>B !gapinput@      o -> Dimension( Source( UnderlyingCapTwoCategoryCell( eta )( o ) ) ) ) );B
+  !gapprompt@>B !gapinput@      o -> Dimension( Source(B
+  !gapprompt@>B !gapinput@        UnderlyingCapTwoCategoryCell( eta )( o ) ) ) ) );B
   [ [ 3, 0 ], [ 3, 0 ], [ 3, 0 ], [ 3, 0 ], [ 0, 3 ],
     [ 1, 3 ], [ 3, 3 ], [ 3, 3 ], [ 3, 3 ], [ 3, 1 ] ]
 \end{Verbatim}
@@ -144,7 +145,11 @@ We get another representation with dimensions $[ 3, 3 ]$ at both objects by the 
   !gapprompt@gap>B !gapinput@proj1 := Yop( Aop.1 );B
   <(1)->3, (2)->3; (a)->3x3, (b)->3x3, (c)->3x3>
 \end{Verbatim}
-We don't know if $\mathtt{proj1}$ is the source of one of the three embeddings $\mathtt{etas[7], etas[8], etas[9]}$ above, so
+We don't know if $\mathtt{proj1}$ is the source of one of the three embeddings
+\[
+\mathtt{etas[7], etas[8], etas[9]}
+\]
+above, so
 we are looking for ways to compare it for example to the representation $\mathtt{six}$.
 
 In the following we give two proofs that $\mathtt{six}$ and $\mathtt{proj1}$ are nonisomorphic:

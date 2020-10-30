@@ -829,7 +829,7 @@ important to note that for each $m \in \kmat_{0}$ there is exactly one such matr
 (that's what initial and terminal object means), and for different $m$, these morphisms are different.\endnote{It is
 challenging to decide between different types of zero matrices with zero rows or zero columns, if they
 are represented by lists of lists with their entries. How many rows does the $(3 \times 0)$ matrix have, if you represent it
-by the empty list \texttt{[ ]}? That's why the implenentation in \homalgProject uses a special function
+by the empty list \texttt{[ ]}? That's why the implementation in \homalgProject uses a special function
 \texttt{HomalgZeroMatrix}, and why the morphisms in \CAP{} are always implemented with their source and target defined.}
 
 \begin{itemize}
@@ -1045,7 +1045,8 @@ $\Bbbk := \mathbb{F}_{3}$ for our calculations below.
    . . . . .
    
    A morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@IsEqualForMorphisms( PreCompose( iota1, pi2 ), ZeroMorphism( V3, V5 ) );|
+  !gapprompt@gap>| !gapinput@IsEqualForMorphisms( PreCompose( iota1, pi2 ),|
+  !gapprompt@>| !gapinput@     ZeroMorphism( V3, V5 ) );|
   true
   !gapprompt@gap>| !gapinput@iota2 := InjectionOfCofactorOfDirectSum( D, 2 );;|
   !gapprompt@gap>| !gapinput@Display( iota2 );|
@@ -1064,7 +1065,8 @@ $\Bbbk := \mathbb{F}_{3}$ for our calculations below.
    . . . . 1
    
    A morphism in Category of matrices over GF(3)
-  !gapprompt@gap>| !gapinput@IsEqualForMorphisms( PreCompose( iota2, pi2 ), IdentityMorphism( V5 ) );|
+  !gapprompt@gap>| !gapinput@IsEqualForMorphisms( PreCompose( iota2, pi2 ),|
+  !gapprompt@>| !gapinput@     IdentityMorphism( V5 ) );|
   true
   !gapprompt@gap>| !gapinput@Display( PreCompose( pi2, iota2 ) );|
    . . . . . . . . . .
@@ -1105,10 +1107,17 @@ $\Bbbk := \mathbb{F}_{3}$ for our calculations below.
 \end{Verbatim}
 
 We can also verify the result in \ref{rmk:addition_derived_from_direct_sum} that the abelian group operation
-$\mathtt{AdditionForMorphisms}$ can be derived from $\mathtt{UniversalMorphismIntoDirectSum}$,
-$\mathtt{UniversalMorphismFromDirectSum}$,\\
-$\mathtt{IdentityMorphism}$ and
-$\mathtt{PreCompose}$. As an example we add two $\mathrm{GF}_{3}$-matrices from $\mathtt{V2}$ to $\mathtt{V3}$ in three
+\[
+\mathtt{AdditionForMorphisms}
+\]
+can be derived from
+\begin{align*}
+\mathtt{UniversalMorphismIntoDirectSum}, \\
+\mathtt{UniversalMorphismFromDirectSum},\\
+\mathtt{IdentityMorphism}\,\text{ and} \\
+\mathtt{PreCompose}.
+\end{align*}
+As an example we add two $\mathrm{GF}_{3}$-matrices from $\mathtt{V2}$ to $\mathtt{V3}$ in three
 different ways.
 
 \begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
@@ -1139,7 +1148,8 @@ different ways.
    A morphism in Category of matrices over GF(3)
   !gapprompt@gap>| !gapinput@one2 := IdentityMorphism( V2 );|
   <An identity morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@result2 := PreCompose( UniversalMorphismIntoDirectSum( [ one2, one2 ] ),|
+  !gapprompt@gap>| !gapinput@result2 := PreCompose( |
+  !gapprompt@>| !gapinput@   UniversalMorphismIntoDirectSum( [ one2, one2 ] ),|
   !gapprompt@>| !gapinput@   UniversalMorphismFromDirectSum( [ mor1, mor2 ] ) );|
   <A morphism in Category of matrices over GF(3)>
   !gapprompt@gap>| !gapinput@Display( result2 );|
@@ -1151,7 +1161,8 @@ different ways.
   true
   !gapprompt@gap>| !gapinput@one3 := IdentityMorphism( V3 );|
   <An identity morphism in Category of matrices over GF(3)>
-  !gapprompt@gap>| !gapinput@result3 := PreCompose( UniversalMorphismIntoDirectSum( [ mor1, mor2 ] ),|
+  !gapprompt@gap>| !gapinput@result3 := PreCompose( |
+  !gapprompt@>| !gapinput@  UniversalMorphismIntoDirectSum( [ mor1, mor2 ] ),|
   !gapprompt@>| !gapinput@  UniversalMorphismFromDirectSum( [ one3, one3 ] ) );|
   <A morphism in Category of matrices over GF(3)>
   !gapprompt@gap>| !gapinput@Display( result3 );|
@@ -1277,7 +1288,7 @@ satisfies
 a\, (\pi_{i})_{n} &= (\pi_{i})_{m}\, a_{i}\,\text{ and }\\
 (\iota_{i})_{m}\, a\, (\pi_{i})_{n} &= a_{i}.
 \end{align}
-This an be interpreted in two ways:
+This can be interpreted in two ways:
 \begin{enumerate}
 \renewcommand{\labelenumi}{(\theenumi)}
 \item For the family $\iota_{m} a := \{ (\iota_{i})_{m} a : m_{i} \rightarrow n \} := \{ a_{i}\,(\iota_{i})_{n} : m_{i} \rightarrow n \}$
