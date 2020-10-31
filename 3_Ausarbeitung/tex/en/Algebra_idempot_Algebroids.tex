@@ -735,7 +735,7 @@ of natural numbers $m, n \in \mathbb{N}$ such that $\alpha^{m+n} = \alpha^{m}$, 
 are only finitely many endomorphisms in $\mathcal{C}$. We want to accomplish the same for our abstract category $Fq$.
 
 The algorithm \algoref{RelationsOfEndomorphisms} below calculates a list $\mathtt{relsEndo}$ of pairs of paths $[a^{m+n}, a^{m}]$ in
-$Fq$ for each relation $\alpha^{m+n} = \alpha^{m}$ in $\mathcal{C}$. Let the functor $E : q \rightarrow \mathcal{C}$ be the
+$Fq$ for each relation $\alpha^{m+n} = \alpha^{m}$ in $\mathcal{C}$. Let the functor $E : Fq \rightarrow \mathcal{C}$ be the
 unique extension of the obvious embedding of the quiver $q$ in our concrete category $\mathcal{C}$.
 Then for each endomorphism $a \in q$ with $\alpha = E(a)$
 for an endomorphism $\alpha$ with $\alpha^{m+n} = \alpha^{m}$ we add the relation $[a^{m+n}, a^{m}]$ as a pair of paths to our
