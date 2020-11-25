@@ -1,0 +1,42 @@
+% mainfile: ../main.tex
+
+\section{The example CatReps}
+\[
+\begin{tabular}{r|cccccc}
+   & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+$e_{1}$ & 1 & 2 & 3 &   &   &  \\
+$e_{2}$ &   &   &   & 4 & 5 & 6 \\
+\hline
+$a$ & 2 & 3 & 1 &   &   &  \\
+$b$ & 4 & 5 & 6 &   &   &  \\
+$c$ &   &   &   & 5 & 6 & 4 \\
+\hline
+\rule{0pt}{0.01pt} \\
+$a^{2}$ & 3 & 1 & 2 &   &   &  \\
+$ab$ & 5 & 6 & 4 &   &   &  \\
+$bc$ & 5 & 6 & 4 &   &   &  \\
+$c^{2}$ &   &   &   & 6 & 4 & 5 \\
+\hline
+\rule{0pt}{1pt} \\
+$a^{3}$ & 1 & 2 & 3 &   &   &  \\
+$a^{2}b$ & 6 & 4 & 5 &   &   &  \\
+$abc$ & 6 & 4 & 5 &   &   &  \\
+$bc^{2}$ & 6 & 4 & 5 &   &   &  \\
+$c^{3}$ &   &   &   & 4 & 5 & 6 \\
+\hline
+\hline
+\end{tabular}
+\]
+
+\[
+\begin{tikzcd}
+\{1,2,3\} \arrow["a"', loop, distance=2em, in=305, out=235] \arrow[rr, "b"] &  & \{4,5,6\} \arrow["c"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
+\]
+\[
+\begin{tikzcd}
+1 \arrow["a"', loop, distance=2em, in=305, out=235] \arrow["e_{1}", loop, distance=2em, in=55, out=125] \arrow[rr, "b"] & 
+ & 2 \arrow["c"', loop, distance=2em, in=305, out=235] \arrow["e_{2}", loop, distance=2em, in=55, out=125]
+\end{tikzcd}
+\]

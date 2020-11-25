@@ -1,0 +1,34 @@
+
+\begin{definition}{(Ideal of the path algebra; relation of endomorphism; quotient algebra)}\label{def:relation_of_endo}
+Let the set of objects $q_{0}$ and the set of morphisms $q_{1}$ of a quiver $q$ be finite. Then from lemmata
+\ref{la:path_algebra_is_ass_algebra} and \ref{la:unit_in_path_algebra} we know that $\Bbbk q$ is a unital associative algebra.
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item A polynomial $p = \sum_{j=1}^{n} a_{j} x^{j} \in \Bbbk[x]$ together with an endomorphism $\alpha \in \mathrm{End}_{q}(o)$ for an object
+$o\in q_{0}$ defines a \ul{left ideal of the path algebra}
+\begin{align}
+\left< p(\alpha) \right> := \{ p(\alpha)\cdot \beta : \beta \in \Bbbk q \} \vartriangleleft \Bbbk q
+\end{align}
+and $p(\alpha) \in \Bbbk q$ is the \ul{generator of the ideal}.
+\item Such an ideal $\left< p(\alpha) \right>$ defines an congruence relation $\sim_{\left< p(\alpha) \right>}$ on $\Bbbk q$:
+\begin{align}
+\beta \sim_{\left< p(\alpha) \right>} \gamma &:\Leftrightarrow \beta - \gamma \in \left< p(\alpha) \right>
+\end{align}
+that we call a \ul{relation of the endomorphism} $\alpha$.\\
+The set $\Bbbk q\, / \left< p(\alpha) \right>$ of residue classes
+\begin{align}
+[\gamma]_{\sim_{\left< p(\alpha) \right>}} &:= \{ \beta \in \Bbbk q \,|\, \beta \sim_{\left< p(\alpha) \right>} \gamma \}, \\
+\Bbbk q \,/ \left< p(\alpha) \right> &:= \{ [\gamma]_{\sim_{\left< p(\alpha) \right>}} : \gamma \in \Bbbk q \}
+\end{align}
+is again an algebra, called the \ul{quotient algebra} of $\Bbbk q$ by the ideal $\left< p(\alpha) \right>$.
+\item More generally, for the finite generating set $q_{1}$ of morphisms, a polynomial $p \in \Bbbk[x_{1},\dots,x_{N}]$ with $N = \abs{q_{1}}$,
+the ideal $\left< p(\beta_{1},\dots,\beta_{N}) : \beta_{i} \in q_{1} \right>$ defines a relation and quotient algebra analogous to (2).
+\item If we have a relation $p_{i}(\alpha_{i})$ for each endomorphism $\alpha_{1},\dots,\alpha_{N'} \in \mathrm{End}_{q}$,
+$N' = |\mathrm{End}_{q}|$, we can iteratively divide by the ideals
+\begin{align}
+&(\dots(\Bbbk q\, / \left< p_{1}(\alpha_{1}) \right> )\, / \left< p_{2}(\alpha_{2}) \right> ) \dots )\, / \left< p_{N'}(\alpha_{N'}) \right> \\
+= \,&\Bbbk q\, / \left< p_{1}(\alpha_{1}), \dots, p_{N'}(\alpha_{N'}) \right>\label{eq:relations_ideal}
+\end{align}
+and end up with a finite-dimensional quotient algebra of the path algebra.
+\end{enumerate}
+\end{definition}

@@ -1,0 +1,130 @@
+
+\[
+\begin{tikzcd}
+                                                          &                                                                                   &                                                          & F                                                      &                                                           &                                                                                       &                                                          \\
+                                                          & F \arrow[rru, "\eta_{1}", bend left]                                              &                                                          &                                                        &                                                           & F \arrow[llu, "\eta_{1}"', bend right]                                                &                                                          \\
+                                                          & I_{1} \arrow[u, "\iota_{1}"] \arrow[rr, dash] \arrow[rruu, "\iota_{1}\eta_{1}"] &                                                          & \bigoplus \arrow[uu, "I_{1} \oplus K_{1}" description] &                                                           & K_{1} \arrow[u, "\kappa_{1}"'] \arrow[ll, dash] \arrow[lluu, "\kappa_{1}\eta_{1}"'] &                                                          \\
+I_{1} \arrow[ru, "\eta_{11}"', bend left=49, shift right] &                                                                                   & I_{1} \arrow[lu, "\eta_{11}", bend right=49, shift left] &                                                        & K_{1} \arrow[ru, "\eta_{12}"', bend left=49, shift right] &                                                                                       & K_{1} \arrow[lu, "\eta_{12}", bend right=49, shift left] \\
+I_{11} \arrow[u, "\iota_{11}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{11}\oplus K_{11}" description]                           & K_{11} \arrow[u, "\kappa_{11}"] \arrow[l, dash]        &                                                        & I_{12} \arrow[u, "\iota_{12}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{12} \oplus K_{12}" description]                              & K_{12} \arrow[u, "\kappa_{12}"'] \arrow[l, dash]      
+\end{tikzcd}
+\]
+
+
+Invariant:
+
+In each step:
+
+\[
+F = \bigoplus_{\eta \in \mathtt{queue}} s(\eta) \oplus \bigoplus_{\varphi \in \mathtt{summands}} s(\varphi).
+\]
+
+When $\mathtt{queue} = \emptyset$, then
+\[
+F = \bigoplus_{\varphi \in \mathtt{summands}} s(\varphi).
+\]
+
+Why is $\mathtt{queue}$ going to be $\emptyset$?
+
+$5 = 4+1 = 2+2+1 = 2+2+1$.
+
+In each step we remove the last $\eta$ from the $\mathtt{queue}$. If $s(\eta)$ was indecomposable, it doesn't get replaced, i.e.
+$\mathtt{queue}$ becomes smaller by 1. If $s(\eta)$ was decomposable, we replace $\eta$ by $\iota\eta$ and $\kappa\eta$ with
+
+\begin{align}
+\iota : I \rightarrow s(\eta) \\
+\kappa : K \rightarrow s(\eta)
+\end{align}
+and in some sense
+\begin{align}
+I \preceq s(\eta) \\
+K \preceq s(\eta)
+\end{align}
+Which sense?
+\begin{align}
+I \oplus K &= s(\eta) \\
+s(\eta)(i) &= (I \oplus K)(i) = I(i) + K(i)\, \forall i \in \mathcal{A}_{0}
+\end{align}
+Since $\iota \neq 0$ and $\kappa \neq 0$, $I \neq 0$ and $K \neq 0$, so for some objects $i,j \in \mathcal{A}_{0}$ we have
+$I(i) > 0$ and $K(j) > 0$, and thus $s(\eta)(i) > 0$ for some $i$.
+
+For all objects $i\in \mathcal{A}_{0}$ $I(i) \leq s(\eta)(i)$ and $K(i) \leq s(\eta)(i)$.
+
+$\mathtt{queue} := \{1_{F}\} \mapsto \{\iota 1_{F}, \kappa 1_{F}\} = \{\iota, \kappa \}
+\mapsto \{ \iota_{1}\iota, \kappa_{1}\iota, \iota_{2}\kappa, \kappa_{2}\kappa \}$
+
+
+Input: Functor $F$.\\
+Output: Tupel $(\mathrm{ImageEmbedding}( \alpha ), \mathrm{KernelEmbedding}( \alpha ) )$
+
+such that
+\[
+\begin{tikzcd}
+                                       & F &                                         \\
+s(\eta) \arrow[ru, "\eta", bend left=49]     &   & s(\eta) \arrow[lu, "\eta"', bend right=49]    \\
+I \arrow[u, "\iota"] &   & K \arrow[u, "\kappa"']
+\end{tikzcd}
+\]
+and
+\[
+F = I \oplus K
+\]
+
+When we input I and K into DecomposeOnce, we get a further decomposition:
+\[
+\begin{tikzcd}
+                                                 &                                                &                                                  & F &                                                  &                                                 &                                                   \\
+                                                 & F \arrow[rru, "\eta_{1}", bend left]           &                                                  &   &                                                  & F \arrow[llu, "\eta_{1}"', bend right]          &                                                   \\
+                                                 & I_{1} \arrow[u, "\mathrm{ImgEmb}(\alpha_{1})"] &                                                  &   &                                                  & K_{1} \arrow[u, "\mathrm{KerEmb}(\alpha_{1})"'] &                                                   \\
+I_{1} \arrow[ru, "\eta_{11}", bend left=49]      &                                                & I_{1} \arrow[lu, "\eta_{11}", bend right=49]     &   & K_{1} \arrow[ru, "\eta_{12}", bend left=49]      &                                                 & K_{1} \arrow[lu, "\eta_{12}", bend right=49]      \\
+I_{11} \arrow[u, "\mathrm{ImgEmb}(\alpha_{11})"] &                                                & K_{11} \arrow[u, "\mathrm{KerEmb}(\alpha_{11})"] &   & I_{12} \arrow[u, "\mathrm{ImgEmb}(\alpha_{12})"] &                                                 & K_{12} \arrow[u, "\mathrm{KerEmb}(\alpha_{12})"']
+\end{tikzcd}
+\]
+
+The direct sum decomposition in each step looks like this:
+
+\[
+\begin{tikzcd}
+                                                                   &                                                                   &                                                                    & F                                                      &                                                                    &                                                                    &                                                                     \\
+                                                                   & F \arrow[rru, "\eta_{1}", bend left]                              &                                                                    &                                                        &                                                                    & F \arrow[llu, "\eta_{1}"', bend right]                             &                                                                     \\
+                                                                   & I_{1} \arrow[u, "\mathrm{ImgEmb}(\alpha_{1})"] \arrow[rr, dash] &                                                                    & \bigoplus \arrow[uu, "I_{1} \oplus K_{1}" description] &                                                                    & K_{1} \arrow[u, "\mathrm{KerEmb}(\alpha_{1})"'] \arrow[ll, dash] &                                                                     \\
+I_{1} \arrow[ru, "\eta_{11}"', bend left=49, shift right]           &                                                                   & I_{1} \arrow[lu, "\eta_{11}", bend right=49, shift left]           &                                                        & K_{1} \arrow[ru, "\eta_{12}"', bend left=49, shift right]                        &                                                                    & K_{1} \arrow[lu, "\eta_{12}", bend right=49, shift left]                        \\
+I_{11} \arrow[u, "\mathrm{ImgEmb}(\alpha_{11})"] \arrow[r, dash] & \bigoplus \arrow[uu, "I_{11}\oplus K_{11}" description]           & K_{11} \arrow[u, "\mathrm{KerEmb}(\alpha_{11})"] \arrow[l, dash] &                                                        & I_{12} \arrow[u, "\mathrm{ImgEmb}(\alpha_{12})"] \arrow[r, dash] & \bigoplus \arrow[uu, "I_{12} \oplus K_{12}" description]           & K_{12} \arrow[u, "\mathrm{KerEmb}(\alpha_{12})"'] \arrow[l, dash]
+\end{tikzcd}
+\]
+That is we have 
+\begin{alignat}{5}
+F &=  &&I_{1} &&\oplus &&K_{1} \\
+F &= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12})
+\end{alignat}
+
+
+
+
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item Let $F \neq 0$ be a functor in $\HomAkmat$. Then there is a maximum dimension $d := \max_{i \in \mathcal{A}_{0}} \mathrm{dim}\, F(i)$ with
+$d \geq 1$.
+\item The vector space $\mathrm{Hom}_{\HomAkmat}(F,F) = \mathrm{End}_{\HomAkmat}(F)$ is finite-dimensional, i.e. we can find a
+finite basis $\mathtt{endbas}$ of our external hom using the algorithm $\mathtt{BasisOfExternalHom}(F,F)$. Since $F \neq 0$, the
+identity morphism $1_{F}$ 
+\item If $\mathrm{End}_{\HomAkmat}(F)$ has dimension 1, i.e. each morphism in $\mathrm{End}_{\HomAkmat}(F)$ is of the form
+$\lambda \alpha$ for some $\lambda \in \Bbbk$ and the one $\alpha \in \mathtt{endbas}$, then $\alpha = 1_{F}$ is the identity morphism.
+In this case, 
+
+The process $\alpha \mapsto \alpha^{2}$ will end when for some $k \in \mathbb{N},\, \alpha^{2^{k+1}} = \alpha^{2^{k}},$ i.e.
+$\alpha^{2^{k}+2^{k}} = \alpha^{2^{k}}$ which is the $\sigma$-lemma with $m = n = 2^{k}$.
+
+\end{enumerate}
+
+The algorithm $\mathtt{DecomposeOnceByRandomEndomorphism}$ will terminate without $\mathtt{fail}$ only if
+\[
+\mathrm{ImgEmb}(\alpha) \neq 0\,\text{ and }\, \mathrm{KerEmb}(\alpha) \neq 0
+\]
+for some $\alpha$.
+
+When we have $\mathrm{ImgEmb}(\alpha) = 0$ or $\mathrm{KerEmb}(\alpha) = 0$ for all $\alpha : F \rightarrow F$, we have
+\begin{alignat}{4}
+&F &&= \{0\} &&\oplus K\quad\text{ or }\\
+&F &&= I &&\oplus \{0\},
+\end{alignat}
+i.e. F was indecomposable.

@@ -1,0 +1,73 @@
+Since the goal of this thesis is a translation of the package \texttt{catreps} by Peter Webb et al. into CAP, this section is
+a short overview of the package catreps.
+
+\blockquote[\cite{[Webb2020]}]{In this package a category is stored as a concrete category (i.e. a category where the objects are sets and
+morphisms are maps of sets).
+A category is stored as a record (cat, say) with fields cat.objects, cat.generators, cat.domain, cat.codomain.
+Each object in the list cat.object is a set, and each morphism in the list of generator morphisms cat.generators
+is stored as a mapping of sets, which we notate as the list of its values.}
+
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@c3c3 := ConcreteCategory( [ [2,3,1], [4,5,6], [,,,5,6,4] ] );|
+  rec( codomain := [ 1, 2, 2 ], domain := [ 1, 1, 2 ],
+       generators := [ [ 2, 3, 1 ], [ 4, 5, 6 ], [ ,,, 5, 6, 4 ] ],
+       objects := [ [ 1, 2, 3 ], [ 4, 5, 6 ] ], operations := rec(  ) )
+\end{Verbatim}
+
+\noindent The list of values as seen in the example above may be easy to type in, but does have its disadvantages: If for example you want to store the
+morphism that maps the set $\{9\}$ to itself, i.e. the identity morphism $1_{\{9\}}$, you first have to write the eight commas that are not part of that
+morphism definition \texttt{ [ ,,,,,,,,9 ] } and you might make a mistake by forgetting one comma.
+Another issue is that the source object of a morphism \texttt{gen} is only implicitly given by those list entries \texttt{i} for which
+\texttt{ IsBound( gen[i] ) = true }.
+
+Using instead \texttt{MapOfFinSets} in \textsc{Cap} solves both of these issues, and it lets us use a different model for concrete categories in \textsc{Cap},
+i.e. that of a subcategory of \texttt{FinSets}, for which we already have an implementation in \textsc{Cap}. 
+Another advantages of this method is that a \texttt{MapOfFinSets} can cache known properties about itself:
+
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@S := FinSet( [1,2,3] );|
+  <An object in FinSets>
+  !gapprompt@gap>| !gapinput@T := FinSet( [4,5,6] );|
+  <An object in FinSets>
+  !gapprompt@gap>| !gapinput@map1 := MapOfFinSets( S, [ [1,1], [2,2], [3,3] ], S );|
+  <A morphism in FinSets>
+  !gapprompt@gap>| !gapinput@IsAutomorphism( map1 );|
+  true
+  !gapprompt@gap>| !gapinput@map1;|
+  <An automorphism in FinSets>
+\end{Verbatim}
+
+Going further in the cited example,\\
+\blockquote[\cite{[Webb2020]}]{The following constructs a representation:}
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@one:=One(GF(3));;|
+  !gapprompt@gap>| !gapinput@d:=[[1,1,0,0,0],[0,1,1,0,0],[0,0,1,0,0],[0,0,0,1,1],[0,0,0,0,1]]*one;;|
+  !gapprompt@gap>| !gapinput@e:=[[0,1,0,0],[0,0,1,0],[0,0,0,0],[0,1,0,1],[0,0,1,0]]*one;;|
+  !gapprompt@gap>| !gapinput@f:=[[1,1,0,0],[0,1,1,0],[0,0,1,0],[0,0,0,1]]*one;;|
+  !gapprompt@gap>| !gapinput@nine:=CatRep(c3c3,[d,e,f],GF(3));|
+  rec(
+category := rec( generators := [ [ 2, 3, 1 ], [ 4, 5, 6 ], [ ,,, 5, 6, 4 ] ]
+, operations := rec( ), objects := [ [ 1, 2, 3 ], [ 4, 5, 6 ] ],
+domain := [ 1, 1, 2 ], codomain := [ 1, 2, 2 ] ),
+genimages := [ [ [ Z(3)^0, Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ],
+[ 0*Z(3), Z(3)^0, Z(3)^0, 0*Z(3), 0*Z(3) ],
+[ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ],
+[ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, Z(3)^0 ],
+[ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ],
+[ [ 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ]
+, [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ],
+[ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ],
+[ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ] ],
+[ [ Z(3)^0, Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, Z(3)^0, 0*Z(3) ]
+, [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3) ],
+[ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ] ], field := GF(3),
+dimension := [ 5, 4 ] )
+\end{Verbatim}
+
+we see that \texttt{catreps} works with \textsc{Gap} matrices directly whereas with \textsc{Cap} we use \texttt{HomalgMatrix} and
+\texttt{RingsForHomalg} which lets us delegate computation to faster computer algebra systems like \texttt{Singular} or \texttt{Magma}.
+What is also noticable is the big chunk of output we get as a result of \texttt{CatRep(c3c3,[d,e,f],GF(3))}. In \textsc{Cap} we hide the output
+and give a short description of the resulting object or morphism, and use the \texttt{Display} function to display the whole result.
+
+All in all, there are plenty of reasons to change to \textsc{Cap}. In the meantime, in order to still support inputs in the convention of
+\texttt{catreps}, I wrote a converter function \funcref{ConvertToMapOfFinSets}.

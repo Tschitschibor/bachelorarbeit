@@ -1,0 +1,15 @@
+
+The object $M$ is a finite set. Let $f \in \mathrm{End}_{\mathcal{C}}(M)$ be an endomorphism, in particular $s(f) = M$. The image of $f$ is the set 
+\[
+\mathrm{Im}(f) = \{ y \in M | \exists x \in M : y = f(x)\} \subset M
+\]
+in other words, there is a monomorphism of sets $\iota : \mathrm{Im}(f) \hookrightarrow M$ with $f(M) \subseteq \iota(\mathrm{Im}(f))$.
+From lemma \ref{la:lift_along_mono} we can find a set-theoretic lift of $f$ along $\iota$, i.e. a map $\psi : M \rightarrow \mathrm{im}(f)$ of sets
+such that the following diagram commutes:
+\[
+\begin{tikzcd}
+\mathrm{im}(f) \arrow[r, "\iota", hook] & M \\
+M \arrow[ru, "f"'] \arrow[u, "\psi"]    &  
+\end{tikzcd}
+\]
+Therefore the function $M \xrightarrow{f} \mathrm{im}(f)$ is surjective

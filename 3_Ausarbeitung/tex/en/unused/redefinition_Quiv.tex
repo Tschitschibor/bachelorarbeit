@@ -1,0 +1,13 @@
+With the definition of a category and the category of functors finished, we can come back and use them to define the category of quivers
+\textbf{Quiv}.
+
+\begin{definition}{(The category \textbf{Quiv})}\cite{[4681]}
+Let the \ul{Kronecker category} $\mathcal{K}$ be the category with two objects, $0$ and $1$, and two non-identity morphisms, s and t
+\begin{tikzcd}
+1 \arrow[r, "s", shift left] \arrow[r, "t"', shift right] & 0
+\end{tikzcd}.
+Let \textbf{FinSets} be the category of finite sets with morphisms being maps between those sets.
+The \ul{category of quivers} \textbf{Quiv} is the category of functors from $\mathcal{K}$ to \textbf{FinSets}.
+For a quiver $q \in \textup{Obj}\,\textbf{Quiv}$ we write $q_{x}$ for the image of $x \in \{0,1\}$ under $q$.
+The images under $q$ of the morphisms $s$ and $t$ are again denoted by $s$ and $t$.
+\end{definition}

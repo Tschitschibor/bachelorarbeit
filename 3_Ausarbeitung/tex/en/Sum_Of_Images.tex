@@ -1,0 +1,187 @@
+
+We want to distinguish between different objects $F$, $G$ in our functor category $\HomAkmat$ up to isomorphism. A good method for this is by
+comparing the output of binary categorical operations
+\[
+\varphi( -, - ) : \HomAkmat_{0} \times \HomAkmat_{0} \rightarrow \HomAkmat_{0}
+\]
+up to isomorphism, with the first input being the same functor, e.g. the tensor unit in $\HomAkmat$
+\[
+\mathtt{unit} : \mathcal{A}_{0} \rightarrow \{1\};\quad \mathcal{A}_{1} \rightarrow \{(1)^{1\times 1}\}.
+\]
+The idea is that the outputs of $\varphi$ are easier to compare up to isomorphism than $F$ and $G$ directly.
+If $\varphi( \mathtt{unit}, F )$ is not isomorphic to $\varphi( \mathtt{unit}, G )$, then $F$ and $G$ are not isomorphic.
+
+We are defining such a morphism $\varphi$ in three steps.
+
+\subsection{The algorithm $\mathtt{MorphismOntoSumOfImagesOfAllMorphisms}$}
+
+In an Abelian category the hom-set $\mathtt{hom} := \mathtt{BasisOfExternalHom}( M, N )$ of morphisms from $M$ to $N$ is a family of
+morphisms with same source $M$ and same target $N$.
+\[
+\begin{tikzcd}[
+  row sep=0.5ex,
+]
+M \arrow[r, "b_{1}"] & N \\
+M \arrow[r, "b_{2}"] & N \\
+M \arrow[r, "\dots"] & N
+\end{tikzcd}
+\]
+If we take this basis $\mathtt{hom}$ as an index set, we can make a direct sum out of that many copies of $M$,
+\[
+S := \bigoplus_{i\in \mathtt{hom}} M.
+\]
+Then for these morphisms $\mathtt{hom}$ we can calculate their universal morphism out of the direct sum as in \ref{def:biproduct}, i.e.
+\begin{align*}
+\mathtt{UniversalMorphismFromDirectSum}( \mathtt{hom} ) := u_{\text{out}}(\mathtt{hom}) : S \rightarrow N.
+\end{align*}
+
+In the case where $\mathtt{hom} = \emptyset$, i.e. there are no (non-zero) morphisms from $M$ to $N$, we still get a
+universal morphism with target $N$, namely the unique morphism from the zero object
+\[
+\mathtt{UniversalMorphismFromZeroObject}( N ) := 0_{0,N} : 0 \rightarrow N
+\]
+as in \ref{ex:sum_of_empty}.
+
+In both cases we get one morphism that encodes all the information of the whole family of morphisms, especially their images. 
+\[
+\begin{tikzcd}
+\displaystyle{\bigoplus_{i\in \mathtt{hom}}M} \arrow[rr, "u_{\text{out}}(\mathtt{hom})"'] &                              & N
+\end{tikzcd}
+\]
+
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{MorphismOntoSumOfImagesOfAllMorphisms}}\label{algo:MorphismOntoSumOfImagesOfAllMorphisms}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~two objects $M$ and $N$ in an abelian category}
+	\Output{~a morphism with source $\oplus_{i \in \mathtt{hom}} M$ and target $N$}
+	\BlankLine
+	$\mathtt{hom} := \mathtt{BasisOfExternalHom}( M, N )$\;
+	\If(\tcp*[f]{the direct sum of the empty set is the zero object}){$\mathtt{hom} = \emptyset$}{
+	    \Return $\mathtt{UniversalMorphismFromZeroObject}( N )$\;
+	}
+	\BlankLine
+	\Return $\mathtt{UniversalMorphismFromDirectSum}( \mathtt{hom} )$\;
+\end{algorithm}
+
+\subsection{The algorithm $\mathtt{EmbeddingOfSumOfImagesOfAllMorphisms}$}
+
+Since we are in the setting of an Abelian category, the morphism $u_{\text{out}}(\mathtt{hom})$ from above can
+be factored with the Corollary \ref{cor:epi_mono_factorization} into an epimorphism $\pi$ and a monomorphism $\iota$.
+\[
+\begin{tikzcd}
+\displaystyle{\bigoplus_{i\in \mathtt{hom}} M} \arrow[rr, "u_{\text{out}}(\mathtt{hom})"] \arrow[rd, "\pi"', two heads] &                              & N \\
+                                                                                                            & I \arrow[ru, "\iota"', hook] &  
+\end{tikzcd}
+\]
+
+The monomorphism $\iota$ is the image embedding of $u_{\text{out}}(\mathtt{hom})$. What can be said about $I$, $M$ and $N$ if the
+morphism $\iota$ is also an epimorphism?
+
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{EmbeddingOfSumOfImagesOfAllMorphisms}}\label{algo:EmbeddingOfSumOfImagesOfAllMorphisms}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~two objects $M$ and $N$ in an abelian category}
+	\Output{~an embedding morphism with source $I$ and target $N$}
+	\BlankLine
+	\Return $\mathtt{ImageEmbedding}( \mathtt{MorphismOntoSumOfImagesOfAllMorphisms}( M, N ) )$\;
+\end{algorithm}
+
+\subsection{The algorithm $\mathtt{SumOfImagesOfAllMorphisms}$}
+
+As a last step, we are now looking at the source $I$ of the above embedding $\iota : I \hookrightarrow N$. The image
+embedding has all the information from $u_{\text{out}}(\mathtt{hom})$, but its source $I$ is considerably ``smaller'' than the
+direct sum $\bigoplus_{i\in I} M$ that we started with. 
+
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{SumOfImagesOfAllMorphisms}}\label{algo:SumOfImagesOfAllMorphisms}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~two objects $M$ and $N$ in an abelian category}
+	\Output{~the image $I$ over which the direct sum factors}
+	\BlankLine
+	\Return $\mathtt{Source}( \mathtt{EmbeddingOfSumOfImagesOfAllMorphisms}( M, N ) )$\;
+\end{algorithm}
+
+Since the objects and morphisms we calculated,
+\begin{itemize}
+\item $\mathtt{hom} := \mathtt{BasisOfExternalHom}(\mathtt{unit},F)$,
+\item $u_{\text{out}}(\mathtt{hom}) := \mathtt{UniversalMorphismFromDirectSum}(\mathtt{hom})$,
+\item $\iota := \mathtt{ImageEmbedding}(u_{\text{out}}(\mathtt{hom}))$ and
+\item the image object $I := \mathtt{Source}(\iota)$
+\end{itemize}
+are all unique up to unique isomorphism, we get as output an object that is unique up to unique isomorphism, and thus a good candidate to distinguish
+between two categorically different objects $F$ and $G$ as we wanted.
+
+\begin{computation}
+Continuing with the computation from \ref{comp:direct_sum_decomposition}, we are now taking a closer look at the embeddings
+resulting from our direct sum decomposition.
+\begin{Verbatim}[commandchars=!@B,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>B !gapinput@etas := WeakDirectSumDecomposition( fortyone : random := false );;B
+  !gapprompt@gap>B !gapinput@dec := List( etas, eta -> List( SetOfObjects( A ),B
+  !gapprompt@>B !gapinput@      o -> Dimension( Source(B
+  !gapprompt@>B !gapinput@        UnderlyingCapTwoCategoryCell( eta )( o ) ) ) ) );B
+  [ [ 3, 0 ], [ 3, 0 ], [ 3, 0 ], [ 3, 0 ], [ 0, 3 ],
+    [ 1, 3 ], [ 3, 3 ], [ 3, 3 ], [ 3, 3 ], [ 3, 1 ] ]
+\end{Verbatim}
+The list $\mathtt{etas}$ we get as result of the direct sum decomposition is a list of ten embeddings $\eta_{i} : F_{i} \rightarrow F$.
+The sources $F_{i}$ of the $\mathtt{etas}$ have different images on the objects $\mathtt{(1)}$ and $\mathtt{(2)}$ of the algebroid $\mathcal{A}$,
+which can be seen by their dimensions in the list $\mathtt{dec}$, ranging between $0$ and $3$.
+There are three different embeddings $\mathtt{etas[7], etas[8]}$ and $\mathtt{etas[9]}$ in the list with $F_{7}, F_{8}$ and $F_{9}$
+mapping to the full three dimensions $[ 3, 3 ]$ at both objects. The last one we call $\mathtt{six}$:
+\begin{Verbatim}[commandchars=!@B,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>B !gapinput@eta := etas[9];B
+  <(1)->3x25, (2)->3x16>
+  !gapprompt@gap>B !gapinput@six := Source( eta );B
+  <(1)->3, (2)->3; (a)->3x3, (b)->3x3, (c)->3x3>
+\end{Verbatim}
+We get another representation with dimensions $[ 3, 3 ]$ at both objects by the first Yoneda projective $\mathtt{proj1}$:
+\begin{Verbatim}[commandchars=!@B,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>B !gapinput@Aop := AlgebroidOverOppositeAlgebra( A );B
+  Algebroid generated by the right quiver q_op(2)[a:1->1,b:2->1,c:2->2]
+  !gapprompt@gap>B !gapinput@Yop := YonedaEmbedding( Aop );B
+  Yoneda embedding functor
+  !gapprompt@gap>B !gapinput@proj1 := Yop( Aop.1 );B
+  <(1)->3, (2)->3; (a)->3x3, (b)->3x3, (c)->3x3>
+\end{Verbatim}
+We don't know if $\mathtt{proj1}$ is the source of one of the three embeddings
+\[
+\mathtt{etas[7], etas[8], etas[9]}
+\]
+above, so
+we are looking for ways to compare it for example to the representation $\mathtt{six}$.
+
+In the following we give two proofs that $\mathtt{six}$ and $\mathtt{proj1}$ are nonisomorphic:
+
+For the first proof as described above we compare the outputs of our binary categorical operator
+$\mathtt{SumOfImagesOfAllMorphisms}$ with the same first input being the tensor unit:
+\begin{Verbatim}[commandchars=!@B,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>B !gapinput@unit := TensorUnit( CatReps );B
+  <(1)->1, (2)->1; (a)->1x1, (b)->1x1, (c)->1x1>
+  !gapprompt@gap>B !gapinput@emb := EmbeddingOfSumOfImagesOfAllMorphisms( unit, six );B
+  <(1)->1x3, (2)->0x3>
+  !gapprompt@gap>B !gapinput@s1 := Source( emb );B
+  <(1)->1, (2)->0; (a)->1x1, (b)->1x0, (c)->0x0>
+  !gapprompt@gap>B !gapinput@e1 := EmbeddingOfSumOfImagesOfAllMorphisms( unit, proj1 );B
+  <(1)->1x3, (2)->1x3>
+  !gapprompt@gap>B !gapinput@Source( e1 );B
+  <(1)->1, (2)->1; (a)->1x1, (b)->1x1, (c)->1x1>
+\end{Verbatim}
+
+Comparing how they map object $2$ in $\mathcal{A}$ to different dimensions, we can see that $\mathtt{six}$ and $\mathtt{proj1}$ are nonisomorphic:
+\begin{alignat*}{2}
+&\mathtt{SumOfImagesOfAllMorphisms}(\mathtt{unit},\mathtt{six})(2) &\,= 0 \\
+&\mathtt{SumOfImagesOfAllMorphisms}(\mathtt{unit},\mathtt{proj1})(2) &\,= 1
+\end{alignat*}
+
+As a second proof, we are comparing them directly using only the embedding from \algoref{EmbeddingOfSumOfImagesOfAllMorphisms}:
+
+\begin{Verbatim}[commandchars=!@B,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>B !gapinput@IsEpimorphism( EmbeddingOfSumOfImagesOfAllMorphisms( proj1, six ) );B
+  false
+\end{Verbatim}
+
+If $\mathtt{proj}$ and $\mathtt{six}$ were isomorphic, then the monomorphism $\iota$ would also be an epimorphism.
+
+\end{computation}

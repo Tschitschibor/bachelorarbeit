@@ -1,0 +1,862 @@
+
+
+
+We have shown in section \ref{sect:abelian_cat} that for a family $\{F_{i}\}_{i\in I}$ of functors in $\HomAkmat$, there is the
+direct sum $F := \bigoplus_{i\in I} F_{i}$ with embeddings $\iota_{i} : F_{i} \rightarrow F$ (and projections $\pi_{i} : F \rightarrow F_{i}$).
+In this section we show constructively the other direction, i.e. that for each $F$ there is a direct sum decomposition
+$\{F_{i}\}_{i\in I}$ and $\iota_{i} : F_{i} \rightarrow F$ such that
+\[
+F = \bigoplus_{i\in I} F_{i}
+\]
+
+
+\subsection{$\mathrm{Hom}$-structure of $\HomAkmat$}
+
+The following algorithms assume that we already have an algorithm to compute a $\Bbbk$-basis of the external hom
+$\mathrm{Hom}_{\HomAkmat}(F,F)$.\\
+That algorithm $\mathtt{BasisOfExternalHom}( F, G )$ for two functors $F$ and $G$ works by solving systems of matrix equations, also known as
+Sylvester equations, which can be solved using the Kronecker product.
+
+As already noticed by Sylvester, one can bring a two-sided homogeneous system of linear equations (of morphisms in $\kmat$) into a classical
+one-sided homogeneous system of linear equations (of morphisms in $\kmat$).
+
+\begin{example}[Sylvester equations for a natural transformation $\eta : F \Rightarrow G$ between two representations of $C_{3}C_{3}$]
+The naturality constraints, that the diagram on the right
+
+\begin{minipage}{0.05\textwidth} % left margin
+\phantom{}
+\end{minipage}
+\begin{minipage}{0.25\textwidth} % c3c3
+\[
+\begin{tikzcd}[boxedcd={inner xsep=2.2em, inner ysep=1.1em}]
+1 \arrow[r, "b"] \arrow["a"', loop, distance=2em, in=215, out=145] & 2 \arrow["c"', loop, distance=2em, in=35, out=325]
+\end{tikzcd}
+\]
+\end{minipage}
+\begin{minipage}{0.02\textwidth} % gap between
+\phantom{}
+\end{minipage}
+\begin{minipage}{0.15\textwidth} % -F-> =eta=> -G->
+\[
+\begin{tikzcd}
+{} \arrow[rr, "F"]  & {} \arrow[dd, "\eta" description, Rightarrow] & {} \\
+                    &                                               &    \\
+{} \arrow[rr, "G"'] & {}                                            & {}
+\end{tikzcd}
+\]
+\end{minipage}
+\begin{minipage}{0.05\textwidth} % gap between
+\phantom{}
+\end{minipage}
+\begin{minipage}{0.30\textwidth} % naturality CD
+\[
+\begin{tikzcd}
+F1 \arrow["Fa"', loop, distance=2em, in=215, out=145] \arrow[rr, "Fb"] \arrow[dd, "\eta_{1}"] &  & F2 \arrow["Fc"', loop, distance=2em, in=35, out=325] \arrow[dd, "\eta_{2}"] \\
+                                                                                              &  &                                                                             \\
+G1 \arrow["Ga"', loop, distance=2em, in=215, out=145] \arrow[rr, "Gb"]                        &  & G2 \arrow["Gc"', loop, distance=2em, in=35, out=325]                       
+\end{tikzcd}
+\]
+\end{minipage}
+\begin{minipage}{0.17\textwidth} % right margin
+\phantom{}
+\end{minipage}\\
+commutes for all three morphisms $a, b, c \in \mathcal{A}_{1}$, with $\mathcal{A}$ being (the $\Bbbk$-linear closure of) our
+finite concrete category $C_{3}C_{3}$, are the following:
+
+\begin{subequations}\label{eq:naturality_constraints_c3c3}
+\begin{align}
+Fa\,\eta_{1} &= \eta_{1} Ga \\
+Fb\,\eta_{2} &= \eta_{1} Gb \\
+Fc\,\eta_{2} &= \eta_{2} Gc
+\end{align}
+\end{subequations}
+
+We bring the terms with the matrix variables $\eta_{j}$ all on one side:
+
+\begin{subequations}
+\begin{align}
+Fa\,\eta_{1} - \eta_{1} Ga &= 0 \\
+Fb\,\eta_{2} - \eta_{1} Gb &= 0 \\
+Fc\,\eta_{2} - \eta_{2} Gc &= 0
+\end{align}
+\end{subequations}
+
+This system of equations can be obtained from the generalized system of Sylvester equations\endnote{This is equation (A.17) in
+\cite{[FengYagoubi2017]}.}
+
+\begin{align}\label{eq:general_sylvester_equations}
+\sum_{1\leq j \leq k} \Phi_{i\,j}\, \Theta_{j}\, \Psi_{i\,j} = P_{i}, \quad 1\leq i \leq f
+\end{align}
+
+by setting $f = 3$, $k = 2$, and defining the constant matrices $\Phi$, $\Psi$ and the right-hand side $P$ as follows:
+
+For the left matrices $\Phi$ we have
+\begin{align*}
+\Phi_{1,1} = \mathrm{Diag}(Fa, 0_{F2,F2}), &\quad \Phi_{1,2} = \mathrm{Diag}(-1_{F1}, 0_{F2,F2}), \\
+\Phi_{2,1} = \mathrm{Diag}(0_{F1,F1}, Fb), &\quad \Phi_{2,2} = \mathrm{Diag}(-1_{F1}, 0_{F2,F2}), \\
+\Phi_{3,1} = \mathrm{Diag}(0_{F1,F1}, Fc), &\quad \Phi_{3,2} = \mathrm{Diag}(0_{F1,F1}, -1_{F2}).
+\end{align*}
+
+For the right matrices $\Psi$ we have
+\begin{align*}
+\Psi_{1,1} = \mathrm{Diag}(1_{G1}, 0_{G2,G2}), &\quad \Psi_{1,2} = \mathrm{Diag}(Ga, 0_{F2,F2}), \\
+\Psi_{2,1} = \mathrm{Diag}(0_{G1,G1}, 1_{G2}), &\quad \Psi_{2,2} = \mathrm{Diag}(Gb, 0_{F2,F2}), \\
+\Psi_{3,1} = \mathrm{Diag}(0_{G1,G1}, 1_{G2}), &\quad \Psi_{3,2} = \mathrm{Diag}(0_{G1,G1}, Gc).
+\end{align*}
+
+For the right-hand side we have $P_{1} = P_{2} = P_{3} = 0_{F1+F2,\,G1+G2}$.
+
+Then the matrix variable $\Theta$ is
+\begin{align*}
+\Theta_{1} = \Theta_{2} = \mathrm{Diag}(\eta_{1}, \eta_{2}).
+\end{align*}
+
+With these definitions, our system of matrix equations \eqref{eq:naturality_constraints_c3c3} is equivalent to the following system of
+block matrix equations:
+
+\begin{subequations}
+\begin{align*}
+\begin{pmatrix} Fa & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} 1_{G1} & 0 \\ 0 & 0 \end{pmatrix}
++ \begin{pmatrix} -1_{F1} & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} Ga & 0 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} \\
+\begin{pmatrix} 0 & 0 \\ 0 & Fb \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} 0 & 0 \\ 0 & 1_{G2} \end{pmatrix}
++ \begin{pmatrix} -1_{F1} & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} Gb & 0 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} \\
+\begin{pmatrix} 0 & 0 \\ 0 & Fc \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix}0 & 0 \\ 0 & 1_{G2} \end{pmatrix}
++ \begin{pmatrix} 0 & 0 \\ 0 & -1_{F2} \end{pmatrix} \begin{pmatrix} \eta_{1} & 0 \\ 0 & \eta_{2} \end{pmatrix}
+\begin{pmatrix} 0 & 0 \\ 0 & Gc \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} 
+\end{align*}
+\end{subequations}
+
+And can be solved with the method suitable for the general system of Sylvester equations \eqref{eq:general_sylvester_equations}.
+With the constants $F1, F2, G1, G2, Fa, Fb, Fc, Ga, Gb, Gc$ given as coefficients for the equations, we can thus solve the system and
+get a finite basis of the external hom, i.e. a basis for $\mathrm{Hom}_{\HomAkmat}(F,G)$.
+\end{example}
+
+\subsection{The algorithm $\mathtt{DecomposeOnceByRandomEndomorphism}$}
+
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{DecomposeOnceByRandomEndomorphism}}\label{algo:DecomposeOnceByRandomEndomorphism}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~a functor $F$ in a functor category}
+	\Output{~a pair $[\iota : I \rightarrow F, \kappa : K \rightarrow F]$ of morphisms such that $I \oplus K = F$ with $I \neq 0$ and $K \neq 0$ or
+	$\mathtt{fail}$ if it was unable to further decompose $F$; }
+	\BlankLine
+	$d := \max \{ \mathrm{dim}_{\Bbbk}Fc \}_{c \in \mathcal{A}_{0}}$\;
+	\If{$d = 0$}{
+	    \Return $\mathtt{fail}$\tcp*{the zero representation is indecomposable}
+	}
+	$\mathcal{B} = [\beta_{1},\dots,\beta_{h}]$ is a $\Bbbk$-basis of $\mathrm{Hom}_{\HomAkmat}(F,F)$\;
+	add $0_{F,F}$ to $\mathcal{B}$\;
+	$n := \lfloor\log_{2}(d)\rfloor + 1$\;
+	\BlankLine
+	\For{$b \in [h+1, h, \dots,2]$}{
+	    $\alpha := \beta_{b} + \mathrm{random}(\Bbbk) \cdot \beta_{b-1}$\tcp*{a heuristic ansatz for a random endomorphism}
+	    \For{$i \in [ 1, \dots, n ]$}{
+	        $\alpha_{2} := \alpha^{2}$\;
+	        \nl\tcc{We do not expect the exponentiation to produce an idempotent, still this is a very cheap test:}
+	        \If{$\alpha = \alpha_{2}$}{
+	            \Break\;
+	        }
+	        $\alpha := \alpha_{2}$\;
+	    }
+	    \BlankLine
+	    
+	    \If{$\alpha = 0$}{
+	        \Continue\tcp*{try another endomorphism}
+	    }
+	    
+	    $\kappa := \mathrm{KernelEmbedding}(\alpha)$\;
+	    
+	    \If{$\kappa = 0$}{
+	        \Continue\tcp*{try another endomorphism}
+	    }
+	    \BlankLine
+	    $\iota := \mathrm{ImageEmbedding}(\alpha)$\;
+	    \Return $[ \iota, \kappa ]$\;
+	}
+	\BlankLine
+	\Return $\mathtt{fail}$\tcp*{The input functor $F$ is indecomposable with a high probability.}
+\end{algorithm}
+\phantom{}\\
+
+To justify proposition \ref{prop:Decompose_terminates_correct} below we need the following lemma which is a linear analogue of the
+$\sigma$-lemma \ref{la:sigma-lemma}.
+
+\begin{lemma}
+If $\alpha$ is an endomorphism of a $d$-dimensional vector space, then $\alpha^{e}\restrict{\mathrm{Im}(\alpha^{d})}$ is an automorphism for
+all $e \geq d$.
+\end{lemma}
+\begin{proof}
+This follows from the inclusion $\mathrm{Im}(\alpha^{2}) \subseteq \mathrm{Im}(\alpha)$ and that the dimension of the vector space is equal to
+$d$.
+\end{proof}
+
+\begin{proposition}\label{prop:Decompose_terminates_correct}
+\algoref{DecomposeOnceByRandomEndomorphism} terminates with the correct output.
+\end{proposition}
+\begin{proof}
+For the input $F = 0$ we have $Fc = 0\,\forall c \in \mathcal{A}$ and thus $d = 0$ which returns $\mathtt{fail}$, i.e. there is no
+decomposition $0 = I \oplus K$ with $I \neq 0$ and $K \neq 0$.\\
+
+\noindent For any other input $F \neq 0$ there is a $c \in \mathcal{A}_{0}$ with $Fc > 0$, thus in line 1 we have $d > 0$.\\
+Since $F \neq 0$ the vector space $\mathrm{End}_{\HomAkmat}(F)$ is at least $1$-dimensional, so our basis $\mathcal{B}$ has
+length $h \geq 1$ and doesn't contain $0_{F,F}$. Thus after line 6 we can assume $\mathrm{Length}(\mathcal{B}) = h+1 \geq 2$ and
+the list $[h+1,h,\dots,2]$ in line 8 to be nonempty, thus we will enter the for loop at least once.\\
+
+\noindent In the for-loop in lines 10-17, we are squaring $\alpha$ at most $n$ times with
+\[
+2^{n} = 2^{\lfloor\log_{2}(d)\rfloor+1} \geq d.
+\]
+Hence $\alpha_{c}^{2^{n}}$ is an automorphism on its image $\mathrm{Im}(\alpha_{c}^{2^{n}}) = \mathrm{Im}(\alpha_{c}^{d})$
+by the above lemma and with the definition of $d$. Let $I = \mathrm{Im}(\alpha^{2^{n}})$ and $K = \mathrm{Ker}(\alpha^{2^{n}})$
+with image embedding $\iota : I \rightarrow F$ and kernel embedding $\kappa : K \rightarrow F$. Then 
+\begin{align}
+F = I \oplus K.
+\end{align}
+\end{proof}
+
+\begin{remark}
+The set of endomorphisms which yield a nontrivial decomposition of a decomposable functor is Zariski-open and hence Zariski-dense in
+the vector space $\mathrm{End}_{\HomAkmat}(F)$.
+\end{remark}
+
+%gap example DecomposeOnce (fortyone)
+\begin{computation} \label{comp:decompose_once}
+In this \Gap{} session we will apply \algoref{DecomposeOnceByRandomEndomorphism}
+first on an indecomposable representation, which will $\mathtt{fail}$ as expected, and then on a decomposable one,
+resulting in the two embeddings $\mathtt{iota}$ and $\mathtt{kappa}$. The former with indecomposable source,
+and the latter $\mathtt{kappa}$ with a source that can be further decomposed.\\
+
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@LoadPackage( "CatReps" );|
+  true
+  !gapprompt@gap>| !gapinput@c3c3 := ConcreteCategoryForCAP( [ [2,3,1], [4,5,6], [,,,5,6,4] ] );
+|
+  A finite concrete category
+  !gapprompt@gap>| !gapinput@GF3 := HomalgRingOfIntegers( 3 );
+|
+  GF(3)
+  !gapprompt@gap>| !gapinput@kq := Algebroid( GF3, c3c3 );
+|
+  Algebroid generated by the right quiver q(2)[a:1->1,b:1->2,c:2->2]
+  !gapprompt@gap>| !gapinput@SetIsLinearClosureOfACategory( kq, true );
+|
+  !gapprompt@gap>| !gapinput@CatReps := Hom( kq, GF3 );
+|
+  The category of functors: Algebroid generated by the right quiver
+  q(2)[a:1->1,b:1->2,c:2->2] -> Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@d := [[1,1,0,0,0],[0,1,1,0,0],[0,0,1,0,0],[0,0,0,1,1],[0,0,0,0,1]];;
+|
+  !gapprompt@gap>| !gapinput@e := [[0,1,0,0],[0,0,1,0],[0,0,0,0],[0,1,0,1],[0,0,1,0]];;
+|
+  !gapprompt@gap>| !gapinput@f := [[1,1,0,0],[0,1,1,0],[0,0,1,0],[0,0,0,1]];;
+|
+  !gapprompt@gap>| !gapinput@nine := AsObjectInHomCategory( kq, [ 5, 4 ], [ d, e, f ] );
+|
+  <(1)->5, (2)->4; (a)->5x5, (b)->5x4, (c)->4x4>
+  !gapprompt@gap>| !gapinput@DecomposeOnceByRandomEndomorphism( nine );
+|
+  fail
+\end{Verbatim}
+ The above shows that our representation \texttt{nine} is indecomposable (with a high probability). We use the tensor product to generate another
+representation \texttt{fortyone}, that is hopefully decomposable, and inspect the two resulting embeddings \texttt{iota} and \texttt{kappa}. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@fortyone := TensorProductOnObjects( nine, nine );
+|
+  <(1)->25, (2)->16; (a)->25x25, (b)->25x16, (c)->16x16>
+  !gapprompt@gap>| !gapinput@result := DecomposeOnceByRandomEndomorphism( fortyone );
+|
+  [ <(1)->3x25, (2)->1x16>, <(1)->22x25, (2)->15x16> ]
+  !gapprompt@gap>| !gapinput@iota := result[1];
+|
+  <(1)->3x25, (2)->1x16>
+  !gapprompt@gap>| !gapinput@kappa := result[2];
+|
+  <(1)->22x25, (2)->15x16>
+  !gapprompt@gap>| !gapinput@Display( fortyone );
+|
+  An object in The category of functors: Algebroid generated by the
+  right quiver q(2)[a:1->1,b:1->2,c:2->2] -> Category of matrices
+  over GF(3) defined by the following data:
+  
+  
+  Image of <(1)>:
+  A vector space object over GF(3) of dimension 25
+  
+  Image of <(2)>:
+  A vector space object over GF(3) of dimension 16
+  
+  Image of (1)-[{ Z(3)^0*(a) }]->(1):
+   1 1 . . . 1 1 . . . . . . . . . . . . . . . . . .
+   . 1 1 . . . 1 1 . . . . . . . . . . . . . . . . .
+   . . 1 . . . . 1 . . . . . . . . . . . . . . . . .
+   . . . 1 1 . . . 1 1 . . . . . . . . . . . . . . .
+   . . . . 1 . . . . 1 . . . . . . . . . . . . . . .
+   . . . . . 1 1 . . . 1 1 . . . . . . . . . . . . .
+   . . . . . . 1 1 . . . 1 1 . . . . . . . . . . . .
+   . . . . . . . 1 . . . . 1 . . . . . . . . . . . .
+   . . . . . . . . 1 1 . . . 1 1 . . . . . . . . . .
+   . . . . . . . . . 1 . . . . 1 . . . . . . . . . .
+   . . . . . . . . . . 1 1 . . . . . . . . . . . . .
+   . . . . . . . . . . . 1 1 . . . . . . . . . . . .
+   . . . . . . . . . . . . 1 . . . . . . . . . . . .
+   . . . . . . . . . . . . . 1 1 . . . . . . . . . .
+   . . . . . . . . . . . . . . 1 . . . . . . . . . .
+   . . . . . . . . . . . . . . . 1 1 . . . 1 1 . . .
+   . . . . . . . . . . . . . . . . 1 1 . . . 1 1 . .
+   . . . . . . . . . . . . . . . . . 1 . . . . 1 . .
+   . . . . . . . . . . . . . . . . . . 1 1 . . . 1 1
+   . . . . . . . . . . . . . . . . . . . 1 . . . . 1
+   . . . . . . . . . . . . . . . . . . . . 1 1 . . .
+   . . . . . . . . . . . . . . . . . . . . . 1 1 . .
+   . . . . . . . . . . . . . . . . . . . . . . 1 . .
+   . . . . . . . . . . . . . . . . . . . . . . . 1 1
+   . . . . . . . . . . . . . . . . . . . . . . . . 1
+  
+  A morphism in Category of matrices over GF(3)
+  
+  
+  Image of (1)-[{ Z(3)^0*(b) }]->(2):
+   . . . . . 1 . . . . . . . . . .
+   . . . . . . 1 . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . 1 . 1 . . . . . . . .
+   . . . . . . 1 . . . . . . . . .
+   . . . . . . . . . 1 . . . . . .
+   . . . . . . . . . . 1 . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . 1 . 1 . . . .
+   . . . . . . . . . . 1 . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . 1 . . . . . . . 1 . .
+   . . . . . . 1 . . . . . . . 1 .
+   . . . . . . . . . . . . . . . .
+   . . . . . 1 . 1 . . . . . 1 . 1
+   . . . . . . 1 . . . . . . . 1 .
+   . . . . . . . . . 1 . . . . . .
+   . . . . . . . . . . 1 . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . 1 . 1 . . . .
+   . . . . . . . . . . 1 . . . . .
+  
+  A morphism in Category of matrices over GF(3)
+  
+  
+  Image of (2)-[{ Z(3)^0*(c) }]->(2):
+   1 1 . . 1 1 . . . . . . . . . .
+   . 1 1 . . 1 1 . . . . . . . . .
+   . . 1 . . . 1 . . . . . . . . .
+   . . . 1 . . . 1 . . . . . . . .
+   . . . . 1 1 . . 1 1 . . . . . .
+   . . . . . 1 1 . . 1 1 . . . . .
+   . . . . . . 1 . . . 1 . . . . .
+   . . . . . . . 1 . . . 1 . . . .
+   . . . . . . . . 1 1 . . . . . .
+   . . . . . . . . . 1 1 . . . . .
+   . . . . . . . . . . 1 . . . . .
+   . . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . 1 1 . .
+   . . . . . . . . . . . . . 1 1 .
+   . . . . . . . . . . . . . . 1 .
+   . . . . . . . . . . . . . . . 1
+  
+  A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@S := DirectSum( [ Source( iota ), Source( kappa ) ] );
+|
+  <(1)->25, (2)->16; (a)->25x25, (b)->25x16, (c)->16x16>
+  !gapprompt@gap>| !gapinput@Display( S );
+|
+  An object in The category of functors: Algebroid generated by the
+  right quiver q(2)[a:1->1,b:1->2,c:2->2] -> Category of matrices
+  over GF(3) defined by the following data:
+  
+  
+  Image of <(1)>:
+  A vector space object over GF(3) of dimension 25
+  
+  Image of <(2)>:
+  A vector space object over GF(3) of dimension 16
+  
+  Image of (1)-[{ Z(3)^0*(a) }]->(1):
+   . 2 . . . . . . . . . . . . . . . . . . . . . . .
+   1 2 2 . . . . . . . . . . . . . . . . . . . . . .
+   . . 1 . . . . . . . . . . . . . . . . . . . . . .
+   . . . 1 1 . . . 1 1 . . . . . . . . . . . . . . .
+   . . . . 1 1 . . . 1 1 . . . . . . . . . . . . . .
+   . . . . . 1 . . . . 1 . . . . . . . . . . . . . .
+   . . . . . . 1 1 . . . 1 1 . . . . . . . . . . . .
+   . . . . . . . 1 . . . . 1 . . . . . . . . . . . .
+   . . . . . . . . 1 1 . . . 1 1 . . . . . . . . . .
+  . . . . . . . . . 1 1 . . . 1 1 . . . . . . . . .
+  . . . . . . . . . . 1 . . . . 1 . . . . . . . . .
+  . . . . . . . . . . . 1 1 . . . 1 1 . . . . . . .
+  . . . . . . . . . . . . 1 . . . . 1 . . . . . . .
+  . . . . . . . . . . . . . 1 1 . . . . . . . . . .
+  . . . . . . . . . . . . . . 1 1 . . . . . . . . .
+  . . . . . . . . . . . . . . . 1 . . . . . . . . .
+  . . . . . . . . . . . . . . . . 1 1 . . . . . . .
+  . . . . . . . . . . . . . . . . . 1 . . . . . . .
+  . . . . . . . . . . . . . . . . . . 1 1 . 1 1 . .
+  . . . . . . . . . . . . . . . . . . . 1 1 . 1 1 .
+  . . . . . . . . . . . . . . . . . . . . 1 . . 1 .
+  . . . . . . . . . . . . . . . . . . . . . 1 1 . .
+  . . . . . . . . . . . . . . . . . . . . . . 1 1 .
+  . . . . . . . . . . . . . . . . . . . . . . . 1 .
+  . . . . . . . . . . . . . . . . . . . . . . . . 1
+  
+  A morphism in Category of matrices over GF(3)
+  
+  
+  Image of (1)-[{ Z(3)^0*(b) }]->(2):
+   2 . . . . . . . . . . . . . . .
+   1 . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . 1 . . . . . . . . .
+   . . . . . . . 1 . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . 1 . 1 . . . . . . .
+   . . . . . . . 1 . . . . . . . .
+   . . . . . . . . . . 1 . . . . .
+   . . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . 1 . 1 . . .
+   . . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . 1 . . . . . . . 1 .
+   . . . . . . . 1 . . . . . . . 1
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . 1 . . . . .
+   . . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . 2 . . 1 . 1 . . 2
+  
+  A morphism in Category of matrices over GF(3)
+  
+  
+  Image of (2)-[{ Z(3)^0*(c) }]->(2):
+   1 . . . . . . . . . . . . . . .
+   . 1 1 . . 1 1 . . . . . . . . .
+   . . 1 1 . . 1 1 . . . . . . . .
+   . . . 1 . . . 1 . . . . . . . .
+   . . . . 1 . . . 1 . . . . . . .
+   . . . . . 1 1 . . 1 1 . . . . .
+   . . . . . . 1 1 . . 1 1 . . . .
+   . . . . . . . 1 . . . 1 . . . .
+   . . . . . . . . 1 . . . 1 . . .
+   . . . . . . . . . 1 1 . . . . .
+   . . . . . . . . . . 1 1 . . . .
+   . . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . 1 . . .
+   . . . . . . . . . . . . . 1 1 .
+   . . . . . . . . . . . . . . 1 1
+   . . . . . . . . . . . . . . . 1
+  
+  A morphism in Category of matrices over GF(3)
+\end{Verbatim}
+ Comparing the matrices of \texttt{fortyone} with those of \texttt{S}, we see that after decomposing once, we have separated one small matrix on
+the diagonal: A $3\times 3$-matrix from \texttt{S(kq.a)}, a $3 \times 1$-matrix from \texttt{S(kq.b)} and a $1\times 1$-matrix from \texttt{S(kq.c)}. This matches with the source of the embedding \texttt{iota}. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Display( iota );
+|
+  A morphism in The category of functors: Algebroid generated by the
+  right quiver q(2)[a:1->1,b:1->2,c:2->2] -> Category of matrices
+  over GF(3) defined by the following data:
+  
+  
+  Image of <(1)>:
+   2 2 . 1 1 . . . . . . . . . . 1 2 1 2 1 . . . . .
+   1 2 1 2 1 1 2 1 2 1 . . . . . 2 . . 1 . 2 . . 1 .
+   . . 2 . . . 1 2 . 2 2 . . 1 . . . 1 . . . 2 . . 1
+  
+  A split monomorphism in Category of matrices over GF(3)
+  
+  
+  Image of <(2)>:
+   . . . . . . . . . . . . . . . 1
+  
+  A split monomorphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@Source( iota );|
+  <(1)->3, (2)->1; (a)->3x3, (b)->3x1, (c)->1x1>
+  !gapprompt@gap>| !gapinput@Display( Source( iota ) );|
+  An object in The category of functors: Algebroid generated by the
+  right quiver q(2)[a:1->1,b:1->2,c:2->2] -> Category of matrices
+  over GF(3) defined by the following data:
+  
+  Image of <(1)>:
+  A vector space object over GF(3) of dimension 3
+  
+  Image of <(2)>:
+  A vector space object over GF(3) of dimension 1
+  
+  Image of (1)-[{ Z(3)^0*(a) }]->(1):
+   . 2 .
+   1 2 2
+   . . 1
+  
+  A morphism in Category of matrices over GF(3)
+  
+  
+  Image of (1)-[{ Z(3)^0*(b) }]->(2):
+   2
+   1
+   .
+  
+  A morphism in Category of matrices over GF(3)
+  
+  
+  Image of (2)-[{ Z(3)^0*(c) }]->(2):
+   1
+  
+  A morphism in Category of matrices over GF(3)
+\end{Verbatim}
+ We can then look at the other embedding of the direct sum decomposition, \texttt{kappa}. The iteration of \texttt{WeakDirectSumDecomposition} will continue then with \texttt{Source( kappa )}. Each time the random endomorphism might decompose the representation resulting in matrices of
+ smaller and smaller dimensions.
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@Source( kappa );|
+  <(1)->22, (2)->15; (a)->22x22, (b)->22x15, (c)->15x15>
+  !gapprompt@gap>| !gapinput@Display( Source( kappa ) );|
+  An object in The category of functors: Algebroid generated by the
+  right quiver q(2)[a:1->1,b:1->2,c:2->2] -> Category of matrices
+  over GF(3) defined by the following data:
+  
+  Image of <(1)>:
+  A vector space object over GF(3) of dimension 22
+  
+  Image of <(2)>:
+  A vector space object over GF(3) of dimension 15
+  
+  Image of (1)-[{ Z(3)^0*(a) }]->(1):
+   1 1 . . . 1 1 . . . . . . . . . . . . . . .
+   . 1 1 . . . 1 1 . . . . . . . . . . . . . .
+   . . 1 . . . . 1 . . . . . . . . . . . . . .
+   . . . 1 1 . . . 1 1 . . . . . . . . . . . .
+   . . . . 1 . . . . 1 . . . . . . . . . . . .
+   . . . . . 1 1 . . . 1 1 . . . . . . . . . .
+   . . . . . . 1 1 . . . 1 1 . . . . . . . . .
+   . . . . . . . 1 . . . . 1 . . . . . . . . .
+   . . . . . . . . 1 1 . . . 1 1 . . . . . . .
+   . . . . . . . . . 1 . . . . 1 . . . . . . .
+   . . . . . . . . . . 1 1 . . . . . . . . . .
+   . . . . . . . . . . . 1 1 . . . . . . . . .
+   . . . . . . . . . . . . 1 . . . . . . . . .
+   . . . . . . . . . . . . . 1 1 . . . . . . .
+   . . . . . . . . . . . . . . 1 . . . . . . .
+   . . . . . . . . . . . . . . . 1 1 . 1 1 . .
+   . . . . . . . . . . . . . . . . 1 1 . 1 1 .
+   . . . . . . . . . . . . . . . . . 1 . . 1 .
+   . . . . . . . . . . . . . . . . . . 1 1 . .
+   . . . . . . . . . . . . . . . . . . . 1 1 .
+   . . . . . . . . . . . . . . . . . . . . 1 .
+   . . . . . . . . . . . . . . . . . . . . . 1
+   
+  A morphism in Category of matrices over GF(3)
+   
+   
+  Image of (1)-[{ Z(3)^0*(b) }]->(2):
+   . . . . . 1 . . . . . . . . .
+   . . . . . . 1 . . . . . . . .
+   . . . . . . . . . . . . . . .
+   . . . . . 1 . 1 . . . . . . .
+   . . . . . . 1 . . . . . . . .
+   . . . . . . . . . 1 . . . . .
+   . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . . . .
+   . . . . . . . . . 1 . 1 . . .
+   . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . .
+   . . . . . 1 . . . . . . . 1 .
+   . . . . . . 1 . . . . . . . 1
+   . . . . . . . . . . . . . . .
+   . . . . . . . . . 1 . . . . .
+   . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . . . .
+   . . . . . . 2 . . 1 . 1 . . 2
+  
+  A morphism in Category of matrices over GF(3)
+ 
+ 
+  Image of (2)-[{ Z(3)^0*(c) }]->(2):
+   1 1 . . 1 1 . . . . . . . . .
+   . 1 1 . . 1 1 . . . . . . . .
+   . . 1 . . . 1 . . . . . . . .
+   . . . 1 . . . 1 . . . . . . .
+   . . . . 1 1 . . 1 1 . . . . .
+   . . . . . 1 1 . . 1 1 . . . .
+   . . . . . . 1 . . . 1 . . . .
+   . . . . . . . 1 . . . 1 . . .
+   . . . . . . . . 1 1 . . . . .
+   . . . . . . . . . 1 1 . . . .
+   . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . 1 . . .
+   . . . . . . . . . . . . 1 1 .
+   . . . . . . . . . . . . . 1 1
+   . . . . . . . . . . . . . . 1
+  
+  A morphism in Category of matrices over GF(3)
+  !gapprompt@gap>| !gapinput@result2 := DecomposeOnceByRandomEndomorphism( Source( kappa ) );|
+  [ <(1)->3x22, (2)->3x15>, <(1)->19x22, (2)->12x15> ]
+\end{Verbatim}
+
+\end{computation}
+
+% julia worksheet
+
+\subsection{The algorithm $\mathtt{WeakDirectSumDecomposition}$}
+
+\begin{algorithm}[H]\capstart
+    \caption{\texttt{WeakDirectSumDecomposition}}\label{algo:WeakDirectSumDecomposition}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~a functor $F$ in a functor category}
+	\Output{~a list $[\eta_i : F_{i} \rightarrow F]$ of embeddings such that $\oplus_{i} F_{i} = F$ and each $F_{i}$ is indecomposable
+	(with a high probability).}
+	\BlankLine
+	$\mathtt{queue} := [ 1_{F} ]$\;
+	$\mathtt{summands} := \emptyset$\;
+	
+	\While{ $\mathtt{queue} \neq \emptyset$ }{
+	    let $\eta$ be the last element in $\mathtt{queue}$ and delete $\eta$ from $\mathtt{queue}$\;
+	    $\mathtt{result} := \mathtt{DecomposeOnceByRandomEndomorphism}(s(\eta))$\;
+	    \eIf(\tcp*[f]{$s(\eta)$ was indecomposable (with a high probability)}){$\mathtt{result} = \mathtt{fail}$}{
+	        add $\eta$ to $\mathtt{summands}$\;
+	    }{
+	        $[\iota,\kappa] = \mathtt{result}$\;
+	        append $[\iota\eta, \kappa\eta]$ to $\mathtt{queue}$\;
+	    }
+	}
+	\BlankLine
+	\Return $\mathtt{summands}$\;
+\end{algorithm}
+
+\begin{proposition}
+\algoref{WeakDirectSumDecomposition} terminates with the correct output.
+\end{proposition}
+\begin{proof} We assert certain truths about the algorithm by formulating invariants, and how they stay constant in each line of the algorithm.\\
+
+\begin{subproof}[Proof that the output is correct]\phantom{}\\
+\noindent In line 1, the morphism $1_{F} : F \rightarrow F$, which is initially the only morphism in $\mathtt{queue}$, satisfies $t(1_{F}) = F$.\\
+In line 10, since $\iota : I \rightarrow s(\eta)$ and $\kappa : K \rightarrow s(\eta)$ are each composable with $\eta$, then we are
+appending the list $[\iota\eta, \kappa\eta]$ of morphisms with target $t(\iota\eta) = t(\kappa\eta) = F$ to the $\mathtt{queue}$.\\
+Thus in each step of the algorithm the $\mathtt{queue}$ only contains morphisms $\eta$ with target $t(\eta) = F$.\\
+
+\noindent In line 2, the list $\mathtt{summands}$ is initially empty.\\
+In line 7, we add a morphism $\eta$ from the $\mathtt{queue}$ to the list $\mathtt{summands}$ only if
+in line 6 we checked that $s(\eta)$ is indecomposable.\\
+Thus in each step of the algorithm the list $\mathtt{summands}$ only contains indecomposable morphisms with target $F$.\\
+
+\noindent Initially with $\mathtt{queue} = [1_{F}]$ and $\mathtt{summands} = \emptyset$ we have
+\begin{align}
+F = \label{eq:direct_sum_decomposition}
+\bigoplus_{\eta \in \mathtt{queue}} s(\eta) \oplus \bigoplus_{\eta \in \mathtt{summands}} s(\eta)
+\end{align}
+For the first run of the while loop we take $\eta_{1} := 1_{F}$ from the $\mathtt{queue}$. Then there are two possibilities:\\
+If $F$ was indecomposable, we now add $\eta_{1}$ to $\mathtt{summands}$, and have $\mathtt{queue} = \emptyset$ and
+$\mathtt{summands} = [1_{F}]$ which also satisfies \eqref{eq:direct_sum_decomposition}.\\
+Otherwise we get a decomposition of $F$ with $\iota_{1} : I_{1} \rightarrow F$ and $\kappa_{1} : K_{1} \rightarrow F$. In this case
+$\mathtt{summands}$ stays empty, and instead we have $\mathtt{queue} = [\iota_{1}\eta_{1}, \kappa_{1}\eta_{1}]$. For
+\eqref{eq:direct_sum_decomposition} to hold, we need to prove that
+\[
+I_{1} \oplus K_{1} = F
+\]
+which is exactly what we proved above for the output of
+\[
+\mathtt{DecomposeOnceByRandomEndomorphism}.
+\]
+Thus after the first while loop, equation \eqref{eq:direct_sum_decomposition} holds.\\
+
+In each run of the while loop, we are replacing $I_{j}$ with $I_{j,1}$ and $K_{j,1}$ with $I_{j} = I_{j,1} \oplus K_{j,1}$ and
+$K_{j}$ with $I_{j,2}$ and $K_{j,2}$ with $K_{j} = I_{j,2} \oplus K_{j,2}$, if possible. That is we have 
+\begin{alignat*}{5}
+F &=  &&I_{1} &&\oplus &&K_{1} \\
+&= (I_{11} &&\oplus K_{11}) &&\oplus (I_{12} &&\oplus K_{12}) \\
+&= \dots
+\end{alignat*}
+
+This decomposition tree can end earlier for some $K_{j}$ and $I_{j'}$, which are already decomposed into indecomposables after
+two steps, while for other $K_{i}$ and $I_{i'}$ the decomposition can go on for three or more steps, as illustrated in the following figure:
+
+\[
+\begin{tikzcd}
+                                                   &                                                           &                                                         &                                                             & F                                                          &                                                           &                                                          &                                                          \\
+                                                   &                                                           & F \arrow[rru, "\eta_{1}", bend left]                    &                                                             &                                                            &                                                           & F \arrow[llu, "\eta_{1}"', bend right]                   &                                                          \\
+                                                   &                                                           & I_{1} \arrow[u, "\iota_{1}"] \arrow[rr, dash]         &                                                             & \bigoplus \arrow[uu, "I_{1} \oplus K_{1}" description]     &                                                           & K_{1} \arrow[u, "\kappa_{1}"'] \arrow[ll, dash]        &                                                          \\
+                                                   & I_{1} \arrow[ru, "\eta_{11}"', bend left=49, shift right] &                                                         &                                                             & I_{1} \arrow[llu, "\eta_{11}", pos=0.35, bend right]                 & K_{1} \arrow[ru, "\eta_{12}"', pos=0.40, bend left=49, shift left] &                                                          & K_{1} \arrow[lu, "\eta_{12}", bend right=49, shift left] \\
+                                                   & I_{11} \arrow[u, "\iota_{11}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{11}\oplus K_{11}" description] &                                                             & K_{11} \arrow[ll, dash] \arrow[u, "\kappa_{11}"]         & I_{12} \arrow[u, "\iota_{12}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{12} \oplus K_{12}" description] & K_{12} \arrow[u, "\kappa_{12}"'] \arrow[l, dash]       \\
+I_{11} \arrow[ru, "\eta_{111}"', bend left=49]     &                                                           & I_{11} \arrow[lu, "\eta_{111}", bend right=49]          & K_{11} \arrow[ru, "\eta_{112}"', bend left=49]              &                                                            & K_{11} \arrow[lu, "\eta_{112}", bend right=49]            &                                                          &                                                          \\
+I_{111} \arrow[r, dash] \arrow[u, "\iota_{111}"] & \bigoplus \arrow[uu, "I_{111}\oplus K_{111}" description] & K_{111} \arrow[l, dash] \arrow[u, "\kappa_{111}"]     & I_{112} \arrow[u, "\iota_{112}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{112} \oplus K_{112}" description] & K_{112} \arrow[u, "\kappa_{112}"] \arrow[l, dash]       &                                                          &                                                          \\
+                                                   &                                                           & I_{112} \arrow[ru, "\eta_{1121}"', bend left=49]        &                                                             & I_{112} \arrow[lu, "\eta_{1121}", bend right=49]           &                                                           &                                                          &                                                          \\
+                                                   &                                                           & I_{1121} \arrow[u, "\iota_{1121}"] \arrow[r, dash]    & \bigoplus \arrow[uu, "I_{1121}\oplus K_{1121}" description] & K_{1121} \arrow[u, "\kappa_{1121}"] \arrow[l, dash]      &                                                           &                                                          &                                                         
+\end{tikzcd}
+\]
+
+Assuming that the bottom-most nodes in the tree represent indecomposable functors (for which the algorithm stopped in line 6), in this example
+we have a decomposition of $F$ as the direct sum
+
+\begin{align*}
+F &= I_{1} \oplus K_{1} \\
+&= I_{11} \oplus K_{11} \oplus I_{12} \oplus K_{12} \\
+&= I_{111} \oplus K_{111} \oplus I_{112} \oplus K_{112} \oplus I_{12} \oplus K_{12} \\
+&= I_{111} \oplus K_{111} \oplus I_{1121} \oplus K_{1121} \oplus K_{112} \oplus I_{12} \oplus K_{12} \\
+\end{align*}
+and with $I_{111}, K_{111}, I_{1121}, K_{1121}, K_{112}, I_{12}, K_{12} $ indecomposable, we are finished. Tracing the morphisms from
+the bottom to the top gives us the list of embeddings, i.e. morphisms with source an indecomposable representation and target $F$,
+which are thus added to $\mathtt{summands}$.
+
+\begin{subproof}[Proof that the algorithm terminates, i.e. that $\mathtt{queue}$ will be empty]\phantom{}\\
+\noindent In each run of the while loop, a morphism $\eta$ from the $\mathtt{queue}$ gets either deleted and not replaced,
+since $s(\eta)$ was indecomposable, or it gets deleted and replaced by two morphisms $[\iota\eta, \kappa\eta]$.\\
+If at some point, $s(\eta)$ is indecomposable for every $\eta \in \mathtt{queue}$, then the $\eta$ will be deleted from the
+$\mathtt{queue}$ (and added to $\mathtt{summands}$) until the $\mathtt{queue}$ is empty. Then the while loop will end.\\
+
+\noindent The case that each $\eta$ gets replaced by $[\iota\eta, \kappa\eta]$ where again the $s(\iota\eta)$ and $s(\kappa\eta)$ are
+decomposable must come to an end after a finite number of steps:\\
+
+\noindent Whenever $G := s(\eta)$ is decomposable with $I \oplus K = G$ and $I, K \neq 0$, the variable
+$d_{G} :=\max_{c \in \mathcal{A}_{0}} Gc$ also gets decomposed into $d_{I} := \max_{c \in \mathcal{A}_{0}} Ic$ and
+$d_{K} := \max_{c \in \mathcal{A}_{0}} Kc$ with
+\begin{align*}
+0 < d_{I} < d_{G} \\
+0 < d_{K} < d_{G}
+\end{align*}
+and both have the lower bound of $0$. Thus after a finite number of steps there are only $\eta$ with indecomposable $s(\eta)$ in the $\mathtt{queue}$
+so that by the above result, $\mathtt{queue}$ will eventually become empty and the loop will end.
+\end{subproof}
+
+\noindent With the $\mathtt{queue} = \emptyset$ and $\mathtt{summands}$ containing only $\eta$ with indecomposable $s(\eta)$,
+equation \eqref{eq:direct_sum_decomposition} becomes
+\begin{align}
+F = \bigoplus_{\eta \in \mathtt{summands}} s(\eta)
+\end{align}
+\end{subproof}
+This proves that the algorithm terminates with the correct output.
+\end{proof}
+
+\begin{computation}\label{comp:direct_sum_decomposition}
+Continuing with the computation \ref{comp:decompose_once}, we want to see the result of our direct sum decomposition
+of $\mathtt{fortyone}$:
+
+\begin{Verbatim}[commandchars=!@B,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>B !gapinput@etas := WeakDirectSumDecomposition( fortyone : random := false );;B
+  !gapprompt@gap>B !gapinput@iso := UniversalMorphismFromDirectSum( etas );B
+  <(1)->25x25, (2)->16x16>
+  !gapprompt@gap>B !gapinput@Display( Source( iso ) );B
+  An object in The category of functors: Algebroid generated by the
+  right quiver q(2)[a:1->1,b:1->2,c:2->2] -> Category of matrices
+  over GF(3) defined by the following data:
+  
+  
+  Image of <(1)>:
+  A vector space object over GF(3) of dimension 25
+  
+  Image of <(2)>:
+  A vector space object over GF(3) of dimension 16
+  
+  Image of (1)-[{ Z(3)^0*(a) }]->(1):
+   1 1 . . . . . . . . . . . . . . . . . . . . . . .
+   . 1 . . . . . . . . . . . . . . . . . . . . . . .
+   1 1 1 . . . . . . . . . . . . . . . . . . . . . .
+   . . . 1 2 . . . . . . . . . . . . . . . . . . . .
+   . . . . 1 . . . . . . . . . . . . . . . . . . . .
+   . . . 1 1 1 . . . . . . . . . . . . . . . . . . .
+   . . . . . . 1 2 . . . . . . . . . . . . . . . . .
+   . . . . . . . 1 . . . . . . . . . . . . . . . . .
+   . . . . . . 1 1 1 . . . . . . . . . . . . . . . .
+   . . . . . . . . . 1 2 . . . . . . . . . . . . . .
+   . . . . . . . . . . 1 . . . . . . . . . . . . . .
+   . . . . . . . . . 1 1 1 . . . . . . . . . . . . .
+   . . . . . . . . . . . . 1 . . . . . . . . . . . .
+   . . . . . . . . . . . . . 1 2 . . . . . . . . . .
+   . . . . . . . . . . . . . . 1 . . . . . . . . . .
+   . . . . . . . . . . . . . 2 . 1 . . . . . . . . .
+   . . . . . . . . . . . . . . . . 2 2 . . . . . . .
+   . . . . . . . . . . . . . . . . 1 . . . . . . . .
+   . . . . . . . . . . . . . . . . 2 . 1 . . . . . .
+   . . . . . . . . . . . . . . . . . . . 1 2 . . . .
+   . . . . . . . . . . . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . . . . . . . . 2 . 1 . . .
+   . . . . . . . . . . . . . . . . . . . . . . . 2 .
+   . . . . . . . . . . . . . . . . . . . . . . 1 2 2
+   . . . . . . . . . . . . . . . . . . . . . . . . 1
+  
+  A morphism in Category of matrices over GF(3)
+  
+  
+  Image of (1)-[{ Z(3)^0*(b) }]->(2):
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . . . .
+   . . . . . 2 . . . . . . . . . .
+   . . . . . . . . 1 . . . . . . .
+   . . . . . . 1 . . . . . . . . .
+   . . . . . . 1 2 . . . . . . . .
+   . . . . . . . . . . . 2 . . . .
+   . . . . . . . . . . . 2 . . . .
+   . . . . . . . . . . 1 . . . . .
+   . . . . . . . . . . . . . . 1 .
+   . . . . . . . . . . . . . . . .
+   . . . . . . . . . . . . . 2 . .
+   . . . . . . . . . . . . . . . 2
+   . . . . . . . . . . . . . . . 1
+   . . . . . . . . . . . . . . . .
+  
+  A morphism in Category of matrices over GF(3)
+  
+  
+  Image of (2)-[{ Z(3)^0*(c) }]->(2):
+   1 . . . . . . . . . . . . . . .
+   . 1 1 . . . . . . . . . . . . .
+   1 . 1 . . . . . . . . . . . . .
+   . . . 1 1 . . . . . . . . . . .
+   . . . . 1 1 . . . . . . . . . .
+   . . . . . 1 . . . . . . . . . .
+   . . . . . . 1 . . . . . . . . .
+   . . . . . . . 1 1 . . . . . . .
+   . . . . . . 2 . 1 . . . . . . .
+   . . . . . . . . . 1 1 . . . . .
+   . . . . . . . . . . 1 1 . . . .
+   . . . . . . . . . . . 1 . . . .
+   . . . . . . . . . . . . 1 1 . .
+   . . . . . . . . . . . . . 1 1 .
+   . . . . . . . . . . . . . . 1 .
+   . . . . . . . . . . . . . . . 1
+  
+  A morphism in Category of matrices over GF(3)
+\end{Verbatim}
+You can clearly see the diagonal block structure of the matrices in comparison with $\mathtt{fortyone}$.
+\end{computation}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,268 @@
+
+\subsection{The category of presheaves}
+
+\begin{definition}{(The category of presheaves)}\endnote{Cited from \cite{[ncatlab_presheaves]}.}\\
+For $\mathcal{C}$ a small category, its \ul{category of presheaves} is the functor category
+\[ \mathrm{PSh}(\mathcal{C}) := \mathrm{Hom}(\mathcal{C}^{\text{op}}, \Set) \]
+from the opposite category of $\mathcal{C}$ to $\Set$.
+An object in this category is a \ul{presheaf}.\\
+\noindent Taking $\mathcal{C}^{\text{op}}$ instead of $\mathcal{C}$ (and with $(\mathcal{C}^{\text{op}})^{\text{op}} = \mathcal{C}$)
+we get the functor category as in \ref{def:functor_category}
+\[
+\mathrm{Hom}(\mathcal{C}, \Set) = \mathrm{PSh}(\mathcal{C}^{\text{op}})
+\]
+\end{definition}
+
+\begin{remark}{(General properties of presheaves)}\\
+The category of presheaves $\mathrm{PSh}(\mathcal{C})$ is called the \ul{free cocompletion} of $\mathcal{C}$.
+\end{remark}
+
+\begin{definition}{(Representable functor)}\label{def:repres_functor}\endnote{Cited from \cite{[ncatlab_repres_functor]}.}
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item A functor from a locally small category $\mathcal{C}$ to $\Set$ is \ul{representable} if there is an object $c \in \mathcal{C}$ and a
+natural isomorphism between $F$ and $\mathrm{Hom}(c,-)$ (for a covariant $F$, otherwise $\mathrm{Hom}(-,c)$ for a contravariant $F$),
+in which case one says thet the functor $F$ is \ul{represented by} the object $c$.
+\item A \ul{representation} for a functor $F$ is a choice of object $c \in \mathcal{C}$ together with a specified natural isomorphism
+$\mathrm{Hom}(c,-) \cong F$ (for a covariant $F$, or $\mathrm{Hom}(-,c) \cong F$ for a contravariant $F$).
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}{(Yoneda's Lemma)}\endnote{Statement of Yoneda's lemma from \cite{[context]}, Lemma 2.2.4.}
+For any functor $F : \mathcal{C} \rightarrow \mathrm{Set}$, whose source $\mathcal{C}$ is locally small and any
+object $c \in \mathcal{C}_{0}$, there is a bijection
+\[
+\mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-), F) \cong Fc
+\]
+that associates a natural transformation $\mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-), F) \ni \alpha : \mathrm{Hom}_{\mathcal{C}}(c,-) \Rightarrow F$ to the element $\alpha_{c}(1_{c}) \in Fc$.
+Moreover, this correspondence is natural in both $c$ and $F$.
+\end{lemma}
+As $\mathcal{C}$ is locally small but not necessarily small, a priori the collection of natural transformations
+$\mathrm{Hom}(\mathrm{Hom}_{\mathcal{C}}(c,-),F)$ might be large. However, the bijection in the Yoneda lemma proves that this particular
+collection of natural transformations indeed forms a set.
+\begin{proof}
+A proof of Yoneda's lemma can be found in many books on category theory, e.g. \cite{[context]}, Lemma 2.2.4, pages 57-59.
+\end{proof}
+
+\begin{definition}{(Yoneda embedding)}\label{def:yoneda_embedding}\endnote{Cited from ncatlab \cite{[ncatlab_yoneda_emb]}.}\\
+The \ul{Yoneda embedding} for a locally small category $\mathcal{C}$ is the functor
+\[
+Y : \mathcal{C} \hookrightarrow \mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set})
+\]
+from $\mathcal{C}$ to the category of presheaves over $\mathcal{C}$ which is the image of the hom-functor
+\[
+\mathrm{Hom} : \mathcal{C}^{\text{op}}\times\mathcal{C} \rightarrow \mathrm{Set}
+\]
+under the $\mathrm{Hom}$ adjunction
+\[
+\mathrm{Hom}(\mathcal{C}^{\text{op}}\times\mathcal{C}, \mathrm{Set}) \simeq
+\mathrm{Hom}(\mathcal{C},\mathrm{Hom}(\mathcal{C}^{\text{op}}, \mathrm{Set}))
+\]
+in the closed symmetric monoidal category $\mathrm{Cat}$.
+If instead we have the opposite category $\mathcal{C}^{\text{op}}$, then we get the embedding into the functor category:
+\[
+Y^{\text{op}} : \mathcal{C}^{\text{op}} \hookrightarrow \mathrm{Hom}(\mathcal{C},\mathrm{Set})
+\]
+\end{definition}
+
+\begin{remark}[Our $\Bbbk$-linear version of Yoneda's embedding]
+Let $\mathcal{A}$ be a $\Bbbk$-linear category with finite-dimensional $\Bbbk$-vector spaces as hom-sets. Then we get
+$\Bbbk$-linear versions of Yoneda's lemma and Yondeda's embedding:
+
+For any $\Bbbk$-linear functor $F : \mathcal{A} \rightarrow \kmat$ and any object $i \in \mathcal{A}_{0}$, there is a bijection
+\[
+\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i), F) \cong F(i)
+\]
+
+\[
+Y : \mathcal{A} \hookrightarrow \mathrm{Hom_{\Bbbk}}(\mathcal{A^{\text{op}}},\kmat)
+\]
+
+\[
+Y^{\text{op}} : \mathcal{A}^{\text{op}} \hookrightarrow \HomAkmat
+\]
+
+\end{remark}
+
+$\HomAkmat$ is Abelian and therefore finitely complete and finitely cocomplete.
+
+\subsection{Projective objects and the Yoneda projective}\label{sec:projective_objects}
+
+\begin{lemma}\label{la:Hom_exact_proj_Lift_along_epis}
+Let $\mathcal{C}$ be a locally small category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
+\begin{itemize}
+\item The covariant functor $\mathrm{Hom}(P,-)$ is exact.
+\item For all epimorphisms $\varphi : M \twoheadrightarrow N$ and morphisms $\theta : P \rightarrow N$, there exists a
+projective lift $\psi : P\dottedrightarrow M$ such that $\theta = \psi\varphi$.\\
+\begin{tikzcd}
+M \arrow[r, "\varphi", two heads] & N \\
+	& P \arrow[u, "\theta", "=\,\psi\varphi"'] \arrow[lu, "\psi", dotted]
+\end{tikzcd}
+\end{itemize}
+\begin{proof}
+For an object $L\in \mathcal{C}_{0}$, $\mathrm{Hom}(L,-)$ is always a covariant left-exact functor, i.e. respects monos.\\
+\setlist[description]{font=\normalfont}
+\begin{description}
+\item[``$\Leftarrow$:''] Prove that $\mathrm{Hom}(P,-)$  is right exact, i.e. respects epis.\\
+For this, let $M, N \in \mathcal{C}_{0}$ and $\varphi : M \twoheadrightarrow N$ be an epi. The Hom-functor works on morphisms
+by mapping the Hom-sets of the source and target objects of the morphism, i.e.
+$\mathrm{Hom}(P,\varphi) : \mathrm{Hom}(P,M) \rightarrow \mathrm{Hom}(P,N)$, given by $\rho \mapsto \rho\varphi\, \forall \rho \in \mathrm{Hom}(P,M)$.
+Now given that $\varphi$ is an epi, we want to show that $\mathrm{Hom}(P,\varphi)$ is also an epi.\\
+Let $O \in \mathcal{C}_{0}$,  $\gamma : N \rightarrow O$ and $\varepsilon : N \rightarrow O$ such that
+$\mathrm{Hom}(P,\gamma) : \mathrm{Hom}(P,N) \rightarrow \mathrm{Hom}(P,O);\, \theta \mapsto \theta\gamma$ and
+$\mathrm{Hom}(P,\varepsilon) : \mathrm{Hom}(P,N) \rightarrow \mathrm{Hom}(P,O);\, \theta \mapsto \theta\varepsilon$ and
+$\mathrm{Hom}(P,\varphi)\mathrm{Hom}(P,\gamma) = \mathrm{Hom}(P,\varphi)\mathrm{Hom}(P,\varepsilon)$. 
+From the functoriality axioms (ref. definition \ref{def:functor} of a functor) it follows that $\mathrm{Hom}(P,\varphi\gamma) = \mathrm{Hom}(P,\varphi\varepsilon)$. This implies
+\begin{equation}\label{eqn:Hom_functoriality}\rho(\varphi\gamma) = \rho(\varphi\varepsilon)\, \forall \rho \in \mathrm{Hom}(P,M)\end{equation}. 
+
+\begin{tikzcd}
+M \arrow[r, "\varphi", shift right, two heads] & N \arrow[r, "\gamma"'] \arrow[r, shift left=2, "\varepsilon"] & O \\
+	& P \arrow[lu, "\rho"] \arrow[u, "\theta"] \arrow[ru, outer sep=2, pos=.55, "\rho(\varphi\gamma) = \rho(\varphi\varepsilon)"'] \arrow[ru, shift right=2]
+\end{tikzcd}
+
+We want to show that the parallel morphisms $\mathrm{Hom}(P,\gamma)$ and $\mathrm{Hom}(P,\varepsilon)$ are the same, i.e. for all
+$\theta \in \mathrm{Hom}(P,N), \theta\gamma = \theta\varepsilon$. Our assumtion that there exists a projective lift helps us in this situation:
+$\forall \theta \in \mathrm{Hom}(P,N)\, \exists\, \rho \in \mathrm{Hom}(P,M)$ such that $\theta = \rho\varphi$ and therefore with the above 
+equation \eqref{eqn:Hom_functoriality},
+$\theta\gamma = (\rho\varphi)\gamma = \rho(\varphi\gamma) = \rho(\varphi\varepsilon) = (\rho\varphi)\varepsilon = \theta\varepsilon$
+and therefore $\mathrm{Hom}(P,\gamma) = \mathrm{Hom}(P,\varepsilon)$, i.e. $\mathrm{Hom}(P,\varphi)$ is epi.\\
+
+\item[``$\Rightarrow$:''] Let $\mathrm{Hom}(P,-)$ be right exact. Let $M, N \in \mathcal{C}_{0}$, the morphism
+$\varphi : M \twoheadrightarrow N$ be an epi and $\theta : P \rightarrow N$ any morphism.
+We want to show the existence of a morphism $\psi : P \dottedrightarrow\, M$ such that $\theta = \psi\varphi$.
+With $\mathrm{Hom}(P,-)$ being exact, we have that $\mathrm{Hom}(P,\varphi) : \mathrm{Hom}(P,M) \twoheadrightarrow \mathrm{Hom}(P,N)$ is
+an epi, and is given by $\mathrm{Hom}(P,M) \ni \rho \mapsto \rho\varphi \in \mathrm{Hom}(P,N)$.\\
+$\mathcal{C}$ is locally small, i.e. for the two objects $P, N \in \mathcal{C}_{0},$ there is a \ul{set} $\mathrm{Hom}(P,N)$
+of morphisms between them. The $\mathrm{Hom}$-functor moves the morphisms from a general categorical context 
+in $\mathcal{C}$ into the category of sets, i.e. $\mathrm{Hom}(P,\varphi)$ is a function in the category of sets.
+And for those it's true that every epimorphism is surjective. Thus $\forall \theta \in \mathrm{Hom}(P,N)\, \exists \rho \in \mathrm{Hom}(P,M)$ such
+that $\theta = (\mathrm{Hom}(P,\varphi))(\rho) = \rho\varphi$. This $\rho$ is the projective lift $\psi := \rho$ we were looking for.
+\end{description}
+\end{proof}
+\end{lemma}
+
+\begin{definition}{(Projective object)}\label{def:proj_object}\\
+An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of the equivalent properties in Lemma
+ \ref{la:Hom_exact_proj_Lift_along_epis} is called a \ul{projective object}.
+\end{definition}
+
+The dual statement to Lemma \ref{la:Hom_exact_proj_Lift_along_epis} is
+\begin{lemma}\label{la:dual_Hom_exact_proj_colift}
+Let $\mathcal{C}$ be a category. For an object $P \in \mathcal{C}_{0}$ the following are equivalent:
+\begin{itemize}
+\item The contravariant functor $\mathrm{Hom}(-,P)$ is exact.
+\item For all monomorphisms $\varphi : M \hookleftarrow N$ and morphisms $\theta : P \leftarrow N$, there exists a
+projective colift $\psi : P \dottedleftarrow M$ such that $\theta = \varphi\psi$.\\
+\begin{tikzcd}
+M \arrow[rd, "\psi"', dotted] & N \arrow[l, "\varphi", hook] \arrow[d, "=\,\varphi\psi", "\theta"'] \\
+	& P 
+\end{tikzcd}
+\end{itemize}
+\end{lemma}
+
+\begin{definition}{(Injective object)}\label{def:inj_object}\\
+An object $P$ in a category $\mathcal{C}$ that satisfies one (and thus both) of the equivalent properties in Lemma
+ \ref{la:dual_Hom_exact_proj_colift} is called an \ul{injective object}.
+\end{definition}
+
+\begin{definition}{(Yoneda projective)}
+Let $\mathcal{A}$ be a $\Bbbk$-algebroid with finitely many objects and finite-dimensional hom-sets over $\Bbbk$.
+With the Yoneda embedding 
+\[
+Y^{\text{op}} : \begin{cases}\mathcal{A}^{\text{op}} \hookrightarrow \HomAkmat \\
+i \mapsto \mathrm{Hom}_{\mathcal{A}}(-,i)
+\end{cases}
+\]
+we see that the image
+$Y^{\text{op}}(i)$ of the object $i \in \mathcal{A}^{\text{op}}$ is the representable functor $\mathrm{Hom}_{\mathcal{A}}(-,i)$ in $\HomAkmat$. 
+It is called the \ul{$i$-th Yoneda projective}.
+\end{definition}
+
+Analogous to Prop. \ref{prop:Alg-Alg-Correspondence} one can easily prove that a $\Bbbk$-representation $F$ of $\mathcal{A}$ corresponds to a 
+module $\bigoplus_{i \in \mathcal{A}_{0}} F(i)$ over the algebra $\mathbf{A} = \mathrm{Algebra}(\mathcal{A})$.
+In particular the Yoneda projective $Y^{\text{op}}(i) = \mathrm{Hom}_{\mathcal{A}}(-,i)$ corresponds to the $\mathbf{A}$-module
+$M_{i} = \bigoplus_{j \in \mathcal{A}_{0}} \mathrm{Hom}_{\mathcal{A}}(j,i)$.
+
+\newpage
+\begin{lemma}
+Yoneda projectives are projective objects in $\HomAkmat$.
+\end{lemma}
+\begin{proof}\phantom{}\\
+We want to show that $\mathrm{Hom}_{\HomAkmat}(Y^{\text{op}}(i),-)$ is right exact, i.e. finitely cocontinuous.
+
+\noindent For this, let
+\[
+\begin{tikzcd}
+0 \arrow[r] & F_{1} \arrow[r, "\eta"] & F_{2} \arrow[r,"\rho"] & F_{3} \arrow[r] & 0
+\end{tikzcd}
+\]
+be a short exact sequence in $\HomAkmat$, i.e.
+\begin{enumerate}
+\item $\eta$ is a monomorphism,
+\item $\rho$ is an epimorphism and
+\item the image of $\eta$ equals the kernel of $\rho$.
+\end{enumerate}
+
+\noindent Then applying the functor $\mathrm{Hom}_{\HomAkmat}(Y^{\text{op}}(i),-)$ on the sequence and simplifying with Yoneda's lemma
+
+\begin{align*}
+\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),F) &\simeq F(i) \\
+\mathrm{Hom}_{\HomAkmat}(\mathrm{Hom}_{\mathcal{A}}(-,i),\rho) &\simeq \rho_{i}
+\end{align*}
+
+We only have to measure exactness on the components
+\[
+\begin{tikzcd}
+0 \arrow[r] & F_{1}(i) \arrow[r, "\eta_{i}"] &
+F_{2}(i) \arrow[r,"\rho_{i}"] & F_{3}(i) \arrow[r] & 0\mbox{,}
+\end{tikzcd}
+\]
+but this coincides with the definition of the exactness of functors. So the proof is a tautology by Yoneda's lemma.
+\end{proof}
+
+\subsubsection{Abelian categories with enough projective objects (constructively)}
+
+\begin{definition}[Enough projective objects]\label{def:enough_projectives}
+A category $\mathcal{C}$ is said to have \ul{enough projective objects} if every object admits an epimorphism from a projective object,
+i.e. for any object $A \in \mathcal{C}_{0}$ there exists an epimorphism $P \twoheadrightarrow A$, where $P$ is projective.
+\end{definition}
+
+We state without a proof the following fact about our functor category:
+
+\begin{theorem}[$\HomAkmat$ has enough projectives]\phantom{}\\
+Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category $\HomAkmat$ has sufficiently many
+projectives.
+\end{theorem}
+
+\begin{doctrine}[Abelian category with enough projective objects]\phantom{}\\
+The doctrine $\mathtt{IsAbelianCategoryWithEnoughProjectives}$ therefore involves algorithms of\\
+$\mathtt{IsAbelianCategory}$ together with algorithms for
+\begin{itemize}
+\item $\mathtt{EpimorphismFromSomeProjectiveObject}$,
+\item $\mathtt{ProjectiveLift}$,
+\end{itemize}
+\end{doctrine}
+
+\subsubsection{Abelian categories with enough injective objects (constructively)}
+Dually to \ref{def:enough_projectives} we define
+
+\begin{definition}[Enough injective objects]\label{def:enough_injectives}
+A category $\mathcal{C}$ is said to have \ul{enough injective objects} if every object admits a monomorphism into an injective object,
+i.e. for any object $A \in \mathcal{C}_{0}$ there exists a monomorphism $A \hookrightarrow J$, where $J$ is injective.
+\end{definition}
+
+We state without a proof the following fact about our functor category:
+
+\begin{theorem}[$\HomAkmat$ has enough injectives]\phantom{}\\
+Let $\mathcal{A}$ be a finite-dimensional algebroid over some field $\Bbbk$. The functor category $\HomAkmat$ has sufficiently many
+injectives.
+\end{theorem}
+
+\begin{doctrine}[Abelian category with enough injective objects]\phantom{}\\
+The doctrine $\mathtt{IsAbelianCategoryWithEnoughInjectives}$ therefore involves algorithms of\\
+$\mathtt{IsAbelianCategory}$ together with algorithms for
+\begin{itemize}
+\item $\mathtt{MonomorphismIntoSomeInjectiveObject}$,
+\item $\mathtt{InjectiveColift}$,
+\end{itemize}
+\end{doctrine}

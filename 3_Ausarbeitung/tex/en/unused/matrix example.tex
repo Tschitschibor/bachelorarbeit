@@ -1,0 +1,101 @@
+
+\begin{example}[A number example for the direct sum in $\kmat$]
+The direct sum of $m = 3, n = 5 \in \kmat_{0}$ is the object $m+n = 8 \in \kmat_{0}$ together with the following morphisms:
+\begin{align*}
+\pi_{1} = \begin{pmatrix}
+1 \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand 1 \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand 1 \\
+\cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot
+\end{pmatrix},
+\pi_{2} = \begin{pmatrix}
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1
+\end{pmatrix}, 
+\begin{array}{rr}
+\iota_{1} &= \begin{pmatrix}
+1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot
+\end{pmatrix} \\
+\\
+\iota_{2} &= \begin{pmatrix}
+\cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1 \ampersand \cdot \\
+\cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand \cdot \ampersand 1
+\end{pmatrix}
+\end{array}
+\end{align*}\\
+\noindent One can easily verify that $\pi_{1} \iota_{1} + \pi_{2} \iota_{2} = 1_{(3+5)} = 1_{8}$ and e.g. $\iota_{1} \pi_{2} = 0_{3,5}$.\\
+
+\noindent \begin{minipage}[t]{.5\textwidth}
+For $t = 4$, $\tau = (\tau_{1}, \tau_{2})$ defined as
+\begin{align*}
+\tau_{1} = \begin{pmatrix}
+1 \ampersand 2 \ampersand 2 \\
+4 \ampersand 3 \ampersand 1 \\
+\cdot \ampersand 1 \ampersand \cdot \\
+1 \ampersand 2 \ampersand 1
+\end{pmatrix},
+\tau_{2} = \begin{pmatrix}
+1 \ampersand 1 \ampersand 2 \ampersand 2 \ampersand 3 \\
+3 \ampersand 4 \ampersand 4 \ampersand 5 \ampersand 5 \\
+6 \ampersand 6 \ampersand 7 \ampersand 7 \ampersand 8 \\
+8 \ampersand 9 \ampersand 9 \ampersand 4 \ampersand 4
+\end{pmatrix}
+\end{align*}
+we get the matrix
+\begin{align*}
+u_{\text{in}}(\tau) = \begin{pmatrix}
+1 \ampersand 2 \ampersand 2 \ampersand 1 \ampersand 1 \ampersand 2 \ampersand 2 \ampersand 3 \\
+4 \ampersand 3 \ampersand 1 \ampersand 3 \ampersand 4 \ampersand 4 \ampersand 5 \ampersand 5 \\
+\cdot \ampersand 1 \ampersand \cdot \ampersand 6 \ampersand 6 \ampersand 7 \ampersand 7 \ampersand 8 \\
+1 \ampersand 2 \ampersand 1 \ampersand 8 \ampersand 9 \ampersand 9 \ampersand 4 \ampersand 4
+\end{pmatrix}
+\end{align*}
+\end{minipage}
+\begin{minipage}[t]{.5\textwidth}
+and for $r = 2$, $\rho = (\rho_{1}, \rho_{2})$ we get the matrix
+\begin{align*}
+\begin{array}{rr}
+\rho_{1} &= \begin{pmatrix}
+\cdot \ampersand 1 \\
+1 \ampersand 1 \\
+2 \ampersand 2
+\end{pmatrix} \\
+\\
+\rho_{2} &= \begin{pmatrix}
+4 \ampersand 5 \\
+7 \ampersand \cdot \\
+\cdot \ampersand 5 \\
+\cdot \ampersand \cdot \\
+1 \ampersand 1
+\end{pmatrix}
+\end{array}
+u_{\text{out}}(\rho) = \begin{pmatrix}
+\cdot \ampersand 1 \\
+1 \ampersand 1 \\
+2 \ampersand 2 \\
+4 \ampersand 5 \\
+7 \ampersand \cdot \\
+\cdot \ampersand 5 \\
+\cdot \ampersand \cdot \\
+1 \ampersand 1
+\end{pmatrix}
+\end{align*}
+\end{minipage}\\
+
+\noindent One can easily verify that e.g. $\tau_{1} = u_{\mathrm{in}}(\tau) \pi_{1}$ and $\rho_{2} = \iota_{2} u_{\mathrm{out}}(\rho)$.
+\end{example}

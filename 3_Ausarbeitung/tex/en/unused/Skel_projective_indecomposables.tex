@@ -1,0 +1,58 @@
+
+
+\section{In $\mathrm{Hom}(\mathcal{C},\Bbbk\textnormal{-}\mathrm{mat})$ compute a skeletal full subcategory
+$\widehat{\mathcal{C}^{\mathrm{op}}}$ of projective indecomposables,
+where each projective indecomposable in $\mathrm{Hom}(\mathcal{C},\Bbbk\textnormal{-}\mathrm{mat})$ is isomorphic to exactly one
+object in $\widehat{\mathcal{C}^{\mathrm{op}}}$.}
+\input{tex/en/Skel_projective_indecomposables.tex}
+
+
+For a finite dimensional algebra $A$ over a field $k$ we define its decomposition algebroid $A^\mathrm{dec}$ as the $k$-linear full subcategory of $A\mathrm{-mod}$ consisting of the summands of a direct sum decomposition of $A$ in indecomposables, which are necessarily projective $A$-modules. The additive closure $A^\mathrm{dec}_\oplus$ of the algebroid $A^\mathrm{dec}$ is then the closure of $A$ (considered as a linear category on one object) under direct sums and direct summands (in $A\mathrm{-mod}$). One recovers $A$ as the direct sum of the $\mathrm{Hom}$-groups of $A^\mathrm{dec}$. If $A^\mathrm{sdec}$ is a skeleton of $A^\mathrm{dec}$, then the direct sum of $\mathrm{Hom}$-groups of $A^\mathrm{sdec}$ is the basic algebra which is Morita-equivalent to $A$.
+
+The category $A^\mathrm{dec}_\oplus \simeq A^\mathrm{sdec}_\oplus$ is a model for the additive full subcategory of projective objects in $A\mathrm{-mod}$, where the second model is skeletal.
+
+We model $A\mathrm{-mod}$ as the functor category $[A^\mathrm{op}, k\mathrm{-vec}]$, where $A^\mathrm{op}$ is the opposite algebra of $A$ (viewed as an algebroid with one object), and $k\mathrm{-vec}$ is the (skeletal) Abelian category of finite dimensional $k$-vector spaces. This is equivalent to the category of representations of the quiver underlying the algebroid $(A^\mathrm{op})^\mathrm{dec} \simeq (A^\mathrm{dec})^\mathrm{op}$. The identification of $A^\mathrm{dec}$ with the $k$-linear full subcategory of indecomposable projective objects in the Abelian category $A\mathrm{-mod} := [A^\mathrm{op}, k\mathrm{-vec}] \simeq [(A^\mathrm{op})^\mathrm{dec}, k\mathrm{-vec}] \simeq [(A^\mathrm{dec})^\mathrm{op}, k\mathrm{-vec}]$ is then nothing but Yoneda's embedding. This embedding factors over the embedding $A^\mathrm{dec}_\oplus \hookrightarrow [(A^\mathrm{dec})^\mathrm{op}, k\mathrm{-vec}] \simeq A\mathrm{-mod}$.
+
+$\mathcal{C} \rightarrow \widehat{\Bbbk\mathcal{C}}$
+
+$\kChat$
+
+BasicAlgebroid( k-algebroid )
+
+In $\mathrm{Hom}(\mathcal{C},\Bbbk\textnormal{-}\mathrm{mat})$ compute a skeletal full subcategory
+$\widehat{\mathcal{C}^{\mathrm{op}}}$ of projective indecomposables,
+where each projective indecomposable in $\mathrm{Hom}(\mathcal{C},\Bbbk\textnormal{-}\mathrm{mat})$ is isomorphic to exactly one
+object in $\widehat{\mathcal{C}^{\mathrm{op}}}$.
+
+DirectSumDecomoposition($Y(o)$) = [ p1,...,pr ]
+
+$\widehat{\mathcal{C}^{\mathrm{op}}}$
+
+$\mathrm{Obj}$: 
+
+$Y_{\Bbbk} : \mathrm{Hom}_{\mathcal{C}^{\mathrm{op}}}(o,o') \xrightarrow{\sim} \mathrm{Hom}_\mathcal{A} (Y(o),Y(o'))$ if $\mathcal{C}$ is a $\Bbbk$-linear category.
+
+This is a fully faithful embedding.
+
+CatReps $\hookleftarrow Y_{\Bbbk}(\mathcal{C}^{\mathrm{op}})$ is the full subcategory of Yoneda projectives.
+
+Given a $\Bbbk$-algebroid $\mathcal{C}$, compute the $\Bbbk$-algebroid $\widehat{\mathcal{C}^{\mathrm{op}}}$ 
+
+$\widehat{\mathcal{C}} := \widehat{\mathcal{C}^{\mathrm{op}}}^{\mathrm{op}}$
+
+$\mathrm{Hom}(\widehat{\mathcal{C}},\Bbbk\mathrm{-mat}) \simeq \mathrm{Hom}(\mathcal{C},\Bbbk\mathrm{-mat})$
+
+This equivalence ignores the monoidal structure.
+
+Given $\mathcal{C}$, what is $\widehat{\mathcal{C}}$?
+
+The underlying algebra of this algebroid is a basic algebra, i.e. the underlying quiver with relations is admissible.
+
+fully-faithful functor essentially surjective is equivalence of categories.
+
+
+Direct summands and direct sums of projectives are projective.
+
+Yoneda projectives, projective indecomposables -> every projective object is a direct sum of projective indecomposables
+
+projective indecomposables for a given concrete category

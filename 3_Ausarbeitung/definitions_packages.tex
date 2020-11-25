@@ -15,3 +15,301 @@
 \usepackage{enumitem}
 \usepackage{fixltx2e}%
 \usepackage{graphicx}%
+
+%\usepackage[top=37mm,bottom=37mm,left=27mm,right=27mm]{geometry}
+
+%% From Gliederung preambel
+% left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm
+
+%\usepackage[ % % top 37, bottom 37
+  %          top=27mm,bottom=27mm,left=27mm,right=27mm,%
+    %        footskip=.6cm]{geometry}
+                      
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
+
+\usepackage{microtype}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}%
+\usepackage{fancyvrb}
+\usepackage{enumitem}
+
+\usepackage{fixltx2e}%
+\usepackage{graphicx}%
+
+% size of table of contents
+\usepackage{tocloft}
+\renewcommand{\cftsecfont}{\small\bfseries}
+\renewcommand{\cftsubsecfont}{\small\mdseries}
+\renewcommand{\cftsubsubsecfont}{\small\mdseries}
+
+
+\usepackage[pdfauthor   = {Tibor\ Gr{\"u}n},
+            pdftitle    = {},
+            pdfsubject  = {},
+            pdfkeywords = {},
+            %plainpages
+            %breaklinks=true, % still buggy under Linux with \stackrel
+            %bookmarks=true,
+            %bookmarksopen=true,
+            %bookmarksnumbered=true, % produces errors on arXiv.org
+            %pagebackref=true,
+            hyperindex=true,
+            hyperfootnotes=true,
+            colorlinks=true,
+            %linkcolor=red,
+            linkcolor=blue,
+            %citecolor=green,
+            citecolor=blue,
+            %filecolor=magenta,
+            filecolor=blue,
+            %urlcolor=cyan,
+            urlcolor=blue,
+            %pdftex=true
+            %ps2pdf=true
+            %hypertex=true
+            ]{hyperref}
+\usepackage[all]{hypcap}
+
+
+
+%%% For captions and references
+%\usepackage{endnotes}
+\usepackage{enotez} %[backref]
+\newcommand{\Algoref}[1]{%
+	\hyperref[algo:#1]{Algorithm~\ref*{algo:#1}}%
+}
+\newcommand{\algoref}[1]{%
+	\hyperref[algo:#1]{Algorithm~\ref*{algo:#1}}%
+}
+\newcommand{\Funcref}[1]{%
+	\hyperref[func:#1]{Function~\ref*{func:#1}}%
+}
+\newcommand{\funcref}[1]{%
+	\hyperref[func:#1]{\texttt{#1}}%
+}
+
+
+\newcommand{\secref}[1]{%
+	\hyperref[sec:#1]{section~\ref*{sec:#1}}%
+}
+%%% For footnotes at end of text
+\usepackage{endnotes}
+
+\input{hyperendnotes.sty}
+%\let\footnote{\endnote}
+%% Heading of endnotes section
+\renewcommand*{\notesname}{Annotations}
+
+\makeatletter
+\renewcommand*{\enoteheading}{%
+   \section*{\notesname%
+   \@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
+\mbox{}\par\vskip-\baselineskip}
+\makeatother
+
+
+
+%%% For switching languages in quotes
+\usepackage[english]{babel}
+%\usepackage[english, german]{babel} %% makes troubles
+
+\usepackage{etoolbox}
+\pretocmd{\section}{\cleardoublepage}{}{}
+
+
+%%% For quotation
+%% english guillemets have to be custom defined in /tex/latex/csquotes/csquotes.cfg
+%\usepackage[english = guillemets, autostyle = true,autopunct,csdisplay = true]{csquotes}
+\usepackage[autostyle = true,autopunct,csdisplay = true]{csquotes}
+
+%%% For proper underline
+\usepackage{soul}
+%\setuldepth{gjpqy}
+%\setuldepth\strut
+\setuldepth{-1}
+
+%%% Color
+\usepackage{xcolor}
+\usepackage{color}
+\definecolor{FireBrick}{rgb}{0.5812,0.0074,0.0083}
+\definecolor{RoyalBlue}{rgb}{0.0236,0.0894,0.6179}
+\definecolor{RoyalGreen}{rgb}{0.0236,0.6179,0.0894}
+\definecolor{RoyalRed}{rgb}{0.6179,0.0236,0.0894}
+\definecolor{LightBlue}{rgb}{0.8544,0.9511,1.0000}
+\definecolor{Black}{rgb}{0.0,0.0,0.0}
+
+\definecolor{linkColor}{rgb}{0.0,0.0,0.554}
+\definecolor{citeColor}{rgb}{0.0,0.0,0.554}
+\definecolor{fileColor}{rgb}{0.0,0.0,0.554}
+\definecolor{urlColor}{rgb}{0.0,0.0,0.554}
+\definecolor{promptColor}{rgb}{0.0,0.0,0.589}
+\definecolor{brkpromptColor}{rgb}{0.589,0.0,0.0}
+\definecolor{gapinputColor}{rgb}{0.589,0.0,0.0}
+\definecolor{gapoutputColor}{rgb}{0.0,0.0,0.0}
+
+%%  for a long time these were red and blue by default,
+%%  now black, but keep variables to overwrite
+\definecolor{FuncColor}{rgb}{0.0,0.0,0.0}
+%% strange name because of pdflatex bug:
+\definecolor{Chapter }{rgb}{0.0,0.0,0.0}
+\definecolor{DarkOlive}{rgb}{0.1047,0.2412,0.0064}
+
+%% command for ColorPrompt style examples
+\newcommand{\gapprompt}[1]{\color{promptColor}{\bfseries #1}}
+\newcommand{\gapbrkprompt}[1]{\color{brkpromptColor}{\bfseries #1}}
+\newcommand{\gapinput}[1]{\color{gapinputColor}{#1}}
+
+%%% For source code listings
+\usepackage{listings}[2013/08/05]
+\input{pfad.tex}
+%\lstloadlanguages{GAP}
+
+%%% For algorithm styles
+\usepackage{xspace}
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\usepackage{algpseudocode}
+\SetKw{Continue}{continue}
+\SetKw{Break}{break}
+\SetKw{Not}{not\xspace}
+\SetKw{AndAlg}{and\xspace}
+
+%%% Math theorem styles
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}[subsection]
+\theoremstyle{definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{doctrine}[theorem]{Doctrine}
+\newtheorem{computation}[theorem]{Computation}
+
+%%% make equations count from subsection
+\usepackage{chngcntr}
+\counterwithin{equation}{subsection}
+
+%%% for nested proofs
+\newenvironment{subproof}[1][\proofname]{%
+  \renewcommand{\qedsymbol}{$\mathbin{/\mkern-6mu/}$}%
+  \begin{proof}[#1]%
+}{%
+  \end{proof}%
+}
+
+%%% for nicer Product sign
+\newcommand{\invamalg}{\mathbin{\rotatebox[origin=c]{180}{$\amalg$}}}
+
+%%% For Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsbsy}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{esvect}
+\usepackage{commath}
+\usepackage[sc,osf]{mathpazo}
+
+\usepackage[sort&compress,capitalise]{cleveref}
+
+%%% Macros for our recurring categories
+\newcommand{\kmat}{\Bbbk\textnormal{-}\mathbf{mat}}
+\newcommand{\kAlgebroid}{\Bbbk\textnormal{-}\mathrm{algebroid}}
+\newcommand{\Rmat}{R\textnormal{-}\mathbf{mat}}
+\newcommand{\HomAkmat}{\mathrm{Hom_{\Bbbk}}(\mathcal{A},\kmat)}
+\newcommand{\HomARmat}{\mathrm{Hom_{R}}(\mathcal{A},\Rmat)}
+\newcommand{\HomA}{\mathrm{Hom}_{\mathcal{A}}}
+\newcommand{\FinSets}{\mathrm{FinSets}}
+\newcommand{\Cat}{\mathrm{\textbf{Cat}}}
+\newcommand{\Set}{\mathrm{\textbf{Set}}}
+\newcommand{\Quiv}{\mathrm{\textbf{Quiv}}}
+\newcommand{\kChat}{\widehat{\Bbbk\mathcal{C}}}
+
+%%% Macros for the software packages
+\newcommand{\Gap}{\textsc{Gap}\xspace}
+\newcommand{\QPA}{\textsc{QPA$2$}\xspace}
+\newcommand{\CatReps}{\texttt{CatReps}\xspace} %CAP package CatReps
+\newcommand{\catreps}{\texttt{catreps}\xspace} %Peter Webb's catreps
+\newcommand{\CAP}{\textsc{CAP}\xspace}
+\newcommand{\homalgProject}{\texttt{homalg\_project}\xspace}
+\newcommand{\FunctorCategories}{\texttt{FunctorCategories}\xspace}
+
+%%% vel means or in latin, easier to remember
+\newcommand{\vel}{\vee}
+
+%%% For arrows and categories
+%\usepackage[all]{xy} %%not used anymore
+\usepackage{tikz-cd}
+
+%%% For calculations and loops inside tikz and latex
+\usepackage{calc}
+\usepackage{pgffor}
+
+\newcounter{modresult}
+\newcommand*{\themodulo}[2]{%
+\setcounter{modresult}{%
+#1-(#1/#2)*#2%
+}%
+#1 mod #2 = \themodresult\par
+}
+
+%%% For matrices
+\let\ampersand =&
+
+%%% Math operators bold
+%\newcommand{\Category}{Category}
+% just use /textup{#1} inside math environment instead of redefining every math operator.
+
+%%% tikz
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+
+%%% for captions of tikzpictures and other figures
+\usepackage{capt-of}
+
+%%% For function restrictions
+\newcommand\restrict[1]{\raisebox{-.5ex}{$|$}_{#1}}
+
+%%% For dotted box around diagrams
+\tikzcdset{
+    boxedcd/.style={
+        every matrix/.append style={
+            draw=black,
+            dotted,
+            rounded corners,
+            #1
+        },
+    },
+}
+
+%%% For dotted arrows in math and in text
+
+%%% For some big dots (they still don't look very big)
+\makeatletter
+\newcommand*{\bigcdot}{}% Check if undefined
+\DeclareRobustCommand*{\bigcdot}{%
+  \mathbin{\mathpalette\bigcdot@{}}%
+}
+\newcommand*{\bigcdot@scalefactor}{.5}
+\newcommand*{\bigcdot@widthfactor}{1.15}
+\newcommand*{\bigcdot@}[2]{%
+  % #1: math style
+  % #2: unused
+  \sbox0{$#1\vcenter{}$}% math axis
+  \sbox2{$#1\cdot\m@th$}%
+  \hbox to \bigcdot@widthfactor\wd2{%
+    \hfil
+    \raise\ht0\hbox{%
+      \scalebox{\bigcdot@scalefactor}{%
+        \lower\ht0\hbox{$#1\bullet\m@th$}%
+      }%
+    }%
+    \hfil
+  }%
+}
+\makeatother
