@@ -1,14 +1,18 @@
-\documentclass{beamer}
+\documentclass[12pt,compress]{beamer}
+\setbeamertemplate{navigation symbols}{}
 
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
 \usetikzlibrary{mindmap,trees,shadows}
+\usepackage{tikz-cd}
+\usepackage{mathtools}
 
-\mode<presentation>
-{
-  \usetheme{Warsaw}
-  
-  \setbeamercovered{transparent}
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt={#1{}{invisible}}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}%
+  }
 }
 
 \newcounter{saveenumi}
@@ -54,59 +58,34 @@
   % would dim the "invisible" parts. Alternatively, the color might be set to white, if the
   % output driver does not support transparencies (e.g., PS) 
   %
-  \tikzset{
-    invisible/.style={opacity=0},
-    visible on/.style={alt={#1{}{invisible}}},
-    alt/.code args={<#1>#2#3}{%
-      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
-    },
-  }
 
 \begin{frame}
   \titlepage
 \end{frame}
 
-\begin{frame}
-\frametitle{Overview}
-\begin{tikzpicture}[mindmap, concept color=gray!50, font=\sf, text=white]
-
-  \tikzstyle{level 1 concept}+=[font=\sf, sibling angle=90,level distance = 30mm]
-
-  \node[concept,scale=0.7] {Gedächtnis}
-    [clockwise from=135]
-        child[concept color=orange, visible on=<2->]{ node[concept,scale=0.7]{Musik} } 
-        child[concept color=orange, visible on=<3->]{ node[concept,scale=0.7]{Kunst} } 
-        child[concept color=orange, visible on=<4->]{ node[concept,scale=0.7]{Mathematik} } 
-        child[concept color=orange, visible on=<5->]{ node[concept,scale=0.7]{Seltenere} };
-
-\end{tikzpicture}
-
+\begin{frame}[fragile]
+\[
+\begin{tikzcd}
+|[visible on=<1->]|\mathrm{FinSets} \arrow[d, visible on=<2->]                                                        &                               &                                              \\
+|[visible on=<2->]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<3->] \arrow[rrd,  visible on=<4->] \arrow[dd,  visible on=<5->]  &                               &                                              \\
+                                                                                  & |[ visible on=<3->]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<5->]{ld} & |[ visible on=<4->]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<5->]{lld} \\
+|[ visible on=<5->]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<7->] &                               & |[ visible on=<6->]|{\text{field}\,\Bbbk} \arrow[d,  visible on=<8->] \arrow[lld,  visible on=<7->]  \\
+|[ visible on=<7->]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<9->]{rd}                                    &                               & |[ visible on=<8->]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<9->]{ld} \\
+                                                                                  & |[ visible on=<9->]|{\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+\end{tikzcd}
+\]
 \end{frame}
 
-\begin{frame}
-
-\begin{tikzpicture}[mindmap,concept color=black]
-
-  \node[concept,fill=blue!30] (A) at (0,0) {A}
-   child[grow=200] {node[concept,fill=blue!20] (Aa) {a}}
-   child[grow=240] {node[concept,fill=blue!20] (Ab) {b}};
-
-  \node[concept,fill=red!30] (B) at (5,5) {B}
-   child[grow=20] {node[concept,fill=red!20] (Ba) {a}}
-   child[grow=160] {node[concept,fill=red!20] (Bb) {b}};
-
-  \node[concept,fill=green!30] (C) at (10,0) {C}
-   child[grow=340] {node[concept,fill=green!20] (Ca) {a}}
-   child[grow=300] {node[concept,fill=green!20] (Cb) {b}};
-
-  \path
-   (A) to[circle connection bar] (B)
-   (B) to[circle connection bar] (C) 
-   (A) to[circle connection bar] (C);
-
-\end{tikzpicture}
-
+\begin{frame}[fragile]
+The functor category $\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})$ is
+\begin{itemize}[<+->]
+\item $\Bbbk$-linear
+\item additive
+\item pre-abelian
+\item abelian
+\end{itemize}
 \end{frame}
+
 
 
 \section{Menschen}
@@ -193,19 +172,6 @@ fpC := AsFpCategory( C4 );
 
 
 C6 := ConcreteCategoryForCAP( [ [2,3,4,5,6,1] ] );
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
