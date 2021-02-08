@@ -7,13 +7,30 @@
 \usepackage{tikz-cd}
 \usepackage{mathtools}
 
-\tikzset{
-    invisible/.style={opacity=0},
-    visible on/.style={alt={#1{}{invisible}}},
-    alt/.code args={<#1>#2#3}{%
-      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}%
-  }
-}
+\usepackage{ifthen}
+\usetikzlibrary{calc}
+
+%%% For proper underline
+\usepackage{soul}
+%\setuldepth{gjpqy}
+%\setuldepth\strut
+\setuldepth{-1}
+
+%%% Macros for our recurring categories
+\newcommand{\kmat}{\Bbbk\textnormal{-}\mathbf{mat}}
+\newcommand{\kAlgebroid}{\Bbbk\textnormal{-}\mathrm{algebroid}}
+\newcommand{\Rmat}{R\textnormal{-}\mathbf{mat}}
+\newcommand{\HomAkmat}{\mathrm{Hom_{\Bbbk}}(\mathcal{A},\kmat)}
+\newcommand{\HomARmat}{\mathrm{Hom_{R}}(\mathcal{A},\Rmat)}
+\newcommand{\HomA}{\mathrm{Hom}_{\mathcal{A}}}
+\newcommand{\FinSets}{\mathrm{FinSets}}
+\newcommand{\Cat}{\mathrm{\textbf{Cat}}}
+\newcommand{\Set}{\mathrm{\textbf{Set}}}
+\newcommand{\Quiv}{\mathrm{\textbf{Quiv}}}
+\newcommand{\kChat}{\widehat{\Bbbk\mathcal{C}}}
+\newcommand{\fpC}{\mathrm{fp}\mathcal{C}}
+
+\newcommand\overviewslide{1}
 
 \newcounter{saveenumi}
 \newcommand{\seti}{\setcounter{saveenumi}{\value{enumi}}}
@@ -21,12 +38,15 @@
 
 \resetcounteronoverlays{saveenumi}
 
-\AtBeginSubsection[]
-{
-  \begin{frame}<beamer>{Outline}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
+
+\newcommand{\visiblesub}[2]{
+  \ifthenelse{\ifnum#1>#2}
+  { 0; }
+  { 1; }
 }
+
+
+
 
 
 % If you wish to uncover everything in a step-wise fashion, uncomment
@@ -44,6 +64,24 @@
 %\date{November 3, 2020} % date of submission
 \date{November 16, 2020} % date of seminar presentation
 \begin{document}
+
+  %% to uncover arrows and nodes one after another
+  %% use: 
+  %% |[visible on=<1->]|\mathrm{FinSets}
+  % in front of node
+  %% \arrow[rd, visible on=<0>]
+  % inside arrow
+  % 1- means from first slide on
+  % 2 only on second slide
+  % -3 on slides 1,2,3
+  % 0 always invisible
+    \tikzset{
+      invisible/.style={opacity=0.3},
+      visible on/.style={alt={#1{}{invisible}}},
+      alt/.code args={<#1>#2#3}{%
+        \alt<#1>{ \pgfkeysalso{#2} }{ \pgfkeysalso{#3} }%
+      }
+  }
 
   % Keys to support piece-wise uncovering of elements in TikZ pictures:
   % \node[visible on=<2->](foo){Foo}
@@ -63,17 +101,149 @@
   \titlepage
 \end{frame}
 
+\section{How we get to $\HomAkmat$}
+\subsection{$\FinSets$ and finite concrete categories}
+%% start of subsection FinSets
 \begin{frame}[fragile]
 \[
 \begin{tikzcd}
-|[visible on=<1->]|\mathrm{FinSets} \arrow[d, visible on=<2->]                                                        &                               &                                              \\
-|[visible on=<2->]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<3->] \arrow[rrd,  visible on=<4->] \arrow[dd,  visible on=<5->]  &                               &                                              \\
-                                                                                  & |[ visible on=<3->]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<5->]{ld} & |[ visible on=<4->]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<5->]{lld} \\
-|[ visible on=<5->]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<7->] &                               & |[ visible on=<6->]|{\text{field}\,\Bbbk} \arrow[d,  visible on=<8->] \arrow[lld,  visible on=<7->]  \\
-|[ visible on=<7->]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<9->]{rd}                                    &                               & |[ visible on=<8->]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<9->]{ld} \\
-                                                                                  & |[ visible on=<9->]|{\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+|[visible on=<1->]|\mathrm{FinSets} \arrow[d, visible on=<2>]                                                        &                               &                                              \\
+|[visible on=<2>]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<0>] \arrow[rrd,  visible on=<0>] \arrow[dd,  visible on=<0>]  &                               &                                              \\
+                                                                                  & |[ visible on=<0>]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<0>]{ld} & |[ visible on=<0>]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<0>]{lld} \\
+|[ visible on=<0>]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<0>] &                               & |[ visible on=<0>]|{\text{field}\,\Bbbk} \arrow[d,  visible on=<0>] \arrow[lld,  visible on=<0>]  \\
+|[ visible on=<0>]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<0>]{rd}                                    &                               & |[ visible on=<0>]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<0>]{ld} \\
+                                                                                  & |[ visible on=<0>]|{\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
 \end{tikzcd}
 \]
+\end{frame}
+
+%% rest of subsection FinSets
+\begin{frame}
+The category of finite sets. We call a finite subcategory of $\FinSets$, i.e. a category with only finitely many objects (and the objects still being finite sets)
+a \ul{finite concrete category}.
+\end{frame}
+
+\begin{frame}[fragile]
+An example of a finite concrete category.
+\[
+\begin{tikzcd}
+{\{1,2,3\}} \arrow["\begin{pmatrix} 1\mapsto 2 \\ 2\mapsto 3\\ 3\mapsto 1\end{pmatrix}"', loop, distance=2em, in=125, out=55] \arrow[rr, "\begin{pmatrix} 1\mapsto 4 \\ 2\mapsto 5\\ 3\mapsto 6\end{pmatrix}"] &  & {\{4,5,6\}} \arrow["\begin{pmatrix} 4\mapsto 5 \\ 5\mapsto 6\\ 6\mapsto 4\end{pmatrix}"', loop, distance=2em, in=125, out=55]
+\end{tikzcd}
+\]
+\end{frame}
+
+\subsection{Quivers, relations, multiplication with association and identity all together define an abstract category}
+%% start of subsection Quivers
+\begin{frame}[fragile]
+\[
+\begin{tikzcd}
+|[visible on=<1->]|\mathrm{FinSets} \arrow[d, visible on=<1->]                                                        &                               &                                              \\
+|[visible on=<1->]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<2->] \arrow[rrd,  visible on=<3>] \arrow[dd,  visible on=<0>]  &                               &                                              \\
+                                                                                  & |[ visible on=<2->]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<0>]{ld} & |[ visible on=<3>]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<0>]{lld} \\
+|[ visible on=<0>]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<0>] &                               & |[ visible on=<0>]|{\text{field}\,\Bbbk} \arrow[d,  visible on=<0>] \arrow[lld,  visible on=<0>]  \\
+|[ visible on=<0>]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<0>]{rd}                                    &                               & |[ visible on=<0>]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<0>]{ld} \\
+                                                                                  & |[ visible on=<0>]|{\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+\end{tikzcd}
+\]
+\end{frame}
+
+%% rest of subsection Quivers
+\begin{frame}[fragile]
+The underlying quiver of the category. The objects are now denoted by numbers $1,2$ 
+\[
+\begin{tikzcd}
+1 \arrow["a"', loop, distance=2em, in=305, out=235] \arrow[rr, "b"] &  & 2 \arrow["c"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
+\]
+\end{frame}
+
+\begin{frame}
+We are now ``abstracting'' from the concrete category of sets and functions between those sets while retaining the
+relations between those functions. $f, g, h \in \mathcal{C}$ with $fg = h$ then we want corresponding abstract morphisms
+$a, b, c \in q$ with $ab = c$. This is accomplished by adding the relation $(ab, c)$ in our set of relations.
+If at this stage, we introduce a field $\mathbb{k}$ we can write $(ab, c)$ as $ab - c = 0$. But at this stage we don't need
+a field yet.
+\end{frame}
+
+\subsection{finitely presented category $\fpC$}
+%% start of subsection fpC
+\begin{frame}[fragile]
+\[
+\begin{tikzcd}
+|[visible on=<1->]|\mathrm{FinSets} \arrow[d, visible on=<1->]                                                        &                               &                                              \\
+|[visible on=<1->]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<1->] \arrow[rrd,  visible on=<1->] \arrow[dd,  visible on=<2->]  &                               &                                              \\
+                                                                                  & |[ visible on=<1->]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<2->]{ld} & |[ visible on=<1->]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<2->]{lld} \\
+|[ visible on=<3>]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<0>] &                               & |[ visible on=<0>]|{\text{field}\,\Bbbk} \arrow[d,  visible on=<0>] \arrow[lld,  visible on=<0>]  \\
+|[ visible on=<0>]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<0>]{rd}                                    &                               & |[ visible on=<0>]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<0>]{ld} \\
+                                                                                  & |[ visible on=<0>]|{\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+\end{tikzcd}
+\]
+\end{frame}
+
+%% rest of subsection fpC
+\begin{frame}
+This is a finite presentation of our concrete category.
+\end{frame}
+
+\subsection{field $\Bbbk$ and the matrix category}
+%% start of subsection field k
+\begin{frame}[fragile]
+\[
+\begin{tikzcd}
+|[visible on=<1->]|\mathrm{FinSets} \arrow[d, visible on=<1->]                                                        &                               &                                              \\
+|[visible on=<1->]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<1->] \arrow[rrd,  visible on=<1->] \arrow[dd,  visible on=<1->]  &                               &                                              \\
+                                                                                  & |[ visible on=<1->]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<1->]{ld} & |[ visible on=<1->]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<1->]{lld} \\
+|[ visible on=<1->]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<0>] &                               & |[ visible on=<2->]|{\text{field}\,\Bbbk} \arrow[d,  visible on=<3>] \arrow[lld,  visible on=<0>]  \\
+|[ visible on=<0>]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<0>]{rd}                                    &                               & |[ visible on=<3>]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<0>]{ld} \\
+                                                                                  & |[ visible on=<0>]|{\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+\end{tikzcd}
+\]
+\end{frame}
+
+%% rest of subsection field k
+\begin{frame}
+The matrix category $\kmat$ is an Abelian category.
+\end{frame}
+
+\subsection{$\Bbbk\text{-}\mathrm{Algebroid}$}
+%% start of subsection k-Algebroid
+\begin{frame}[fragile]
+\[
+\begin{tikzcd}
+|[visible on=<1->]|\mathrm{FinSets} \arrow[d, visible on=<1->]                                                        &                               &                                              \\
+|[visible on=<1->]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<1->] \arrow[rrd,  visible on=<1->] \arrow[dd,  visible on=<1->]  &                               &                                              \\
+                                                                                  & |[ visible on=<1->]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<1->]{ld} & |[ visible on=<1->]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<1->]{lld} \\
+|[ visible on=<1->]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<2->] &                               & |[ visible on=<1->]|{\text{field}\,\Bbbk} \arrow[d,  visible on=<1->] \arrow[lld,  visible on=<2->]  \\
+|[ visible on=<3>]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<0>]{rd}                                    &                               & |[ visible on=<1->]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<0>]{ld} \\
+                                                                                  & |[ visible on=<0>]|{\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+\end{tikzcd}
+\]
+\end{frame}
+
+%% rest of subsection k-Algebroid
+\begin{frame}
+$\Bbbk$-Algebroid, $\Bbbk$-linear category and $\Bbbk$-Algebras with orthogonal idempotents are mutually inverse constructions.
+\end{frame}
+
+\subsection{The functor category $\HomAkmat$}
+%% start of subsection HomAkmat
+\begin{frame}[fragile]
+\[
+\begin{tikzcd}
+|[visible on=<1->]|\mathrm{FinSets} \arrow[d, visible on=<1->]                                                        &                               &                                              \\
+|[visible on=<1->]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<1->] \arrow[rrd,  visible on=<1->] \arrow[dd,  visible on=<1->]  &                               &                                              \\
+                                                                                  & |[ visible on=<1->]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<1->]{ld} & |[ visible on=<1->]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<1->]{lld} \\
+|[ visible on=<1->]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<1->] &                               & |[ visible on=<1->]|{\text{field}\,\Bbbk} \arrow[d,  visible on=<1->] \arrow[lld,  visible on=<1->]  \\
+|[ visible on=<1->]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<2>]{rd}                                    &                               & |[ visible on=<1->]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<2>]{ld} \\
+                                                                                  & |[ visible on=<2>]|{\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+\end{tikzcd}
+\]
+\end{frame}
+
+%% rest of subsection HomAkmat
+\begin{frame}
+The functor category $\HomAkmat$ of $\Bbbk$-linear functors from a $\Bbbk$-Algebroid into the matrix category $\kmat$ is a $\Bbbk$-linear
+abelian category.
 \end{frame}
 
 \begin{frame}[fragile]
@@ -85,6 +255,10 @@ The functor category $\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat}
 \item abelian
 \end{itemize}
 \end{frame}
+
+% end section HomAkmat
+
+
 
 
 
