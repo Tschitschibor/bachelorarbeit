@@ -1,0 +1,33 @@
+%% Try to make a clickable tree-like table of contents using tikz-cd
+
+
+    \tikzset{
+      invisible/.style={opacity=0.3},
+      visible on/.style={alt={#1{}{invisible}}},
+      alt/.code args={<#1>#2#3}{%
+        \alt<#1>{ \pgfkeysalso{#2} }{ \pgfkeysalso{#3} }%
+      }
+    }
+
+\begin{tikzcd}
+    |[visible on=<1->]|\mathrm{FinSets} \arrow[d, visible on=<2->]                                                        &                               &                                              \\
+|[visible on=<2->]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<3->] \arrow[rrd,  visible on=<4->] \arrow[dd,  visible on=<5->]  &                               &                                              \\
+                                                                                  & |[ visible on=<3->]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<5->]{ld} & |[ visible on=<4->]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<5->]{lld} \\
+|[ visible on=<5->]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<7->] &                               & |[ visible on=<6->]|{\text{field}\,\Bbbk} \arrow[d,  visible on=<8->] \arrow[lld,  visible on=<7->]  \\
+|[ visible on=<7->]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<9->]{rd}                                    &                               & |[ visible on=<8->]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<9->]{ld} \\
+                                                                                  & |[ visible on=<9->]|{\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+    \end{tikzcd}
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Without visibile on:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{tikzcd}
+    \mathrm{FinSets} \arrow[d]                                                        &                               &                                              \\
+{\text{finite concrete category}\,\mathcal{C}} \arrow[rd] \arrow[rrd] \arrow[dd]  &                               &                                              \\
+                                                                                  & {\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]}]{ld} & {\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]}]{lld} \\
+{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d] &                               & {\text{field}\,\Bbbk} \arrow[d] \arrow[lld]  \\
+{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]}]{rd}                                    &                               & \Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]}]{ld} \\
+                                                                                  & {\mathclap{\text{Functor category}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+    \end{tikzcd}

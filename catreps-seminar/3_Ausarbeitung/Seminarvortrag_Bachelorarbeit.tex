@@ -1,0 +1,772 @@
+\documentclass[12pt,compress]{beamer}
+
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{mindmap,trees,shadows}
+\usepackage{tikz-cd}
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage{makecell}
+\usepackage{ifthen}
+\usetikzlibrary{calc}
+
+
+%%% For algorithm styles
+\usepackage{xspace}
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\usepackage{algpseudocode}
+\SetKw{Continue}{continue}
+\SetKw{Break}{break}
+\SetKw{Not}{not\xspace}
+\SetKw{AndAlg}{and\xspace}
+
+\usepackage{algcompatible}
+
+\usepackage{adjustbox}
+\usepackage{tabularx,booktabs}
+\usepackage{xcolor,colortbl,etoolbox}
+ 
+\makeatletter
+\long\def\long@firstofone#1{#1}
+\long\def\@getnextbraced#1#2#3{#2\long@firstofone{#3{#1}}}
+\long\def\@braced@unexpanded#1\long@firstofone#2#3{%
+   #1\long@firstofone{#2{#3}}}
+\protected\long\def\@braced@expandedfully#1\long@firstofone#2#3{%
+   \edef\@expandargs@internal{{#3}}%
+   \expandafter\@getnextbraced\@expandargs@internal{#1}{#2}%
+}
+\protected\long\def\expandtabularargs{%
+   \@braced@unexpanded
+   \@braced@expandedfully
+   \long@firstofone
+}
+\makeatother
+ 
+\makeatletter
+\newenvironment{breakalgo}[2][alg:\thealgorithm]{%
+  \def\@fs@cfont{\bfseries}%
+  \let\@fs@capt\relax%
+  \par\noindent%
+  \medskip%
+  \rule{\linewidth}{.8pt}%
+  \vspace{-3pt}%
+  \captionof{algorithm}{#2}\label{#1}%
+  \vspace{-1.7\baselineskip}%
+  \noindent\rule{\linewidth}{.4pt}%
+  \vspace{-1.3\baselineskip}%
+}{%
+  \vspace{-.75\baselineskip}%
+  \rule{\linewidth}{.4pt}%
+  \medskip%
+}
+\makeatother
+
+%%% For proper underline
+\usepackage{soul}
+%\setuldepth{gjpqy}
+%\setuldepth\strut
+\setuldepth{-1}
+
+%%% Macros for our recurring categories
+\newcommand{\kmat}{\Bbbk\textnormal{-}\mathbf{mat}}
+\newcommand{\kAlgebroid}{\Bbbk\textnormal{-}\mathrm{algebroid}}
+\newcommand{\Rmat}{R\textnormal{-}\mathbf{mat}}
+\newcommand{\HomAkmat}{\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\textnormal{-}\mathrm{Mat})}
+\newcommand{\HomARmat}{\mathrm{Hom_{R}}(\mathcal{A},\Rmat)}
+\newcommand{\HomA}{\mathrm{Hom}_{\mathcal{A}}}
+\newcommand{\FinSets}{\mathrm{FinSets}}
+\newcommand{\Cat}{\mathrm{\textbf{Cat}}}
+\newcommand{\Set}{\mathrm{\textbf{Set}}}
+\newcommand{\Quiv}{\mathrm{\textbf{Quiv}}}
+\newcommand{\kChat}{\widehat{\Bbbk\mathcal{C}}}
+\newcommand{\fpC}{\mathrm{fp}\mathcal{C}}
+
+\newcommand\overviewslide{1}
+
+\newcounter{saveenumi}
+\newcommand{\seti}{\setcounter{saveenumi}{\value{enumi}}}
+\newcommand{\conti}{\setcounter{enumi}{\value{saveenumi}}}
+
+\resetcounteronoverlays{saveenumi}
+
+
+\newcommand{\visiblesub}[2]{
+  \ifthenelse{\ifnum#1>#2}
+  { 0; }
+  { 1; }
+}
+
+
+
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+\beamerdefaultoverlayspecification{<+->}
+
+\title[The category of representations]
+{The category of representations of a concrete category as a functor category}
+
+\author{Tibor Gr{\"u}n}
+
+%\date{October 30, 2020} % date of printed version
+%\date{November 3, 2020} % date of submission
+%\date{November 16, 2020} % date of seminar presentation
+\date{March 22, 2021} % date of seminar presentation
+\begin{document}
+
+  %% to uncover arrows and nodes one after another
+  %% use: 
+  %% |[visible on=<1->]|\mathrm{FinSets}
+  % in front of node
+  %% \arrow[rd, visible on=<0>]
+  % inside arrow
+  % 1- means from first slide on
+  % 2 only on second slide
+  % -3 on slides 1,2,3
+  % 0 always invisible
+    \tikzset{
+      invisible/.style={opacity=0.3},
+      visible on/.style={alt={#1{}{invisible}}},
+      alt/.code args={<#1>#2#3}{%
+        \alt<#1>{ \pgfkeysalso{#2} }{ \pgfkeysalso{#3} }%
+      }
+  }
+
+  % Keys to support piece-wise uncovering of elements in TikZ pictures:
+  % \node[visible on=<2->](foo){Foo}
+  % \node[visible on=<{2,4}>](bar){Bar}   % put braces around comma expressions
+  %
+  % Internally works by setting opacity=0 when invisible, which has the 
+  % adavantage (compared to \node<2->(foo){Foo} that the node is always there, hence
+  % always consumes space plus that coordinate (foo) is always available.
+  %
+  % The actual command that implements the invisibility can be overriden
+  % by altering the style invisible. For instance \tikzset{invisible/.style={opacity=0.2}}
+  % would dim the "invisible" parts. Alternatively, the color might be set to white, if the
+  % output driver does not support transparencies (e.g., PS) 
+  %
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section{Short introduction to Category theory}
+\tikzset{invisible/.style={opacity=0.0}}
+\begin{frame}[fragile]
+\uncover<1->{
+A \ul{quiver} (also called \ul{directed graph}) $q$ consists of a class of \ul{objects} (or \ul{vertices}) $q_{0} = \mathrm{Obj}\,q$
+}
+\uncover<3->{
+and a class of
+\ul{morphisms} (or \ul{arrows}) $q_{1} = \mathrm{Mor}\,q$
+}
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+|[visible on=<2->]|1 \arrow[rddd, "b", visible on=<4->] \arrow[rrd, "a", visible on=<4->] \&         \&                    \&         \&                    \\
+                                 \&         \& |[visible on=<2->]|3 \arrow[rd, "e", shift left, visible on=<4->] \&         \& |[visible on=<2->]|4 \arrow[ll, "d", visible on=<4->] \arrow[ll, "c"', bend right, shift right, visible on=<4->]  \\
+                                 \&         \&                    \& |[visible on=<2->]|5 \arrow[lu, "f", shift left, visible on=<4->] \&                    \\
+                                 \& |[visible on=<2->]|2 \&                    \&         \&                   
+\end{tikzcd}
+\]
+\end{frame}
+
+\begin{frame}
+\uncover<1->{
+together with two defining maps $s : q_{1} \longrightarrow q_{0}$ called \ul{source}, and
+$t : q_{1} \longrightarrow q_{0}$ called \ul{target}.\\
+}
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+|[visible on=<2->]|1 \arrow[rddd, "b", visible on=<2->] \arrow[rrd, "a", visible on=<2->] \&         \&                    \&         \&                    \\
+                                 \&         \& |[visible on=<2->]|3 \arrow[rd, "e", shift left, visible on=<2->] \&         \& |[visible on=<2->]|4 \arrow[ll, "d", visible on=<2->] \arrow[ll, "c"', bend right, shift right, visible on=<2->]  \\
+                                 \&         \&                    \& |[visible on=<2->]|5 \arrow[lu, "f", shift left, visible on=<2->] \&                    \\
+                                 \& |[visible on=<2->]|2 \&                    \&         \&                   
+\end{tikzcd}
+\]
+\uncover<3->{
+For example
+\begin{align*}
+s(a) = s(b) = 1 \\
+t(b) = 2 \\
+t(a) = t(c) = t(d) = t(f) = 3
+\end{align*}
+etc. \\
+}
+\end{frame}
+
+\begin{frame}
+\uncover<1->{
+In the finite case - which we will be dealing with most of the time here - we call $q_{0}$ \ul{set} of objects and and $q_{1}$ \ul{set} of morphisms.
+}
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+|[visible on=<2->]|1 \arrow[rddd, "b", visible on=<2->] \arrow[rrd, "a", visible on=<2->] \&         \&                    \&         \&                    \\
+                                 \&         \& |[visible on=<2->]|3 \arrow[rd, "e", shift left, visible on=<2->] \&         \& |[visible on=<2->]|4 \arrow[ll, "d", visible on=<2->] \arrow[ll, "c"', bend right, shift right, visible on=<2->]  \\
+                                 \&         \&                    \& |[visible on=<2->]|5 \arrow[lu, "f", shift left, visible on=<2->] \&                    \\
+                                 \& |[visible on=<2->]|2 \&                    \&         \&                   
+\end{tikzcd}
+\]
+\uncover<3->{
+So in the quiver $q$ we have
+}
+\uncover<4->{
+\[
+q_{0} = \{1,2,3,4,5\}
+\]
+and
+\[
+q_{1} = \{a,b,c,d,e,f\}
+\]
+}
+\end{frame}
+
+\begin{frame}
+\uncover<1->
+{
+Another map relates the arrows with the objects. That is the Hom-set, i.e. set of morphisms, between two objects (order matters):
+\[
+\mathrm{Hom} : q_{0} \times q_{0} \longrightarrow \mathcal{P}(q_{1})
+\]
+}
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+|[visible on=<2->]|1 \arrow[rddd, "b", visible on=<2->] \arrow[rrd, "a", visible on=<2->] \&         \&                    \&         \&                    \\
+                                 \&         \& |[visible on=<2->]|3 \arrow[rd, "e", shift left, visible on=<2->] \&         \& |[visible on=<2->]|4 \arrow[ll, "d", visible on=<2->] \arrow[ll, "c"', bend right, shift right, visible on=<2->]  \\
+                                 \&         \&                    \& |[visible on=<2->]|5 \arrow[lu, "f", shift left, visible on=<2->] \&                    \\
+                                 \& |[visible on=<2->]|2 \&                    \&         \&                   
+\end{tikzcd}
+\]
+\uncover<3->
+{
+\begin{align*}
+\mathrm{Hom}(1,3) &= \{a\} \\
+\mathrm{Hom}(4,3) &= \{c,d\} \\
+\mathrm{Hom}(3,4) &= \{\}
+\end{align*}
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\uncover<1->{
+For the same object $X \in q_{0}$ we call $\mathrm{Hom}(X,X) = \mathrm{End}(X)$ the endomorphism set.
+}
+\[
+\begin{tikzcd}
+|[visible on=<2->]|1 \arrow["a"', loop, distance=2em, in=305, out=235, visible on=<2->] \arrow[rr, "b", visible on=<2->] &  & |[visible on=<2->]|2 \arrow["c"', loop, distance=2em, in=305, out=235, visible on=<2->]
+\end{tikzcd}
+\]
+\uncover<3->{
+\begin{align*}
+\mathrm{End}(1) = \{a\} \\
+\mathrm{End}(2) = \{c\} \\
+\mathrm{Hom}(1,2) = \{b\}
+\end{align*}
+}
+\end{frame}
+
+\begin{frame}
+\begin{centering}
+You now know what a quiver is.
+\end{centering}
+\end{frame}
+% you now know what a quiver is
+
+\begin{frame}
+A \ul{category} $\mathcal{C}$ is a quiver with two further maps:
+\begin{description}
+\item[($\mathbbm{1}$)] For every object $X \in \mathcal{C}_{0}$ there is the \ul{identity map} 
+\begin{align*}
+\mathbbm{1} : \mathcal{C}_{0} \longrightarrow \mathcal{C}_{1} \\
+X \longmapsto \mathbbm{1}_{X} : X \longrightarrow X
+\end{align*}
+\item[($\mu$)] For two \ul{composable} morphisms $\varphi$ and $\psi \in \mathcal{C}_{1}$, i.e. with $t(\varphi) = s(\psi)$ there is
+the \ul{composition map}
+\begin{align*}
+\mu &: \mathcal{C}_{1} \times \mathcal{C}_{1} \longrightarrow \mathcal{C}_{1} \\
+\varphi &: A \longrightarrow B \\
+\psi &: B \longrightarrow C \\
+(\varphi, \psi) &\longmapsto \mu(\varphi, \psi) := \varphi\psi : A \longrightarrow C
+\end{align*}
+\end{description}
+\end{frame}
+
+\begin{frame}
+The defining poperties for $\mathbbm{1}$ and $\mu$ are:
+\begin{enumerate}
+\item $s(\mathbbm{1}_{M}) = M = t(\mathbbm{1}_{M})$, i.e. $\mathbbm{1}_{M} \in \mathrm{End}(M)$.
+\item $s(\varphi\psi) = s(\varphi)$ and $t(\varphi\psi) = t(\psi)$, i.e. for objects $M, L, N \in \mathcal{C}_{0}$ we have
+\[
+\mu : \mathrm{Hom}(M,L) \times \mathrm{Hom}(L,N) \longrightarrow \mathrm{Hom}(M,N)
+\]
+\item $(\varphi\psi)\rho = \varphi(\psi\rho)$, i.e. composition is \ul{associative}
+\item $\mathbbm{1}_{s(\varphi)}\varphi = \varphi = \varphi\mathbbm{1}_{t(\varphi)}$, i.e. the identity is a left and right \ul{unit} of the composition.
+\end{enumerate}
+\uncover<5->{These properties make each endomorphism set $\mathrm{End}(M)$ for $M \in \mathcal{C}$ together with the composition into a monoid, called the \ul{endomorphism monoid} $(\mathrm{End}(M), \mu)$.}
+\end{frame}
+
+\begin{frame}
+So when you define a category, you always answer the four questions
+\begin{itemize}[<.->]
+\item What are the objects?
+\item What are the morphisms? Especially what are the identity morphisms?
+\item How do you compose morphisms?
+\item Why is the composition associative? Why is the identity a unit for the composition?
+\end{itemize}
+\end{frame}
+\begin{frame}
+\begin{centering}
+You now know what a category is
+\end{centering}
+\end{frame}
+% you now know what a category is
+\begin{frame}
+A small example for a category: The symmetric group on two objects $S_{2}$.
+\[
+\begin{tikzcd}
+{\{1,2\}} \arrow["{\mathbbm{1}_{\{1,2\}}}"', loop, distance=2em, in=215, out=145] \arrow["{(1,2)}"', loop, distance=2em, in=35, out=325]
+\end{tikzcd}
+\]
+The rule that the composition of $(1,2)$ with itself results in the identity $\mathbbm{1}_{\{1,2\}}$ makes sure there are only 2 morphisms in total.\\
+
+\uncover<2->{
+This is an example of a category which is a sub-category of the category \textsc{Sets} with sets as objects and functions between sets as morphisms.
+Between those categories lies the category \textsc{FinSets} in which the objects are finite sets and morphisms are functions between finite sets.
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\uncover<1->{
+As another example of a finite subcategory of \textsc{FinSets}, take the category with two objects that are sets with $3$ elements.
+}
+\uncover<4->{
+The endomorphisms at each objects are the cyclic permutations on the $3$ elements $\{1,2,3\}$
+}
+\uncover<6->{
+and on the $3$ elements $\{4,5,6\}$.
+}
+\uncover<8->{
+There is also a morphism from the first to the second object, mapping $1 \mapsto 4, 2 \mapsto 5$ and $3 \mapsto 6$.
+}
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+|[visible on=<2->]|\{1,2,3\} \arrow["{(2,3,1)}"',pos=.52, loop, distance=2em, in=120, out=40, visible on=<5->]
+\arrow["{(3,2,1)}"', loop, distance=2em, in=220, out=140, visible on=<5->]
+\arrow["{\mathbbm{1}_{\{1,2,3\}}}"', pos=.48, loop, distance=2em, in=320, out=240, visible on=<5->]
+\arrow[rr, "\begin{pmatrix} 1\mapsto 4 \\ 2\mapsto 5\\ 3\mapsto 6\end{pmatrix}", visible on=<9->] \&  \& |[visible on=<3->]|\{4,5,6\}
+\arrow["{(5,6,4)}"', pos=.48, loop, distance=2em, in=140, out=60, visible on=<7->]
+\arrow["{(6,5,4)}"', loop, distance=2em, in=40, out=320, visible on=<7->]
+\arrow["{\mathbbm{1}_{\{4,5,6\}}}"', pos=.52, loop, distance=2em, in=300, out=220, visible on=<7->]
+\end{tikzcd}
+\]
+\uncover<10->{
+The endomorphism monoid on each object is the goup $C_{3}$, i.e. the cyclic group on three elements.
+This also means that each endomorphism is invertible. We thus call this category $C_{3}C_{3}$.
+}
+\end{frame}
+
+\begin{frame}
+\uncover<1->{
+You may have noticed that this picture is not complete when we look back to the axioms for a category: We have three endomorphisms at the first object and three endomorphisms at the second object. Since we also have a morphism from the first to the second object, we also need all the possible compositions of those morphisms.
+}
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+|[visible on=<1->]|\{1,2,3\} \arrow["{(2,3,1)}"',pos=.52, loop, distance=2em, in=120, out=40, visible on=<1->]
+\arrow["{(3,2,1)}"', loop, distance=2em, in=220, out=140, visible on=<1->]
+\arrow["{\mathbbm{1}_{\{1,2,3\}}}"', pos=.48, loop, distance=2em, in=320, out=240, visible on=<1->]
+\arrow[rr, "\begin{pmatrix} 1\mapsto 4 \\ 2\mapsto 5\\ 3\mapsto 6\end{pmatrix}", visible on=<1->] \&  \& |[visible on=<1->]|\{4,5,6\}
+\arrow["{(5,6,4)}"', pos=.48, loop, distance=2em, in=140, out=60, visible on=<1->]
+\arrow["{(6,5,4)}"', loop, distance=2em, in=40, out=320, visible on=<1->]
+\arrow["{\mathbbm{1}_{\{4,5,6\}}}"', pos=.52, loop, distance=2em, in=300, out=220, visible on=<1->]
+\end{tikzcd}
+\]
+\uncover<2->{
+Of the missing two morphisms from $\{1,2,3\}$ to $\{4,5,6\}$, the first one is mapping $1 \mapsto 5, 2 \mapsto 6$ and $3 \mapsto 4$, where the last one is mapping $1 \mapsto 6, 2 \mapsto 4$ and $3 \mapsto 5$.
+}
+\uncover<3->{
+So our category $C_{3}C_{3}$ has two objects $\{1,2,3\}, \{4,5,6\}$ and nine morphisms in total.
+}
+\end{frame}
+
+\begin{frame}[fragile]
+The categories $S_{2}$, $C_{3}C_{3}$, \textsc{Set}, \textsc{FinSets} can themselves all be considered objects in a greater category, \textsc{Cat}, i.e. \ul{the category of categories}.
+\uncover<2->{
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+S_{2} \arrow[rr] \&                                        \& S_{3} \arrow[r] \& C_{3} \arrow[d] \arrow[r] \& C_{3}C_{3}  \arrow[ld]  \\
+                 \& \textsc{Sets} \arrow[rr, shift left=2] \&                             \& \textsc{FinSets} \arrow[ll, shift left] \arrow[ll, shift left=4] \arrow[lu]
+\end{tikzcd}
+\]
+}
+\uncover<3->{
+We know what the objects are in \textsc{Cat}. But what are the morphisms? What is meant with an arrow from \textsc{Sets} to \textsc{FinSets}?
+}
+\end{frame}
+\begin{frame}
+\begin{centering}
+You now know the objects in the category \textsc{Cat} of all categories.
+\end{centering}
+\end{frame}
+% you now know the objects in the category Cat of all categories
+
+\begin{frame}
+\noindent A \ul{functor} $F : \mathcal{C} \rightarrow \mathcal{D}$, between categories $\mathcal{C}$ and $\mathcal{D}$, consists of the
+following data:
+
+\begin{itemize}[<.->]
+\item An object $Fc\in\mathcal{D}_{0}$, for each object $c \in \mathcal{C}_{0}$.
+\item A function $Ff : Fc \rightarrow Fc' \in \mathcal{D}_{1}$, for each morphism $f : c \rightarrow c' \in \mathcal{C}_{1}$, so that the
+source and target of $Ff$ are, respectively, equal to $F$ applied to the source or target of $f$, in other words,
+$s(Ff) = Fs(f)$ and $t(Ff) = Ft(f)$.
+\end{itemize}
+
+\noindent The assignments are required to satisfy the following two \ul{functoriality axioms}:
+\begin{itemize}[<.->]
+\item For any composable pair $f : M \rightarrow N, g : N \rightarrow L \in \mathcal{C}_{1}, F\,f \cdot F\,g = F(f \cdot g)$.
+\item For each object $c \in \mathcal{C}_{0}, F(1_{c}) = 1_{Fc}$.
+\end{itemize}
+
+\end{frame}
+\begin{frame}
+\noindent So with functors you always answer the four questions
+\begin{itemize}[<.->]
+\item How does it work on objects?
+\item How does it work on morphisms?
+\item Why does it respect composition?
+\item Why does it respect identity morphisms?
+\end{itemize}
+\end{frame}
+\begin{frame}
+\begin{centering}
+You now know what a functor is.
+\end{centering}
+\end{frame}
+% you now know what a functor is
+\begin{frame}
+\begin{centering}
+You now know the objects and morphisms in the category \textsc{Cat} of all categories.
+\end{centering}
+\end{frame}
+% you now know the objects and morphisms in the category Cat of all categories
+\begin{frame}
+Let us now take a look at just two categories, $\mathcal{C}$ and $\mathcal{D}$ as objects in \textsc{Cat}.\\
+The Hom-set $\mathrm{Hom}(\mathcal{C},\mathcal{D})$ of all functors $F : \mathcal{C} \longrightarrow \mathcal{D}$ is itself a category, called the \ul{functor category}.
+
+This makes the functors $F, G, H : \mathcal{C} \longrightarrow \mathcal{D}$ objects in $\mathrm{Hom}(\mathcal{C},\mathcal{D})$ when before they were considered morphisms.
+
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+|[visible on=<2->]|F \arrow[r, "\alpha", Rightarrow, visible on=<4->] \& |[visible on=<2->]|G \arrow[r, "\beta", Rightarrow, visible on=<4->] \& |[visible on=<2->]|H
+\end{tikzcd}
+\]
+
+\uncover<3->{
+As you can imagine, we are again looking for the morphisms in this category, i.e. what are morphisms between functors?
+}
+\end{frame}
+\begin{frame}
+\begin{centering}
+You now know the objects in the category $\mathrm{Hom}(\mathcal{C},\mathcal{D})$ of all functors between categories
+$\mathcal{C}$ and $\mathcal{D}$.
+\end{centering}
+\end{frame}
+% you now know the objects in the category Hom(C,D) of all functors between categories C and D
+\begin{frame}[fragile]
+
+\noindent Given categories $\mathcal{C}$ and $\mathcal{D}$ and functors $F : \mathcal{C} \rightarrow \mathcal{D}$ and
+$G : \mathcal{C} \rightarrow \mathcal{D}$, a \ul{natural transformation} $\alpha : F \Rightarrow G$ consists of:
+\begin{itemize}
+\item a morphism $\alpha_{c} : Fc \rightarrow Gc \in \mathcal{D}_{1}$ for each object $c \in \mathcal{C}_{0}$, the collection of which
+define the \ul{components} of the natural transformation, so that, for any morphism $f : c \rightarrow c' \in \mathcal{C}_{1}$, the following
+square of morphisms in $\mathcal{D}$
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+Fc \arrow[r, "\alpha_{c}"] \arrow[d, "Ff"'] \& Gc \arrow[d, "Gf"] \\
+Fc' \arrow[r, "\alpha_{c'}"]                \& Gc'                
+\end{tikzcd}
+\]
+
+\ul{commutes}, i.e., has a common composite $Fc \rightarrow Gc' \in \mathcal{D}_{1}$. This means explicitly that
+\begin{align*}
+Ff \alpha_{c'} = \alpha_{c} Gf,\,\forall f : c \rightarrow c' \in \mathcal{C}_{1}. \label{eq:naturality_condition}
+\end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{centering}
+You now know what a natural transformation is.
+\end{centering}
+\end{frame}
+% you now know what a natural transformation is
+
+\begin{frame}
+\begin{centering}
+You now know the objects and morphisms in the category $\mathrm{Hom}(\mathcal{C},\mathcal{D})$ of all functors between categories $\mathcal{C}$ and $\mathcal{D}$.
+\end{centering}
+\end{frame}
+% you now know the objects and morphisms in the category Hom(C,D) of all functors between categories C and D
+
+%--------
+% ^
+%  |
+% Grundbegriffe Kategorientheorie
+
+\begin{frame}
+Now that we know what a functor category is, we want to work towards a special kind of functor category:
+Given a finite concrete category $\mathcal{C}$ whose endomorphism monoids are explicitly cyclic, we can
+calculate its $\Bbbk$-linear closure, i.e. the $\Bbbk$-Algebroid $\mathcal{A}$.
+
+Then we can calculate the category of $\Bbbk$-linear functors from the $\Bbbk$-Algebroid $\mathcal{A}$
+into the matrix category $\Bbbk\text{-}\mathrm{Mat}$ over the same field $\Bbbk$.
+\[
+\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})
+\]
+\end{frame}
+
+\tikzset{invisible/.style={opacity=0.0}}
+\begin{frame}[fragile]
+\[
+\begin{tikzcd}
+|[visible on=<2->]|\mathrm{FinSets} \arrow[d, visible on=<2->]                                                        &                               &                                              \\
+|[visible on=<2->]|{\text{finite concrete category}\,\mathcal{C}} \arrow[rd, visible on=<5->] \arrow[rrd,  visible on=<5->] \arrow[dd,  visible on=<4->]  &                               &                                              \\
+                                                                                  & |[ visible on=<5->]|{\text{quiver}\,q} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<5->]{ld} & |[ visible on=<5->]|{\text{relations}\,\mathtt{rel}} \arrow[end anchor={[xshift=3.00em, yshift=.75em]},  visible on=<5->]{lld} \\
+|[ visible on=<4->]|{\mathclap{\text{finitely presented category}\,\mathrm{fp}\mathcal{C}}} \arrow[d,  visible on=<4->] &                               & |[ visible on=<3->]|{\text{field}\,\Bbbk} \arrow[lld,  visible on=<3->] \arrow[d,  visible on=<6->]  \\
+|[ visible on=<3->]|{\Bbbk\text{-}\mathrm{Algebroid}\,\mathcal{A}} \arrow[end anchor={[xshift=-1.25em, yshift=.75em]},  visible on=<3->]{rd}                                    &                               & |[ visible on=<6->]|\Bbbk\text{-}\mathrm{Mat} \arrow[end anchor={[xshift=1.25em, yshift=.75em]},  visible on=<6->]{ld} \\
+                                                                                  & |[ visible on=<1->]|{\mathclap{\text{category of $\Bbbk$-linear functors}\,\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\text{-}\mathrm{Mat})}}
+\end{tikzcd}
+\]
+\end{frame}
+
+\begin{frame}
+
+\end{frame}
+% Abelsche Kategorie
+% |
+% |
+% v
+
+% Funktorkategorie nach Abelsche Kategorie ist Abelsche Kategorie
+% |
+% |
+% v
+
+%\begin{frame}
+%Up to definition of Functor category $\HomAkmat$.
+%$\mathrm{Hom}_{\Bbbk}(\mathcal{A},\Bbbk\textnormal{-}\mathrm{Mat})$.
+%\end{frame}
+
+%% juxtaposition kmat <-> HomAkmat
+\begin{frame}[fragile]
+\begin{tabular}{p{.28\textwidth}p{.33\textwidth}p{.33\textwidth}}
+$\mathbf{Category}\,\mathcal{C}$ & $\HomAkmat$ & $\kmat$ \\
+\hline \\
+\textbf{Objects} $\mathcal{C}_{0}$ & \makecell[l]{$\Bbbk$-linear functors $F :$\\ $\mathcal{A} \rightarrow \kmat$ \\ $c \in \mathcal{A}_{0} \mapsto Fc \in \kmat_{0}$ \\ $\varphi \in \mathcal{A}_{1} \mapsto F\varphi \in \kmat_{1}$} 
+& \makecell[r]{natural numbers $\mathbb{N}_{0}$} \\
+\textbf{Morphisms} $\mathcal{C}_{1}$ & natural transformations, components are matrices & $m\times n$-matrices \\
+\textbf{Composition}: & & \\
+\makecell[l]{$\varphi : A \rightarrow B$, \\$\psi : B \rightarrow C$ \\ $\varphi\psi : A \rightarrow C$}
+& \makecell[l]{$\eta : F \Rightarrow G$, $\eta_{c} : Fc \rightarrow Gc$ \\
+  $\varepsilon : G \Rightarrow H$, $\varepsilon_{c} : Gc \rightarrow Hc$ \\
+  $\eta\varepsilon : F \Rightarrow H$, $\eta_{c}\varepsilon_{c} : Fc \rightarrow Hc$}
+& \\
+& (component-wise) & matrix multiplication
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{tabular}{p{.28\textwidth}p{.33\textwidth}p{.33\textwidth}}
+$\mathbf{Category}\,\mathcal{C}$ & $\HomAkmat$ & $\kmat$ \\
+\hline \\
+\textbf{Direct Sum}: & & \\
+\makecell[l]{Let $I = \{1,\dots,N\}$ \\ be a finite set} & \makecell[l]{ $\{F_{i}\}_{i\in I}$ a family \\ of objects in\\ $\HomAkmat_{0}$} & \makecell[l]{$\{n_{i}\}_{i\in I}$ a family\\ of objects in $\kmat_{0}$}\\
+& & \\
+ & \makecell[l]{$F : c \mapsto \sum_{i=1}^{N} F_{i}(c)$}
+ & $n = \sum_{i=1}^{N} n_{i}$ \\
+& & \\
+& \makecell[l]{at each object the \\sum of natural \\numbers at that object} & \makecell[r]{sum of natural\\ numbers}
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{tabular}{p{.28\textwidth}p{.66\textwidth}}
+Projections: & $\pi_{i} : F \rightarrow F_{i}$ with components \\
+& $(\pi_{i})_{c} := \begin{pmatrix}
+0_{F_{<i}(c), F_{i}(c)} \\[2pt]
+1_{F_{i}(c)} \\[2pt]
+0_{F_{>i}(c), F_{i}(c)}
+\end{pmatrix}$ \\
+& \\
+Coprojections: & $\iota_{i} : F_{i} \rightarrow F$ with components \\
+& $(\iota_{i})_{c} :=$ \\
+& $\begin{pmatrix}
+0_{F_{i}(c),\,F_{<i}(c)} & 1_{F_{i}(c)} & 0_{F_{i}(c),\,F_{>i}(c)}
+\end{pmatrix}$
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]
+For a morphism $a : c \rightarrow c' \in \mathcal{A}_{1}$ we have a family of morphisms 
+$\{F_{i} a : F_{i} c \rightarrow F_{i} c'\}_{i \in I}$. Then the direct sum F is defined on morphisms as
+
+\begin{align*}
+F a := \sum_{i \in I} (\pi_{i})_{c} F_{i} a (\iota_{i})_{c'} : Fc \rightarrow Fc'
+\end{align*}
+which satisfies
+\begin{align*}
+(\iota_{i})_{c} Fa (\pi_{i})_{c'} &= (\iota_{i})_{c} \sum_{j \in I} (\pi_{j})_{c} F_{j} a (\iota_{j})_{c'} (\pi_{i})_{c'} \\
+&= \sum_{j \in I} (\iota_{i})_{c} (\pi_{j})_{c} F_{j} a (\iota_{j})_{c'}(\pi_{i})_{c'} \\
+&= \sum_{j \in I} (\delta_{i,j})_{c} F_{j} a (\delta_{j,i})_{c'} \\
+&= 1_{F_{i} c} F_{i} a 1_{F_{i} c'} \\
+&= F_{i} a
+\end{align*}
+\end{frame}
+
+\begin{frame}[fragile]
+One step in the decomposition algorithm looks like this:
+\[
+\begin{tikzcd}
+                                   & F                 &                                      \\
+F \arrow[ru, "\eta", bend left=49] &                   & F \arrow[lu, "\eta"', bend right=49] \\
+I \arrow[u, "\iota"] \arrow[r, dash]     & \oplus \arrow[uu, "I \oplus K = F" description] & K \arrow[u, "\kappa"'] \arrow[l, dash]    
+\end{tikzcd}
+\]
+
+Then we have two morphisms $\iota, \kappa$ with target $F$ and sources $I, K$ such that $I \oplus K = F$.
+\end{frame}
+
+\begin{frame}
+\begin{algorithm}[H]
+    \caption{\texttt{DecomposeOnceByRandomEndomorphism}}\label{algo:DecomposeOnceByRandomEndomorphism}
+        \LinesNumbered
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~a functor $F$ in a functor category}
+	\Output{~a pair $[\iota : I \rightarrow F, \kappa : K \rightarrow F]$ of morphisms such that $I \oplus K = F$ with $I \neq 0$ and $K \neq 0$ or
+	$\mathtt{fail}$ if it was unable to further decompose $F$; }
+	\BlankLine
+	$d := \max \{ \mathrm{dim}_{\Bbbk}Fc \}_{c \in \mathcal{A}_{0}}$\;
+	\If{$d = 0$}{
+	    \Return $\mathtt{fail}$\tcp*{the zero representation is indecomposable}
+	}
+	$\mathcal{B} = [\beta_{1},\dots,\beta_{h}]$ is a $\Bbbk$-basis of $\mathrm{Hom}_{\HomAkmat}(F,F)$\;
+	add $0_{F,F}$ to $\mathcal{B}$\;
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\begin{algorithm}[H]
+        \LinesNumbered
+        \setcounter{AlgoLine}{6}
+	$n := \lfloor\log_{2}(d)\rfloor + 1$\;
+	\BlankLine
+	\For{$b \in [h+1, h, \dots,2]$}{
+	    $\alpha := \beta_{b} + \mathrm{random}(\Bbbk) \cdot \beta_{b-1}$\tcp*{a heuristic ansatz for a random endomorphism}
+	    \For{$i \in [ 1, \dots, n ]$}{
+	        $\alpha_{2} := \alpha^{2}$\;
+	        \nl\tcc{We do not expect the exponentiation to produce an idempotent, still this is a very cheap test:}
+	        \If{$\alpha = \alpha_{2}$}{
+	            \Break\;
+	        }
+	        $\alpha := \alpha_{2}$\;
+	    }
+	    \BlankLine
+	    
+	    \If{$\alpha = 0$}{
+	        \Continue\tcp*{try another endomorphism}
+	    }
+	}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\begin{algorithm}[H]
+        \LinesNumbered
+        \setcounter{AlgoLine}{7}
+	\For{$b \in [h+1, h, \dots,2]$}{
+	    \dots
+	    \BlankLine
+            \setcounter{AlgoLine}{21}
+	    $\kappa := \mathrm{KernelEmbedding}(\alpha)$\;
+	    
+	    \If{$\kappa = 0$}{
+	        \Continue\tcp*{try another endomorphism}
+	    }
+	    \BlankLine
+	    $\iota := \mathrm{ImageEmbedding}(\alpha)$\;
+	    \Return $[ \iota, \kappa ]$\;
+	}
+	\BlankLine
+	\Return $\mathtt{fail}$\tcp*{The input functor $F$ is indecomposable with a high probability.}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}[fragile]
+Direct sum decomposition
+\[
+\adjustbox{scale=0.7,center}{%
+\begin{tikzcd}
+                                                   &                                                           &                                                         &                                                             & F                                                          &                                                           &                                                          &                                                          \\
+                                                   &                                                           & F \arrow[rru, "\eta_{1}", bend left]                    &                                                             &                                                            &                                                           & F \arrow[llu, "\eta_{1}"', bend right]                   &                                                          \\
+                                                   &                                                           & I_{1} \arrow[u, "\iota_{1}"] \arrow[rr, dash]         &                                                             & \bigoplus \arrow[uu, "I_{1} \oplus K_{1}" description]     &                                                           & K_{1} \arrow[u, "\kappa_{1}"'] \arrow[ll, dash]        &                                                          \\
+                                                   & I_{1} \arrow[ru, "\eta_{11}"', bend left=49, shift right] &                                                         &                                                             & I_{1} \arrow[llu, "\eta_{11}", pos=0.35, bend right]                 & K_{1} \arrow[ru, "\eta_{12}"', pos=0.40, bend left=49, shift left] &                                                          & K_{1} \arrow[lu, "\eta_{12}", bend right=49, shift left] \\
+                                                   & I_{11} \arrow[u, "\iota_{11}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{11}\oplus K_{11}" description] &                                                             & K_{11} \arrow[ll, dash] \arrow[u, "\kappa_{11}"]         & I_{12} \arrow[u, "\iota_{12}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{12} \oplus K_{12}" description] & K_{12} \arrow[u, "\kappa_{12}"'] \arrow[l, dash]       \\
+I_{11} \arrow[ru, "\eta_{111}"', bend left=49]     &                                                           & I_{11} \arrow[lu, "\eta_{111}", bend right=49]          & K_{11} \arrow[ru, "\eta_{112}"', bend left=49]              &                                                            & K_{11} \arrow[lu, "\eta_{112}", bend right=49]            &                                                          &                                                          \\
+I_{111} \arrow[r, dash] \arrow[u, "\iota_{111}"] & \bigoplus \arrow[uu, "I_{111}\oplus K_{111}" description] & K_{111} \arrow[l, dash] \arrow[u, "\kappa_{111}"]     & I_{112} \arrow[u, "\iota_{112}"] \arrow[r, dash]          & \bigoplus \arrow[uu, "I_{112} \oplus K_{112}" description] & K_{112} \arrow[u, "\kappa_{112}"] \arrow[l, dash]       &                                                          &                                                          \\
+                                                   &                                                           & I_{112} \arrow[ru, "\eta_{1121}"', bend left=49]        &                                                             & I_{112} \arrow[lu, "\eta_{1121}", bend right=49]           &                                                           &                                                          &                                                          \\
+                                                   &                                                           & I_{1121} \arrow[u, "\iota_{1121}"] \arrow[r, dash]    & \bigoplus \arrow[uu, "I_{1121}\oplus K_{1121}" description] & K_{1121} \arrow[u, "\kappa_{1121}"] \arrow[l, dash]      &                                                           &                                                          &                                                         
+\end{tikzcd}
+}
+\]
+\end{frame}
+
+\begin{frame}
+\begin{algorithm}[H]
+    \setcounter{AlgoLine}{0}
+    \caption{\texttt{WeakDirectSumDecomposition}}\label{algo:WeakDirectSumDecomposition}
+	\SetKwInput{Input}{Input~}
+	\SetKwInput{Output}{Output~}
+	\Input{~a functor $F$ in a functor category}
+	\Output{~a list $[\eta_i : F_{i} \rightarrow F]$ of embeddings.}
+	\BlankLine
+	$\mathtt{queue} := [ 1_{F} ]$\;
+	$\mathtt{summands} := \emptyset$\;
+	
+	\While{ $\mathtt{queue} \neq \emptyset$ }{
+	    let $\eta = \mathtt{remove(queue)}$\;
+	    $\mathtt{result} := \mathtt{DecomposeOnceByRandomEndomorphism}(s(\eta))$\;
+	    \eIf(\tcp*[f]{$s(\eta)$ indecomposable}){$\mathtt{result} = \mathtt{fail}$}{
+	        add $\eta$ to $\mathtt{summands}$\;
+	    }{
+	        $[\iota,\kappa] = \mathtt{result}$\;
+	        append $[\iota\eta, \kappa\eta]$ to $\mathtt{queue}$\;
+	    }
+	}
+	\BlankLine
+	\Return $\mathtt{summands}$\;
+\end{algorithm}
+\end{frame}
+
+\begin{frame}[fragile]
+Hom-based invariants: \\
+\texttt{EmbeddingOfSumOfImagesOfAllMorphisms}:
+\[
+\begin{tikzcd}
+\displaystyle{\oplus_{i\in \mathtt{hom}} M} \arrow[rr, "u_{\text{out}}(\mathtt{hom})"] \arrow[rd, "\pi"', two heads] &                              & N \\
+                                                                                                            & I \arrow[ru, "\iota"', hook] &  
+\end{tikzcd}
+\]
+\end{frame}
+
+\begin{frame}[fragile]
+\[
+\begin{tikzcd}
+1 \arrow["a"', loop, distance=2em, in=305, out=235] \arrow[rr, "b"] &  & 2 \arrow["c"', loop, distance=2em, in=305, out=235]
+\end{tikzcd}
+\]
+\end{frame}
+
+\end{document}
