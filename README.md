@@ -5,6 +5,8 @@
 as a functor category." 
 The result of this thesis is the [Gap](https://github.com/gap-system/gap) package [CatReps](https://github.com/homalg-project/CatReps).
 
+I have also given a talk on this subject, the slides and an example in form of a jupyter worksheet can be found in the sub-repository `catreps-seminar`.
+
 ## Build
 
 The directory `3_Ausarbeitung/` contains the LaTeX source code.
