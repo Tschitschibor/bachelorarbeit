@@ -2,6 +2,7 @@
 4_Style-Vorlagen
 *.lnk
 *.pdf
+!3_Ausarbeitung/assets/logo.pdf
 *.log
 *.synctex.gz
 *.aux
