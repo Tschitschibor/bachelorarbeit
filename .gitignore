@@ -3,6 +3,8 @@
 *.lnk
 *.pdf
 !3_Ausarbeitung/assets/logo.pdf
+!3_Ausarbeitung/Bachelorarbeit_Tibor_Gruen.pdf
+!catreps-seminar/Seminarvortrag_Bachelorarbeit.pdf
 *.log
 *.synctex.gz
 *.aux
